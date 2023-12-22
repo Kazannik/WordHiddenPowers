@@ -86,7 +86,7 @@ namespace WordHiddenPowers
         private void deletePowersButton_Click(object sender, RibbonControlEventArgs e)
         {
             Document doc = Globals.ThisAddIn.Application.ActiveDocument;
-            Variable variable = Globals.ThisAddIn.GetVariable(doc.Variables);
+            Variable variable = Globals.ThisAddIn.GetVariable(doc.Variables, Globals.ThisAddIn.TableVariableName);
             if (variable != null)
             {
                if ( MessageBox.Show("Удалить дополнительные данные из документа?", "Удаление скрытых данных", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)== DialogResult.Yes)
@@ -109,9 +109,8 @@ namespace WordHiddenPowers
             RibbonToggleButton button = (RibbonToggleButton)sender;
             if (button.Id == Globals.Ribbons.WordHiddenPowersRibbon.paneVisibleButton.Id)
             {
-                Globals.ThisAddIn.PowerPane.Visible = Globals.Ribbons.WordHiddenPowersRibbon.paneVisibleButton.Checked;
-            }
-           
+                Globals.ThisAddIn.Panes.ActivePane.Visible = Globals.Ribbons.WordHiddenPowersRibbon.paneVisibleButton.Checked;
+            }           
         }
     }
 }
