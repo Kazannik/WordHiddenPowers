@@ -16,9 +16,9 @@ namespace WordHiddenPowers
     {
         const string PANE_TITLE = "Дополнительные данные";
 
-        const string titleValueName = "TitleHiddenPower";
-        const string descriptionValueName = "DescriptionHiddenPower";
-        const string dateValueName = "DateHiddenPower";
+        const string TITLE_VARIABLE_NAME = "TitleHiddenPower";
+        const string DESCRIPTION_VARIABLE_NAME = "DescriptionHiddenPower";
+        const string DATE_VARIABLE_NAME = "DateHiddenPower";
         const string TABLE_VARIABLE_NAME = "TableHiddenPower";
 
         Panes.PaneCollection panes; 
@@ -27,6 +27,12 @@ namespace WordHiddenPowers
 
         public string TableVariableName { get { return TABLE_VARIABLE_NAME; } }
 
+        public string TitleVariableName { get { return TITLE_VARIABLE_NAME; } }
+
+        public string DateVariableName { get { return DATE_VARIABLE_NAME; } }
+
+        public string DescriptionVariableName { get { return DESCRIPTION_VARIABLE_NAME; } }
+        
         RepositoryDataSet powersDataSet = new RepositoryDataSet();
 
         public RepositoryDataSet PowersDataSet { get { return powersDataSet; } }
@@ -85,6 +91,8 @@ namespace WordHiddenPowers
                     powersDataSet.ReadXml(reader, System.Data.XmlReadMode.IgnoreSchema);
                     reader.Close();
                 }
+
+
             }
             else
             {
