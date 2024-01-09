@@ -94,12 +94,12 @@
             // group2
             // 
             this.group2.Items.Add(this.paneVisibleButton);
-            this.group2.Label = "group2";
+            this.group2.Label = "Панель управления";
             this.group2.Name = "group2";
             // 
             // paneVisibleButton
             // 
-            this.paneVisibleButton.Label = "toggleButton1";
+            this.paneVisibleButton.Label = "Дополнительные данные";
             this.paneVisibleButton.Name = "paneVisibleButton";
             this.paneVisibleButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.paneVisibleButton_Click);
             // 

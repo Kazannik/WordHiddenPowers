@@ -11,7 +11,7 @@ using Microsoft.Office.Tools.Ribbon;
 
 namespace WordHiddenPowers.Panes
 {
-    public class PaneCollection
+    public class PaneCollection: IDisposable
     {
         IDictionary<int, CustomTaskPane> panes;
         CustomTaskPaneCollection links;
@@ -26,6 +26,18 @@ namespace WordHiddenPowers.Panes
 
         public CustomTaskPane ActivePane { get; private set; }
 
+        public CustomTaskPane this[Word.Document Doc]
+        {
+            get
+            {
+                return panes[Doc.DocID];
+            }
+        }
+
+        public bool Contains(Word.Document Doc)
+        {
+            return panes.ContainsKey(Doc.DocID);
+        }
 
         public void WindowActivate(Word.Document Doc)
         {
@@ -75,6 +87,17 @@ namespace WordHiddenPowers.Panes
                 }                
             }            
             button.Checked = pane.Visible;
+        }
+
+                
+        public void Dispose()
+        {
+            foreach (CustomTaskPane item in panes.Values)
+            {
+                item.Dispose();                
+            }
+            panes.Clear();
+            panes = null;
         }
     }
 }

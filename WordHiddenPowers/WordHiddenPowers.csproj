@@ -160,6 +160,12 @@
     <Compile Include="Controls\WordHiddenPowersRibbon.Designer.cs">
       <DependentUpon>WordHiddenPowersRibbon.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\AboutBox1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\AboutBox1.Designer.cs">
+      <DependentUpon>AboutBox1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -179,6 +185,12 @@
     <Compile Include="Utils\ShowDialogUtil.cs" />
     <EmbeddedResource Include="Controls\WordHiddenPowersRibbon.resx">
       <DependentUpon>WordHiddenPowersRibbon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\AboutBox1.resx">
+      <DependentUpon>AboutBox1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Panes\WordHiddenPowersPane.resx">
       <DependentUpon>WordHiddenPowersPane.cs</DependentUpon>

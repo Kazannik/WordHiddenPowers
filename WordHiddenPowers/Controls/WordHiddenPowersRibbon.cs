@@ -21,27 +21,32 @@ namespace WordHiddenPowers
 
         private void newPowersButton_Click(object sender, RibbonControlEventArgs e)
         {
-            Globals.ThisAddIn.PowersDataSet.Reset();
+            if (Globals.ThisAddIn.ActivePane !=null)
+            {
+                Globals.ThisAddIn.ActivePane.PowersDataSet.Reset();
+            }
         }
 
         private void openPowersButton_Click(object sender, RibbonControlEventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Multiselect = false;
-            dialog.Filter = dialogFilters;
-            if (dialog.ShowDialog( Utils.ShowDialogUtil.GetOwner()) == DialogResult.OK)
+            if (Globals.ThisAddIn.ActivePane != null)
             {
-                try
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.Multiselect = false;
+                dialog.Filter = dialogFilters;
+                if (dialog.ShowDialog( Utils.ShowDialogUtil.GetOwner()) == DialogResult.OK)
                 {
-                    Globals.ThisAddIn.PowersDataSet.ReadXml(dialog.FileName, System.Data.XmlReadMode.IgnoreSchema);
-                    Globals.ThisAddIn.PowersDataSet.DecimalPowers.Clear();
-                    Globals.ThisAddIn.PowersDataSet.StringPowers.Clear();
+                    try
+                    {
+                        Globals.ThisAddIn.ActivePane.PowersDataSet.ReadXml(dialog.FileName, System.Data.XmlReadMode.IgnoreSchema);
+                        Globals.ThisAddIn.ActivePane.PowersDataSet.DecimalPowers.Clear();
+                        Globals.ThisAddIn.ActivePane.PowersDataSet.StringPowers.Clear();
+                    }
+                    catch (Exception)
+                    {
+                    }
                 }
-                catch (Exception)
-                {
-                    
-                }                
-            }
+            }                
         }
 
         private void savePowersButton_Click(object sender, RibbonControlEventArgs e)
@@ -52,7 +57,7 @@ namespace WordHiddenPowers
             {
                 try
                 {
-                    string xml = GetXml(Globals.ThisAddIn.PowersDataSet);
+                    string xml = GetXml(Globals.ThisAddIn.ActivePane.PowersDataSet);
                     RepositoryDataSet powersDataSet = new RepositoryDataSet();
                     SetXml(powersDataSet, xml);
                     powersDataSet.DecimalPowers.Clear();
@@ -85,22 +90,18 @@ namespace WordHiddenPowers
 
         private void deletePowersButton_Click(object sender, RibbonControlEventArgs e)
         {
-            Document doc = Globals.ThisAddIn.Application.ActiveDocument;
-            Variable variable = Globals.ThisAddIn.GetVariable(doc.Variables, Globals.ThisAddIn.TableVariableName);
-            if (variable != null)
+            if (Globals.ThisAddIn.ActivePane != null)
             {
-               if ( MessageBox.Show("Удалить дополнительные данные из документа?", "Удаление скрытых данных", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)== DialogResult.Yes)
+                if (Globals.ThisAddIn.ActivePane.VariablesExitst())
                 {
-                    Globals.ThisAddIn.PowersDataSet.Categories.Clear();
-                    Globals.ThisAddIn.PowersDataSet.Subcategories.Clear();
-                    Globals.ThisAddIn.PowersDataSet.DecimalPowers.Clear();
-                    Globals.ThisAddIn.PowersDataSet.StringPowers.Clear();
-                    Globals.ThisAddIn.PowersDataSet.Reset();
-                    variable.Delete();
+                    if ( MessageBox.Show("Удалить дополнительные данные из документа?", "Удаление скрытых данных", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)== DialogResult.Yes)
+                    {
+                        Globals.ThisAddIn.ActivePane.DeleteVariables();
+                    }
+                } else
+                {
+                    MessageBox.Show("Дополнительные данные отсуствуют!", "Удаление скрытых данных", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-            } else
-            {
-                MessageBox.Show("Дополнительные данные отсуствуют!", "Удаление скрытых данных", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

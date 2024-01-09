@@ -397,6 +397,8 @@ namespace WordHiddenPowers.Repositoryes {
             
             private global::System.Data.DataColumn columnValue;
             
+            private global::System.Data.DataColumn columnRating;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public StringPowersDataTable() {
@@ -480,6 +482,14 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn RatingColumn {
+                get {
+                    return this.columnRating;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -515,7 +525,7 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public StringPowersRow AddStringPowersRow(int category_id, int subcategory_id, string Caption, string Description, string Value) {
+            public StringPowersRow AddStringPowersRow(int category_id, int subcategory_id, string Caption, string Description, string Value, int Rating) {
                 StringPowersRow rowStringPowersRow = ((StringPowersRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -523,7 +533,8 @@ namespace WordHiddenPowers.Repositoryes {
                         subcategory_id,
                         Caption,
                         Description,
-                        Value};
+                        Value,
+                        Rating};
                 rowStringPowersRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowStringPowersRow);
                 return rowStringPowersRow;
@@ -559,6 +570,7 @@ namespace WordHiddenPowers.Repositoryes {
                 this.columnCaption = base.Columns["Caption"];
                 this.columnDescription = base.Columns["Description"];
                 this.columnValue = base.Columns["Value"];
+                this.columnRating = base.Columns["Rating"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -576,6 +588,8 @@ namespace WordHiddenPowers.Repositoryes {
                 base.Columns.Add(this.columnDescription);
                 this.columnValue = new global::System.Data.DataColumn("Value", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnValue);
+                this.columnRating = new global::System.Data.DataColumn("Rating", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRating);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("DesimalPowersTableKey", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -1319,6 +1333,8 @@ namespace WordHiddenPowers.Repositoryes {
             
             private global::System.Data.DataColumn columnValue;
             
+            private global::System.Data.DataColumn columnRaiting;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public DecimalPowersDataTable() {
@@ -1402,6 +1418,14 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn RaitingColumn {
+                get {
+                    return this.columnRaiting;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1437,7 +1461,7 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DecimalPowersRow AddDecimalPowersRow(int category_id, int subcategory_id, string Caption, string Description, long Value) {
+            public DecimalPowersRow AddDecimalPowersRow(int category_id, int subcategory_id, string Caption, string Description, long Value, int Raiting) {
                 DecimalPowersRow rowDecimalPowersRow = ((DecimalPowersRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -1445,7 +1469,8 @@ namespace WordHiddenPowers.Repositoryes {
                         subcategory_id,
                         Caption,
                         Description,
-                        Value};
+                        Value,
+                        Raiting};
                 rowDecimalPowersRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDecimalPowersRow);
                 return rowDecimalPowersRow;
@@ -1481,6 +1506,7 @@ namespace WordHiddenPowers.Repositoryes {
                 this.columnCaption = base.Columns["Caption"];
                 this.columnDescription = base.Columns["Description"];
                 this.columnValue = base.Columns["Value"];
+                this.columnRaiting = base.Columns["Raiting"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1498,6 +1524,8 @@ namespace WordHiddenPowers.Repositoryes {
                 base.Columns.Add(this.columnDescription);
                 this.columnValue = new global::System.Data.DataColumn("Value", typeof(long), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnValue);
+                this.columnRaiting = new global::System.Data.DataColumn("Raiting", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRaiting);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("DesimalPowersTableKey", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -1729,6 +1757,22 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int Rating {
+                get {
+                    try {
+                        return ((int)(this[this.tableStringPowers.RatingColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Rating\' в таблице \'StringPowers\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableStringPowers.RatingColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsDescriptionNull() {
                 return this.IsNull(this.tableStringPowers.DescriptionColumn);
             }
@@ -1749,6 +1793,18 @@ namespace WordHiddenPowers.Repositoryes {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetValueNull() {
                 this[this.tableStringPowers.ValueColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsRatingNull() {
+                return this.IsNull(this.tableStringPowers.RatingColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetRatingNull() {
+                this[this.tableStringPowers.RatingColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -2002,6 +2058,22 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int Raiting {
+                get {
+                    try {
+                        return ((int)(this[this.tableDecimalPowers.RaitingColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Raiting\' в таблице \'DecimalPowers\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDecimalPowers.RaitingColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsCaptionNull() {
                 return this.IsNull(this.tableDecimalPowers.CaptionColumn);
             }
@@ -2022,6 +2094,18 @@ namespace WordHiddenPowers.Repositoryes {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetDescriptionNull() {
                 this[this.tableDecimalPowers.DescriptionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsRaitingNull() {
+                return this.IsNull(this.tableDecimalPowers.RaitingColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetRaitingNull() {
+                this[this.tableDecimalPowers.RaitingColumn] = global::System.Convert.DBNull;
             }
         }
         

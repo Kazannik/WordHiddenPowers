@@ -32,12 +32,24 @@ namespace WordHiddenPowers
         public string DateVariableName { get { return DATE_VARIABLE_NAME; } }
 
         public string DescriptionVariableName { get { return DESCRIPTION_VARIABLE_NAME; } }
-        
-        RepositoryDataSet powersDataSet = new RepositoryDataSet();
-
-        public RepositoryDataSet PowersDataSet { get { return powersDataSet; } }
-
+               
         public Panes.PaneCollection Panes { get { return panes; } }
+
+
+        public Panes.WordHiddenPowersPane ActivePane
+        {
+            get
+            {
+                if (panes.Contains(this.Application.ActiveDocument))
+                {
+                    return (Panes.WordHiddenPowersPane) panes[this.Application.ActiveDocument].Control;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
 
 
         private void ThisAddIn_Startup(object sender, EventArgs e)
@@ -51,6 +63,7 @@ namespace WordHiddenPowers
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
         {
+            panes.Dispose();
         }
                 
         #region Код, автоматически созданный VSTO
@@ -82,27 +95,15 @@ namespace WordHiddenPowers
 
         private void Application_DocumentOpen(Word.Document Doc)
         {
-            if (Doc.Variables.Count > 0)
-            {
-                Word.Variable variable = GetVariable(Doc.Variables, TABLE_VARIABLE_NAME);
-                if (variable !=null)
-                {
-                    StringReader reader = new StringReader(variable.Value);
-                    powersDataSet.ReadXml(reader, System.Data.XmlReadMode.IgnoreSchema);
-                    reader.Close();
-                }
-
-
-            }
-            else
-            {
+            Panes.WordHiddenPowersPane pane = (Panes.WordHiddenPowersPane)panes.ActivePane.Control;
+            pane.InitializeVariables();
                 //powersDataSet.Categories.Rows.Add(new object[] { 0, "Поручения Генерального прокурора Российской Федерации", "Категория о поручениях Генерального прокурора Российской Федерации" });
                 //StringBuilder builder = new StringBuilder();
                 //StringWriter writer = new StringWriter(builder);
                 //powersDataSet.WriteXml(writer, System.Data.XmlWriteMode.WriteSchema);
                 //Doc.Variables.Add(TABLE_VARIABLE_NAME, builder.ToString());
                 //writer.Close();
-            }            
+
         }
 
 
@@ -111,18 +112,7 @@ namespace WordHiddenPowers
             panes.Remove(Doc);            
         }
 
-        public Word.Variable GetVariable(Word.Variables array, string variableName)
-        {
-            for (int i = 1; i <=  array.Count; i++)
-            {
-                if (array[i].Name == variableName)
-                {
-                    return array[i];
-                }
-            }
-            return null;
-        }
-
+        
         #endregion
     }
 }
