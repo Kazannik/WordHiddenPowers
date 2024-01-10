@@ -25,9 +25,13 @@ namespace WordSuite.HiddenPowers.Utils
                 {
                     if (file.Extension ==".doc" || file.Extension == ".docx")
                     {
-                        Word._Document document = application.Documents.Open(FileName: file.FullName, ReadOnly: true, Visible: false);
-                        collection.Add(Document.Create(file.FullName, document));
-                        document.Close();
+                        try
+                        {
+                            Word._Document document = application.Documents.Open(FileName: file.FullName, ReadOnly: true, Visible: false);
+                            collection.Add(Document.Create(file.FullName, document));
+                            document.Close();
+                        }
+                        catch (Exception) { }                       
                     }
                 }
 

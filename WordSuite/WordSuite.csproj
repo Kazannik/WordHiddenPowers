@@ -55,6 +55,7 @@
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="HiddenPowers\Data\TableCollection.cs" />
     <Compile Include="HiddenPowers\Model\Document.cs" />
     <Compile Include="HiddenPowers\Model\DocumentCollection.cs" />
     <Compile Include="HiddenPowers\Utils\FileSystem.cs" />

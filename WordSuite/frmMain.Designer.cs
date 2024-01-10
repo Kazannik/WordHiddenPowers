@@ -31,23 +31,25 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.mnuFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.buttonBarMain = new System.Windows.Forms.ToolStrip();
-            this.statusBarMain = new System.Windows.Forms.StatusStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.treeView1 = new System.Windows.Forms.TreeView();
-            this.mnuFileImport = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnuFileExit = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuFileNew = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuFileExport = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuFileOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuFileSave = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuFileSaveAs = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuFileImport = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuFileExport = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuFileExit = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuEditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.buttonBarMain = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.statusBarMain = new System.Windows.Forms.StatusStrip();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.mnuTable = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuTableOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMain.SuspendLayout();
             this.buttonBarMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -61,7 +63,8 @@
             this.mnuMain.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.mnuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuFile,
-            this.mnuEditToolStripMenuItem});
+            this.mnuEditToolStripMenuItem,
+            this.mnuTable});
             this.mnuMain.Location = new System.Drawing.Point(0, 0);
             this.mnuMain.Name = "mnuMain";
             this.mnuMain.Size = new System.Drawing.Size(935, 28);
@@ -85,89 +88,6 @@
             this.mnuFile.Size = new System.Drawing.Size(57, 24);
             this.mnuFile.Text = "Файл";
             // 
-            // buttonBarMain
-            // 
-            this.buttonBarMain.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.buttonBarMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1});
-            this.buttonBarMain.Location = new System.Drawing.Point(0, 28);
-            this.buttonBarMain.Name = "buttonBarMain";
-            this.buttonBarMain.Size = new System.Drawing.Size(935, 27);
-            this.buttonBarMain.TabIndex = 1;
-            this.buttonBarMain.Text = "Основная панель инструментов";
-            // 
-            // statusBarMain
-            // 
-            this.statusBarMain.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusBarMain.Location = new System.Drawing.Point(0, 427);
-            this.statusBarMain.Name = "statusBarMain";
-            this.statusBarMain.Size = new System.Drawing.Size(935, 22);
-            this.statusBarMain.TabIndex = 2;
-            this.statusBarMain.Text = "statusStrip1";
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(24, 24);
-            this.toolStripButton1.Text = "toolStripButton1";
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 55);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.treeView1);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.listBox1);
-            this.splitContainer1.Size = new System.Drawing.Size(935, 372);
-            this.splitContainer1.SplitterDistance = 203;
-            this.splitContainer1.TabIndex = 3;
-            // 
-            // listBox1
-            // 
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 16;
-            this.listBox1.Location = new System.Drawing.Point(0, 0);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(728, 372);
-            this.listBox1.TabIndex = 0;
-            // 
-            // treeView1
-            // 
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.Location = new System.Drawing.Point(0, 0);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(203, 372);
-            this.treeView1.TabIndex = 0;
-            // 
-            // mnuFileImport
-            // 
-            this.mnuFileImport.Name = "mnuFileImport";
-            this.mnuFileImport.Size = new System.Drawing.Size(245, 26);
-            this.mnuFileImport.Text = "Импорт данных...";
-            this.mnuFileImport.Click += new System.EventHandler(this.mnuFileImport_Click);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(242, 6);
-            // 
-            // mnuFileExit
-            // 
-            this.mnuFileExit.Name = "mnuFileExit";
-            this.mnuFileExit.Size = new System.Drawing.Size(245, 26);
-            this.mnuFileExit.Text = "Выход";
-            this.mnuFileExit.Click += new System.EventHandler(this.mnuFileExit_Click);
-            // 
             // mnuFileNew
             // 
             this.mnuFileNew.Name = "mnuFileNew";
@@ -175,17 +95,10 @@
             this.mnuFileNew.Text = "Новый проект";
             this.mnuFileNew.Click += new System.EventHandler(this.mnuFileNew_Click);
             // 
-            // mnuFileExport
+            // toolStripMenuItem1
             // 
-            this.mnuFileExport.Name = "mnuFileExport";
-            this.mnuFileExport.Size = new System.Drawing.Size(245, 26);
-            this.mnuFileExport.Text = "Экспорт данных...";
-            this.mnuFileExport.Click += new System.EventHandler(this.mnuFileExport_Click);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(242, 6);
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(242, 6);
             // 
             // mnuFileOpen
             // 
@@ -208,16 +121,121 @@
             this.mnuFileSaveAs.Text = "Сохранить проект как...";
             this.mnuFileSaveAs.Click += new System.EventHandler(this.mnuFileSaveAs_Click);
             // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(242, 6);
+            // 
+            // mnuFileImport
+            // 
+            this.mnuFileImport.Name = "mnuFileImport";
+            this.mnuFileImport.Size = new System.Drawing.Size(245, 26);
+            this.mnuFileImport.Text = "Импорт данных...";
+            this.mnuFileImport.Click += new System.EventHandler(this.mnuFileImport_Click);
+            // 
+            // mnuFileExport
+            // 
+            this.mnuFileExport.Name = "mnuFileExport";
+            this.mnuFileExport.Size = new System.Drawing.Size(245, 26);
+            this.mnuFileExport.Text = "Экспорт данных...";
+            this.mnuFileExport.Click += new System.EventHandler(this.mnuFileExport_Click);
+            // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
             this.toolStripMenuItem3.Size = new System.Drawing.Size(242, 6);
+            // 
+            // mnuFileExit
+            // 
+            this.mnuFileExit.Name = "mnuFileExit";
+            this.mnuFileExit.Size = new System.Drawing.Size(245, 26);
+            this.mnuFileExit.Text = "Выход";
+            this.mnuFileExit.Click += new System.EventHandler(this.mnuFileExit_Click);
             // 
             // mnuEditToolStripMenuItem
             // 
             this.mnuEditToolStripMenuItem.Name = "mnuEditToolStripMenuItem";
             this.mnuEditToolStripMenuItem.Size = new System.Drawing.Size(76, 24);
             this.mnuEditToolStripMenuItem.Text = "mnuEdit";
+            // 
+            // buttonBarMain
+            // 
+            this.buttonBarMain.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.buttonBarMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton1});
+            this.buttonBarMain.Location = new System.Drawing.Point(0, 28);
+            this.buttonBarMain.Name = "buttonBarMain";
+            this.buttonBarMain.Size = new System.Drawing.Size(935, 27);
+            this.buttonBarMain.TabIndex = 1;
+            this.buttonBarMain.Text = "Основная панель инструментов";
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(24, 24);
+            this.toolStripButton1.Text = "toolStripButton1";
+            // 
+            // statusBarMain
+            // 
+            this.statusBarMain.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.statusBarMain.Location = new System.Drawing.Point(0, 427);
+            this.statusBarMain.Name = "statusBarMain";
+            this.statusBarMain.Size = new System.Drawing.Size(935, 22);
+            this.statusBarMain.TabIndex = 2;
+            this.statusBarMain.Text = "statusStrip1";
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 55);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.treeView1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.listBox1);
+            this.splitContainer1.Size = new System.Drawing.Size(935, 372);
+            this.splitContainer1.SplitterDistance = 203;
+            this.splitContainer1.TabIndex = 3;
+            // 
+            // treeView1
+            // 
+            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView1.Location = new System.Drawing.Point(0, 0);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Size = new System.Drawing.Size(203, 372);
+            this.treeView1.TabIndex = 0;
+            // 
+            // listBox1
+            // 
+            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 16;
+            this.listBox1.Location = new System.Drawing.Point(0, 0);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(728, 372);
+            this.listBox1.TabIndex = 0;
+            // 
+            // mnuTable
+            // 
+            this.mnuTable.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuTableOpen});
+            this.mnuTable.Name = "mnuTable";
+            this.mnuTable.Size = new System.Drawing.Size(85, 24);
+            this.mnuTable.Text = "mnuTable";
+            // 
+            // mnuTableOpen
+            // 
+            this.mnuTableOpen.Name = "mnuTableOpen";
+            this.mnuTableOpen.Size = new System.Drawing.Size(184, 26);
+            this.mnuTableOpen.Text = "mnuTableOpen";
+            this.mnuTableOpen.Click += new System.EventHandler(this.mnuTableOpen_Click);
             // 
             // frmMain
             // 
@@ -265,6 +283,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem mnuFileExit;
         private System.Windows.Forms.ToolStripMenuItem mnuEditToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnuTable;
+        private System.Windows.Forms.ToolStripMenuItem mnuTableOpen;
     }
 }
 

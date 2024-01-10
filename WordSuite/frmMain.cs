@@ -71,5 +71,9 @@ namespace WordSuite
             }
         }
 
+        private void mnuTableOpen_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -7,6 +7,7 @@ using WordHiddenPowers.Repositoryes;
 using Word = Microsoft.Office.Interop.Word;
 using HiddenPowerConst = WordHiddenPowers.Const.Globals;
 using System.IO;
+using WordHiddenPowers.Data;
 
 namespace WordSuite.HiddenPowers.Model
 {
@@ -22,15 +23,18 @@ namespace WordSuite.HiddenPowers.Model
 
         public string Description { get; }        
 
+        public Table Table {get;}
+
         public RepositoryDataSet PowersDataSet { get { return powersDataSet; } }
         
-        private Document (string fileName, string title, DateTime date, string description)
+        private Document (string fileName, string title, DateTime date, string description, Table table)
         {
             this.powersDataSet = new RepositoryDataSet();
             this.FileName = fileName;
             this.Title = title;
             this.Date = date;
             this.Description = description;
+            this.Table = table;
         }
 
         public static Document Create (string fileName, Word._Document Doc)
@@ -38,6 +42,7 @@ namespace WordSuite.HiddenPowers.Model
             string titleValue = string.Empty;
             DateTime dateValue = DateTime.MinValue;
             string descriptionValue = string.Empty;
+            Table tableValue = null;
 
             if (Doc.Variables.Count > 0)
             {
@@ -59,7 +64,14 @@ namespace WordSuite.HiddenPowers.Model
                     descriptionValue = description.Value;
                 }
 
-                Document document = new Document(fileName, titleValue, dateValue, descriptionValue);
+
+                Word.Variable table = GetVariable(Doc.Variables, HiddenPowerConst.TABLE_VARIABLE_NAME);
+                if (table != null)
+                {
+                    tableValue = Table.Create(table.Value);
+                }
+
+                Document document = new Document(fileName, titleValue, dateValue, descriptionValue, tableValue);
                 Word.Variable categories = GetVariable(Doc.Variables, HiddenPowerConst.CATEGORIES_VARIABLE_NAME);
                 if (categories != null)
                 {
@@ -86,5 +98,7 @@ namespace WordSuite.HiddenPowers.Model
             }
             return null;
         }
+
+
     }
 }
