@@ -121,6 +121,13 @@ namespace WordHiddenPowers.Panes
 
         public void DeleteVariables()
         {
+            powersDataSet.DecimalPowers.Clear();
+            powersDataSet.StringPowers.Clear();
+            powersDataSet.Categories.Clear();
+            powersDataSet.Subcategories.Clear();
+            powersDataSet.ColumnsHeaders.Clear();
+            powersDataSet.RowsHeaders.Clear();
+
             if (Document.Variables.Count > 0)
             {
                 titleTextBox.Text = string.Empty;
@@ -149,6 +156,12 @@ namespace WordHiddenPowers.Panes
                 if (categories != null)
                 {
                     categories.Delete();
+                }
+
+                Word.Variable table = GetVariable(Document.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+                if (table != null)
+                {
+                    table.Delete();
                 }
             }
         }
@@ -179,7 +192,13 @@ namespace WordHiddenPowers.Panes
                 if (categories != null)
                 {
                     return true;
-                }                
+                }
+
+                Word.Variable table = GetVariable(Document.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+                if (table != null)
+                {
+                    return true;
+                }
             }
             return false;
         }

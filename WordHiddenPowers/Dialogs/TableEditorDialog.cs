@@ -37,7 +37,8 @@ namespace WordHiddenPowers.Dialogs
                 for (int i = 0; i < powersDataSet.ColumnsHeaders.Rows.Count; i++)
                 {
                     string text = powersDataSet.ColumnsHeaders.Rows[i]["Header"].ToString();
-                    dataGridView1.Columns.Add(text, text);
+                    int columnIndex = dataGridView1.Columns.Add(text, text);
+                    dataGridView1.Columns[columnIndex].SortMode = DataGridViewColumnSortMode.NotSortable;
                 }
 
                 dataGridView1.RowHeadersWidth = 120;

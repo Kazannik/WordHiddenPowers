@@ -190,6 +190,12 @@
     <Compile Include="Dialogs\TableEditorDialog.Designer.cs">
       <DependentUpon>TableEditorDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\TableSettingDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\TableSettingDialog.Designer.cs">
+      <DependentUpon>TableSettingDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Panes\PaneCollection.cs" />
     <Compile Include="Panes\WordHiddenPowersPane.cs">
       <SubType>UserControl</SubType>
@@ -215,6 +221,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\TableEditorDialog.resx">
       <DependentUpon>TableEditorDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\TableSettingDialog.resx">
+      <DependentUpon>TableSettingDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Panes\WordHiddenPowersPane.resx">
       <DependentUpon>WordHiddenPowersPane.cs</DependentUpon>

@@ -28,25 +28,44 @@ namespace WordHiddenPowers.Dialogs
 
         private void FileNew_Click(object sender, EventArgs e)
         {
+            TableSettingDialog dialog = new TableSettingDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                CreateTable(dialog.ColumnsCount, dialog.RowsCount);
+            }            
+        }
+
+        private void FileSave_Click(object sender, EventArgs e)
+        {
+            SaveTableStructure();
+        }
+
+
+        private void CreateTable(int columnsCount, int rowsCount)
+        {
             dataGridView.Rows.Clear();
             dataGridView.Columns.Clear();
 
-            dataGridView.Columns.Add("HEADER","");
-            dataGridView.Columns.Add("HEADER 1", "");
-            dataGridView.Columns.Add("HEADER 2", "");
-            dataGridView.Columns.Add("HEADER 3", "");
+            dataGridView.Columns.Add("HEADER", "");
+            object[] array = new object[columnsCount + 1];
+            array[0] = string.Empty;
 
-            int rowIndex = dataGridView.Rows.Add(new object[] {"", "Графа 1", "Графа 2" , "Графа 3" });
+            for (int c = 1; c <= columnsCount; c++)
+            {
+                int columnIndex = dataGridView.Columns.Add("HEADER " + c.ToString(), "");
+                dataGridView.Columns[columnIndex].SortMode = DataGridViewColumnSortMode.NotSortable;
+                array[c] = "Графа " + c.ToString(); 
+            }
+            
+            int rowIndex = dataGridView.Rows.Add(array);
             dataGridView.Rows[rowIndex].Cells["HEADER"].ReadOnly = true;
             dataGridView.Rows[rowIndex].Cells["HEADER"].Style.BackColor = dataGridView.BackgroundColor;
 
-            dataGridView.Rows.Add("Строка 1");
-            dataGridView.Rows.Add("Строка 2");
-            dataGridView.Rows.Add("Строка 3");
-            dataGridView.Rows.Add("Строка 4");
-            dataGridView.Rows.Add("Строка 5");
-            dataGridView.Rows.Add("Строка 6");
-
+            for (int r = 0; r < rowsCount; r++)
+            {
+                dataGridView.Rows.Add("Строка " + (r + 1).ToString());
+            }
+                       
             for (int r = 1; r < dataGridView.Rows.Count; r++)
             {
                 for (int c = 1; c < dataGridView.Columns.Count; c++)
@@ -57,12 +76,6 @@ namespace WordHiddenPowers.Dialogs
             }
         }
 
-        private void FileSave_Click(object sender, EventArgs e)
-        {
-            SaveTableStructure();
-        }
-
-
         private void ReadTableStructure()
         {
             dataGridView.Rows.Clear();
@@ -71,12 +84,16 @@ namespace WordHiddenPowers.Dialogs
             {
                 dataGridView.Columns.Add("HEADER", "");
                 int rowIndex = dataGridView.Rows.Add();
+                dataGridView.Rows[rowIndex].Cells["HEADER"].ReadOnly = true;
+                dataGridView.Rows[rowIndex].Cells["HEADER"].Style.BackColor = dataGridView.BackgroundColor;
+
                 for (int i = 0; i < powersDataSet.ColumnsHeaders.Rows.Count; i++)
                 {
                     string text = powersDataSet.ColumnsHeaders.Rows[i]["Header"].ToString();
-                    dataGridView.Columns.Add(text,  "");
+                    int columnIndex = dataGridView.Columns.Add(text,  "");
+                    dataGridView.Columns[columnIndex].SortMode = DataGridViewColumnSortMode.NotSortable;
                     dataGridView.Rows[rowIndex].Cells[i + 1].Value = text;
-                }
+                }                
 
                 foreach (DataRow item in powersDataSet.RowsHeaders.Rows)
                 {
@@ -94,6 +111,18 @@ namespace WordHiddenPowers.Dialogs
 
         private void SaveTableStructure()
         {
+            dataGridView.EndEdit();
+
+            if (powersDataSet.RowsHeaders.Rows.Count != (dataGridView.Rows.Count - 1) ||
+                    powersDataSet.ColumnsHeaders.Rows.Count != (dataGridView.Columns.Count - 1))
+            {
+                Word.Variable variable = GetVariable(document.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+                if (variable != null)
+                {
+                    variable.Delete();
+                }
+            }
+                       
             powersDataSet.ColumnsHeaders.Clear();
 
             for (int i = 1; i < dataGridView.Columns.Count; i++)
@@ -171,9 +200,16 @@ namespace WordHiddenPowers.Dialogs
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {
+                if (dataGridView.Rows.Count == 0 && dataGridView.Columns.Count ==0)
+                {
+                    e.Cancel = false;
+                    return;
+                }
+
+
                 bool edited = false;
-                if (powersDataSet.RowsHeaders.Columns.Count != dataGridView.Rows.Count ||
-                    powersDataSet.ColumnsHeaders.Columns.Count != dataGridView.Columns.Count)
+                if (powersDataSet.RowsHeaders.Rows.Count != (dataGridView.Rows.Count - 1) ||
+                    powersDataSet.ColumnsHeaders.Rows.Count != (dataGridView.Columns.Count - 1))
                 {
                     edited = true;
                 }
@@ -182,20 +218,21 @@ namespace WordHiddenPowers.Dialogs
                     for (int i = 1; i < dataGridView.Columns.Count; i++)
                     {
                         string gridText = dataGridView.Rows[0].Cells[i].Value.ToString();
-                        string dataText = powersDataSet.ColumnsHeaders.Rows[i]["Header"].ToString();
+                        string dataText = powersDataSet.ColumnsHeaders.Rows[i - 1]["Header"].ToString();
                         if (!gridText.Equals(dataText))
                         {
                             edited = true;
+                            break;
                         }
                     }
-                    powersDataSet.RowsHeaders.Clear();
                     for (int i = 1; i < dataGridView.Rows.Count; i++)
                     {
                         string gridText = dataGridView.Rows[i].Cells["HEADER"].Value.ToString();
-                        string dataText = powersDataSet.RowsHeaders.Rows[i]["Header"].ToString();
+                        string dataText = powersDataSet.RowsHeaders.Rows[i - 1]["Header"].ToString();
                         if (!gridText.Equals(dataText))
                         {
                             edited = true;
+                            break;
                         }
                     }
                 }

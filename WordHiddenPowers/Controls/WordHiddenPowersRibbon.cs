@@ -24,7 +24,12 @@ namespace WordHiddenPowers
         {
             if (Globals.ThisAddIn.ActivePane !=null)
             {
-                Globals.ThisAddIn.ActivePane.PowersDataSet.Reset();
+                Globals.ThisAddIn.ActivePane.PowersDataSet.RowsHeaders.Clear();
+                Globals.ThisAddIn.ActivePane.PowersDataSet.ColumnsHeaders.Clear();
+                Globals.ThisAddIn.ActivePane.PowersDataSet.Categories.Clear();
+                Globals.ThisAddIn.ActivePane.PowersDataSet.Subcategories.Clear();
+                Globals.ThisAddIn.ActivePane.PowersDataSet.DecimalPowers.Clear();
+                Globals.ThisAddIn.ActivePane.PowersDataSet.StringPowers.Clear();
             }
         }
 
@@ -39,7 +44,13 @@ namespace WordHiddenPowers
                 {
                     try
                     {
+                        Globals.ThisAddIn.ActivePane.PowersDataSet.RowsHeaders.Clear();
+                        Globals.ThisAddIn.ActivePane.PowersDataSet.ColumnsHeaders.Clear();
+                        Globals.ThisAddIn.ActivePane.PowersDataSet.Categories.Clear();
+                        Globals.ThisAddIn.ActivePane.PowersDataSet.Subcategories.Clear();
+
                         Globals.ThisAddIn.ActivePane.PowersDataSet.ReadXml(dialog.FileName, System.Data.XmlReadMode.IgnoreSchema);
+
                         Globals.ThisAddIn.ActivePane.PowersDataSet.DecimalPowers.Clear();
                         Globals.ThisAddIn.ActivePane.PowersDataSet.StringPowers.Clear();
                     }
@@ -124,7 +135,7 @@ namespace WordHiddenPowers
         private void editTableButton_Click(object sender, RibbonControlEventArgs e)
         {
             TableEditorDialog dialog = new TableEditorDialog(Globals.ThisAddIn.ActivePane.Document, Globals.ThisAddIn.ActivePane.PowersDataSet);
-            dialog.ShowDialog();
+            dialog.Show();
         }
     }
 }
