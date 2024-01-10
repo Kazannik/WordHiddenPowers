@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using WordHiddenPowers.Repositoryes;
 using System.IO;
 using Microsoft.Office.Interop.Word;
+using WordHiddenPowers.Dialogs;
 
 namespace WordHiddenPowers
 {
@@ -92,7 +93,7 @@ namespace WordHiddenPowers
         {
             if (Globals.ThisAddIn.ActivePane != null)
             {
-                if (Globals.ThisAddIn.ActivePane.VariablesExitst())
+                if (Globals.ThisAddIn.ActivePane.VariablesExists())
                 {
                     if ( MessageBox.Show("Удалить дополнительные данные из документа?", "Удаление скрытых данных", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)== DialogResult.Yes)
                     {
@@ -112,6 +113,18 @@ namespace WordHiddenPowers
             {
                 Globals.ThisAddIn.Panes.ActivePane.Visible = Globals.Ribbons.WordHiddenPowersRibbon.paneVisibleButton.Checked;
             }           
+        }
+
+        private void createTableButton_Click(object sender, RibbonControlEventArgs e)
+        {
+            CreateTableDialog dialog = new  CreateTableDialog(Globals.ThisAddIn.ActivePane.Document, Globals.ThisAddIn.ActivePane.PowersDataSet);
+            dialog.ShowDialog();            
+        }
+
+        private void editTableButton_Click(object sender, RibbonControlEventArgs e)
+        {
+            TableEditorDialog dialog = new TableEditorDialog(Globals.ThisAddIn.ActivePane.Document, Globals.ThisAddIn.ActivePane.PowersDataSet);
+            dialog.ShowDialog();
         }
     }
 }

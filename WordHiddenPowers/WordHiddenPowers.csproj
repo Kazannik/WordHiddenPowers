@@ -154,23 +154,41 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="Const\Globals.cs" />
+    <Compile Include="Const\Panes.cs" />
     <Compile Include="Controls\WordHiddenPowersRibbon.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\WordHiddenPowersRibbon.Designer.cs">
       <DependentUpon>WordHiddenPowersRibbon.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\Cell.cs" />
+    <Compile Include="Data\Row.cs" />
+    <Compile Include="Data\RowCollection.cs" />
+    <Compile Include="Data\Table.cs" />
     <Compile Include="Dialogs\AboutBox1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dialogs\AboutBox1.Designer.cs">
       <DependentUpon>AboutBox1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\CreateTableDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\CreateTableDialog.Designer.cs">
+      <DependentUpon>CreateTableDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dialogs\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\TableEditorDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\TableEditorDialog.Designer.cs">
+      <DependentUpon>TableEditorDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Panes\PaneCollection.cs" />
     <Compile Include="Panes\WordHiddenPowersPane.cs">
@@ -189,8 +207,14 @@
     <EmbeddedResource Include="Dialogs\AboutBox1.resx">
       <DependentUpon>AboutBox1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\CreateTableDialog.resx">
+      <DependentUpon>CreateTableDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\TableEditorDialog.resx">
+      <DependentUpon>TableEditorDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Panes\WordHiddenPowersPane.resx">
       <DependentUpon>WordHiddenPowersPane.cs</DependentUpon>

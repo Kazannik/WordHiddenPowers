@@ -47,7 +47,7 @@ namespace WordHiddenPowers.Panes
             }
             else
             {
-                ActivePane = links.Add(new WordHiddenPowersPane(Doc), Globals.ThisAddIn.PaneTitle);
+                ActivePane = links.Add(new WordHiddenPowersPane(Doc), Const.Panes.PANE_TITLE);
                 panes.Add(Doc.DocID, ActivePane);
                 ActivePane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
                 ActivePane.Width = 400;

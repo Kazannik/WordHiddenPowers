@@ -9,6 +9,10 @@ namespace WordHiddenPowers.Repositoryes
 
     partial class RepositoryDataSet
     {
+        partial class RowsHeadersDataTable
+        {
+        }
+
         partial class StringPowersDataTable
         {
         }

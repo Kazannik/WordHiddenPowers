@@ -15,12 +15,12 @@
         <xs:element name="StringPowers" msprop:Generator_TableClassName="StringPowersDataTable" msprop:Generator_TableVarName="tableStringPowers" msprop:Generator_TablePropName="StringPowers" msprop:Generator_RowDeletingName="StringPowersRowDeleting" msprop:Generator_RowChangingName="StringPowersRowChanging" msprop:Generator_RowEvHandlerName="StringPowersRowChangeEventHandler" msprop:Generator_RowDeletedName="StringPowersRowDeleted" msprop:Generator_UserTableName="StringPowers" msprop:Generator_RowChangedName="StringPowersRowChanged" msprop:Generator_RowEvArgName="StringPowersRowChangeEvent" msprop:Generator_RowClassName="StringPowersRow">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" />
-              <xs:element name="category_id" msprop:Generator_ColumnVarNameInTable="columncategory_id" msprop:Generator_ColumnPropNameInRow="category_id" msprop:Generator_ColumnPropNameInTable="category_idColumn" msprop:Generator_UserColumnName="category_id" type="xs:int" default="0" />
+              <xs:element name="id" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" />
+              <xs:element name="category_id" msprop:Generator_ColumnVarNameInTable="columncategory_id" msprop:Generator_ColumnPropNameInRow="category_id" msprop:Generator_ColumnPropNameInTable="category_idColumn" msprop:Generator_UserColumnName="category_id" type="xs:int" />
               <xs:element name="subcategory_id" msprop:Generator_ColumnVarNameInTable="columnsubcategory_id" msprop:Generator_ColumnPropNameInRow="subcategory_id" msprop:Generator_ColumnPropNameInTable="subcategory_idColumn" msprop:Generator_UserColumnName="subcategory_id" type="xs:int" />
-              <xs:element name="Caption" msprop:Generator_ColumnVarNameInTable="columnCaption" msprop:Generator_ColumnPropNameInRow="Caption" msprop:Generator_ColumnPropNameInTable="CaptionColumn" msprop:Generator_UserColumnName="Caption" type="xs:string" />
+              <xs:element name="Caption" msprop:Generator_ColumnVarNameInTable="columnCaption" msprop:Generator_ColumnPropNameInRow="Caption" msprop:Generator_ColumnPropNameInTable="CaptionColumn" msprop:Generator_UserColumnName="Caption" type="xs:string" minOccurs="0" />
               <xs:element name="Description" msprop:Generator_ColumnVarNameInTable="columnDescription" msprop:Generator_ColumnPropNameInRow="Description" msprop:Generator_ColumnPropNameInTable="DescriptionColumn" msprop:Generator_UserColumnName="Description" type="xs:string" minOccurs="0" />
-              <xs:element name="Value" msprop:Generator_ColumnVarNameInTable="columnValue" msprop:Generator_ColumnPropNameInRow="Value" msprop:Generator_ColumnPropNameInTable="ValueColumn" msprop:Generator_UserColumnName="Value" type="xs:string" default="" minOccurs="0" />
+              <xs:element name="Value" msprop:Generator_ColumnVarNameInTable="columnValue" msprop:Generator_ColumnPropNameInRow="Value" msprop:Generator_ColumnPropNameInTable="ValueColumn" msprop:Generator_UserColumnName="Value" type="xs:string" minOccurs="0" />
               <xs:element name="Rating" msprop:Generator_ColumnVarNameInTable="columnRating" msprop:Generator_ColumnPropNameInRow="Rating" msprop:Generator_ColumnPropNameInTable="RatingColumn" msprop:Generator_UserColumnName="Rating" type="xs:int" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
@@ -28,8 +28,8 @@
         <xs:element name="Categories" msprop:Generator_TableClassName="CategoriesDataTable" msprop:Generator_TableVarName="tableCategories" msprop:Generator_TablePropName="Categories" msprop:Generator_RowDeletingName="CategoriesRowDeleting" msprop:Generator_RowChangingName="CategoriesRowChanging" msprop:Generator_RowEvHandlerName="CategoriesRowChangeEventHandler" msprop:Generator_RowDeletedName="CategoriesRowDeleted" msprop:Generator_UserTableName="Categories" msprop:Generator_RowChangedName="CategoriesRowChanged" msprop:Generator_RowEvArgName="CategoriesRowChangeEvent" msprop:Generator_RowClassName="CategoriesRow">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" />
-              <xs:element name="Caption" msprop:Generator_ColumnVarNameInTable="columnCaption" msprop:Generator_ColumnPropNameInRow="Caption" msprop:Generator_ColumnPropNameInTable="CaptionColumn" msprop:Generator_UserColumnName="Caption" type="xs:string" />
+              <xs:element name="id" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" />
+              <xs:element name="Caption" msprop:Generator_ColumnVarNameInTable="columnCaption" msprop:Generator_ColumnPropNameInRow="Caption" msprop:Generator_ColumnPropNameInTable="CaptionColumn" msprop:Generator_UserColumnName="Caption" type="xs:string" minOccurs="0" />
               <xs:element name="Description" msprop:Generator_ColumnVarNameInTable="columnDescription" msprop:Generator_ColumnPropNameInRow="Description" msprop:Generator_ColumnPropNameInTable="DescriptionColumn" msprop:Generator_UserColumnName="Description" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
@@ -37,7 +37,7 @@
         <xs:element name="Subcategories" msprop:Generator_TableClassName="SubcategoriesDataTable" msprop:Generator_TableVarName="tableSubcategories" msprop:Generator_TablePropName="Subcategories" msprop:Generator_RowDeletingName="SubcategoriesRowDeleting" msprop:Generator_RowChangingName="SubcategoriesRowChanging" msprop:Generator_RowEvHandlerName="SubcategoriesRowChangeEventHandler" msprop:Generator_RowDeletedName="SubcategoriesRowDeleted" msprop:Generator_UserTableName="Subcategories" msprop:Generator_RowChangedName="SubcategoriesRowChanged" msprop:Generator_RowEvArgName="SubcategoriesRowChangeEvent" msprop:Generator_RowClassName="SubcategoriesRow">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" />
+              <xs:element name="id" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" />
               <xs:element name="category_id" msprop:Generator_ColumnVarNameInTable="columncategory_id" msprop:Generator_ColumnPropNameInRow="category_id" msprop:Generator_ColumnPropNameInTable="category_idColumn" msprop:Generator_UserColumnName="category_id" type="xs:int" />
               <xs:element name="Caption" msprop:Generator_ColumnVarNameInTable="columnCaption" msprop:Generator_ColumnPropNameInRow="Caption" msprop:Generator_ColumnPropNameInTable="CaptionColumn" msprop:Generator_UserColumnName="Caption" type="xs:string" minOccurs="0" />
               <xs:element name="Description" msprop:Generator_ColumnVarNameInTable="columnDescription" msprop:Generator_ColumnPropNameInRow="Description" msprop:Generator_ColumnPropNameInTable="DescriptionColumn" msprop:Generator_UserColumnName="Description" type="xs:string" minOccurs="0" />
@@ -47,19 +47,35 @@
         <xs:element name="DecimalPowers" msprop:Generator_TableClassName="DecimalPowersDataTable" msprop:Generator_TableVarName="tableDecimalPowers" msprop:Generator_TablePropName="DecimalPowers" msprop:Generator_RowDeletingName="DecimalPowersRowDeleting" msprop:Generator_RowChangingName="DecimalPowersRowChanging" msprop:Generator_RowEvHandlerName="DecimalPowersRowChangeEventHandler" msprop:Generator_RowDeletedName="DecimalPowersRowDeleted" msprop:Generator_UserTableName="DecimalPowers" msprop:Generator_RowChangedName="DecimalPowersRowChanged" msprop:Generator_RowEvArgName="DecimalPowersRowChangeEvent" msprop:Generator_RowClassName="DecimalPowersRow">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" />
-              <xs:element name="category_id" msprop:Generator_ColumnVarNameInTable="columncategory_id" msprop:Generator_ColumnPropNameInRow="category_id" msprop:Generator_ColumnPropNameInTable="category_idColumn" msprop:Generator_UserColumnName="category_id" type="xs:int" default="0" />
+              <xs:element name="id" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" />
+              <xs:element name="category_id" msprop:Generator_ColumnVarNameInTable="columncategory_id" msprop:Generator_ColumnPropNameInRow="category_id" msprop:Generator_ColumnPropNameInTable="category_idColumn" msprop:Generator_UserColumnName="category_id" type="xs:int" />
               <xs:element name="subcategory_id" msprop:Generator_ColumnVarNameInTable="columnsubcategory_id" msprop:Generator_ColumnPropNameInRow="subcategory_id" msprop:Generator_ColumnPropNameInTable="subcategory_idColumn" msprop:Generator_UserColumnName="subcategory_id" type="xs:int" />
               <xs:element name="Caption" msprop:Generator_ColumnVarNameInTable="columnCaption" msprop:Generator_ColumnPropNameInRow="Caption" msprop:Generator_ColumnPropNameInTable="CaptionColumn" msprop:Generator_UserColumnName="Caption" type="xs:string" minOccurs="0" />
               <xs:element name="Description" msprop:Generator_ColumnVarNameInTable="columnDescription" msprop:Generator_ColumnPropNameInRow="Description" msprop:Generator_ColumnPropNameInTable="DescriptionColumn" msprop:Generator_UserColumnName="Description" type="xs:string" minOccurs="0" />
-              <xs:element name="Value" msprop:Generator_ColumnVarNameInTable="columnValue" msprop:Generator_ColumnPropNameInRow="Value" msprop:Generator_ColumnPropNameInTable="ValueColumn" msprop:Generator_UserColumnName="Value" type="xs:long" default="0" />
+              <xs:element name="Value" msprop:Generator_ColumnVarNameInTable="columnValue" msprop:Generator_ColumnPropNameInRow="Value" msprop:Generator_ColumnPropNameInTable="ValueColumn" msprop:Generator_UserColumnName="Value" type="xs:long" minOccurs="0" />
               <xs:element name="Raiting" msprop:Generator_ColumnVarNameInTable="columnRaiting" msprop:Generator_ColumnPropNameInRow="Raiting" msprop:Generator_ColumnPropNameInTable="RaitingColumn" msprop:Generator_UserColumnName="Raiting" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ColumnsHeaders" msprop:Generator_TableClassName="ColumnsHeadersDataTable" msprop:Generator_TableVarName="tableColumnsHeaders" msprop:Generator_RowChangedName="ColumnsHeadersRowChanged" msprop:Generator_TablePropName="ColumnsHeaders" msprop:Generator_RowDeletingName="ColumnsHeadersRowDeleting" msprop:Generator_RowChangingName="ColumnsHeadersRowChanging" msprop:Generator_RowEvHandlerName="ColumnsHeadersRowChangeEventHandler" msprop:Generator_RowDeletedName="ColumnsHeadersRowDeleted" msprop:Generator_RowClassName="ColumnsHeadersRow" msprop:Generator_UserTableName="ColumnsHeaders" msprop:Generator_RowEvArgName="ColumnsHeadersRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" />
+              <xs:element name="Header" msprop:Generator_ColumnVarNameInTable="columnHeader" msprop:Generator_ColumnPropNameInRow="Header" msprop:Generator_ColumnPropNameInTable="HeaderColumn" msprop:Generator_UserColumnName="Header" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="RowsHeaders" msprop:Generator_TableClassName="RowsHeadersDataTable" msprop:Generator_TableVarName="tableRowsHeaders" msprop:Generator_RowChangedName="RowsHeadersRowChanged" msprop:Generator_TablePropName="RowsHeaders" msprop:Generator_RowDeletingName="RowsHeadersRowDeleting" msprop:Generator_RowChangingName="RowsHeadersRowChanging" msprop:Generator_RowEvHandlerName="RowsHeadersRowChangeEventHandler" msprop:Generator_RowDeletedName="RowsHeadersRowDeleted" msprop:Generator_RowClassName="RowsHeadersRow" msprop:Generator_UserTableName="RowsHeaders" msprop:Generator_RowEvArgName="RowsHeadersRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" />
+              <xs:element name="Header" msprop:Generator_ColumnVarNameInTable="columnHeader" msprop:Generator_ColumnPropNameInRow="Header" msprop:Generator_ColumnPropNameInTable="HeaderColumn" msprop:Generator_UserColumnName="Header" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
       </xs:choice>
     </xs:complexType>
-    <xs:unique name="DesimalPowersTableKey" msdata:PrimaryKey="true">
+    <xs:unique name="StringPowersTableKey" msdata:PrimaryKey="true">
       <xs:selector xpath=".//mstns:StringPowers" />
       <xs:field xpath="mstns:id" />
     </xs:unique>
@@ -67,12 +83,20 @@
       <xs:selector xpath=".//mstns:Categories" />
       <xs:field xpath="mstns:id" />
     </xs:unique>
-    <xs:unique name="Constraint1">
+    <xs:unique name="SubcategoriesTableKey" msdata:PrimaryKey="true">
       <xs:selector xpath=".//mstns:Subcategories" />
       <xs:field xpath="mstns:id" />
     </xs:unique>
-    <xs:unique name="DecimalPowers_DesimalPowersTableKey" msdata:ConstraintName="DesimalPowersTableKey" msdata:PrimaryKey="true">
+    <xs:unique name="DesimalPowersTableKey" msdata:PrimaryKey="true">
       <xs:selector xpath=".//mstns:DecimalPowers" />
+      <xs:field xpath="mstns:id" />
+    </xs:unique>
+    <xs:unique name="ColumnsHeadersTableKey" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:ColumnsHeaders" />
+      <xs:field xpath="mstns:id" />
+    </xs:unique>
+    <xs:unique name="RowsHeadersTableKey" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:RowsHeaders" />
       <xs:field xpath="mstns:id" />
     </xs:unique>
   </xs:element>

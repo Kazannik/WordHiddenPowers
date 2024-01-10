@@ -13,29 +13,11 @@ using Microsoft.Office.Tools;
 namespace WordHiddenPowers
 {
     public partial class ThisAddIn
-    {
-        const string PANE_TITLE = "Дополнительные данные";
-
-        const string TITLE_VARIABLE_NAME = "TitleHiddenPower";
-        const string DESCRIPTION_VARIABLE_NAME = "DescriptionHiddenPower";
-        const string DATE_VARIABLE_NAME = "DateHiddenPower";
-        const string TABLE_VARIABLE_NAME = "TableHiddenPower";
-
+    {        
         Panes.PaneCollection panes; 
-
-        public string PaneTitle { get { return PANE_TITLE; } }
-
-        public string TableVariableName { get { return TABLE_VARIABLE_NAME; } }
-
-        public string TitleVariableName { get { return TITLE_VARIABLE_NAME; } }
-
-        public string DateVariableName { get { return DATE_VARIABLE_NAME; } }
-
-        public string DescriptionVariableName { get { return DESCRIPTION_VARIABLE_NAME; } }
-               
+                      
         public Panes.PaneCollection Panes { get { return panes; } }
-
-
+        
         public Panes.WordHiddenPowersPane ActivePane
         {
             get
