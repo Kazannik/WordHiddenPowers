@@ -7,104 +7,38 @@ using System.Threading.Tasks;
 
 namespace WordHiddenPowers.Data
 {
-    public class Row : IList<Cell>
+    public class Row : List<Cell>
     {
-
-        List<Cell> List;
 
         internal RowCollection parent;
 
         internal Row(RowCollection parent, int CellCount)
         {
-            List = new List<Cell>();
+            this.parent = parent;
             for (int i = 0; i < CellCount; i++)
             {
-                List.Add(new Cell(this));
+                base.Add(new Cell(this));
             }
         }
         
-        public int Index { get { return parent.IndexOf(this); } }
-
-
-        public Cell this[int index]
+        public int Index
         {
             get
             {
-                return List[index];
-            }
-
-            set
-            {
-                List[index] = value;
+                return parent.IndexOf(this);
             }
         }
-
-        public int Count
-        {
-            get
-            {
-                return List.Count;
-            }
-        }
-
-        public bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        public void Add(Cell item)
+        
+        public new void Add(Cell item)
         {
             item.Row = this;
-            List.Add(item);
+            base.Add(item);
         }
-
-        public void Clear()
-        {
-            List.Clear();
-        }
-
-        public bool Contains(Cell item)
-        {
-            return List.Contains(item);
-        }
-
-        public void CopyTo(Cell[] array, int arrayIndex)
-        {
-            List.CopyTo(array, arrayIndex);
-        }
-
-        public IEnumerator<Cell> GetEnumerator()
-        {
-            return List.GetEnumerator();
-        }
-
-        public int IndexOf(Cell item)
-        {
-            return List.IndexOf(item);
-        }
-
-        public void Insert(int index, Cell item)
+               
+        public new void Insert(int index, Cell item)
         {
             item.Row = this;
-            List.Insert(index, item);
-        }
-
-        public bool Remove(Cell item)
-        {
-            return List.Remove(item);
-        }
-
-        public void RemoveAt(int index)
-        {
-            List.RemoveAt(index);
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return List.GetEnumerator();
-        }
+            base.Insert(index, item);
+        }        
     }
 }

@@ -17,8 +17,7 @@ namespace WordHiddenPowers.Data
         public int ColumnCount { get; }
 
         public RowCollection Rows { get; }
-
-
+        
         public new string ToString()
         {
             string result = string.Empty;
