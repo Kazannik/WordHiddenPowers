@@ -38,11 +38,12 @@
             this.group1 = this.Factory.CreateRibbonGroup();
             this.newPowersButton = this.Factory.CreateRibbonButton();
             this.deletePowersButton = this.Factory.CreateRibbonButton();
+            this.separator1 = this.Factory.CreateRibbonSeparator();
             this.openPowersButton = this.Factory.CreateRibbonButton();
             this.savePowersButton = this.Factory.CreateRibbonButton();
+            this.createTableButton = this.Factory.CreateRibbonButton();
             this.group2 = this.Factory.CreateRibbonGroup();
             this.paneVisibleButton = this.Factory.CreateRibbonToggleButton();
-            this.createTableButton = this.Factory.CreateRibbonButton();
             this.editTableButton = this.Factory.CreateRibbonButton();
             this.WordHiddenPowersTab.SuspendLayout();
             this.group1.SuspendLayout();
@@ -60,6 +61,7 @@
             // 
             this.group1.Items.Add(this.newPowersButton);
             this.group1.Items.Add(this.deletePowersButton);
+            this.group1.Items.Add(this.separator1);
             this.group1.Items.Add(this.openPowersButton);
             this.group1.Items.Add(this.savePowersButton);
             this.group1.Items.Add(this.createTableButton);
@@ -70,6 +72,7 @@
             // 
             this.newPowersButton.Label = "Создать макет данных";
             this.newPowersButton.Name = "newPowersButton";
+            this.newPowersButton.OfficeImageId = "CreateSubsite";
             this.newPowersButton.ShowImage = true;
             this.newPowersButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.newPowersButton_Click);
             // 
@@ -77,22 +80,43 @@
             // 
             this.deletePowersButton.Label = "Удалить данные";
             this.deletePowersButton.Name = "deletePowersButton";
+            this.deletePowersButton.OfficeImageId = "Delete";
             this.deletePowersButton.ShowImage = true;
             this.deletePowersButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.deletePowersButton_Click);
             // 
+            // separator1
+            // 
+            this.separator1.Name = "separator1";
+            // 
             // openPowersButton
             // 
+            this.openPowersButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.openPowersButton.Description = "Открыть макет данных в котором сохранены настройки ";
             this.openPowersButton.Label = "Открыть макет данных...";
             this.openPowersButton.Name = "openPowersButton";
+            this.openPowersButton.OfficeImageId = "OpenSubsite";
+            this.openPowersButton.ScreenTip = "Открыть макет данных";
             this.openPowersButton.ShowImage = true;
+            this.openPowersButton.SuperTip = "В макете данных сохранены все настройки, необходимые для анализа документов";
             this.openPowersButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.openPowersButton_Click);
             // 
             // savePowersButton
             // 
+            this.savePowersButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
             this.savePowersButton.Label = "Сохранить макет данных...";
             this.savePowersButton.Name = "savePowersButton";
+            this.savePowersButton.OfficeImageId = "FileSaveAs";
             this.savePowersButton.ShowImage = true;
             this.savePowersButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.savePowersButton_Click);
+            // 
+            // createTableButton
+            // 
+            this.createTableButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.createTableButton.Label = "Макет таблицы...";
+            this.createTableButton.Name = "createTableButton";
+            this.createTableButton.OfficeImageId = "GroupCreateTableSql";
+            this.createTableButton.ShowImage = true;
+            this.createTableButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.createTableButton_Click);
             // 
             // group2
             // 
@@ -103,21 +127,19 @@
             // 
             // paneVisibleButton
             // 
+            this.paneVisibleButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
             this.paneVisibleButton.Label = "Дополнительные данные";
             this.paneVisibleButton.Name = "paneVisibleButton";
+            this.paneVisibleButton.OfficeImageId = "MenuToDoBar";
+            this.paneVisibleButton.ShowImage = true;
             this.paneVisibleButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.paneVisibleButton_Click);
-            // 
-            // createTableButton
-            // 
-            this.createTableButton.Label = "Макет таблицы...";
-            this.createTableButton.Name = "createTableButton";
-            this.createTableButton.ShowImage = true;
-            this.createTableButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.createTableButton_Click);
             // 
             // editTableButton
             // 
+            this.editTableButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
             this.editTableButton.Label = "Таблица данных...";
             this.editTableButton.Name = "editTableButton";
+            this.editTableButton.OfficeImageId = "TableStyleModify";
             this.editTableButton.ShowImage = true;
             this.editTableButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.editTableButton_Click);
             // 
@@ -126,7 +148,6 @@
             this.Name = "WordHiddenPowersRibbon";
             this.RibbonType = "Microsoft.Word.Document";
             this.Tabs.Add(this.WordHiddenPowersTab);
-            this.Load += new Microsoft.Office.Tools.Ribbon.RibbonUIEventHandler(this.WordHiddenPowersRibbon_Load);
             this.WordHiddenPowersTab.ResumeLayout(false);
             this.WordHiddenPowersTab.PerformLayout();
             this.group1.ResumeLayout(false);
@@ -149,6 +170,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton paneVisibleButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton createTableButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton editTableButton;
+        internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator1;
     }
 
     partial class ThisRibbonCollection

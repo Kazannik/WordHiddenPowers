@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WordHiddenPowers.Panes;
 using WordHiddenPowers.Repositoryes;
 using Word = Microsoft.Office.Interop.Word;
 
@@ -14,38 +15,40 @@ namespace WordHiddenPowers.Dialogs
 {
     public partial class TableEditorDialog : Form
     {
-        Word.Document document;
-        RepositoryDataSet powersDataSet;
+        WordHiddenPowersPane pane;
 
-        public TableEditorDialog(Word.Document Doc, RepositoryDataSet DataSet)
+        public TableEditorDialog(WordHiddenPowersPane pane)
         {
+            this.pane = pane;
+
             InitializeComponent();
 
-            this.powersDataSet = DataSet;
-            this.document = Doc;
-
+            nameLabel.Text = this.pane.Document.Name;
+                       
             ReadTableStructure();
             ReadValues();
         }
 
         private void ReadTableStructure()
         {
-            dataGridView1.Rows.Clear();
-            dataGridView1.Columns.Clear();
-            if (powersDataSet.ColumnsHeaders.Rows.Count > 0)
+            pane.DataSetRefresh();
+
+            dataGridView.Rows.Clear();
+            dataGridView.Columns.Clear();
+            if (pane.PowersDataSet.ColumnsHeaders.Rows.Count > 0)
             {
-                for (int i = 0; i < powersDataSet.ColumnsHeaders.Rows.Count; i++)
+                for (int i = 0; i < pane.PowersDataSet.ColumnsHeaders.Rows.Count; i++)
                 {
-                    string text = powersDataSet.ColumnsHeaders.Rows[i]["Header"].ToString();
-                    int columnIndex = dataGridView1.Columns.Add(text, text);
-                    dataGridView1.Columns[columnIndex].SortMode = DataGridViewColumnSortMode.NotSortable;
+                    string text = pane.PowersDataSet.ColumnsHeaders.Rows[i]["Header"].ToString();
+                    int columnIndex = dataGridView.Columns.Add(text, text);
+                    dataGridView.Columns[columnIndex].SortMode = DataGridViewColumnSortMode.NotSortable;
                 }
 
-                dataGridView1.RowHeadersWidth = 120;
-                foreach (DataRow item in powersDataSet.RowsHeaders.Rows)
+                dataGridView.RowHeadersWidth = 120;
+                foreach (DataRow item in pane.PowersDataSet.RowsHeaders.Rows)
                 {
-                    int rowIndex = dataGridView1.Rows.Add();
-                    dataGridView1.Rows[rowIndex].HeaderCell.Value = item["Header"].ToString();                    
+                    int rowIndex = dataGridView.Rows.Add();
+                    dataGridView.Rows[rowIndex].HeaderCell.Value = item["Header"].ToString();                    
                 }
             }
         }
@@ -53,7 +56,7 @@ namespace WordHiddenPowers.Dialogs
 
         private void ReadValues()
         {
-            Word.Variable variable = GetVariable(document.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+            Word.Variable variable = GetVariable(pane.Document.Variables, Const.Globals.TABLE_VARIABLE_NAME);
             if (variable != null)
             {
                 Data.Table table = Data.Table.Create(variable.Value);
@@ -61,7 +64,7 @@ namespace WordHiddenPowers.Dialogs
                 {
                     for (int c = 0; c < table.ColumnCount; c++)
                     {
-                        dataGridView1.Rows[r].Cells[c].Value = table.Rows[r][c].Value;
+                        dataGridView.Rows[r].Cells[c].Value = table.Rows[r][c].Value;
                     }
                 }
             }
@@ -72,10 +75,10 @@ namespace WordHiddenPowers.Dialogs
             if (e.ColumnIndex >=0 && e.RowIndex >= 0)
             {
                 int value = 0;
-                bool correct= int.TryParse( dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(),out value);
+                bool correct= int.TryParse( dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(),out value);
                 if (!correct)
                 {
-                    dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = 0;
+                    dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = 0;
                 }
             }           
         }
@@ -84,26 +87,26 @@ namespace WordHiddenPowers.Dialogs
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {
-                Data.Table table = new Data.Table(dataGridView1.Rows.Count, dataGridView1.ColumnCount);
+                Data.Table table = new Data.Table(dataGridView.Rows.Count, dataGridView.ColumnCount);
                 for (int r = 0; r < table.Rows.Count; r++)
                 {
                     for (int c = 0; c < table.ColumnCount; c++)
                     {
-                        if (dataGridView1.Rows[r].Cells[c].Value != null)
+                        if (dataGridView.Rows[r].Cells[c].Value != null)
                         {
-                            table.Rows[r][c].Value = int.Parse(dataGridView1.Rows[r].Cells[c].Value.ToString());
+                            table.Rows[r][c].Value = int.Parse(dataGridView.Rows[r].Cells[c].Value.ToString());
                         }                        
                     }
                 }
 
-                Word.Variable variable = GetVariable(document.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+                Word.Variable variable = GetVariable(pane.Document.Variables, Const.Globals.TABLE_VARIABLE_NAME);
                 if (variable != null)
                 {
                     variable.Value = table.ToString();
                 }
                 else
                 {
-                    document.Variables.Add(Const.Globals.TABLE_VARIABLE_NAME, table.ToString());
+                    pane.Document.Variables.Add(Const.Globals.TABLE_VARIABLE_NAME, table.ToString());
                 }
             }
         }

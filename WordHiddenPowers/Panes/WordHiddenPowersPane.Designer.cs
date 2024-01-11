@@ -49,7 +49,7 @@
             this.titleTextBox.Name = "titleTextBox";
             this.titleTextBox.Size = new System.Drawing.Size(280, 22);
             this.titleTextBox.TabIndex = 1;
-            this.titleTextBox.TextChanged += new System.EventHandler(this.titleTextBox_TextChanged);
+            this.titleTextBox.TextChanged += new System.EventHandler(this.Controls_TextChanged);
             // 
             // splitContainer1
             // 
@@ -82,7 +82,7 @@
             this.descriptionTextBox.Name = "descriptionTextBox";
             this.descriptionTextBox.Size = new System.Drawing.Size(152, 48);
             this.descriptionTextBox.TabIndex = 6;
-            this.descriptionTextBox.TextChanged += new System.EventHandler(this.descriptionTextBox_TextChanged);
+            this.descriptionTextBox.TextChanged += new System.EventHandler(this.Controls_TextChanged);
             // 
             // descriptionLabel
             // 
@@ -99,7 +99,7 @@
             this.dateTimePicker.Name = "dateTimePicker";
             this.dateTimePicker.Size = new System.Drawing.Size(152, 22);
             this.dateTimePicker.TabIndex = 4;
-            this.dateTimePicker.ValueChanged += new System.EventHandler(this.dateTimePicker_ValueChanged);
+            this.dateTimePicker.ValueChanged += new System.EventHandler(this.Controls_TextChanged);
             // 
             // dateLabel
             // 

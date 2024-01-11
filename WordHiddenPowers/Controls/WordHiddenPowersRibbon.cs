@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Microsoft.Office.Tools.Ribbon;
 using System.Windows.Forms;
 using WordHiddenPowers.Repositoryes;
 using System.IO;
-using Microsoft.Office.Interop.Word;
 using WordHiddenPowers.Dialogs;
 
 namespace WordHiddenPowers
@@ -15,11 +12,7 @@ namespace WordHiddenPowers
     {
         const string dialogFilters = "XML Schema File (.xsd)|*.xsd";
 
-        private void WordHiddenPowersRibbon_Load(object sender, RibbonUIEventArgs e)
-        {
-
-        }
-
+        
         private void newPowersButton_Click(object sender, RibbonControlEventArgs e)
         {
             if (Globals.ThisAddIn.ActivePane !=null)
@@ -30,6 +23,8 @@ namespace WordHiddenPowers
                 Globals.ThisAddIn.ActivePane.PowersDataSet.Subcategories.Clear();
                 Globals.ThisAddIn.ActivePane.PowersDataSet.DecimalPowers.Clear();
                 Globals.ThisAddIn.ActivePane.PowersDataSet.StringPowers.Clear();
+
+                Globals.ThisAddIn.ActivePane.CommitVariables();
             }
         }
 
@@ -53,6 +48,8 @@ namespace WordHiddenPowers
 
                         Globals.ThisAddIn.ActivePane.PowersDataSet.DecimalPowers.Clear();
                         Globals.ThisAddIn.ActivePane.PowersDataSet.StringPowers.Clear();
+
+                        Globals.ThisAddIn.ActivePane.CommitVariables();
                     }
                     catch (Exception)
                     {
@@ -69,6 +66,8 @@ namespace WordHiddenPowers
             {
                 try
                 {
+                    Globals.ThisAddIn.ActivePane.CommitVariables();
+
                     string xml = GetXml(Globals.ThisAddIn.ActivePane.PowersDataSet);
                     RepositoryDataSet powersDataSet = new RepositoryDataSet();
                     SetXml(powersDataSet, xml);
@@ -128,13 +127,13 @@ namespace WordHiddenPowers
 
         private void createTableButton_Click(object sender, RibbonControlEventArgs e)
         {
-            CreateTableDialog dialog = new  CreateTableDialog(Globals.ThisAddIn.ActivePane.Document, Globals.ThisAddIn.ActivePane.PowersDataSet);
-            dialog.ShowDialog();            
+            CreateTableDialog dialog = new  CreateTableDialog(Globals.ThisAddIn.ActivePane);
+            dialog.ShowDialog();                      
         }
 
         private void editTableButton_Click(object sender, RibbonControlEventArgs e)
         {
-            TableEditorDialog dialog = new TableEditorDialog(Globals.ThisAddIn.ActivePane.Document, Globals.ThisAddIn.ActivePane.PowersDataSet);
+            TableEditorDialog dialog = new TableEditorDialog(Globals.ThisAddIn.ActivePane);
             dialog.Show();
         }
     }

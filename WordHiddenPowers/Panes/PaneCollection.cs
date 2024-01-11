@@ -11,17 +11,15 @@ using Microsoft.Office.Tools.Ribbon;
 
 namespace WordHiddenPowers.Panes
 {
-    public class PaneCollection: IDisposable
+    public class PaneCollection: Dictionary<int, CustomTaskPane>, IDisposable
     {
-        IDictionary<int, CustomTaskPane> panes;
         CustomTaskPaneCollection links;
-        RibbonToggleButton button;
+        RibbonToggleButton buttonVisible;
 
         public PaneCollection(CustomTaskPaneCollection collection, RibbonToggleButton button)
         {
             this.links = collection;
-            this.button = button;
-            this.panes = new Dictionary<int, CustomTaskPane>();
+            this.buttonVisible = button;
         }
 
         public CustomTaskPane ActivePane { get; private set; }
@@ -30,47 +28,47 @@ namespace WordHiddenPowers.Panes
         {
             get
             {
-                return panes[Doc.DocID];
+                return base[Doc.DocID];
             }
         }
 
         public bool Contains(Word.Document Doc)
         {
-            return panes.ContainsKey(Doc.DocID);
+            return base.ContainsKey(Doc.DocID);
         }
 
         public void WindowActivate(Word.Document Doc)
         {
-            if (panes.ContainsKey(Doc.DocID))
+            if (ContainsKey(Doc.DocID))
             {
-                ActivePane = panes[Doc.DocID];
+                ActivePane = base[Doc.DocID];
             }
             else
             {
                 ActivePane = links.Add(new WordHiddenPowersPane(Doc), Const.Panes.PANE_TITLE);
-                panes.Add(Doc.DocID, ActivePane);
+                Add(Doc.DocID, ActivePane);
                 ActivePane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
                 ActivePane.Width = 400;
            }
-            ActivePane.Visible = button.Checked;
+            ActivePane.Visible = buttonVisible.Checked;
             ActivePane.VisibleChanged += new EventHandler(Pane_VisibleChanged);
         }
 
         public void WindowDeactivate(Word.Document Doc)
         {
-            if (panes.ContainsKey(Doc.DocID))
+            if (ContainsKey(Doc.DocID))
             {
-                panes[Doc.DocID].VisibleChanged -= Pane_VisibleChanged;
+                base[Doc.DocID].VisibleChanged -= Pane_VisibleChanged;
             }               
         }
 
         public void Remove(Word.Document Doc)
         {
-            if (panes.ContainsKey(Doc.DocID))
+            if (ContainsKey(Doc.DocID))
             {
-                panes[Doc.DocID].VisibleChanged -= Pane_VisibleChanged;
-                links.Remove(panes[Doc.DocID]);
-                panes.Remove(Doc.DocID);
+                base[Doc.DocID].VisibleChanged -= Pane_VisibleChanged;
+                links.Remove(base[Doc.DocID]);
+                base.Remove(Doc.DocID);
             }           
         }
 
@@ -79,25 +77,23 @@ namespace WordHiddenPowers.Panes
         {
             CustomTaskPane pane = (CustomTaskPane)sender;
             bool visible = pane.Visible;
-            foreach (CustomTaskPane item in panes.Values)
+            foreach (CustomTaskPane item in Values)
             {
                 if (!pane.Equals(item))
                 {
                     item.Visible = visible;
                 }                
             }            
-            button.Checked = pane.Visible;
+            buttonVisible.Checked = pane.Visible;
         }
 
                 
         public void Dispose()
         {
-            foreach (CustomTaskPane item in panes.Values)
+            foreach (CustomTaskPane item in Values)
             {
                 item.Dispose();                
             }
-            panes.Clear();
-            panes = null;
         }
     }
 }
