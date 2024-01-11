@@ -63,29 +63,9 @@ namespace WordHiddenPowers.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Column_AddHS1 {
+        internal static System.Drawing.Bitmap CreateTable_24 {
             get {
-                object obj = ResourceManager.GetObject("Column_AddHS1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap DeleteRedHS {
-            get {
-                object obj = ResourceManager.GetObject("DeleteRedHS", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap ExitHS {
-            get {
-                object obj = ResourceManager.GetObject("ExitHS", resourceCulture);
+                object obj = ResourceManager.GetObject("CreateTable_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,16 +83,6 @@ namespace WordHiddenPowers.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Row_AddHS1 {
-            get {
-                object obj = ResourceManager.GetObject("Row_AddHS1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Save_24 {
             get {
                 object obj = ResourceManager.GetObject("Save_24", resourceCulture);
@@ -123,29 +93,139 @@ namespace WordHiddenPowers.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap saveHS {
-            get {
-                object obj = ResourceManager.GetObject("saveHS", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Table_AddHS {
-            get {
-                object obj = ResourceManager.GetObject("Table_AddHS", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap TableClear_24 {
             get {
                 object obj = ResourceManager.GetObject("TableClear_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TableDeleteColumns_16 {
+            get {
+                object obj = ResourceManager.GetObject("TableDeleteColumns_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TableDeleteColumns_24 {
+            get {
+                object obj = ResourceManager.GetObject("TableDeleteColumns_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TableDeleteRows_16 {
+            get {
+                object obj = ResourceManager.GetObject("TableDeleteRows_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TableDeleteRows_24 {
+            get {
+                object obj = ResourceManager.GetObject("TableDeleteRows_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TableInsertColumnsLeft_16 {
+            get {
+                object obj = ResourceManager.GetObject("TableInsertColumnsLeft_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TableInsertColumnsLeft_24 {
+            get {
+                object obj = ResourceManager.GetObject("TableInsertColumnsLeft_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TableInsertColumnsRight_16 {
+            get {
+                object obj = ResourceManager.GetObject("TableInsertColumnsRight_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TableInsertColumnsRight_24 {
+            get {
+                object obj = ResourceManager.GetObject("TableInsertColumnsRight_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TableInsertRowsAbove_16 {
+            get {
+                object obj = ResourceManager.GetObject("TableInsertRowsAbove_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TableInsertRowsAbove_24 {
+            get {
+                object obj = ResourceManager.GetObject("TableInsertRowsAbove_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TableInsertRowsBelow_16 {
+            get {
+                object obj = ResourceManager.GetObject("TableInsertRowsBelow_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TableInsertRowsBelow_24 {
+            get {
+                object obj = ResourceManager.GetObject("TableInsertRowsBelow_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WindowClose_24 {
+            get {
+                object obj = ResourceManager.GetObject("WindowClose_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

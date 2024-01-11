@@ -213,9 +213,9 @@ namespace WordHiddenPowers.Panes
                 commandBarButton = (CommandBarButton)popupCommandBar.Controls.Add
                     (MsoControlType.msoControlButton);
                 commandBarButton.Click += new _CommandBarButtonEvents_ClickEventHandler(CommandBarButton_Click);
-                commandBarButton.Caption = "Hello !!!";
-                commandBarButton.FaceId = 356;
-                commandBarButton.Tag = "HELLO_TAG";
+                commandBarButton.Caption = "Дополнительные данные...";
+                commandBarButton.FaceId = 9267;
+                commandBarButton.Tag = Const.Panes.BUTTON_TAG;
                 commandBarButton.BeginGroup = true;               
             }
         }
@@ -224,7 +224,7 @@ namespace WordHiddenPowers.Panes
         {
             foreach (var commandBarButton in popupCommandBar.Controls.OfType<CommandBarButton>())
             {
-                if (commandBarButton.Tag.Equals("HELLO_TAG"))
+                if (commandBarButton.Tag.Equals(Const.Panes.BUTTON_TAG))
                 {
                     return commandBarButton;                  
                 }
@@ -234,7 +234,7 @@ namespace WordHiddenPowers.Panes
 
         private void CommandBarButton_Click(CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            throw new NotImplementedException();
+            
         }
 
         // add the button to the context menus that you need to support

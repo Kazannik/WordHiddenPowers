@@ -469,6 +469,12 @@ namespace WordHiddenPowers.Repositoryes {
             
             private global::System.Data.DataColumn columnRating;
             
+            private global::System.Data.DataColumn columnWordText;
+            
+            private global::System.Data.DataColumn columnWordSelectionStart;
+            
+            private global::System.Data.DataColumn columnWordSelectionEnd;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public StringPowersDataTable() {
@@ -560,6 +566,30 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn WordTextColumn {
+                get {
+                    return this.columnWordText;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn WordSelectionStartColumn {
+                get {
+                    return this.columnWordSelectionStart;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn WordSelectionEndColumn {
+                get {
+                    return this.columnWordSelectionEnd;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -595,7 +625,7 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public StringPowersRow AddStringPowersRow(int category_id, int subcategory_id, string Caption, string Description, string Value, int Rating) {
+            public StringPowersRow AddStringPowersRow(int category_id, int subcategory_id, string Caption, string Description, string Value, int Rating, string WordText, int WordSelectionStart, string WordSelectionEnd) {
                 StringPowersRow rowStringPowersRow = ((StringPowersRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -604,7 +634,10 @@ namespace WordHiddenPowers.Repositoryes {
                         Caption,
                         Description,
                         Value,
-                        Rating};
+                        Rating,
+                        WordText,
+                        WordSelectionStart,
+                        WordSelectionEnd};
                 rowStringPowersRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowStringPowersRow);
                 return rowStringPowersRow;
@@ -641,6 +674,9 @@ namespace WordHiddenPowers.Repositoryes {
                 this.columnDescription = base.Columns["Description"];
                 this.columnValue = base.Columns["Value"];
                 this.columnRating = base.Columns["Rating"];
+                this.columnWordText = base.Columns["WordText"];
+                this.columnWordSelectionStart = base.Columns["WordSelectionStart"];
+                this.columnWordSelectionEnd = base.Columns["WordSelectionEnd"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -660,6 +696,12 @@ namespace WordHiddenPowers.Repositoryes {
                 base.Columns.Add(this.columnValue);
                 this.columnRating = new global::System.Data.DataColumn("Rating", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnRating);
+                this.columnWordText = new global::System.Data.DataColumn("WordText", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnWordText);
+                this.columnWordSelectionStart = new global::System.Data.DataColumn("WordSelectionStart", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnWordSelectionStart);
+                this.columnWordSelectionEnd = new global::System.Data.DataColumn("WordSelectionEnd", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnWordSelectionEnd);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("StringPowersTableKey", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -2386,6 +2428,54 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string WordText {
+                get {
+                    try {
+                        return ((string)(this[this.tableStringPowers.WordTextColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'WordText\' в таблице \'StringPowers\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableStringPowers.WordTextColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int WordSelectionStart {
+                get {
+                    try {
+                        return ((int)(this[this.tableStringPowers.WordSelectionStartColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'WordSelectionStart\' в таблице \'StringPowers\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableStringPowers.WordSelectionStartColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string WordSelectionEnd {
+                get {
+                    try {
+                        return ((string)(this[this.tableStringPowers.WordSelectionEndColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'WordSelectionEnd\' в таблице \'StringPowers\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableStringPowers.WordSelectionEndColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsCaptionNull() {
                 return this.IsNull(this.tableStringPowers.CaptionColumn);
             }
@@ -2430,6 +2520,42 @@ namespace WordHiddenPowers.Repositoryes {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetRatingNull() {
                 this[this.tableStringPowers.RatingColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsWordTextNull() {
+                return this.IsNull(this.tableStringPowers.WordTextColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetWordTextNull() {
+                this[this.tableStringPowers.WordTextColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsWordSelectionStartNull() {
+                return this.IsNull(this.tableStringPowers.WordSelectionStartColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetWordSelectionStartNull() {
+                this[this.tableStringPowers.WordSelectionStartColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsWordSelectionEndNull() {
+                return this.IsNull(this.tableStringPowers.WordSelectionEndColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetWordSelectionEndNull() {
+                this[this.tableStringPowers.WordSelectionEndColumn] = global::System.Convert.DBNull;
             }
         }
         

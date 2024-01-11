@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Windows.Forms;
-using Word = Microsoft.Office.Interop.Word;
 using WordHiddenPowers.Repositoryes;
+using System;
 
 namespace WordHiddenPowers.Controls
 {
@@ -38,7 +38,7 @@ namespace WordHiddenPowers.Controls
             set
             {
                 table = value;
-                ReadValues();
+                RefreshValues();
             }
         }
 
@@ -46,6 +46,7 @@ namespace WordHiddenPowers.Controls
         {
             dataGridView.Rows.Clear();
             dataGridView.Columns.Clear();
+            if (source == null) return;
             if (source.ColumnsHeaders.Rows.Count > 0)
             {
                 for (int i = 0; i < source.ColumnsHeaders.Rows.Count; i++)
@@ -64,8 +65,22 @@ namespace WordHiddenPowers.Controls
             }
         }
         
-        private void ReadValues()
+        public void ClearValues()
         {
+            dataGridView.CancelEdit();
+            for (int r = 0; r < dataGridView.RowCount; r++)
+            {
+                for (int c = 0; c < dataGridView.ColumnCount; c++)
+                {
+                    dataGridView.Rows[r].Cells[c].Value = 0;
+                }
+            }
+        }
+
+        public void RefreshValues()
+        {
+            dataGridView.CancelEdit();
+            if (table == null) return;
             for (int r = 0; r < table.Rows.Count; r++)
             {
                 for (int c = 0; c < table.ColumnCount; c++)
@@ -75,34 +90,76 @@ namespace WordHiddenPowers.Controls
             }            
         }
 
-        
-
-        private void TableEditorDialog_FormClosed(object sender, FormClosedEventArgs e)
+        public void CommitValue()
         {
-            if (e.CloseReason == CloseReason.UserClosing)
+            dataGridView.CancelEdit();
+            if (table == null) return;
+            for (int r = 0; r < table.Rows.Count; r++)
             {
-                Data.Table table = new Data.Table(dataGridView.Rows.Count, dataGridView.ColumnCount);
+                for (int c = 0; c < table.ColumnCount; c++)
+                {
+                    if (dataGridView.Rows[r].Cells[c].Value != null)
+                    {
+                        table.Rows[r][c].Value = int.Parse(dataGridView.Rows[r].Cells[c].Value.ToString());
+                    }
+                }
+            }
+            
+            if (IsChanged == true)
+            {
+                IsChanged = false;
+                DoValueChanged();
+            }
+        }
+
+        public bool IsChanged { get; private set; }
+              
+
+        private void data_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex >= 0 && e.RowIndex >= 0)
+            {
+                int value = 0;
+                bool correct = int.TryParse(dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out value);
+                if (!correct)
+                {
+                    dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = 0;
+                }
+
+                bool changed = false;
                 for (int r = 0; r < table.Rows.Count; r++)
                 {
                     for (int c = 0; c < table.ColumnCount; c++)
                     {
                         if (dataGridView.Rows[r].Cells[c].Value != null)
                         {
-                            table.Rows[r][c].Value = int.Parse(dataGridView.Rows[r].Cells[c].Value.ToString());
+                            if (table.Rows[r][c].Value != int.Parse(dataGridView.Rows[r].Cells[c].Value.ToString()))
+                            {                                
+                                changed = true;
+                                break;
+                            }
                         }
                     }
                 }
 
-                Word.Variable variable = GetVariable(pane.Document.Variables, Const.Globals.TABLE_VARIABLE_NAME);
-                if (variable != null)
+                if (IsChanged != changed)
                 {
-                    variable.Value = table.ToString();
-                }
-                else
-                {
-                    pane.Document.Variables.Add(Const.Globals.TABLE_VARIABLE_NAME, table.ToString());
+                    IsChanged = changed;
+                    DoValueChanged();
                 }
             }
+        }
+
+        public event EventHandler ValueChanged;
+
+        public void DoValueChanged()
+        {
+            OnValueChanged(new EventArgs());
+        }
+
+        protected virtual void OnValueChanged(EventArgs e)
+        {
+            ValueChanged?.Invoke(this, e);
         }        
     }
 }

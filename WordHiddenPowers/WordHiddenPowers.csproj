@@ -190,6 +190,12 @@
     <Compile Include="Dialogs\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\SelectCetegoryDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\SelectCetegoryDialog.Designer.cs">
+      <DependentUpon>SelectCetegoryDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\TableEditorDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -227,6 +233,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\SelectCetegoryDialog.resx">
+      <DependentUpon>SelectCetegoryDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\TableEditorDialog.resx">
       <DependentUpon>TableEditorDialog.cs</DependentUpon>
@@ -318,6 +327,54 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Refresh_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CreateTable_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WindowClose_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CreateTable_241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TableDeleteColumns_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TableDeleteRows_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TableInsertColumnsLeft_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TableInsertColumnsRight_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TableInsertRowsAbove_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TableInsertRowsBelow_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WindowClose_241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TableDeleteColumns_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TableDeleteRows_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TableInsertColumnsLeft_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TableInsertColumnsRight_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TableInsertRowsAbove_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TableInsertRowsBelow_16.png" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

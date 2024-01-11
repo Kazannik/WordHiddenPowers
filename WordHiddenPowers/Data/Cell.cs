@@ -16,7 +16,8 @@ namespace WordHiddenPowers.Data
         public Row Row { get; internal set; }
 
         public int Value { get; set; }
-                
+        
+               
         public int ToInt()
         {
             return this.Value;
@@ -142,7 +143,7 @@ namespace WordHiddenPowers.Data
             if (value is Cell)
             {
                 Cell c = (Cell)value;
-                c.CompareTo(value);
+                return c.CompareTo(value);
             }
             throw new ArgumentException();
         }
