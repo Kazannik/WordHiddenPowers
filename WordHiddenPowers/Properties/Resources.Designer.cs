@@ -93,9 +93,29 @@ namespace WordHiddenPowers.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Refresh_24 {
+            get {
+                object obj = ResourceManager.GetObject("Refresh_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Row_AddHS1 {
             get {
                 object obj = ResourceManager.GetObject("Row_AddHS1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Save_24 {
+            get {
+                object obj = ResourceManager.GetObject("Save_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -116,6 +136,16 @@ namespace WordHiddenPowers.Properties {
         internal static System.Drawing.Bitmap Table_AddHS {
             get {
                 object obj = ResourceManager.GetObject("Table_AddHS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TableClear_24 {
+            get {
+                object obj = ResourceManager.GetObject("TableClear_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

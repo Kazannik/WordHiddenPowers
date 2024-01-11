@@ -39,8 +39,16 @@ namespace WordHiddenPowers
             #region PowerPane
 
             panes = new Panes.PaneCollection(CustomTaskPanes, Globals.Ribbons.WordHiddenPowersRibbon.paneVisibleButton);
-                        
+
             #endregion
+
+            if (this.Application.Documents.Count > 0)
+            {
+                panes.WindowActivate(this.Application.ActiveDocument);
+                Panes.WordHiddenPowersPane pane = (Panes.WordHiddenPowersPane)panes.ActivePane.Control;
+
+                pane.InitializeVariables();
+            }          
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
@@ -66,7 +74,7 @@ namespace WordHiddenPowers
         
         private void Application_WindowActivate(Word.Document Doc, Word.Window Wn)
         {
-            panes.WindowActivate(Doc);            
+            panes.WindowActivate(Doc);
         }
 
         private void Application_WindowDeactivate(Word.Document Doc, Word.Window Wn)
@@ -78,14 +86,8 @@ namespace WordHiddenPowers
         private void Application_DocumentOpen(Word.Document Doc)
         {
             Panes.WordHiddenPowersPane pane = (Panes.WordHiddenPowersPane)panes.ActivePane.Control;
-            pane.InitializeVariables();
-                //powersDataSet.Categories.Rows.Add(new object[] { 0, "Поручения Генерального прокурора Российской Федерации", "Категория о поручениях Генерального прокурора Российской Федерации" });
-                //StringBuilder builder = new StringBuilder();
-                //StringWriter writer = new StringWriter(builder);
-                //powersDataSet.WriteXml(writer, System.Data.XmlWriteMode.WriteSchema);
-                //Doc.Variables.Add(TABLE_VARIABLE_NAME, builder.ToString());
-                //writer.Close();
 
+            pane.InitializeVariables();
         }
 
 
