@@ -1,18 +1,26 @@
 ﻿using System;
 using System.Drawing;
 using System.Data;
-using System.Linq;
 using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
 using System.IO;
 using WordHiddenPowers.Repositoryes;
 using Microsoft.Office.Core;
 using System.Text;
+using WordHiddenPowers.Dialogs;
+using System.Reflection;
 
 namespace WordHiddenPowers.Panes
 {
     public partial class WordHiddenPowersPane : UserControl
     {
+        CreateTableDialog createDialog;
+        TableEditorDialog editorDialog;
+
+        SelectCategoryStringDialog selectedStringDialog;
+        SelectCategoryDecimalDialog selectedDecimalDialog;
+
+       
         public Word.Document Document { get; }
 
         public RepositoryDataSet PowersDataSet { get; }
@@ -21,10 +29,6 @@ namespace WordHiddenPowers.Panes
         {
             this.Document = Doc;
             this.PowersDataSet = new RepositoryDataSet();
-
-            Word.Application applicationObject = Globals.ThisAddIn.Application as Word.Application;
-            applicationObject.WindowSelectionChange += new Word.ApplicationEvents4_WindowSelectionChangeEventHandler(ApplicationObject_WindowSelectionChange);
-            AddButton(applicationObject.CommandBars["Text"]);
 
             InitializeComponent();
             InitializeVariables();
@@ -45,17 +49,14 @@ namespace WordHiddenPowers.Panes
             get { return descriptionTextBox.Text; }
         }
         
-        private void ApplicationObject_WindowSelectionChange(Word.Selection Sel)
+        public _CommandBarButtonEvents_ClickEventHandler DecimalCategoryDelegate
         {
-            Word.Application applicationObject = Globals.ThisAddIn.Application as Word.Application;
-            if (Sel.Text.Length > 1)
-            {
-                GetButton(applicationObject.CommandBars["Text"]).Enabled = true;
-            }
-            else
-            {
-                GetButton(applicationObject.CommandBars["Text"]).Enabled = false;
-            }
+            get { return DecimalCategoryClick; }
+        }
+
+        public _CommandBarButtonEvents_ClickEventHandler StringCategoryDelegate
+        {
+            get { return StringCategoryClick; }
         }
 
         private void splitContainer1_Panel1_Resize(object sender, EventArgs e)
@@ -94,7 +95,9 @@ namespace WordHiddenPowers.Panes
                 if (description != null)
                 {
                     descriptionTextBox.Text = description.Value;
-                }                
+                }
+
+                categoriesListBox1.PowersDataSet = PowersDataSet;                                
             }
         }
         
@@ -200,41 +203,51 @@ namespace WordHiddenPowers.Panes
                 reader.Close();
             }
         }
-
-        private void AddButton(CommandBar popupCommandBar)
+        
+        public void ShowCreateTableDialog()
         {
-            var commandBarButton = GetButton(popupCommandBar);
-            if (commandBarButton !=null)
-            {
-                commandBarButton.Click += new _CommandBarButtonEvents_ClickEventHandler(CommandBarButton_Click);
-            }
-            else
-            {
-                commandBarButton = (CommandBarButton)popupCommandBar.Controls.Add
-                    (MsoControlType.msoControlButton);
-                commandBarButton.Click += new _CommandBarButtonEvents_ClickEventHandler(CommandBarButton_Click);
-                commandBarButton.Caption = "Дополнительные данные...";
-                commandBarButton.FaceId = 9267;
-                commandBarButton.Tag = Const.Panes.BUTTON_TAG;
-                commandBarButton.BeginGroup = true;               
-            }
+            createDialog = new CreateTableDialog(this);
+            createDialog.ShowDialog();
+        }
+
+        public void ShowEditTableDialog()
+        {
+            editorDialog = new TableEditorDialog(this);
+            editorDialog.Show();
         }
         
-        private CommandBarButton GetButton(CommandBar popupCommandBar)
+        public void AddStringSelection(Word.Selection selection)
         {
-            foreach (var commandBarButton in popupCommandBar.Controls.OfType<CommandBarButton>())
+            selectedStringDialog = new SelectCategoryStringDialog(selection);
+            if (selectedStringDialog.ShowDialog() == DialogResult.OK)
             {
-                if (commandBarButton.Tag.Equals(Const.Panes.BUTTON_TAG))
-                {
-                    return commandBarButton;                  
-                }
+                PowersDataSet.StringPowers.Rows.Add(new object[]
+                { null, 0, 0, selectedStringDialog.Description, selectedStringDialog.Value, selectedStringDialog.Rating, selectedStringDialog.StartPosition, selectedStringDialog.SelectionEnd });
+
+                CommitVariables();
             }
-            return null;
         }
 
-        private void CommandBarButton_Click(CommandBarButton Ctrl, ref bool CancelDefault)
+        public void AddDecimalSelection(Word.Selection selection)
         {
-            
+            selectedDecimalDialog = new SelectCategoryDecimalDialog(selection);
+            if (selectedDecimalDialog.ShowDialog() == DialogResult.OK)
+            {
+                PowersDataSet.DecimalPowers.Rows.Add(new object[] 
+                { null, 0, 0, selectedDecimalDialog.Description, selectedDecimalDialog.Value, selectedDecimalDialog.Rating, selectedDecimalDialog.StartPosition, selectedDecimalDialog.SelectionEnd });
+
+                CommitVariables();
+            }                
+        }      
+
+        private void StringCategoryClick(CommandBarButton Ctrl, ref bool CancelDefault)
+        {
+            AddStringSelection(Globals.ThisAddIn.Application.ActiveWindow.Selection);
+        }
+
+        private void DecimalCategoryClick(CommandBarButton Ctrl, ref bool CancelDefault)
+        {
+            AddDecimalSelection(Globals.ThisAddIn.Application.ActiveWindow.Selection);
         }
 
         // add the button to the context menus that you need to support

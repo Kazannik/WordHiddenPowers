@@ -23,8 +23,6 @@ namespace WordHiddenPowers.Dialogs
         }
 
         
-
-
         private void ReadValues()
         {
             Word.Variable variable = GetVariable(pane.Document.Variables, Const.Globals.TABLE_VARIABLE_NAME);

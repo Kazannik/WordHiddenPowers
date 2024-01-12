@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using WordHiddenPowers.Repositoryes;
 using System;
+using System.Drawing;
 
 namespace WordHiddenPowers.Controls
 {
@@ -44,8 +45,16 @@ namespace WordHiddenPowers.Controls
 
         private void ReadStructure()
         {
-            dataGridView.Rows.Clear();
-            dataGridView.Columns.Clear();
+            try
+            {
+                dataGridView.Rows.Clear();
+                dataGridView.Columns.Clear();
+            }
+            catch (Exception)
+            {
+                return;                
+            }            
+            
             if (source == null) return;
             if (source.ColumnsHeaders.Rows.Count > 0)
             {
@@ -55,12 +64,34 @@ namespace WordHiddenPowers.Controls
                     int columnIndex = dataGridView.Columns.Add(text, text);
                     dataGridView.Columns[columnIndex].SortMode = DataGridViewColumnSortMode.NotSortable;
                 }
-
-                dataGridView.RowHeadersWidth = 120;
+                
                 foreach (DataRow item in source.RowsHeaders.Rows)
                 {
                     int rowIndex = dataGridView.Rows.Add();
-                    dataGridView.Rows[rowIndex].HeaderCell.Value = item["Header"].ToString();
+                    dataGridView.Rows[rowIndex].HeaderCell.Value = (rowIndex + 1).ToString() + ".   " +  item["Header"].ToString();
+                }
+
+                for (int r = 0; r < source.RowsHeaders.Rows.Count; r++)
+                {
+                    bool rowBold = bool.Parse(source.RowsHeaders.Rows[r]["Bold"].ToString());
+                    int rowColor = int.Parse(source.RowsHeaders.Rows[r]["Color"].ToString());
+                    int rowBackColor = int.Parse(source.RowsHeaders.Rows[r]["BackColor"].ToString());
+                    for (int c = 0; c < source.ColumnsHeaders.Rows.Count; c++)
+                    {
+                        bool columnBold = bool.Parse(source.ColumnsHeaders.Rows[c]["Bold"].ToString());
+                        int columnColor = int.Parse(source.ColumnsHeaders.Rows[c]["Color"].ToString());
+                        int columnBackColor = int.Parse(source.ColumnsHeaders.Rows[c]["BackColor"].ToString());
+
+                       // -16777216
+
+                        if (rowBold || columnBold)
+                        {
+                            if (dataGridView.Rows[r].Cells[c].Style.Font.Style != FontStyle.Bold)
+                                dataGridView.Rows[r].Cells[c].Style.Font = new Font(dataGridView.Rows[r].Cells[c].Style.Font, FontStyle.Bold);
+                            else
+                                dataGridView.Rows[r].Cells[c].Style.Font = new Font(dataGridView.Rows[r].Cells[c].Style.Font, FontStyle.Regular);
+                        }                       
+                    }
                 }
             }
         }

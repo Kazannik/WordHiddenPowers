@@ -156,6 +156,18 @@
   <ItemGroup>
     <Compile Include="Const\Globals.cs" />
     <Compile Include="Const\Panes.cs" />
+    <Compile Include="Controls\CategoriesListBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CategoriesListBox.Designer.cs">
+      <DependentUpon>CategoriesListBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RaitingBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\RaitingBox.Designer.cs">
+      <DependentUpon>RaitingBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TableEditBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -190,11 +202,17 @@
     <Compile Include="Dialogs\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\SelectCetegoryDialog.cs">
+    <Compile Include="Dialogs\SelectCategoryDecimalDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\SelectCetegoryDialog.Designer.cs">
-      <DependentUpon>SelectCetegoryDialog.cs</DependentUpon>
+    <Compile Include="Dialogs\SelectCategoryDecimalDialog.Designer.cs">
+      <DependentUpon>SelectCategoryDecimalDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SelectCategoryStringDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\SelectCategoryStringDialog.Designer.cs">
+      <DependentUpon>SelectCategoryStringDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\TableEditorDialog.cs">
       <SubType>Form</SubType>
@@ -219,6 +237,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Utils\ShowDialogUtil.cs" />
+    <EmbeddedResource Include="Controls\CategoriesListBox.resx">
+      <DependentUpon>CategoriesListBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\RaitingBox.resx">
+      <DependentUpon>RaitingBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\TableEditBox.resx">
       <DependentUpon>TableEditBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -234,8 +258,11 @@
     <EmbeddedResource Include="Dialogs\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\SelectCetegoryDialog.resx">
-      <DependentUpon>SelectCetegoryDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\SelectCategoryDecimalDialog.resx">
+      <DependentUpon>SelectCategoryDecimalDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\SelectCategoryStringDialog.resx">
+      <DependentUpon>SelectCategoryStringDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\TableEditorDialog.resx">
       <DependentUpon>TableEditorDialog.cs</DependentUpon>
@@ -296,28 +323,7 @@
     <None Include="WordHiddenPowers_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Table_AddHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\saveHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Column_AddHS1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Row_AddHS1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DeleteRedHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ExitHS.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\TableEdit.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\TableClear.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TableClear_24.png" />
@@ -333,9 +339,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\WindowClose_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\CreateTable_241.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TableDeleteColumns_24.png" />
@@ -354,9 +357,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TableInsertRowsBelow_24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\WindowClose_241.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TableDeleteColumns_16.png" />

@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using WordHiddenPowers.Repositoryes;
 using System.IO;
 using WordHiddenPowers.Dialogs;
+using WordHiddenPowers.Panes;
 
 namespace WordHiddenPowers
 {
@@ -127,14 +128,14 @@ namespace WordHiddenPowers
 
         private void createTableButton_Click(object sender, RibbonControlEventArgs e)
         {
-            CreateTableDialog dialog = new  CreateTableDialog(Globals.ThisAddIn.ActivePane);
-            dialog.ShowDialog();                      
+            WordHiddenPowersPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as WordHiddenPowersPane;
+            pane.ShowCreateTableDialog();                           
         }
 
         private void editTableButton_Click(object sender, RibbonControlEventArgs e)
         {
-            TableEditorDialog dialog = new TableEditorDialog(Globals.ThisAddIn.ActivePane);
-            dialog.Show();
+            WordHiddenPowersPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as WordHiddenPowersPane;
+            pane.ShowEditTableDialog();
         }
     }
 }

@@ -20,7 +20,6 @@
 
             Table = null;
             PowersDataSet = null;
-            dataGridView.Dispose();
             base.Dispose(disposing);
         }
 
@@ -55,26 +54,27 @@
             this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridView.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridView.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridView.MultiSelect = false;
             this.dataGridView.Name = "dataGridView";
+            this.dataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dataGridView.RowTemplate.Height = 24;
             this.dataGridView.ShowCellErrors = false;
             this.dataGridView.ShowCellToolTips = false;
             this.dataGridView.ShowEditingIcon = false;
             this.dataGridView.ShowRowErrors = false;
-            this.dataGridView.Size = new System.Drawing.Size(308, 338);
+            this.dataGridView.Size = new System.Drawing.Size(411, 416);
             this.dataGridView.TabIndex = 2;
             this.dataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.data_CellValueChanged);
             // 
             // TableEditBox
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.dataGridView);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "TableEditBox";
-            this.Size = new System.Drawing.Size(308, 338);
+            this.Size = new System.Drawing.Size(411, 416);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
 

@@ -17,6 +17,35 @@
             {
                 components.Dispose();
             }
+
+            if (createDialog !=null)
+            {
+                createDialog.Close();
+                createDialog.Dispose();
+                createDialog = null;
+            }
+
+            if (editorDialog != null)
+            {
+                editorDialog.Close();
+                editorDialog.Dispose();
+                editorDialog = null;
+            }
+
+            if (selectedStringDialog !=null)
+            {
+                selectedStringDialog.Close();
+                selectedStringDialog.Dispose();
+                selectedStringDialog = null;
+            }
+
+            if (selectedDecimalDialog != null)
+            {
+                selectedDecimalDialog.Close();
+                selectedDecimalDialog.Dispose();
+                selectedDecimalDialog = null;
+            }
+
             base.Dispose(disposing);
         }
 
@@ -35,12 +64,11 @@
             this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.dateLabel = new System.Windows.Forms.Label();
             this.titleLabel = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.categoriesListBox1 = new WordHiddenPowers.Controls.CategoriesListBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // titleTextBox
@@ -70,7 +98,7 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.dataGridView1);
+            this.splitContainer1.Panel2.Controls.Add(this.categoriesListBox1);
             this.splitContainer1.Size = new System.Drawing.Size(326, 323);
             this.splitContainer1.SplitterDistance = 152;
             this.splitContainer1.TabIndex = 2;
@@ -119,14 +147,13 @@
             this.titleLabel.TabIndex = 2;
             this.titleLabel.Text = "Заголовок:";
             // 
-            // dataGridView1
+            // categoriesListBox1
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(8, 16);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(312, 136);
-            this.dataGridView1.TabIndex = 0;
+            this.categoriesListBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.categoriesListBox1.Location = new System.Drawing.Point(0, 0);
+            this.categoriesListBox1.Name = "categoriesListBox1";
+            this.categoriesListBox1.Size = new System.Drawing.Size(326, 167);
+            this.categoriesListBox1.TabIndex = 0;
             // 
             // WordHiddenPowersPane
             // 
@@ -140,7 +167,6 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -153,6 +179,6 @@
         private System.Windows.Forms.Label descriptionLabel;
         private System.Windows.Forms.DateTimePicker dateTimePicker;
         private System.Windows.Forms.Label dateLabel;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private Controls.CategoriesListBox categoriesListBox1;
     }
 }

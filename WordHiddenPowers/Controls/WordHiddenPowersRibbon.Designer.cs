@@ -36,15 +36,16 @@
         {
             this.WordHiddenPowersTab = this.Factory.CreateRibbonTab();
             this.group1 = this.Factory.CreateRibbonGroup();
+            this.separator1 = this.Factory.CreateRibbonSeparator();
+            this.group2 = this.Factory.CreateRibbonGroup();
             this.newPowersButton = this.Factory.CreateRibbonButton();
             this.deletePowersButton = this.Factory.CreateRibbonButton();
-            this.separator1 = this.Factory.CreateRibbonSeparator();
             this.openPowersButton = this.Factory.CreateRibbonButton();
             this.savePowersButton = this.Factory.CreateRibbonButton();
             this.createTableButton = this.Factory.CreateRibbonButton();
-            this.group2 = this.Factory.CreateRibbonGroup();
             this.paneVisibleButton = this.Factory.CreateRibbonToggleButton();
             this.editTableButton = this.Factory.CreateRibbonButton();
+            this.separator2 = this.Factory.CreateRibbonSeparator();
             this.WordHiddenPowersTab.SuspendLayout();
             this.group1.SuspendLayout();
             this.group2.SuspendLayout();
@@ -64,9 +65,21 @@
             this.group1.Items.Add(this.separator1);
             this.group1.Items.Add(this.openPowersButton);
             this.group1.Items.Add(this.savePowersButton);
+            this.group1.Items.Add(this.separator2);
             this.group1.Items.Add(this.createTableButton);
             this.group1.Label = "Набор данных";
             this.group1.Name = "group1";
+            // 
+            // separator1
+            // 
+            this.separator1.Name = "separator1";
+            // 
+            // group2
+            // 
+            this.group2.Items.Add(this.editTableButton);
+            this.group2.Items.Add(this.paneVisibleButton);
+            this.group2.Label = "Панель управления";
+            this.group2.Name = "group2";
             // 
             // newPowersButton
             // 
@@ -83,10 +96,6 @@
             this.deletePowersButton.OfficeImageId = "Delete";
             this.deletePowersButton.ShowImage = true;
             this.deletePowersButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.deletePowersButton_Click);
-            // 
-            // separator1
-            // 
-            this.separator1.Name = "separator1";
             // 
             // openPowersButton
             // 
@@ -118,13 +127,6 @@
             this.createTableButton.ShowImage = true;
             this.createTableButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.createTableButton_Click);
             // 
-            // group2
-            // 
-            this.group2.Items.Add(this.paneVisibleButton);
-            this.group2.Items.Add(this.editTableButton);
-            this.group2.Label = "Панель управления";
-            this.group2.Name = "group2";
-            // 
             // paneVisibleButton
             // 
             this.paneVisibleButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -142,6 +144,10 @@
             this.editTableButton.OfficeImageId = "TableStyleModify";
             this.editTableButton.ShowImage = true;
             this.editTableButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.editTableButton_Click);
+            // 
+            // separator2
+            // 
+            this.separator2.Name = "separator2";
             // 
             // WordHiddenPowersRibbon
             // 
@@ -171,6 +177,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton createTableButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton editTableButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator2;
     }
 
     partial class ThisRibbonCollection
