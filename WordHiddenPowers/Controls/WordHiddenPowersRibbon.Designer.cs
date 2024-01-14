@@ -37,15 +37,16 @@
             this.WordHiddenPowersTab = this.Factory.CreateRibbonTab();
             this.group1 = this.Factory.CreateRibbonGroup();
             this.separator1 = this.Factory.CreateRibbonSeparator();
+            this.separator2 = this.Factory.CreateRibbonSeparator();
             this.group2 = this.Factory.CreateRibbonGroup();
             this.newPowersButton = this.Factory.CreateRibbonButton();
             this.deletePowersButton = this.Factory.CreateRibbonButton();
             this.openPowersButton = this.Factory.CreateRibbonButton();
             this.savePowersButton = this.Factory.CreateRibbonButton();
+            this.editCategoriesButton = this.Factory.CreateRibbonButton();
             this.createTableButton = this.Factory.CreateRibbonButton();
-            this.paneVisibleButton = this.Factory.CreateRibbonToggleButton();
             this.editTableButton = this.Factory.CreateRibbonButton();
-            this.separator2 = this.Factory.CreateRibbonSeparator();
+            this.paneVisibleButton = this.Factory.CreateRibbonToggleButton();
             this.WordHiddenPowersTab.SuspendLayout();
             this.group1.SuspendLayout();
             this.group2.SuspendLayout();
@@ -66,13 +67,18 @@
             this.group1.Items.Add(this.openPowersButton);
             this.group1.Items.Add(this.savePowersButton);
             this.group1.Items.Add(this.separator2);
+            this.group1.Items.Add(this.editCategoriesButton);
             this.group1.Items.Add(this.createTableButton);
-            this.group1.Label = "Набор данных";
+            this.group1.Label = "Макет данных";
             this.group1.Name = "group1";
             // 
             // separator1
             // 
             this.separator1.Name = "separator1";
+            // 
+            // separator2
+            // 
+            this.separator2.Name = "separator2";
             // 
             // group2
             // 
@@ -118,6 +124,15 @@
             this.savePowersButton.ShowImage = true;
             this.savePowersButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.savePowersButton_Click);
             // 
+            // editCategoriesButton
+            // 
+            this.editCategoriesButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.editCategoriesButton.Label = "Редактор категорий...";
+            this.editCategoriesButton.Name = "editCategoriesButton";
+            this.editCategoriesButton.OfficeImageId = "GroupContentTypeEdit";
+            this.editCategoriesButton.ShowImage = true;
+            this.editCategoriesButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.editCategoriesButton_Click);
+            // 
             // createTableButton
             // 
             this.createTableButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -126,15 +141,6 @@
             this.createTableButton.OfficeImageId = "GroupCreateTableSql";
             this.createTableButton.ShowImage = true;
             this.createTableButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.createTableButton_Click);
-            // 
-            // paneVisibleButton
-            // 
-            this.paneVisibleButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.paneVisibleButton.Label = "Дополнительные данные";
-            this.paneVisibleButton.Name = "paneVisibleButton";
-            this.paneVisibleButton.OfficeImageId = "MenuToDoBar";
-            this.paneVisibleButton.ShowImage = true;
-            this.paneVisibleButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.paneVisibleButton_Click);
             // 
             // editTableButton
             // 
@@ -145,9 +151,14 @@
             this.editTableButton.ShowImage = true;
             this.editTableButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.editTableButton_Click);
             // 
-            // separator2
+            // paneVisibleButton
             // 
-            this.separator2.Name = "separator2";
+            this.paneVisibleButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.paneVisibleButton.Label = "Дополнительные данные";
+            this.paneVisibleButton.Name = "paneVisibleButton";
+            this.paneVisibleButton.OfficeImageId = "MenuToDoBar";
+            this.paneVisibleButton.ShowImage = true;
+            this.paneVisibleButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.paneVisibleButton_Click);
             // 
             // WordHiddenPowersRibbon
             // 
@@ -178,6 +189,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton editTableButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator1;
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator2;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton editCategoriesButton;
     }
 
     partial class ThisRibbonCollection

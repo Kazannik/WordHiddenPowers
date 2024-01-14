@@ -1,0 +1,180 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+
+namespace WordHiddenPowers.Repositoryes.Models
+{
+    public class Note: INotifyPropertyChanged, IComparable<Note>
+    {
+        internal Rectangle rectagle;
+        internal Rectangle removeButton;
+
+        internal static Note Create(DataRow dataRow, Subcategory subcategory)
+        {
+            if (dataRow["Value"].GetType() == typeof(double))
+            {
+                return new Note(id: (int)dataRow["id"],
+                    subcategory: subcategory,
+                    description: dataRow["Description"] as string,
+                    value: (double)dataRow["Value"],
+                    reiting: (int)dataRow["Reiting"],
+                    wordSelectionStart: (int)dataRow["WordSelectionStart"],
+                    wordSelectionEnd: (int)dataRow["WordSelectionEnd"],
+                    dataRow: dataRow);
+            }
+            else
+            {
+                return new Note(id: (int)dataRow["id"],
+                    subcategory: subcategory,
+                    description: dataRow["Description"] as string,
+                    value: dataRow["Value"] as string,
+                    reiting: (int)dataRow["Reiting"],
+                    wordSelectionStart: (int)dataRow["WordSelectionStart"],
+                    wordSelectionEnd: (int)dataRow["WordSelectionEnd"],
+                    dataRow: dataRow);
+            }            
+        }
+
+        internal static Note Create(RepositoryDataSet.DecimalPowersRow dataRow, Subcategory subcategory)
+        {
+            return new Note(id: dataRow.id,
+                subcategory: subcategory,
+                description: dataRow.Description,
+                value: dataRow.Value,
+                reiting: dataRow.Reiting,
+                wordSelectionStart: dataRow.WordSelectionStart,
+                wordSelectionEnd: dataRow.WordSelectionEnd,
+                dataRow: dataRow);
+        }
+
+        internal static Note Create(RepositoryDataSet.TextPowersRow dataRow, Subcategory subcategory)
+        {
+            return new Note(id: dataRow.id,
+                subcategory: subcategory,
+                description: dataRow.Description,
+                value: dataRow.Value,
+                reiting: dataRow.Reiting,
+                wordSelectionStart: dataRow.WordSelectionStart,
+                wordSelectionEnd: dataRow.WordSelectionEnd,
+                dataRow: dataRow);
+        }
+
+        protected Note(int id, Subcategory subcategory, string description, double value, int reiting, int wordSelectionStart, int wordSelectionEnd, object dataRow)
+        {
+            Subcategory = subcategory;
+            Id = id;
+            Description = description;
+            Value = value;
+            Reiting = reiting;
+            WordSelectionStart = wordSelectionStart;
+            WordSelectionEnd = wordSelectionEnd;
+            DataRow = dataRow;
+        }
+
+        protected Note(int id, Subcategory subcategory, string description, string value, int reiting, int wordSelectionStart, int wordSelectionEnd, object dataRow)
+        {
+            Subcategory = subcategory;
+            Id = id;
+            Description = description;
+            Value = value;
+            Reiting = Reiting;
+            WordSelectionStart = wordSelectionStart;
+            WordSelectionEnd = wordSelectionEnd;
+            DataRow = dataRow;
+        }
+
+        public Category Category { get { return Subcategory.Category; } }
+
+        public Subcategory Subcategory { get; internal set; }
+
+        public int Id { get; }
+
+        public string Description { get; internal set; }
+
+        public object Value { get; internal set; }
+
+        public int Reiting { get; internal set; }
+
+        public int WordSelectionStart { get; }
+
+        public int WordSelectionEnd { get; }
+
+        public bool IsText
+        {
+            get { return Value.GetType() != typeof(double); }
+        }
+
+        public object DataRow { get; }
+
+        public object[]  ToObjectsArray()
+        {
+            return(new object[]{ Id,
+                Subcategory.Category.Id,
+                Subcategory.Id,
+                Description,
+                Value,
+                Reiting,
+                WordSelectionStart,
+                WordSelectionEnd });            
+        }
+
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #endregion
+
+        public int CompareTo(Note value)
+        {
+            return Compare(this, value);
+        }
+
+        public int CompareTo(Object value)
+        {
+            if (value == null)
+            {
+                return 1;
+            }
+            if (value is Note)
+            {
+                Note n = (Note)value;
+                return n.CompareTo(value);
+            }
+            throw new ArgumentException();
+        }
+
+        public static int Compare(Note x, Note y)
+        {
+            if (!Equals(x, null) & !Equals(y, null))
+            {
+                try
+                {
+                    return Decimal.Compare(x.WordSelectionStart, y.WordSelectionStart) == 0 ?
+                        Decimal.Compare(x.WordSelectionEnd, y.WordSelectionEnd) : 0;
+                }
+                catch (Exception)
+                { return 0; }
+            }
+            else if (!Equals(x, null) & Equals(y, null))
+            { return 1; }
+            else if (Equals(x, null) & !Equals(y, null))
+            { return -1; }
+            else { return 0; }
+        }
+
+        public class NoteComparer : IComparer<Note>
+        {
+            public int Compare(Note x, Note y)
+            {
+                return Note.Compare(x, y);
+            }
+        }
+    }
+}

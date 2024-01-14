@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WordHiddenPowers.Repositoryes;
 using Word = Microsoft.Office.Interop.Word;
 using HiddenPowerConst = WordHiddenPowers.Const.Globals;
@@ -13,8 +9,6 @@ namespace WordSuite.HiddenPowers.Model
 {
     public class Document
     {
-        RepositoryDataSet powersDataSet = new RepositoryDataSet();
-        
         public string FileName { get; }
 
         public string Title { get; }
@@ -25,16 +19,16 @@ namespace WordSuite.HiddenPowers.Model
 
         public Table Table {get;}
 
-        public RepositoryDataSet PowersDataSet { get { return powersDataSet; } }
+        public RepositoryDataSet PowersDataSet { get; }
         
         private Document (string fileName, string title, DateTime date, string description, Table table)
         {
-            this.powersDataSet = new RepositoryDataSet();
-            this.FileName = fileName;
-            this.Title = title;
-            this.Date = date;
-            this.Description = description;
-            this.Table = table;
+            PowersDataSet = new RepositoryDataSet();
+            FileName = fileName;
+            Title = title;
+            Date = date;
+            Description = description;
+            Table = table;
         }
 
         public static Document Create (string fileName, Word._Document Doc)

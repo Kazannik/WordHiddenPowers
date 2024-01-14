@@ -14,7 +14,7 @@ namespace WordHiddenPowers.Panes
         RibbonToggleButton buttonVisible;
 
         Office.CommandBarButton buttonSelectDecimalCategory;
-        Office.CommandBarButton buttonSelectStringCategory;
+        Office.CommandBarButton buttonSelectTextCategory;
 
         public PaneCollection(CustomTaskPaneCollection collection, RibbonToggleButton button)
         {
@@ -26,10 +26,12 @@ namespace WordHiddenPowers.Panes
 
             application.CommandBars["Text"].Reset();
 
-            buttonSelectStringCategory = AddButtons(application.CommandBars["Text"], "Текстовые дополнительные данные...", 9267, Const.Panes.BUTTON_STRING_TAG, true);
-            buttonSelectDecimalCategory = AddButtons(application.CommandBars["Text"], "Числовые дополнительные данные...", 9267, Const.Panes.BUTTON_DECIMAL_TAG, false);
-        }
+            buttonSelectTextCategory = AddButtons(application.CommandBars["Text"], "Текстовые дополнительные данные...", 9267, Const.Panes.BUTTON_STRING_TAG, true, AddTextNoteClick);
+            buttonSelectDecimalCategory = AddButtons(application.CommandBars["Text"], "Числовые дополнительные данные...", 9267, Const.Panes.BUTTON_DECIMAL_TAG, false, AddDecimalNoteClick);   
 
+
+        }
+                
         public CustomTaskPane ActivePane { get; private set; }
 
         public CustomTaskPane this[Word.Document Doc]
@@ -60,22 +62,13 @@ namespace WordHiddenPowers.Panes
            }
             ActivePane.Visible = buttonVisible.Checked;
             ActivePane.VisibleChanged += new EventHandler(Pane_VisibleChanged);
-
-            WordHiddenPowersPane pane = ActivePane.Control as WordHiddenPowersPane;
-            
-            buttonSelectDecimalCategory.Click += new Office._CommandBarButtonEvents_ClickEventHandler(pane.DecimalCategoryDelegate);
-            buttonSelectStringCategory.Click += new Office._CommandBarButtonEvents_ClickEventHandler(pane.StringCategoryDelegate);
         }
 
         public void WindowDeactivate(Word.Document Doc)
         {
             if (ContainsKey(Doc.DocID))
             {
-                base[Doc.DocID].VisibleChanged -= Pane_VisibleChanged;
-
-                WordHiddenPowersPane pane = base[Doc.DocID].Control as WordHiddenPowersPane;
-                buttonSelectDecimalCategory.Click -= pane.DecimalCategoryDelegate;
-                buttonSelectStringCategory.Click -= pane.StringCategoryDelegate;
+                base[Doc.DocID].VisibleChanged -= Pane_VisibleChanged;               
             }               
         }
 
@@ -120,7 +113,25 @@ namespace WordHiddenPowers.Panes
             }            
         }
 
-        private Office.CommandBarButton AddButtons(Office.CommandBar popupCommandBar, string caption, int faceId, string tag, bool beginGroup)
+        private void AddDecimalNoteClick(Office.CommandBarButton Ctrl, ref bool CancelDefault)
+        {
+            if (ActivePane != null)
+            {
+                WordHiddenPowersPane pane = ActivePane.Control as WordHiddenPowersPane;
+                pane.AddDecimalNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
+            }
+        }
+
+        private void AddTextNoteClick(Office.CommandBarButton Ctrl, ref bool CancelDefault)
+        {
+            if (ActivePane != null)
+            {
+                WordHiddenPowersPane pane = ActivePane.Control as WordHiddenPowersPane;
+                pane.AddTextNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
+            }               
+        }
+                
+        private Office.CommandBarButton AddButtons(Office.CommandBar popupCommandBar, string caption, int faceId, string tag, bool beginGroup, Office._CommandBarButtonEvents_ClickEventHandler clickFunctionDelegate)
         {
             var commandBarButton = GetButton(popupCommandBar, tag);
             if (commandBarButton == null)
@@ -131,6 +142,7 @@ namespace WordHiddenPowers.Panes
                 commandBarButton.FaceId = faceId;
                 commandBarButton.Tag = tag;
                 commandBarButton.BeginGroup = beginGroup;
+                commandBarButton.Click += new Office._CommandBarButtonEvents_ClickEventHandler(clickFunctionDelegate);
             }
             return commandBarButton;
         }
@@ -150,10 +162,12 @@ namespace WordHiddenPowers.Panes
         
         public void Dispose()
         {
+            Word.Application application = Globals.ThisAddIn.Application as Word.Application;
+            application.CommandBars["Text"].Reset();
             foreach (CustomTaskPane item in Values)
             {
                 item.Dispose();                
-            }               
+            }
         }
     }
 }

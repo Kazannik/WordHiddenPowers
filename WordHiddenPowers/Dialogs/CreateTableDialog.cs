@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Text;
 using System.Windows.Forms;
 using WordHiddenPowers.Panes;
-using WordHiddenPowers.Repositoryes;
 using Word = Microsoft.Office.Interop.Word;
 
 
@@ -159,16 +155,33 @@ namespace WordHiddenPowers.Dialogs
 
         private void dataGridView_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
+            DataGridViewCell clickedCell = (sender as DataGridView).Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+            if (e.RowIndex != 0 && e.ColumnIndex != 0)
+            {
+                buttonBold.Enabled = false;
+            }
+            else 
+            {
+                buttonBold.Enabled = true;
+                if (e.RowIndex == 0)
+                {
+                    buttonBold.Checked = clickedCell.Style.Font.Bold;
+                }
+            }
+
+
             if (e.Button == MouseButtons.Right)
             {
-                DataGridViewCell clickedCell = (sender as DataGridView).Rows[e.RowIndex].Cells[e.ColumnIndex];
-                if (clickedCell.RowIndex <= 0 && clickedCell.ColumnIndex <=0 )
+                if (clickedCell.RowIndex <= 0 && clickedCell.ColumnIndex <= 0 )
                 {
                     toolStripMenuItem2.Visible = false;
                     mnuTableDelete.Visible = false;
                     toolStripMenuItem3.Visible = false;
                     cmnuTableDelete.Visible = false;
+                    
                 }
+                
 
                 // Here you can do whatever you want with the cell
                 dataGridView.CurrentCell = clickedCell;  // Select the clicked cell, for instance
@@ -190,8 +203,7 @@ namespace WordHiddenPowers.Dialogs
                     e.Cancel = false;
                     return;
                 }
-
-
+                
                 bool edited = false;
                 if (pane.PowersDataSet.RowsHeaders.Rows.Count != (dataGridView.Rows.Count - 1) ||
                     pane.PowersDataSet.ColumnsHeaders.Rows.Count != (dataGridView.Columns.Count - 1))
@@ -236,6 +248,16 @@ namespace WordHiddenPowers.Dialogs
                     }
                 }
             }
+        }
+
+        private void mnuDeleteTable_ButtonClick(object sender, EventArgs e)
+        {
+            mnuDeleteTable.ShowDropDown();
+        }
+
+        private void Bold_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

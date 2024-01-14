@@ -42,7 +42,7 @@ namespace WordSuite
 
         }
 
-        private void mnuFileImport_Click(object sender, EventArgs e)
+        private void FileImport_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             if (dialog.ShowDialog(this)== DialogResult.OK)
@@ -52,26 +52,29 @@ namespace WordSuite
             }            
         }
 
-        private void mnuFileExport_Click(object sender, EventArgs e)
+        private void FileExport_Click(object sender, EventArgs e)
         {
             HiddenPowers.Utils.MicrosoftDocuments.ExportToWord(collection);
         }
 
-        private void mnuFileExit_Click(object sender, EventArgs e)
+        private void FileExit_Click(object sender, EventArgs e)
         {
 
         }
+
+
+
 
         private void ListRefresh()
         {
-            listBox1.Items.Clear();
-            foreach (Document item in collection)
-            {
-                listBox1.Items.Add(item.Title);
-            }
+            //listBox1.Items.Clear();
+            //foreach (Document item in collection)
+            //{
+            //    listBox1.Items.Add(item.Title);
+            //}
         }
 
-        private void mnuTableOpen_Click(object sender, EventArgs e)
+        private void TableOpen_Click(object sender, EventArgs e)
         {
 
         }

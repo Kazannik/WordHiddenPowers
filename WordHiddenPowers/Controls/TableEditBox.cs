@@ -144,7 +144,6 @@ namespace WordHiddenPowers.Controls
         }
 
         public bool IsChanged { get; private set; }
-              
 
         private void data_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {

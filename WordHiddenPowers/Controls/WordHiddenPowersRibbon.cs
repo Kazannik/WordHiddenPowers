@@ -23,7 +23,7 @@ namespace WordHiddenPowers
                 Globals.ThisAddIn.ActivePane.PowersDataSet.Categories.Clear();
                 Globals.ThisAddIn.ActivePane.PowersDataSet.Subcategories.Clear();
                 Globals.ThisAddIn.ActivePane.PowersDataSet.DecimalPowers.Clear();
-                Globals.ThisAddIn.ActivePane.PowersDataSet.StringPowers.Clear();
+                Globals.ThisAddIn.ActivePane.PowersDataSet.TextPowers.Clear();
 
                 Globals.ThisAddIn.ActivePane.CommitVariables();
             }
@@ -48,7 +48,7 @@ namespace WordHiddenPowers
                         Globals.ThisAddIn.ActivePane.PowersDataSet.ReadXml(dialog.FileName, System.Data.XmlReadMode.IgnoreSchema);
 
                         Globals.ThisAddIn.ActivePane.PowersDataSet.DecimalPowers.Clear();
-                        Globals.ThisAddIn.ActivePane.PowersDataSet.StringPowers.Clear();
+                        Globals.ThisAddIn.ActivePane.PowersDataSet.TextPowers.Clear();
 
                         Globals.ThisAddIn.ActivePane.CommitVariables();
                     }
@@ -73,7 +73,7 @@ namespace WordHiddenPowers
                     RepositoryDataSet powersDataSet = new RepositoryDataSet();
                     SetXml(powersDataSet, xml);
                     powersDataSet.DecimalPowers.Clear();
-                    powersDataSet.StringPowers.Clear();
+                    powersDataSet.TextPowers.Clear();
                     powersDataSet.WriteXml(dialog.FileName, System.Data.XmlWriteMode.WriteSchema);
                 }
                 catch (Exception)
@@ -136,6 +136,11 @@ namespace WordHiddenPowers
         {
             WordHiddenPowersPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as WordHiddenPowersPane;
             pane.ShowEditTableDialog();
+        }
+
+        private void editCategoriesButton_Click(object sender, RibbonControlEventArgs e)
+        {
+
         }
     }
 }

@@ -156,17 +156,20 @@
   <ItemGroup>
     <Compile Include="Const\Globals.cs" />
     <Compile Include="Const\Panes.cs" />
-    <Compile Include="Controls\CategoriesListBox.cs">
+    <Compile Include="Controls\NoteListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\NumericTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\NumericTextBox.Designer.cs">
+      <DependentUpon>NumericTextBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ReitingBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\CategoriesListBox.Designer.cs">
-      <DependentUpon>CategoriesListBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\RaitingBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\RaitingBox.Designer.cs">
-      <DependentUpon>RaitingBox.cs</DependentUpon>
+    <Compile Include="Controls\ReitingBox.Designer.cs">
+      <DependentUpon>ReitingBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\TableEditBox.cs">
       <SubType>UserControl</SubType>
@@ -184,11 +187,11 @@
     <Compile Include="Data\Row.cs" />
     <Compile Include="Data\RowCollection.cs" />
     <Compile Include="Data\Table.cs" />
-    <Compile Include="Dialogs\AboutBox1.cs">
+    <Compile Include="Dialogs\CategoriesEditorDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\AboutBox1.Designer.cs">
-      <DependentUpon>AboutBox1.cs</DependentUpon>
+    <Compile Include="Dialogs\CategoriesEditorDialog.Designer.cs">
+      <DependentUpon>CategoriesEditorDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\CreateTableDialog.cs">
       <SubType>Form</SubType>
@@ -196,23 +199,17 @@
     <Compile Include="Dialogs\CreateTableDialog.Designer.cs">
       <DependentUpon>CreateTableDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\Form1.cs">
+    <Compile Include="Dialogs\DecimalNoteDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Dialogs\DecimalNoteDialog.Designer.cs">
+      <DependentUpon>DecimalNoteDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\SelectCategoryDecimalDialog.cs">
+    <Compile Include="Dialogs\TextNoteDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\SelectCategoryDecimalDialog.Designer.cs">
-      <DependentUpon>SelectCategoryDecimalDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\SelectCategoryStringDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\SelectCategoryStringDialog.Designer.cs">
-      <DependentUpon>SelectCategoryStringDialog.cs</DependentUpon>
+    <Compile Include="Dialogs\TextNoteDialog.Designer.cs">
+      <DependentUpon>TextNoteDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\TableEditorDialog.cs">
       <SubType>Form</SubType>
@@ -236,12 +233,15 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Repositoryes\Models\Category.cs" />
+    <Compile Include="Repositoryes\Models\Note.cs" />
+    <Compile Include="Repositoryes\Models\Subcategory.cs" />
     <Compile Include="Utils\ShowDialogUtil.cs" />
-    <EmbeddedResource Include="Controls\CategoriesListBox.resx">
-      <DependentUpon>CategoriesListBox.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\NumericTextBox.resx">
+      <DependentUpon>NumericTextBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\RaitingBox.resx">
-      <DependentUpon>RaitingBox.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ReitingBox.resx">
+      <DependentUpon>ReitingBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TableEditBox.resx">
       <DependentUpon>TableEditBox.cs</DependentUpon>
@@ -249,20 +249,17 @@
     <EmbeddedResource Include="Controls\WordHiddenPowersRibbon.resx">
       <DependentUpon>WordHiddenPowersRibbon.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\AboutBox1.resx">
-      <DependentUpon>AboutBox1.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\CategoriesEditorDialog.resx">
+      <DependentUpon>CategoriesEditorDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\CreateTableDialog.resx">
       <DependentUpon>CreateTableDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\DecimalNoteDialog.resx">
+      <DependentUpon>DecimalNoteDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\SelectCategoryDecimalDialog.resx">
-      <DependentUpon>SelectCategoryDecimalDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\SelectCategoryStringDialog.resx">
-      <DependentUpon>SelectCategoryStringDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\TextNoteDialog.resx">
+      <DependentUpon>TextNoteDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\TableEditorDialog.resx">
       <DependentUpon>TableEditorDialog.cs</DependentUpon>
@@ -375,6 +372,138 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TableInsertRowsBelow_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TableDelete_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TableDelete_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Bold_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Bold_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BackColor_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BackColor_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorAqua_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorAqua_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorBlack_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorBlack_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorBlue_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorBlue_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorFuchsia_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorFuchsia_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorGray_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorGray_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorGreen_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorGreen_26.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorLime_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorLime_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorMaroon_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorMaroon_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorMenu_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorMenu_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorNavy_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorNavy_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorOlive_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorOlive_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorPalette_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorPalette_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorPurple_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorPurple_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorRed_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorRed_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorSilver_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorSilver_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorTeal_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorTeal_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorWhite_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorWhite_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorYellow_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorYellow_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorGreen_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GroupContTypeNew_24.png" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

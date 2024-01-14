@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Word = Microsoft.Office.Interop.Word;
+﻿using Word = Microsoft.Office.Interop.Word;
 using System.Reflection;
 using WordSuite.HiddenPowers.Model;
 
@@ -26,9 +21,14 @@ namespace WordSuite.HiddenPowers.Utils
 
             foreach (Document item in collection)
             {
-                Word.Paragraph paragraph;
-                paragraph = document.Content.Paragraphs.Add(ref oMissing);
+                Word.Paragraph paragraph = document.Content.Paragraphs.Add(ref oMissing);
                 paragraph.Range.Text = item.Title;
+                paragraph.Range.Font.Bold = 1;
+                paragraph.Format.SpaceAfter = 24;    //24 pt spacing after paragraph.
+                paragraph.Range.InsertParagraphAfter();
+
+                paragraph = document.Content.Paragraphs.Add(ref oMissing);
+                paragraph.Range.Text = item.Date.ToShortDateString();
                 paragraph.Range.Font.Bold = 1;
                 paragraph.Format.SpaceAfter = 24;    //24 pt spacing after paragraph.
                 paragraph.Range.InsertParagraphAfter();

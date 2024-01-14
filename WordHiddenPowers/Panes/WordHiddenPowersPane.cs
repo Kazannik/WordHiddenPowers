@@ -9,6 +9,7 @@ using Microsoft.Office.Core;
 using System.Text;
 using WordHiddenPowers.Dialogs;
 using System.Reflection;
+using WordHiddenPowers.Repositoryes.Models;
 
 namespace WordHiddenPowers.Panes
 {
@@ -17,8 +18,8 @@ namespace WordHiddenPowers.Panes
         CreateTableDialog createDialog;
         TableEditorDialog editorDialog;
 
-        SelectCategoryStringDialog selectedStringDialog;
-        SelectCategoryDecimalDialog selectedDecimalDialog;
+        TextNoteDialog selectedTextDialog;
+        DecimalNoteDialog selectedDecimalDialog;
 
        
         public Word.Document Document { get; }
@@ -31,9 +32,13 @@ namespace WordHiddenPowers.Panes
             this.PowersDataSet = new RepositoryDataSet();
 
             InitializeComponent();
-            InitializeVariables();
+
+            noteListBox.PowersDataSet = PowersDataSet;
+
+            InitializeVariables();            
+
         }
-                
+
         public string Title
         {
             get { return titleTextBox.Text; }
@@ -49,15 +54,7 @@ namespace WordHiddenPowers.Panes
             get { return descriptionTextBox.Text; }
         }
         
-        public _CommandBarButtonEvents_ClickEventHandler DecimalCategoryDelegate
-        {
-            get { return DecimalCategoryClick; }
-        }
-
-        public _CommandBarButtonEvents_ClickEventHandler StringCategoryDelegate
-        {
-            get { return StringCategoryClick; }
-        }
+       
 
         private void splitContainer1_Panel1_Resize(object sender, EventArgs e)
         {
@@ -97,14 +94,13 @@ namespace WordHiddenPowers.Panes
                     descriptionTextBox.Text = description.Value;
                 }
 
-                categoriesListBox1.PowersDataSet = PowersDataSet;                                
             }
         }
         
         public void DeleteVariables()
         {
             PowersDataSet.DecimalPowers.Clear();
-            PowersDataSet.StringPowers.Clear();
+            PowersDataSet.TextPowers.Clear();
             PowersDataSet.Categories.Clear();
             PowersDataSet.Subcategories.Clear();
             PowersDataSet.ColumnsHeaders.Clear();
@@ -193,7 +189,7 @@ namespace WordHiddenPowers.Panes
                 StringReader reader = new StringReader(categories.Value);
 
                 PowersDataSet.DecimalPowers.Clear();
-                PowersDataSet.StringPowers.Clear();
+                PowersDataSet.TextPowers.Clear();
                 PowersDataSet.Categories.Clear();
                 PowersDataSet.Subcategories.Clear();
                 PowersDataSet.ColumnsHeaders.Clear();
@@ -216,39 +212,31 @@ namespace WordHiddenPowers.Panes
             editorDialog.Show();
         }
         
-        public void AddStringSelection(Word.Selection selection)
+        public void AddTextNote(Word.Selection selection)
         {
-            selectedStringDialog = new SelectCategoryStringDialog(selection);
-            if (selectedStringDialog.ShowDialog() == DialogResult.OK)
+            selectedTextDialog = new TextNoteDialog(selection);
+            if (selectedTextDialog.ShowDialog() == DialogResult.OK)
             {
-                PowersDataSet.StringPowers.Rows.Add(new object[]
-                { null, 0, 0, selectedStringDialog.Description, selectedStringDialog.Value, selectedStringDialog.Rating, selectedStringDialog.StartPosition, selectedStringDialog.SelectionEnd });
+                PowersDataSet.TextPowers.Rows.Add(new object[]
+                { null, 0, 0, selectedTextDialog.Description, selectedTextDialog.Value, selectedTextDialog.Reiting, selectedTextDialog.SelectionStart, selectedTextDialog.SelectionEnd });
 
                 CommitVariables();
             }
         }
 
-        public void AddDecimalSelection(Word.Selection selection)
+        public void AddDecimalNote(Word.Selection selection)
         {
-            selectedDecimalDialog = new SelectCategoryDecimalDialog(selection);
+            selectedDecimalDialog = new DecimalNoteDialog(selection);
             if (selectedDecimalDialog.ShowDialog() == DialogResult.OK)
             {
                 PowersDataSet.DecimalPowers.Rows.Add(new object[] 
-                { null, 0, 0, selectedDecimalDialog.Description, selectedDecimalDialog.Value, selectedDecimalDialog.Rating, selectedDecimalDialog.StartPosition, selectedDecimalDialog.SelectionEnd });
+                { null, 0, 0, selectedDecimalDialog.Description, selectedDecimalDialog.Value, selectedDecimalDialog.Reiting, selectedDecimalDialog.SelectionStart, selectedDecimalDialog.SelectionEnd });
 
                 CommitVariables();
             }                
         }      
 
-        private void StringCategoryClick(CommandBarButton Ctrl, ref bool CancelDefault)
-        {
-            AddStringSelection(Globals.ThisAddIn.Application.ActiveWindow.Selection);
-        }
-
-        private void DecimalCategoryClick(CommandBarButton Ctrl, ref bool CancelDefault)
-        {
-            AddDecimalSelection(Globals.ThisAddIn.Application.ActiveWindow.Selection);
-        }
+       
 
         // add the button to the context menus that you need to support
         //AddButton(applicationObject.CommandBars["Text"]);
@@ -319,6 +307,68 @@ namespace WordHiddenPowers.Panes
         private void Controls_TextChanged(object sender, EventArgs e)
         {
             CommitVariables();
-        }      
+        }
+
+        private void NoteOpen_Click(object sender, EventArgs e)
+        {
+            Note note = noteListBox.SelectedItem as Note;
+            if (note != null)
+            {
+                Word.Range range = Document.Range(note.WordSelectionStart, note.WordSelectionEnd);
+                range.Select();
+            }
+        }
+
+        private void NoteEdit_Click(object sender, EventArgs e)
+        {
+            Note note = noteListBox.SelectedItem as Note;
+            if (note != null)
+            {
+                if (note.IsText)
+                {
+                    selectedTextDialog = new TextNoteDialog(note);
+                    if (selectedTextDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        PowersDataSet.TextPowers.Set(note.Id,
+                            0,
+                            0,
+                            selectedTextDialog.Description,
+                            selectedTextDialog.Value,
+                            selectedTextDialog.Reiting,
+                            selectedTextDialog.SelectionStart,
+                            selectedTextDialog.SelectionEnd);
+                    }
+                }
+                else
+                {
+                    selectedDecimalDialog = new DecimalNoteDialog(note);
+                    if (selectedDecimalDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        PowersDataSet.DecimalPowers.Set(note.Id,
+                            0,
+                            0,
+                            selectedDecimalDialog.Description,
+                            selectedDecimalDialog.Value,
+                            selectedDecimalDialog.Reiting,
+                            selectedDecimalDialog.SelectionStart,
+                            selectedDecimalDialog.SelectionEnd);
+                    }
+                }
+                CommitVariables();
+            }          
+        }
+
+        private void NoteRemove_Click(object sender, EventArgs e)
+        {
+            Note note = noteListBox.SelectedItem as Note;
+            if (note != null)
+            {
+                if (note.IsText)
+                    PowersDataSet.TextPowers.Remove(note);
+                else
+                    PowersDataSet.DecimalPowers.Remove(note);
+                CommitVariables();
+            }            
+        }        
     }
 }

@@ -49,13 +49,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\Note.cs" />
+    <Compile Include="Controls\NoteListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="HiddenPowers\Data\TableCollection.cs" />
     <Compile Include="HiddenPowers\Model\Document.cs" />
     <Compile Include="HiddenPowers\Model\DocumentCollection.cs" />
     <Compile Include="HiddenPowers\Utils\FileSystem.cs" />

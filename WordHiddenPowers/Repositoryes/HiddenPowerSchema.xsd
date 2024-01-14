@@ -12,17 +12,17 @@
   <xs:element name="RepositoryDataSet" msdata:IsDataSet="true" msdata:Locale="ru" msprop:Generator_DataSetName="RepositoryDataSet" msprop:Generator_UserDSName="RepositoryDataSet">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="StringPowers" msprop:Generator_TableClassName="StringPowersDataTable" msprop:Generator_TableVarName="tableStringPowers" msprop:Generator_TablePropName="StringPowers" msprop:Generator_RowDeletingName="StringPowersRowDeleting" msprop:Generator_RowChangingName="StringPowersRowChanging" msprop:Generator_RowEvHandlerName="StringPowersRowChangeEventHandler" msprop:Generator_RowDeletedName="StringPowersRowDeleted" msprop:Generator_UserTableName="StringPowers" msprop:Generator_RowChangedName="StringPowersRowChanged" msprop:Generator_RowEvArgName="StringPowersRowChangeEvent" msprop:Generator_RowClassName="StringPowersRow">
+        <xs:element name="TextPowers" msprop:Generator_TableClassName="TextPowersDataTable" msprop:Generator_TableVarName="tableTextPowers" msprop:Generator_TablePropName="TextPowers" msprop:Generator_RowDeletingName="TextPowersRowDeleting" msprop:Generator_RowChangingName="TextPowersRowChanging" msprop:Generator_RowEvHandlerName="TextPowersRowChangeEventHandler" msprop:Generator_RowDeletedName="TextPowersRowDeleted" msprop:Generator_UserTableName="TextPowers" msprop:Generator_RowChangedName="TextPowersRowChanged" msprop:Generator_RowEvArgName="TextPowersRowChangeEvent" msprop:Generator_RowClassName="TextPowersRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="id" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" />
-              <xs:element name="category_id" msprop:Generator_ColumnVarNameInTable="columncategory_id" msprop:Generator_ColumnPropNameInRow="category_id" msprop:Generator_ColumnPropNameInTable="category_idColumn" msprop:Generator_UserColumnName="category_id" type="xs:int" />
-              <xs:element name="subcategory_id" msprop:Generator_ColumnVarNameInTable="columnsubcategory_id" msprop:Generator_ColumnPropNameInRow="subcategory_id" msprop:Generator_ColumnPropNameInTable="subcategory_idColumn" msprop:Generator_UserColumnName="subcategory_id" type="xs:int" />
+              <xs:element name="category_id" msprop:Generator_ColumnVarNameInTable="columncategory_id" msprop:Generator_ColumnPropNameInRow="category_id" msprop:Generator_ColumnPropNameInTable="category_idColumn" msprop:Generator_UserColumnName="category_id" type="xs:int" default="0" />
+              <xs:element name="subcategory_id" msprop:Generator_ColumnVarNameInTable="columnsubcategory_id" msprop:Generator_ColumnPropNameInRow="subcategory_id" msprop:Generator_ColumnPropNameInTable="subcategory_idColumn" msprop:Generator_UserColumnName="subcategory_id" type="xs:int" default="0" />
               <xs:element name="Description" msprop:Generator_ColumnVarNameInTable="columnDescription" msprop:Generator_ColumnPropNameInRow="Description" msprop:Generator_ColumnPropNameInTable="DescriptionColumn" msprop:Generator_UserColumnName="Description" type="xs:string" minOccurs="0" />
               <xs:element name="Value" msprop:Generator_ColumnVarNameInTable="columnValue" msprop:Generator_ColumnPropNameInRow="Value" msprop:Generator_ColumnPropNameInTable="ValueColumn" msprop:Generator_UserColumnName="Value" type="xs:string" minOccurs="0" />
-              <xs:element name="Rating" msprop:Generator_ColumnVarNameInTable="columnRating" msprop:Generator_ColumnPropNameInRow="Rating" msprop:Generator_ColumnPropNameInTable="RatingColumn" msprop:Generator_UserColumnName="Rating" type="xs:int" minOccurs="0" />
-              <xs:element name="WordSelectionStart" msprop:Generator_ColumnVarNameInTable="columnWordSelectionStart" msprop:Generator_ColumnPropNameInRow="WordSelectionStart" msprop:Generator_ColumnPropNameInTable="WordSelectionStartColumn" msprop:Generator_UserColumnName="WordSelectionStart" type="xs:int" minOccurs="0" />
-              <xs:element name="WordSelectionEnd" msprop:Generator_ColumnVarNameInTable="columnWordSelectionEnd" msprop:Generator_ColumnPropNameInRow="WordSelectionEnd" msprop:Generator_ColumnPropNameInTable="WordSelectionEndColumn" msprop:Generator_UserColumnName="WordSelectionEnd" type="xs:int" minOccurs="0" />
+              <xs:element name="Reiting" msprop:Generator_ColumnVarNameInTable="columnReiting" msprop:Generator_ColumnPropNameInRow="Reiting" msprop:Generator_ColumnPropNameInTable="ReitingColumn" msprop:Generator_UserColumnName="Reiting" type="xs:int" default="0" />
+              <xs:element name="WordSelectionStart" msprop:Generator_ColumnVarNameInTable="columnWordSelectionStart" msprop:Generator_ColumnPropNameInRow="WordSelectionStart" msprop:Generator_ColumnPropNameInTable="WordSelectionStartColumn" msprop:Generator_UserColumnName="WordSelectionStart" type="xs:int" default="0" />
+              <xs:element name="WordSelectionEnd" msprop:Generator_ColumnVarNameInTable="columnWordSelectionEnd" msprop:Generator_ColumnPropNameInRow="WordSelectionEnd" msprop:Generator_ColumnPropNameInTable="WordSelectionEndColumn" msprop:Generator_UserColumnName="WordSelectionEnd" type="xs:int" default="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -39,9 +39,11 @@
           <xs:complexType>
             <xs:sequence>
               <xs:element name="id" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" />
-              <xs:element name="category_id" msprop:Generator_ColumnVarNameInTable="columncategory_id" msprop:Generator_ColumnPropNameInRow="category_id" msprop:Generator_ColumnPropNameInTable="category_idColumn" msprop:Generator_UserColumnName="category_id" type="xs:int" />
+              <xs:element name="category_id" msprop:Generator_ColumnVarNameInTable="columncategory_id" msprop:Generator_ColumnPropNameInRow="category_id" msprop:Generator_ColumnPropNameInTable="category_idColumn" msprop:Generator_UserColumnName="category_id" type="xs:int" default="0" />
               <xs:element name="Caption" msprop:Generator_ColumnVarNameInTable="columnCaption" msprop:Generator_ColumnPropNameInRow="Caption" msprop:Generator_ColumnPropNameInTable="CaptionColumn" msprop:Generator_UserColumnName="Caption" type="xs:string" minOccurs="0" />
               <xs:element name="Description" msprop:Generator_ColumnVarNameInTable="columnDescription" msprop:Generator_ColumnPropNameInRow="Description" msprop:Generator_ColumnPropNameInTable="DescriptionColumn" msprop:Generator_UserColumnName="Description" type="xs:string" minOccurs="0" />
+              <xs:element name="IsDecimal" msprop:Generator_ColumnVarNameInTable="columnIsDecimal" msprop:Generator_ColumnPropNameInRow="IsDecimal" msprop:Generator_ColumnPropNameInTable="IsDecimalColumn" msprop:Generator_UserColumnName="IsDecimal" type="xs:boolean" default="true" />
+              <xs:element name="IsText" msprop:Generator_ColumnVarNameInTable="columnIsText" msprop:Generator_ColumnPropNameInRow="IsText" msprop:Generator_ColumnPropNameInTable="IsTextColumn" msprop:Generator_UserColumnName="IsText" type="xs:boolean" default="true" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -49,13 +51,13 @@
           <xs:complexType>
             <xs:sequence>
               <xs:element name="id" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" />
-              <xs:element name="category_id" msprop:Generator_ColumnVarNameInTable="columncategory_id" msprop:Generator_ColumnPropNameInRow="category_id" msprop:Generator_ColumnPropNameInTable="category_idColumn" msprop:Generator_UserColumnName="category_id" type="xs:int" />
-              <xs:element name="subcategory_id" msprop:Generator_ColumnVarNameInTable="columnsubcategory_id" msprop:Generator_ColumnPropNameInRow="subcategory_id" msprop:Generator_ColumnPropNameInTable="subcategory_idColumn" msprop:Generator_UserColumnName="subcategory_id" type="xs:int" />
+              <xs:element name="category_id" msprop:Generator_ColumnVarNameInTable="columncategory_id" msprop:Generator_ColumnPropNameInRow="category_id" msprop:Generator_ColumnPropNameInTable="category_idColumn" msprop:Generator_UserColumnName="category_id" type="xs:int" default="0" />
+              <xs:element name="subcategory_id" msprop:Generator_ColumnVarNameInTable="columnsubcategory_id" msprop:Generator_ColumnPropNameInRow="subcategory_id" msprop:Generator_ColumnPropNameInTable="subcategory_idColumn" msprop:Generator_UserColumnName="subcategory_id" type="xs:int" default="0" />
               <xs:element name="Description" msprop:Generator_ColumnVarNameInTable="columnDescription" msprop:Generator_ColumnPropNameInRow="Description" msprop:Generator_ColumnPropNameInTable="DescriptionColumn" msprop:Generator_UserColumnName="Description" type="xs:string" minOccurs="0" />
-              <xs:element name="Value" msprop:Generator_ColumnVarNameInTable="columnValue" msprop:Generator_ColumnPropNameInRow="Value" msprop:Generator_ColumnPropNameInTable="ValueColumn" msprop:Generator_UserColumnName="Value" type="xs:long" minOccurs="0" />
-              <xs:element name="Raiting" msprop:Generator_ColumnVarNameInTable="columnRaiting" msprop:Generator_ColumnPropNameInRow="Raiting" msprop:Generator_ColumnPropNameInTable="RaitingColumn" msprop:Generator_UserColumnName="Raiting" type="xs:int" minOccurs="0" />
-              <xs:element name="WordSelectionStart" msprop:Generator_ColumnVarNameInTable="columnWordSelectionStart" msprop:Generator_ColumnPropNameInRow="WordSelectionStart" msprop:Generator_ColumnPropNameInTable="WordSelectionStartColumn" msprop:Generator_UserColumnName="WordSelectionStart" type="xs:int" minOccurs="0" />
-              <xs:element name="WordSelectionEnd" msprop:Generator_ColumnVarNameInTable="columnWordSelectionEnd" msprop:Generator_ColumnPropNameInRow="WordSelectionEnd" msprop:Generator_ColumnPropNameInTable="WordSelectionEndColumn" msprop:Generator_UserColumnName="WordSelectionEnd" type="xs:string" minOccurs="0" />
+              <xs:element name="Value" msprop:Generator_ColumnVarNameInTable="columnValue" msprop:Generator_ColumnPropNameInRow="Value" msprop:Generator_ColumnPropNameInTable="ValueColumn" msprop:Generator_UserColumnName="Value" type="xs:double" default="0" />
+              <xs:element name="Reiting" msprop:Generator_ColumnVarNameInTable="columnReiting" msprop:Generator_ColumnPropNameInRow="Reiting" msprop:Generator_ColumnPropNameInTable="ReitingColumn" msprop:Generator_UserColumnName="Reiting" type="xs:int" default="0" />
+              <xs:element name="WordSelectionStart" msprop:Generator_ColumnVarNameInTable="columnWordSelectionStart" msprop:Generator_ColumnPropNameInRow="WordSelectionStart" msprop:Generator_ColumnPropNameInTable="WordSelectionStartColumn" msprop:Generator_UserColumnName="WordSelectionStart" type="xs:int" default="0" />
+              <xs:element name="WordSelectionEnd" msprop:Generator_ColumnVarNameInTable="columnWordSelectionEnd" msprop:Generator_ColumnPropNameInRow="WordSelectionEnd" msprop:Generator_ColumnPropNameInTable="WordSelectionEndColumn" msprop:Generator_UserColumnName="WordSelectionEnd" type="xs:int" default="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -84,7 +86,7 @@
       </xs:choice>
     </xs:complexType>
     <xs:unique name="StringPowersTableKey" msdata:PrimaryKey="true">
-      <xs:selector xpath=".//mstns:StringPowers" />
+      <xs:selector xpath=".//mstns:TextPowers" />
       <xs:field xpath="mstns:id" />
     </xs:unique>
     <xs:unique name="CategoriesTableKey" msdata:PrimaryKey="true">
