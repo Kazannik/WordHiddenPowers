@@ -5,7 +5,7 @@ using WordHiddenPowers.Repositoryes.Models;
 
 namespace WordSuite.Repositoryes
 {
-    
+
     partial class RepositoryDataSet
     {
         partial class RowsHeadersDataTable
@@ -38,7 +38,7 @@ namespace WordSuite.Repositoryes
                 if (row != null)
                     Rows.Remove(row);
             }
-            
+
             private DataRow GetRow(Note note)
             {
                 return GetRow(note.Id);
@@ -81,7 +81,7 @@ namespace WordSuite.Repositoryes
                 if (row != null)
                     Rows.Remove(row);
             }
-            
+
             private DataRow GetRow(Note note)
             {
                 return GetRow(note.Id);

@@ -156,6 +156,9 @@
   <ItemGroup>
     <Compile Include="Const\Globals.cs" />
     <Compile Include="Const\Panes.cs" />
+    <Compile Include="Controls\CategoriesComboBox.cs" />
+    <Compile Include="Controls\CategoriesPicker.cs" />
+    <Compile Include="Controls\ComboControl.cs" />
     <Compile Include="Controls\NoteListBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -171,6 +174,7 @@
     <Compile Include="Controls\ReitingBox.Designer.cs">
       <DependentUpon>ReitingBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SubcategoriesComboBox.cs" />
     <Compile Include="Controls\TableEditBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -204,6 +208,12 @@
     </Compile>
     <Compile Include="Dialogs\DecimalNoteDialog.Designer.cs">
       <DependentUpon>DecimalNoteDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DocumentsKeysDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\DocumentsKeysDialog.Designer.cs">
+      <DependentUpon>DocumentsKeysDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\TextNoteDialog.cs">
       <SubType>Form</SubType>
@@ -257,6 +267,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\DecimalNoteDialog.resx">
       <DependentUpon>DecimalNoteDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\DocumentsKeysDialog.resx">
+      <DependentUpon>DocumentsKeysDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\TextNoteDialog.resx">
       <DependentUpon>TextNoteDialog.cs</DependentUpon>

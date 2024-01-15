@@ -39,7 +39,7 @@ namespace WordHiddenPowers.Repositoryes
                 if (row != null)
                     Rows.Remove(row);
             }
-            
+
             private DataRow GetRow(Note note)
             {
                 return GetRow(note.Id);
@@ -82,7 +82,7 @@ namespace WordHiddenPowers.Repositoryes
                 if (row != null)
                     Rows.Remove(row);
             }
-            
+
             private DataRow GetRow(Note note)
             {
                 return GetRow(note.Id);

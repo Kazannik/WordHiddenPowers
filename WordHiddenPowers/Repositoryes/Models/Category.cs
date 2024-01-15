@@ -6,7 +6,6 @@ namespace WordHiddenPowers.Repositoryes.Models
 {
     public class Category: IComparable<Category>
     {
-
         public static Category Create(DataRow dataRow)
         {
             return new Category(id: (int)dataRow["id"],

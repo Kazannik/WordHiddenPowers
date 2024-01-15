@@ -28,33 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.cancelButton = new System.Windows.Forms.Button();
             this.okButton = new System.Windows.Forms.Button();
             this.descriptionTextBox = new System.Windows.Forms.TextBox();
-            this.numericTextBox1 = new WordHiddenPowers.Controls.NumericTextBox(this.components);
+            this.categoriesComboBox1 = new WordHiddenPowers.Controls.CategoriesComboBox();
+            this.numericTextBox1 = new WordHiddenPowers.Controls.NumericTextBox();
             this.raitingBox = new WordHiddenPowers.Controls.ReitingBox();
+            this.subcategoriesComboBox1 = new WordHiddenPowers.Controls.SubcategoriesComboBox();
             this.SuspendLayout();
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(12, 12);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(260, 21);
-            this.comboBox1.TabIndex = 0;
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(12, 39);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(260, 21);
-            this.comboBox2.TabIndex = 1;
             // 
             // cancelButton
             // 
@@ -87,6 +68,20 @@
             this.descriptionTextBox.Size = new System.Drawing.Size(472, 55);
             this.descriptionTextBox.TabIndex = 31;
             // 
+            // categoriesComboBox1
+            // 
+            this.categoriesComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.categoriesComboBox1.DropDownHeight = 140;
+            this.categoriesComboBox1.DropDownWidth = 80;
+            this.categoriesComboBox1.FormattingEnabled = true;
+            this.categoriesComboBox1.IntegralHeight = false;
+            this.categoriesComboBox1.ItemHeight = 17;
+            this.categoriesComboBox1.Location = new System.Drawing.Point(12, 12);
+            this.categoriesComboBox1.MaxDropDownItems = 20;
+            this.categoriesComboBox1.Name = "categoriesComboBox1";
+            this.categoriesComboBox1.Size = new System.Drawing.Size(260, 23);
+            this.categoriesComboBox1.TabIndex = 34;
+            // 
             // numericTextBox1
             // 
             this.numericTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -95,6 +90,8 @@
             this.numericTextBox1.Name = "numericTextBox1";
             this.numericTextBox1.Size = new System.Drawing.Size(206, 29);
             this.numericTextBox1.TabIndex = 33;
+            this.numericTextBox1.Text = "0";
+            this.numericTextBox1.Value = 0D;
             this.numericTextBox1.TextChanged += new System.EventHandler(this.ValueTextBox_TextChanged);
             // 
             // raitingBox
@@ -108,6 +105,20 @@
             this.raitingBox.TabIndex = 32;
             this.raitingBox.Value = 0;
             // 
+            // subcategoriesComboBox1
+            // 
+            this.subcategoriesComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.subcategoriesComboBox1.DropDownHeight = 140;
+            this.subcategoriesComboBox1.DropDownWidth = 80;
+            this.subcategoriesComboBox1.FormattingEnabled = true;
+            this.subcategoriesComboBox1.IntegralHeight = false;
+            this.subcategoriesComboBox1.ItemHeight = 17;
+            this.subcategoriesComboBox1.Location = new System.Drawing.Point(13, 42);
+            this.subcategoriesComboBox1.MaxDropDownItems = 20;
+            this.subcategoriesComboBox1.Name = "subcategoriesComboBox1";
+            this.subcategoriesComboBox1.Size = new System.Drawing.Size(259, 23);
+            this.subcategoriesComboBox1.TabIndex = 35;
+            // 
             // DecimalNoteDialog
             // 
             this.AcceptButton = this.okButton;
@@ -115,13 +126,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
             this.ClientSize = new System.Drawing.Size(496, 173);
+            this.Controls.Add(this.subcategoriesComboBox1);
+            this.Controls.Add(this.categoriesComboBox1);
             this.Controls.Add(this.numericTextBox1);
             this.Controls.Add(this.raitingBox);
             this.Controls.Add(this.descriptionTextBox);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.comboBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -136,13 +147,12 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.TextBox descriptionTextBox;
         private Controls.ReitingBox raitingBox;
         private Controls.NumericTextBox numericTextBox1;
+        private Controls.CategoriesComboBox categoriesComboBox1;
+        private Controls.SubcategoriesComboBox subcategoriesComboBox1;
     }
 }
