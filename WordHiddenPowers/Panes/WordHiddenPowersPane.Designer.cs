@@ -1,4 +1,6 @@
-﻿namespace WordHiddenPowers.Panes
+﻿using System.Windows.Forms;
+
+namespace WordHiddenPowers.Panes
 {
     partial class WordHiddenPowersPane
     {
@@ -18,33 +20,18 @@
                 components.Dispose();
             }
 
-            if (createDialog !=null)
+            if (dialogs != null)
             {
-                createDialog.Close();
-                createDialog.Dispose();
-                createDialog = null;
-            }
-
-            if (editorDialog != null)
-            {
-                editorDialog.Close();
-                editorDialog.Dispose();
-                editorDialog = null;
-            }
-
-            if (selectedTextDialog !=null)
-            {
-                selectedTextDialog.Close();
-                selectedTextDialog.Dispose();
-                selectedTextDialog = null;
-            }
-
-            if (selectedDecimalDialog != null)
-            {
-                selectedDecimalDialog.Close();
-                selectedDecimalDialog.Dispose();
-                selectedDecimalDialog = null;
-            }
+                foreach (Form form in dialogs)
+                {
+                    if (form !=null)
+                    {
+                        form.Close();
+                        form.Dispose();
+                    }
+                }
+                dialogs.Clear();
+            }          
 
             base.Dispose(disposing);
         }

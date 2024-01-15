@@ -15,21 +15,18 @@ namespace WordHiddenPowers.Panes
 {
     public partial class WordHiddenPowersPane : UserControl
     {
-        CreateTableDialog createDialog;
-        TableEditorDialog editorDialog;
-
-        TextNoteDialog selectedTextDialog;
-        DecimalNoteDialog selectedDecimalDialog;
-
-       
+        private System.Collections.Generic.IList<Form> dialogs = null;
+              
         public Word.Document Document { get; }
 
         public RepositoryDataSet PowersDataSet { get; }
 
         public WordHiddenPowersPane(Word.Document Doc)
         {
-            this.Document = Doc;
-            this.PowersDataSet = new RepositoryDataSet();
+            dialogs = new System.Collections.Generic.List<Form>();
+
+            Document = Doc;
+            PowersDataSet = new RepositoryDataSet();
 
             InitializeComponent();
 
@@ -199,26 +196,36 @@ namespace WordHiddenPowers.Panes
                 reader.Close();
             }
         }
-        
+
+        public void ShowEditCategoriesDialog()
+        {
+            Form dialog = new CategoriesEditorDialog(this);
+            dialogs.Add(dialog);
+            dialog.ShowDialog();
+        }
+
         public void ShowCreateTableDialog()
         {
-            createDialog = new CreateTableDialog(this);
-            createDialog.ShowDialog();
+            Form dialog = new CreateTableDialog(this);
+            dialogs.Add(dialog);
+            dialog.ShowDialog();
         }
 
         public void ShowEditTableDialog()
         {
-            editorDialog = new TableEditorDialog(this);
-            editorDialog.Show();
+            Form dialog = new TableEditorDialog(this);
+            dialogs.Add(dialog);
+            dialog.Show();
         }
         
         public void AddTextNote(Word.Selection selection)
         {
-            selectedTextDialog = new TextNoteDialog(selection);
-            if (selectedTextDialog.ShowDialog() == DialogResult.OK)
+            TextNoteDialog dialog = new TextNoteDialog(selection);
+            dialogs.Add(dialog);
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
                 PowersDataSet.TextPowers.Rows.Add(new object[]
-                { null, 0, 0, selectedTextDialog.Description, selectedTextDialog.Value, selectedTextDialog.Reiting, selectedTextDialog.SelectionStart, selectedTextDialog.SelectionEnd });
+                { null, 0, 0, dialog.Description, dialog.Value, dialog.Reiting, dialog.SelectionStart, dialog.SelectionEnd });
 
                 CommitVariables();
             }
@@ -226,11 +233,12 @@ namespace WordHiddenPowers.Panes
 
         public void AddDecimalNote(Word.Selection selection)
         {
-            selectedDecimalDialog = new DecimalNoteDialog(selection);
-            if (selectedDecimalDialog.ShowDialog() == DialogResult.OK)
+            DecimalNoteDialog dialog = new DecimalNoteDialog(selection);
+            dialogs.Add(dialog);
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
                 PowersDataSet.DecimalPowers.Rows.Add(new object[] 
-                { null, 0, 0, selectedDecimalDialog.Description, selectedDecimalDialog.Value, selectedDecimalDialog.Reiting, selectedDecimalDialog.SelectionStart, selectedDecimalDialog.SelectionEnd });
+                { null, 0, 0, dialog.Description, dialog.Value, dialog.Reiting, dialog.SelectionStart, dialog.SelectionEnd });
 
                 CommitVariables();
             }                
@@ -326,32 +334,34 @@ namespace WordHiddenPowers.Panes
             {
                 if (note.IsText)
                 {
-                    selectedTextDialog = new TextNoteDialog(note);
-                    if (selectedTextDialog.ShowDialog() == DialogResult.OK)
+                    TextNoteDialog dialog = new TextNoteDialog(note);
+                    dialogs.Add(dialog);
+                    if (dialog.ShowDialog() == DialogResult.OK)
                     {
                         PowersDataSet.TextPowers.Set(note.Id,
                             0,
                             0,
-                            selectedTextDialog.Description,
-                            selectedTextDialog.Value,
-                            selectedTextDialog.Reiting,
-                            selectedTextDialog.SelectionStart,
-                            selectedTextDialog.SelectionEnd);
+                            dialog.Description,
+                            dialog.Value,
+                            dialog.Reiting,
+                            dialog.SelectionStart,
+                            dialog.SelectionEnd);
                     }
                 }
                 else
                 {
-                    selectedDecimalDialog = new DecimalNoteDialog(note);
-                    if (selectedDecimalDialog.ShowDialog() == DialogResult.OK)
+                    DecimalNoteDialog dialog = new DecimalNoteDialog(note);
+                    dialogs.Add(dialog);
+                    if (dialog.ShowDialog() == DialogResult.OK)
                     {
                         PowersDataSet.DecimalPowers.Set(note.Id,
                             0,
                             0,
-                            selectedDecimalDialog.Description,
-                            selectedDecimalDialog.Value,
-                            selectedDecimalDialog.Reiting,
-                            selectedDecimalDialog.SelectionStart,
-                            selectedDecimalDialog.SelectionEnd);
+                            dialog.Description,
+                            dialog.Value,
+                            dialog.Reiting,
+                            dialog.SelectionStart,
+                            dialog.SelectionEnd);
                     }
                 }
                 CommitVariables();

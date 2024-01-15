@@ -140,7 +140,8 @@ namespace WordHiddenPowers
 
         private void editCategoriesButton_Click(object sender, RibbonControlEventArgs e)
         {
-
+            WordHiddenPowersPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as WordHiddenPowersPane;
+            pane.ShowEditCategoriesDialog();
         }
     }
 }

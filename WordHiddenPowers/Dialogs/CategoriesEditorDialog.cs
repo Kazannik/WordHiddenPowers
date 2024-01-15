@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WordHiddenPowers.Panes;
 
 namespace WordHiddenPowers.Dialogs
 {
     public partial class CategoriesEditorDialog : Form
     {
-        public CategoriesEditorDialog()
+        public CategoriesEditorDialog(WordHiddenPowersPane pane)
         {
             InitializeComponent();
         }
