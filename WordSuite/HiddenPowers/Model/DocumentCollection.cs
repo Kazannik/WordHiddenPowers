@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WordHiddenPowers.Data;
 using WordSuite.Controls;
+using WordSuite.Repositoryes;
 using AddIn = WordHiddenPowers.Repositoryes.Models;
 
 namespace WordSuite.HiddenPowers.Model
@@ -20,11 +22,16 @@ namespace WordSuite.HiddenPowers.Model
         
         public DocumentCollection()
         {
+            PowersDataSet = new RepositoryDataSet();
+
             subcategories = new Dictionary<int, AddIn.Subcategory>();
             categories = new Dictionary<int, AddIn.Category>();
             notes = new List<Note>();
             sumDecimalNotes = new Dictionary<AddIn.Subcategory, double>();
         }
+
+
+        public RepositoryDataSet PowersDataSet { get; }
 
         public Table SumTable { get; private set; }
         
@@ -33,6 +40,11 @@ namespace WordSuite.HiddenPowers.Model
             if (base.Count==0)
             {
                 SumTable = new Table(item.Table.Rows.Count, item.Table.ColumnCount);
+                                
+                string xml = item.PowersDataSetToXml();
+                SetXml(PowersDataSet, xml);
+                PowersDataSet.DecimalPowers.Clear();
+                PowersDataSet.TextPowers.Clear();
             }
 
             for (int r = 0; r < SumTable.Rows.Count; r++)
@@ -46,6 +58,21 @@ namespace WordSuite.HiddenPowers.Model
             base.Add(item);
         }
 
+        private string GetXml(RepositoryDataSet dataSet)
+        {
+            StringBuilder builder = new StringBuilder();
+            StringWriter writer = new StringWriter(builder);
+            dataSet.WriteXml(writer, System.Data.XmlWriteMode.WriteSchema);
+            writer.Close();
+            return builder.ToString();
+        }
+
+        private void SetXml(RepositoryDataSet dataSet, string xml)
+        {
+            StringReader reader = new StringReader(xml);
+            dataSet.ReadXml(reader, System.Data.XmlReadMode.IgnoreSchema);
+            reader.Close();
+        }
 
         public void ReadData(Document item)
         {

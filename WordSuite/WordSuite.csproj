@@ -53,6 +53,12 @@
     <Compile Include="Controls\NoteListBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Dialogs\TableDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\TableDialog.Designer.cs">
+      <DependentUpon>TableDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -65,6 +71,18 @@
     <Compile Include="HiddenPowers\Utils\MicrosoftDocuments.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositoryes\Class1.cs" />
+    <Compile Include="Repositoryes\HiddenPowerSchema.cs">
+      <DependentUpon>HiddenPowerSchema.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Repositoryes\HiddenPowerSchema1.Designer.cs">
+      <DependentUpon>HiddenPowerSchema.xsd</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Dialogs\TableDialog.resx">
+      <DependentUpon>TableDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -76,6 +94,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -86,6 +105,17 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Repositoryes\HiddenPowerSchema.xsc">
+      <DependentUpon>HiddenPowerSchema.xsd</DependentUpon>
+    </None>
+    <None Include="Repositoryes\HiddenPowerSchema.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>HiddenPowerSchema1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Repositoryes\HiddenPowerSchema.xss">
+      <DependentUpon>HiddenPowerSchema.xsd</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -95,6 +125,15 @@
       <Project>{dda3e4d4-908c-46ef-ba4c-ff5c54ae7c2a}</Project>
       <Name>WordHiddenPowers</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TableClear_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Refresh_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save_24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

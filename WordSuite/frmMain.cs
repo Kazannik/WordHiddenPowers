@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WordSuite.Dialogs;
 using WordSuite.HiddenPowers.Model;
 
 namespace WordSuite
@@ -76,7 +77,8 @@ namespace WordSuite
 
         private void TableOpen_Click(object sender, EventArgs e)
         {
-
+           TableDialog dialog = new TableDialog(collection.PowersDataSet, collection.SumTable);
+            dialog.Show();
         }
     }
 }

@@ -4,6 +4,7 @@ using Word = Microsoft.Office.Interop.Word;
 using HiddenPowerConst = WordHiddenPowers.Const.Globals;
 using System.IO;
 using WordHiddenPowers.Data;
+using System.Text;
 
 namespace WordSuite.HiddenPowers.Model
 {
@@ -93,6 +94,19 @@ namespace WordSuite.HiddenPowers.Model
             return null;
         }
 
+        public string PowersDataSetToXml()
+        {
+            string xml = GetXml(PowersDataSet);
+            return xml;
+        }
 
+        private string GetXml(RepositoryDataSet dataSet)
+        {
+            StringBuilder builder = new StringBuilder();
+            StringWriter writer = new StringWriter(builder);
+            dataSet.WriteXml(writer, System.Data.XmlWriteMode.WriteSchema);
+            writer.Close();
+            return builder.ToString();
+        }
     }
 }
