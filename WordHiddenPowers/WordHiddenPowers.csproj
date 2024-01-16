@@ -158,6 +158,7 @@
     <Compile Include="Const\Panes.cs" />
     <Compile Include="Controls\CategoriesComboBox.cs" />
     <Compile Include="Controls\CategoriesPicker.cs" />
+    <Compile Include="Controls\CategoryTreeNode.cs" />
     <Compile Include="Controls\ComboControl.cs" />
     <Compile Include="Controls\NoteListBox.cs">
       <SubType>Component</SubType>
@@ -209,11 +210,11 @@
     <Compile Include="Dialogs\DecimalNoteDialog.Designer.cs">
       <DependentUpon>DecimalNoteDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\DocumentsKeysDialog.cs">
+    <Compile Include="Dialogs\DocumentKeysDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\DocumentsKeysDialog.Designer.cs">
-      <DependentUpon>DocumentsKeysDialog.cs</DependentUpon>
+    <Compile Include="Dialogs\DocumentKeysDialog.Designer.cs">
+      <DependentUpon>DocumentKeysDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\TextNoteDialog.cs">
       <SubType>Form</SubType>
@@ -240,12 +241,17 @@
     <Compile Include="Panes\WordHiddenPowersPane.Designer.cs">
       <DependentUpon>WordHiddenPowersPane.cs</DependentUpon>
     </Compile>
+    <Compile Include="Panes\WordHiddenPowersPane.Dialogs.cs">
+      <DependentUpon>WordHiddenPowersPane.cs</DependentUpon>
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Repositoryes\Models\Category.cs" />
     <Compile Include="Repositoryes\Models\Note.cs" />
     <Compile Include="Repositoryes\Models\Subcategory.cs" />
+    <Compile Include="Utils\HiddenPowerDocument.cs" />
     <Compile Include="Utils\ShowDialogUtil.cs" />
     <EmbeddedResource Include="Controls\NumericTextBox.resx">
       <DependentUpon>NumericTextBox.cs</DependentUpon>
@@ -268,8 +274,8 @@
     <EmbeddedResource Include="Dialogs\DecimalNoteDialog.resx">
       <DependentUpon>DecimalNoteDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\DocumentsKeysDialog.resx">
-      <DependentUpon>DocumentsKeysDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\DocumentKeysDialog.resx">
+      <DependentUpon>DocumentKeysDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\TextNoteDialog.resx">
       <DependentUpon>TextNoteDialog.cs</DependentUpon>

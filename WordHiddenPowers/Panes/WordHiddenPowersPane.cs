@@ -10,6 +10,7 @@ using System.Text;
 using WordHiddenPowers.Dialogs;
 using System.Reflection;
 using WordHiddenPowers.Repositoryes.Models;
+using WordHiddenPowers.Utils;
 
 namespace WordHiddenPowers.Panes
 {
@@ -26,7 +27,10 @@ namespace WordHiddenPowers.Panes
             dialogs = new System.Collections.Generic.List<Form>();
 
             Document = Doc;
+
             PowersDataSet = new RepositoryDataSet();
+
+            PowersDataSet.DocumentKeys.DocumentKeysRowChanged += new RepositoryDataSet.DocumentKeysRowChangeEventHandler(DocumentKeys_DocumentKeysRowChanged);
 
             InitializeComponent();
 
@@ -36,9 +40,20 @@ namespace WordHiddenPowers.Panes
 
         }
 
+        private void DocumentKeys_DocumentKeysRowChanged(object sender, RepositoryDataSet.DocumentKeysRowChangeEvent e)
+        {
+            titleComboBox.BeginUpdate();
+            titleComboBox.Items.Clear();
+            foreach (DataRow row in PowersDataSet.DocumentKeys.Rows)
+            {
+                titleComboBox.Items.Add(row["Caption"]);
+            }
+            titleComboBox.EndUpdate();
+        }
+
         public string Title
         {
-            get { return titleTextBox.Text; }
+            get { return titleComboBox.Text; }
         }
 
         public DateTime Date
@@ -52,16 +67,15 @@ namespace WordHiddenPowers.Panes
         }
         
        
-
         private void splitContainer1_Panel1_Resize(object sender, EventArgs e)
         {
             SplitterPanel panel = (SplitterPanel)sender;
 
             titleLabel.Location = new Point(0, 0);
-            titleTextBox.Location = new Point(0, titleLabel.Height);
-            titleTextBox.Width = panel.Width;
-            dateLabel.Location = new Point(0, titleTextBox.Top + titleTextBox.Height + 4);
-            dateTimePicker.Location = new Point(dateLabel.Width + 8, titleTextBox.Top + titleTextBox.Height + 4);
+            titleComboBox.Location = new Point(0, titleLabel.Height);
+            titleComboBox.Width = panel.Width;
+            dateLabel.Location = new Point(0, titleComboBox.Top + titleComboBox.Height + 4);
+            dateTimePicker.Location = new Point(dateLabel.Width + 8, titleComboBox.Top + titleComboBox.Height + 4);
             descriptionLabel.Location = new Point(0, dateLabel.Top + dateLabel.Height + 4);
             descriptionTextBox.Location = new Point(0, descriptionLabel.Top + descriptionLabel.Height);
             descriptionTextBox.Width = panel.Width;
@@ -73,103 +87,79 @@ namespace WordHiddenPowers.Panes
             {
                 DataSetRefresh();
 
-                Word.Variable title = GetVariable(Document.Variables, Const.Globals.TITLE_VARIABLE_NAME);
-                if (title != null)
-                {
-                    titleTextBox.Text = title.Value;
-                }
-
-                Word.Variable date = GetVariable(Document.Variables, Const.Globals.DATE_VARIABLE_NAME);
-                if (date != null)
-                {
-                   dateTimePicker.Value = DateTime.Parse(date.Value);
-                }
-
-                Word.Variable description = GetVariable(Document.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME);
-                if (description != null)
-                {
-                    descriptionTextBox.Text = description.Value;
-                }
-
+                titleComboBox.Text = GetVariable(Const.Globals.TITLE_VARIABLE_NAME);
+                dateTimePicker.Value = DateTime.Parse(GetVariable(Const.Globals.DATE_VARIABLE_NAME));
+                descriptionTextBox.Text = GetVariable(Const.Globals.DESCRIPTION_VARIABLE_NAME);
             }
         }
         
+        private string GetVariable(string name)
+        {
+            Word.Variable variable = HiddenPowerDocument.GetVariable(Document.Variables, name);
+            if (variable != null)
+                return variable.Value;
+            else
+                return string.Empty;
+        }
+
         public void DeleteVariables()
         {
-            PowersDataSet.DecimalPowers.Clear();
-            PowersDataSet.TextPowers.Clear();
-            PowersDataSet.Categories.Clear();
-            PowersDataSet.Subcategories.Clear();
-            PowersDataSet.ColumnsHeaders.Clear();
-            PowersDataSet.RowsHeaders.Clear();
+            foreach (DataTable table in PowersDataSet.Tables)
+            {
+                table.Clear();
+            }
 
             if (Document.Variables.Count > 0)
             {
-                titleTextBox.Text = string.Empty;
+                titleComboBox.Items.Clear();
+                titleComboBox.Text = string.Empty;
                 dateTimePicker.Text = string.Empty;
                 descriptionTextBox.Text = string.Empty;
 
-                Word.Variable title = GetVariable(Document.Variables, Const.Globals.TITLE_VARIABLE_NAME);
-                if (title != null)
-                {
-                    title.Delete();
-                }
-
-                Word.Variable date = GetVariable(Document.Variables, Const.Globals.DATE_VARIABLE_NAME);
-                if (date != null)
-                {
-                    date.Delete();
-                }
-
-                Word.Variable description = GetVariable(Document.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME);
-                if (description != null)
-                {
-                    description.Delete();
-                }
-
-                Word.Variable categories = GetVariable(Document.Variables, Const.Globals.CATEGORIES_VARIABLE_NAME);
-                if (categories != null)
-                {
-                    categories.Delete();
-                }
-
-                Word.Variable table = GetVariable(Document.Variables, Const.Globals.TABLE_VARIABLE_NAME);
-                if (table != null)
-                {
-                    table.Delete();
-                }
+                DeleteVariable(Const.Globals.TITLE_VARIABLE_NAME);
+                DeleteVariable(Const.Globals.DATE_VARIABLE_NAME);
+                DeleteVariable(Const.Globals.DESCRIPTION_VARIABLE_NAME);
+                DeleteVariable(Const.Globals.CATEGORIES_VARIABLE_NAME);
+                DeleteVariable(Const.Globals.TABLE_VARIABLE_NAME);                
             }
+        }
+
+        private void DeleteVariable(string name)
+        {
+            Word.Variable variable = HiddenPowerDocument.GetVariable(Document.Variables, name);
+            if (variable != null)
+                variable.Delete();            
         }
 
         public bool VariablesExists()
         {
             if (Document.Variables.Count > 0)
             {
-                Word.Variable title = GetVariable(Document.Variables, Const.Globals.TITLE_VARIABLE_NAME);
+                Word.Variable title = HiddenPowerDocument.GetVariable(Document.Variables, Const.Globals.TITLE_VARIABLE_NAME);
                 if (title != null)
                 {
                     return true;
                 }
 
-                Word.Variable date = GetVariable(Document.Variables, Const.Globals.DATE_VARIABLE_NAME);
+                Word.Variable date = HiddenPowerDocument.GetVariable(Document.Variables, Const.Globals.DATE_VARIABLE_NAME);
                 if (date != null)
                 {
                     return true;
                 }
 
-                Word.Variable description = GetVariable(Document.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME);
+                Word.Variable description = HiddenPowerDocument.GetVariable(Document.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME);
                 if (description != null)
                 {
                     return true;
                 }
 
-                Word.Variable categories = GetVariable(Document.Variables, Const.Globals.CATEGORIES_VARIABLE_NAME);
+                Word.Variable categories = HiddenPowerDocument.GetVariable(Document.Variables, Const.Globals.CATEGORIES_VARIABLE_NAME);
                 if (categories != null)
                 {
                     return true;
                 }
 
-                Word.Variable table = GetVariable(Document.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+                Word.Variable table = HiddenPowerDocument.GetVariable(Document.Variables, Const.Globals.TABLE_VARIABLE_NAME);
                 if (table != null)
                 {
                     return true;
@@ -180,44 +170,22 @@ namespace WordHiddenPowers.Panes
         
         public void DataSetRefresh()
         {
-            Word.Variable categories = GetVariable(Document.Variables, Const.Globals.CATEGORIES_VARIABLE_NAME);
+            Word.Variable categories = HiddenPowerDocument.GetVariable(Document.Variables, Const.Globals.CATEGORIES_VARIABLE_NAME);
             if (categories != null)
             {
                 StringReader reader = new StringReader(categories.Value);
 
-                PowersDataSet.DecimalPowers.Clear();
-                PowersDataSet.TextPowers.Clear();
-                PowersDataSet.Categories.Clear();
-                PowersDataSet.Subcategories.Clear();
-                PowersDataSet.ColumnsHeaders.Clear();
-                PowersDataSet.RowsHeaders.Clear();
-
+                foreach (DataTable table in PowersDataSet.Tables)
+                {
+                    table.Clear();
+                }
+                                
                 PowersDataSet.ReadXml(reader, XmlReadMode.IgnoreSchema);
                 reader.Close();
             }
         }
 
-        public void ShowEditCategoriesDialog()
-        {
-            Form dialog = new CategoriesEditorDialog(this);
-            dialogs.Add(dialog);
-            dialog.ShowDialog();
-        }
 
-        public void ShowCreateTableDialog()
-        {
-            Form dialog = new CreateTableDialog(this);
-            dialogs.Add(dialog);
-            dialog.ShowDialog();
-        }
-
-        public void ShowEditTableDialog()
-        {
-            Form dialog = new TableEditorDialog(this);
-            dialogs.Add(dialog);
-            dialog.Show();
-        }
-        
         public void AddTextNote(Word.Selection selection)
         {
             TextNoteDialog dialog = new TextNoteDialog(selection);
@@ -252,71 +220,31 @@ namespace WordHiddenPowers.Panes
         //AddButton(applicationObject.CommandBars["Table Cells"]);
 
 
-        private Word.Variable GetVariable(Word.Variables array, string variableName)
-        {
-            for (int i = 1; i <= array.Count; i++)
-            {
-                if (array[i].Name == variableName)
-                {
-                    return array[i];
-                }
-            }
-            return null;
-        }
+        
 
         public void CommitVariables()
         {
-            Word.Variable title = GetVariable(Document.Variables, Const.Globals.TITLE_VARIABLE_NAME);
-            if (title == null)
-            {
-                Document.Variables.Add(Const.Globals.TITLE_VARIABLE_NAME, titleTextBox.Text);
-            }
-            else
-            {
-                title.Value = titleTextBox.Text;
-            }
-
-            Word.Variable date = GetVariable(Document.Variables, Const.Globals.DATE_VARIABLE_NAME);
-            if (date == null)
-            {
-                Document.Variables.Add(Const.Globals.DATE_VARIABLE_NAME, dateTimePicker.Value.ToShortDateString());
-            }
-            else
-            {
-                date.Value = dateTimePicker.Value.ToShortDateString();
-            }
-
-            Word.Variable description = GetVariable(Document.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME);
-            if (description == null)
-            {
-                Document.Variables.Add(Const.Globals.DESCRIPTION_VARIABLE_NAME, descriptionTextBox.Text);
-            }
-            else
-            {
-                description.Value = descriptionTextBox.Text;
-            }
-            
+            CommitVariables(Const.Globals.TITLE_VARIABLE_NAME, titleComboBox.Text);
+            CommitVariables(Const.Globals.DATE_VARIABLE_NAME, dateTimePicker.Value.ToShortDateString());
+            CommitVariables(Const.Globals.DESCRIPTION_VARIABLE_NAME, descriptionTextBox.Text);
+                        
             StringBuilder builder = new StringBuilder();
             StringWriter writer = new StringWriter(builder);
             PowersDataSet.WriteXml(writer, XmlWriteMode.WriteSchema);
             writer.Close();
 
-            Word.Variable categories = GetVariable(Document.Variables, Const.Globals.CATEGORIES_VARIABLE_NAME);
-            if (categories == null)
-            {
-                Document.Variables.Add(Const.Globals.CATEGORIES_VARIABLE_NAME, builder.ToString());
-            }
-            else
-            {
-                categories.Value = builder.ToString();
-            }            
+            CommitVariables(Const.Globals.CATEGORIES_VARIABLE_NAME,builder.ToString());
         }
-
-        private void Controls_TextChanged(object sender, EventArgs e)
+               
+        private void CommitVariables(string name, string value)
         {
-            CommitVariables();
+            Word.Variable variable = HiddenPowerDocument.GetVariable(Document.Variables, name);
+            if (variable == null)
+                Document.Variables.Add(name, value);
+            else
+                variable.Value = value;
         }
-
+         
         private void NoteOpen_Click(object sender, EventArgs e)
         {
             Note note = noteListBox.SelectedItem as Note;

@@ -2,6 +2,7 @@
 using System.Data;
 using System.Windows.Forms;
 using WordHiddenPowers.Panes;
+using WordHiddenPowers.Utils;
 using Word = Microsoft.Office.Interop.Word;
 
 
@@ -111,7 +112,7 @@ namespace WordHiddenPowers.Dialogs
             if (pane.PowersDataSet.RowsHeaders.Rows.Count != (dataGridView.Rows.Count - 1) ||
                     pane.PowersDataSet.ColumnsHeaders.Rows.Count != (dataGridView.Columns.Count - 1))
             {
-                Word.Variable variable = GetVariable(pane.Document.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+                Word.Variable variable = HiddenPowerDocument.GetVariable(pane.Document.Variables, Const.Globals.TABLE_VARIABLE_NAME);
                 if (variable != null)
                 {
                     variable.Delete();
@@ -135,19 +136,7 @@ namespace WordHiddenPowers.Dialogs
 
             pane.CommitVariables();            
         }
-
-        private Word.Variable GetVariable(Word.Variables array, string variableName)
-        {
-            for (int i = 1; i <= array.Count; i++)
-            {
-                if (array[i].Name == variableName)
-                {
-                    return array[i];
-                }
-            }
-            return null;
-        }
-
+                
         private void Delete_Click(object sender, EventArgs e)
         {
 

@@ -76,6 +76,9 @@ namespace WordHiddenPowers.Panes
         {
             if (ContainsKey(Doc.DocID))
             {
+                WordHiddenPowersPane pane = base[Doc.DocID].Control as WordHiddenPowersPane;
+                pane.CommitVariables();
+
                 base[Doc.DocID].VisibleChanged -= Pane_VisibleChanged;
                 links.Remove(base[Doc.DocID]);
                 base.Remove(Doc.DocID);

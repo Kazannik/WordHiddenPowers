@@ -36,7 +36,7 @@ namespace WordHiddenPowers.Repositoryes {
         
         private RowsHeadersDataTable tableRowsHeaders;
         
-        private DocumentsKeysDataTable tableDocumentsKeys;
+        private DocumentKeysDataTable tableDocumentKeys;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -84,8 +84,8 @@ namespace WordHiddenPowers.Repositoryes {
                 if ((ds.Tables["RowsHeaders"] != null)) {
                     base.Tables.Add(new RowsHeadersDataTable(ds.Tables["RowsHeaders"]));
                 }
-                if ((ds.Tables["DocumentsKeys"] != null)) {
-                    base.Tables.Add(new DocumentsKeysDataTable(ds.Tables["DocumentsKeys"]));
+                if ((ds.Tables["DocumentKeys"] != null)) {
+                    base.Tables.Add(new DocumentKeysDataTable(ds.Tables["DocumentKeys"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -169,9 +169,9 @@ namespace WordHiddenPowers.Repositoryes {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public DocumentsKeysDataTable DocumentsKeys {
+        public DocumentKeysDataTable DocumentKeys {
             get {
-                return this.tableDocumentsKeys;
+                return this.tableDocumentKeys;
             }
         }
         
@@ -260,8 +260,8 @@ namespace WordHiddenPowers.Repositoryes {
                 if ((ds.Tables["RowsHeaders"] != null)) {
                     base.Tables.Add(new RowsHeadersDataTable(ds.Tables["RowsHeaders"]));
                 }
-                if ((ds.Tables["DocumentsKeys"] != null)) {
-                    base.Tables.Add(new DocumentsKeysDataTable(ds.Tables["DocumentsKeys"]));
+                if ((ds.Tables["DocumentKeys"] != null)) {
+                    base.Tables.Add(new DocumentKeysDataTable(ds.Tables["DocumentKeys"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -332,10 +332,10 @@ namespace WordHiddenPowers.Repositoryes {
                     this.tableRowsHeaders.InitVars();
                 }
             }
-            this.tableDocumentsKeys = ((DocumentsKeysDataTable)(base.Tables["DocumentsKeys"]));
+            this.tableDocumentKeys = ((DocumentKeysDataTable)(base.Tables["DocumentKeys"]));
             if ((initTable == true)) {
-                if ((this.tableDocumentsKeys != null)) {
-                    this.tableDocumentsKeys.InitVars();
+                if ((this.tableDocumentKeys != null)) {
+                    this.tableDocumentKeys.InitVars();
                 }
             }
         }
@@ -361,8 +361,8 @@ namespace WordHiddenPowers.Repositoryes {
             base.Tables.Add(this.tableColumnsHeaders);
             this.tableRowsHeaders = new RowsHeadersDataTable();
             base.Tables.Add(this.tableRowsHeaders);
-            this.tableDocumentsKeys = new DocumentsKeysDataTable();
-            base.Tables.Add(this.tableDocumentsKeys);
+            this.tableDocumentKeys = new DocumentKeysDataTable();
+            base.Tables.Add(this.tableDocumentKeys);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -403,7 +403,7 @@ namespace WordHiddenPowers.Repositoryes {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private bool ShouldSerializeDocumentsKeys() {
+        private bool ShouldSerializeDocumentKeys() {
             return false;
         }
         
@@ -481,7 +481,7 @@ namespace WordHiddenPowers.Repositoryes {
         public delegate void RowsHeadersRowChangeEventHandler(object sender, RowsHeadersRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public delegate void DocumentsKeysRowChangeEventHandler(object sender, DocumentsKeysRowChangeEvent e);
+        public delegate void DocumentKeysRowChangeEventHandler(object sender, DocumentKeysRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -2488,7 +2488,7 @@ namespace WordHiddenPowers.Repositoryes {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class DocumentsKeysDataTable : global::System.Data.TypedTableBase<DocumentsKeysRow> {
+        public partial class DocumentKeysDataTable : global::System.Data.TypedTableBase<DocumentKeysRow> {
             
             private global::System.Data.DataColumn columnid;
             
@@ -2496,8 +2496,8 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DocumentsKeysDataTable() {
-                this.TableName = "DocumentsKeys";
+            public DocumentKeysDataTable() {
+                this.TableName = "DocumentKeys";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -2505,7 +2505,7 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal DocumentsKeysDataTable(global::System.Data.DataTable table) {
+            internal DocumentKeysDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -2522,7 +2522,7 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected DocumentsKeysDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected DocumentKeysDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
@@ -2554,46 +2554,46 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DocumentsKeysRow this[int index] {
+            public DocumentKeysRow this[int index] {
                 get {
-                    return ((DocumentsKeysRow)(this.Rows[index]));
+                    return ((DocumentKeysRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event DocumentsKeysRowChangeEventHandler DocumentsKeysRowChanging;
+            public event DocumentKeysRowChangeEventHandler DocumentKeysRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event DocumentsKeysRowChangeEventHandler DocumentsKeysRowChanged;
+            public event DocumentKeysRowChangeEventHandler DocumentKeysRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event DocumentsKeysRowChangeEventHandler DocumentsKeysRowDeleting;
+            public event DocumentKeysRowChangeEventHandler DocumentKeysRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event DocumentsKeysRowChangeEventHandler DocumentsKeysRowDeleted;
+            public event DocumentKeysRowChangeEventHandler DocumentKeysRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void AddDocumentsKeysRow(DocumentsKeysRow row) {
+            public void AddDocumentKeysRow(DocumentKeysRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DocumentsKeysRow AddDocumentsKeysRow(string Caption) {
-                DocumentsKeysRow rowDocumentsKeysRow = ((DocumentsKeysRow)(this.NewRow()));
+            public DocumentKeysRow AddDocumentKeysRow(string Caption) {
+                DocumentKeysRow rowDocumentKeysRow = ((DocumentKeysRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         Caption};
-                rowDocumentsKeysRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowDocumentsKeysRow);
-                return rowDocumentsKeysRow;
+                rowDocumentKeysRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowDocumentKeysRow);
+                return rowDocumentKeysRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                DocumentsKeysDataTable cln = ((DocumentsKeysDataTable)(base.Clone()));
+                DocumentKeysDataTable cln = ((DocumentKeysDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -2601,7 +2601,7 @@ namespace WordHiddenPowers.Repositoryes {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new DocumentsKeysDataTable();
+                return new DocumentKeysDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2624,28 +2624,28 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DocumentsKeysRow NewDocumentsKeysRow() {
-                return ((DocumentsKeysRow)(this.NewRow()));
+            public DocumentKeysRow NewDocumentKeysRow() {
+                return ((DocumentKeysRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new DocumentsKeysRow(builder);
+                return new DocumentKeysRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(DocumentsKeysRow);
+                return typeof(DocumentKeysRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.DocumentsKeysRowChanged != null)) {
-                    this.DocumentsKeysRowChanged(this, new DocumentsKeysRowChangeEvent(((DocumentsKeysRow)(e.Row)), e.Action));
+                if ((this.DocumentKeysRowChanged != null)) {
+                    this.DocumentKeysRowChanged(this, new DocumentKeysRowChangeEvent(((DocumentKeysRow)(e.Row)), e.Action));
                 }
             }
             
@@ -2653,8 +2653,8 @@ namespace WordHiddenPowers.Repositoryes {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.DocumentsKeysRowChanging != null)) {
-                    this.DocumentsKeysRowChanging(this, new DocumentsKeysRowChangeEvent(((DocumentsKeysRow)(e.Row)), e.Action));
+                if ((this.DocumentKeysRowChanging != null)) {
+                    this.DocumentKeysRowChanging(this, new DocumentKeysRowChangeEvent(((DocumentKeysRow)(e.Row)), e.Action));
                 }
             }
             
@@ -2662,8 +2662,8 @@ namespace WordHiddenPowers.Repositoryes {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.DocumentsKeysRowDeleted != null)) {
-                    this.DocumentsKeysRowDeleted(this, new DocumentsKeysRowChangeEvent(((DocumentsKeysRow)(e.Row)), e.Action));
+                if ((this.DocumentKeysRowDeleted != null)) {
+                    this.DocumentKeysRowDeleted(this, new DocumentKeysRowChangeEvent(((DocumentKeysRow)(e.Row)), e.Action));
                 }
             }
             
@@ -2671,14 +2671,14 @@ namespace WordHiddenPowers.Repositoryes {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.DocumentsKeysRowDeleting != null)) {
-                    this.DocumentsKeysRowDeleting(this, new DocumentsKeysRowChangeEvent(((DocumentsKeysRow)(e.Row)), e.Action));
+                if ((this.DocumentKeysRowDeleting != null)) {
+                    this.DocumentKeysRowDeleting(this, new DocumentKeysRowChangeEvent(((DocumentKeysRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void RemoveDocumentsKeysRow(DocumentsKeysRow row) {
+            public void RemoveDocumentKeysRow(DocumentKeysRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -2705,7 +2705,7 @@ namespace WordHiddenPowers.Repositoryes {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "DocumentsKeysDataTable";
+                attribute2.FixedValue = "DocumentKeysDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -3377,15 +3377,15 @@ namespace WordHiddenPowers.Repositoryes {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class DocumentsKeysRow : global::System.Data.DataRow {
+        public partial class DocumentKeysRow : global::System.Data.DataRow {
             
-            private DocumentsKeysDataTable tableDocumentsKeys;
+            private DocumentKeysDataTable tableDocumentKeys;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal DocumentsKeysRow(global::System.Data.DataRowBuilder rb) : 
+            internal DocumentKeysRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tableDocumentsKeys = ((DocumentsKeysDataTable)(this.Table));
+                this.tableDocumentKeys = ((DocumentKeysDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3393,14 +3393,14 @@ namespace WordHiddenPowers.Repositoryes {
             public int id {
                 get {
                     try {
-                        return ((int)(this[this.tableDocumentsKeys.idColumn]));
+                        return ((int)(this[this.tableDocumentKeys.idColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Значение для столбца \'id\' в таблице \'DocumentsKeys\' равно DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'id\' в таблице \'DocumentKeys\' равно DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableDocumentsKeys.idColumn] = value;
+                    this[this.tableDocumentKeys.idColumn] = value;
                 }
             }
             
@@ -3408,23 +3408,23 @@ namespace WordHiddenPowers.Repositoryes {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string Caption {
                 get {
-                    return ((string)(this[this.tableDocumentsKeys.CaptionColumn]));
+                    return ((string)(this[this.tableDocumentKeys.CaptionColumn]));
                 }
                 set {
-                    this[this.tableDocumentsKeys.CaptionColumn] = value;
+                    this[this.tableDocumentKeys.CaptionColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsidNull() {
-                return this.IsNull(this.tableDocumentsKeys.idColumn);
+                return this.IsNull(this.tableDocumentKeys.idColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetidNull() {
-                this[this.tableDocumentsKeys.idColumn] = global::System.Convert.DBNull;
+                this[this.tableDocumentKeys.idColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -3636,22 +3636,22 @@ namespace WordHiddenPowers.Repositoryes {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public class DocumentsKeysRowChangeEvent : global::System.EventArgs {
+        public class DocumentKeysRowChangeEvent : global::System.EventArgs {
             
-            private DocumentsKeysRow eventRow;
+            private DocumentKeysRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DocumentsKeysRowChangeEvent(DocumentsKeysRow row, global::System.Data.DataRowAction action) {
+            public DocumentKeysRowChangeEvent(DocumentKeysRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DocumentsKeysRow Row {
+            public DocumentKeysRow Row {
                 get {
                     return this.eventRow;
                 }

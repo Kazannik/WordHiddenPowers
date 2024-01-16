@@ -20,6 +20,13 @@ namespace WordHiddenPowers.Repositoryes.Models
                 description: dataRow.Description);
         }
 
+        public static Category Create(string caption, string description)
+        {
+            return new Category(id: -1,
+                caption: caption,
+                description: description);
+        }
+
         public static Category Default()
         {
             return new Category(id: 0,
@@ -42,7 +49,12 @@ namespace WordHiddenPowers.Repositoryes.Models
 
         public object[] ToObjectsArray()
         {
-            return (new object[]{ Id,
+            if (Id ==-1)
+                return (new object[]{ null,
+                Caption,
+                Description });
+            else
+                return (new object[]{ Id,
                 Caption,
                 Description });
         }

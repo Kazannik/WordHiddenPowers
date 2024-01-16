@@ -43,6 +43,7 @@
             this.deletePowersButton = this.Factory.CreateRibbonButton();
             this.openPowersButton = this.Factory.CreateRibbonButton();
             this.savePowersButton = this.Factory.CreateRibbonButton();
+            this.editDocumentKeysButton = this.Factory.CreateRibbonButton();
             this.editCategoriesButton = this.Factory.CreateRibbonButton();
             this.createTableButton = this.Factory.CreateRibbonButton();
             this.editTableButton = this.Factory.CreateRibbonButton();
@@ -67,6 +68,7 @@
             this.group1.Items.Add(this.openPowersButton);
             this.group1.Items.Add(this.savePowersButton);
             this.group1.Items.Add(this.separator2);
+            this.group1.Items.Add(this.editDocumentKeysButton);
             this.group1.Items.Add(this.editCategoriesButton);
             this.group1.Items.Add(this.createTableButton);
             this.group1.Label = "Макет данных";
@@ -123,6 +125,14 @@
             this.savePowersButton.OfficeImageId = "FileSaveAs";
             this.savePowersButton.ShowImage = true;
             this.savePowersButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.savePowersButton_Click);
+            // 
+            // editDocumentKeysButton
+            // 
+            this.editDocumentKeysButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.editDocumentKeysButton.Label = "Коллекция заголовков";
+            this.editDocumentKeysButton.Name = "editDocumentKeysButton";
+            this.editDocumentKeysButton.ShowImage = true;
+            this.editDocumentKeysButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.editDocumentKeysButton_Click);
             // 
             // editCategoriesButton
             // 
@@ -190,6 +200,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator1;
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator2;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton editCategoriesButton;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton editDocumentKeysButton;
     }
 
     partial class ThisRibbonCollection
