@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using WordHiddenPowers.Repositoryes.Models;
 
 namespace WordHiddenPowers.Controls
@@ -15,12 +10,14 @@ namespace WordHiddenPowers.Controls
         public CategoryTreeNode(Category category):base(text: category.Caption)
         {
             Category = category;
-
+            Name = category.Caption;
         }
+               
 
-        public CategoryTreeNode(string caption, string description): base(text: caption)
+        public CategoryTreeNode(string caption, string description, bool isObligatory) : base(text: caption)
         {
-            Category = Category.Create(caption: caption, description: description);
-        }
+            Category = Category.Create(caption: caption, description: description, isObligatory:isObligatory);
+            Name = caption;
+        }        
     }
 }

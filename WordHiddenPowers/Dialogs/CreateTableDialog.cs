@@ -248,5 +248,15 @@ namespace WordHiddenPowers.Dialogs
         {
 
         }
+
+        private void mnuFileOpen_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mnuFileSaveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -10,53 +10,56 @@ namespace WordHiddenPowers.Repositoryes.Models
         {
             return new Category(id: (int)dataRow["id"],
                 caption: dataRow["Caption"] as string,
-                description: dataRow["Description"] as string);
+                description: dataRow["Description"] as string,
+                isObligatory: (bool)dataRow["IsObligatory"]);
         }
 
         public static Category Create(RepositoryDataSet.CategoriesRow dataRow)
         {
             return new Category(id: dataRow.id,
                 caption: dataRow.Caption,
-                description: dataRow.Description);
+                description: dataRow.Description,
+                isObligatory: dataRow.IsObligatory);
         }
 
-        public static Category Create(string caption, string description)
+        public static Category Create(string caption, string description, bool isObligatory)
         {
             return new Category(id: -1,
                 caption: caption,
-                description: description);
+                description: description,
+                isObligatory: isObligatory);
         }
 
         public static Category Default()
         {
             return new Category(id: 0,
                 caption: "Не определено",
-                description: "Значение категории не определено");
+                description: "Значение категории не определено",
+                isObligatory: false);
         }
 
-        private Category(int id, string caption, string description)
+        private Category(int id, string caption, string description, bool isObligatory)
         {
             Id = id;
             Caption = caption;
             Description = description;
+            IsObligatory = isObligatory;
         }
 
         public int Id { get; }
 
-        public string Caption { get; }
+        public string Caption { get; set; }
 
-        public string Description { get; }
+        public string Description { get; set; }
+
+        public bool IsObligatory { get; set; }
 
         public object[] ToObjectsArray()
         {
-            if (Id ==-1)
-                return (new object[]{ null,
+            return (new object[] { Id < 0 ? null: (object) Id,
                 Caption,
-                Description });
-            else
-                return (new object[]{ Id,
-                Caption,
-                Description });
+                Description,
+                IsObligatory });
         }
 
         public int CompareTo(Category value)

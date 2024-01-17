@@ -863,6 +863,8 @@ namespace WordHiddenPowers.Repositoryes {
             
             private global::System.Data.DataColumn columnDescription;
             
+            private global::System.Data.DataColumn columnIsObligatory;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public CategoriesDataTable() {
@@ -922,6 +924,14 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn IsObligatoryColumn {
+                get {
+                    return this.columnIsObligatory;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -957,12 +967,13 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public CategoriesRow AddCategoriesRow(string Caption, string Description) {
+            public CategoriesRow AddCategoriesRow(string Caption, string Description, bool IsObligatory) {
                 CategoriesRow rowCategoriesRow = ((CategoriesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         Caption,
-                        Description};
+                        Description,
+                        IsObligatory};
                 rowCategoriesRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowCategoriesRow);
                 return rowCategoriesRow;
@@ -995,6 +1006,7 @@ namespace WordHiddenPowers.Repositoryes {
                 this.columnid = base.Columns["id"];
                 this.columnCaption = base.Columns["Caption"];
                 this.columnDescription = base.Columns["Description"];
+                this.columnIsObligatory = base.Columns["IsObligatory"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1006,11 +1018,15 @@ namespace WordHiddenPowers.Repositoryes {
                 base.Columns.Add(this.columnCaption);
                 this.columnDescription = new global::System.Data.DataColumn("Description", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDescription);
+                this.columnIsObligatory = new global::System.Data.DataColumn("IsObligatory", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnIsObligatory);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("CategoriesTableKey", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
                 this.columnid.AllowDBNull = false;
                 this.columnid.Unique = true;
+                this.columnIsObligatory.AllowDBNull = false;
+                this.columnIsObligatory.DefaultValue = ((bool)(false));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1156,6 +1172,8 @@ namespace WordHiddenPowers.Repositoryes {
             
             private global::System.Data.DataColumn columnIsText;
             
+            private global::System.Data.DataColumn columnIsObligatory;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public SubcategoriesDataTable() {
@@ -1239,6 +1257,14 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn IsObligatoryColumn {
+                get {
+                    return this.columnIsObligatory;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1274,7 +1300,7 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SubcategoriesRow AddSubcategoriesRow(int category_id, string Caption, string Description, bool IsDecimal, bool IsText) {
+            public SubcategoriesRow AddSubcategoriesRow(int category_id, string Caption, string Description, bool IsDecimal, bool IsText, bool IsObligatory) {
                 SubcategoriesRow rowSubcategoriesRow = ((SubcategoriesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -1282,7 +1308,8 @@ namespace WordHiddenPowers.Repositoryes {
                         Caption,
                         Description,
                         IsDecimal,
-                        IsText};
+                        IsText,
+                        IsObligatory};
                 rowSubcategoriesRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowSubcategoriesRow);
                 return rowSubcategoriesRow;
@@ -1318,6 +1345,7 @@ namespace WordHiddenPowers.Repositoryes {
                 this.columnDescription = base.Columns["Description"];
                 this.columnIsDecimal = base.Columns["IsDecimal"];
                 this.columnIsText = base.Columns["IsText"];
+                this.columnIsObligatory = base.Columns["IsObligatory"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1335,6 +1363,8 @@ namespace WordHiddenPowers.Repositoryes {
                 base.Columns.Add(this.columnIsDecimal);
                 this.columnIsText = new global::System.Data.DataColumn("IsText", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnIsText);
+                this.columnIsObligatory = new global::System.Data.DataColumn("IsObligatory", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnIsObligatory);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("SubcategoriesTableKey", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -1346,6 +1376,8 @@ namespace WordHiddenPowers.Repositoryes {
                 this.columnIsDecimal.DefaultValue = ((bool)(true));
                 this.columnIsText.AllowDBNull = false;
                 this.columnIsText.DefaultValue = ((bool)(true));
+                this.columnIsObligatory.AllowDBNull = false;
+                this.columnIsObligatory.DefaultValue = ((bool)(false));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2942,6 +2974,17 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsObligatory {
+                get {
+                    return ((bool)(this[this.tableCategories.IsObligatoryColumn]));
+                }
+                set {
+                    this[this.tableCategories.IsObligatoryColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsCaptionNull() {
                 return this.IsNull(this.tableCategories.CaptionColumn);
             }
@@ -3052,6 +3095,17 @@ namespace WordHiddenPowers.Repositoryes {
                 }
                 set {
                     this[this.tableSubcategories.IsTextColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsObligatory {
+                get {
+                    return ((bool)(this[this.tableSubcategories.IsObligatoryColumn]));
+                }
+                set {
+                    this[this.tableSubcategories.IsObligatoryColumn] = value;
                 }
             }
             

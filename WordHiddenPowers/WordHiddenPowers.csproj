@@ -176,6 +176,7 @@
       <DependentUpon>ReitingBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\SubcategoriesComboBox.cs" />
+    <Compile Include="Controls\SubcategoryTreeNode.cs" />
     <Compile Include="Controls\TableEditBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -523,6 +524,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\GroupContTypeNew_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestFiles\regions.txt" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
