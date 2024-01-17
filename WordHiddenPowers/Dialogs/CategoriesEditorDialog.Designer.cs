@@ -33,10 +33,15 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.mnuFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuFileNewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuFileSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuFileOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuFileSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuFileSaveAs = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuFileExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuCategories = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuCategoriesAddCategory = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -48,36 +53,30 @@
             this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.categoriesTreeView = new System.Windows.Forms.TreeView();
-            this.isTextCheckBox = new System.Windows.Forms.CheckBox();
-            this.isDecimalCheckBox = new System.Windows.Forms.CheckBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.descriptionTextBox = new System.Windows.Forms.TextBox();
             this.descriptionLabel = new System.Windows.Forms.Label();
             this.captionTextBox = new System.Windows.Forms.TextBox();
             this.captionLabel = new System.Windows.Forms.Label();
-            this.isObligatoryCheckBox = new System.Windows.Forms.CheckBox();
-            this.mnuCategories = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuCategoriesAddCategory = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuFileOpen = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuFileSaveAs = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.captionPanel = new System.Windows.Forms.Panel();
             this.typeLabel = new System.Windows.Forms.Label();
+            this.isTextCheckBox = new System.Windows.Forms.CheckBox();
+            this.isDecimalCheckBox = new System.Windows.Forms.CheckBox();
+            this.isObligatoryCheckBox = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.captionPanel.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Location = new System.Drawing.Point(0, 400);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 321);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(699, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(524, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -90,8 +89,7 @@
             this.mnuCategories});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(699, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(524, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -106,40 +104,71 @@
             this.toolStripMenuItem2,
             this.mnuFileExitToolStripMenuItem});
             this.mnuFileToolStripMenuItem.Name = "mnuFileToolStripMenuItem";
-            this.mnuFileToolStripMenuItem.Size = new System.Drawing.Size(57, 24);
+            this.mnuFileToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.mnuFileToolStripMenuItem.Text = "Файл";
             // 
             // mnuFileNewToolStripMenuItem
             // 
             this.mnuFileNewToolStripMenuItem.Image = global::WordHiddenPowers.Properties.Resources.GroupContTypeNew_24;
             this.mnuFileNewToolStripMenuItem.Name = "mnuFileNewToolStripMenuItem";
-            this.mnuFileNewToolStripMenuItem.Size = new System.Drawing.Size(212, 30);
+            this.mnuFileNewToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.mnuFileNewToolStripMenuItem.Text = "Создать структуру";
+            // 
+            // mnuFileOpen
+            // 
+            this.mnuFileOpen.Name = "mnuFileOpen";
+            this.mnuFileOpen.Size = new System.Drawing.Size(174, 22);
+            this.mnuFileOpen.Text = "Открыть файл...";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(171, 6);
             // 
             // mnuFileSaveToolStripMenuItem
             // 
             this.mnuFileSaveToolStripMenuItem.Image = global::WordHiddenPowers.Properties.Resources.Save_24;
             this.mnuFileSaveToolStripMenuItem.Name = "mnuFileSaveToolStripMenuItem";
-            this.mnuFileSaveToolStripMenuItem.Size = new System.Drawing.Size(212, 30);
+            this.mnuFileSaveToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.mnuFileSaveToolStripMenuItem.Text = "Сохранить";
             // 
-            // toolStripMenuItem1
+            // mnuFileSaveAs
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(209, 6);
+            this.mnuFileSaveAs.Name = "mnuFileSaveAs";
+            this.mnuFileSaveAs.Size = new System.Drawing.Size(174, 22);
+            this.mnuFileSaveAs.Text = "Сохранить как...";
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(171, 6);
             // 
             // mnuFileExitToolStripMenuItem
             // 
             this.mnuFileExitToolStripMenuItem.Image = global::WordHiddenPowers.Properties.Resources.WindowClose_24;
             this.mnuFileExitToolStripMenuItem.Name = "mnuFileExitToolStripMenuItem";
-            this.mnuFileExitToolStripMenuItem.Size = new System.Drawing.Size(212, 30);
+            this.mnuFileExitToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.mnuFileExitToolStripMenuItem.Text = "Закрыть";
             // 
             // mnuEdit
             // 
             this.mnuEdit.Name = "mnuEdit";
-            this.mnuEdit.Size = new System.Drawing.Size(76, 24);
+            this.mnuEdit.Size = new System.Drawing.Size(64, 20);
             this.mnuEdit.Text = "mnuEdit";
+            // 
+            // mnuCategories
+            // 
+            this.mnuCategories.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuCategoriesAddCategory});
+            this.mnuCategories.Name = "mnuCategories";
+            this.mnuCategories.Size = new System.Drawing.Size(76, 20);
+            this.mnuCategories.Text = "Категории";
+            // 
+            // mnuCategoriesAddCategory
+            // 
+            this.mnuCategoriesAddCategory.Name = "mnuCategoriesAddCategory";
+            this.mnuCategoriesAddCategory.Size = new System.Drawing.Size(188, 22);
+            this.mnuCategoriesAddCategory.Text = "Добавить категорию";
             // 
             // toolStrip1
             // 
@@ -154,9 +183,9 @@
             this.addSubcategoryButton,
             this.toolStripSeparator3,
             this.toolStripButton5});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 28);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(699, 31);
+            this.toolStrip1.Size = new System.Drawing.Size(524, 31);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -225,8 +254,7 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 59);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 55);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -235,171 +263,151 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.captionPanel);
-            this.splitContainer1.Panel2.Controls.Add(this.isObligatoryCheckBox);
-            this.splitContainer1.Panel2.Controls.Add(this.isTextCheckBox);
-            this.splitContainer1.Panel2.Controls.Add(this.isDecimalCheckBox);
-            this.splitContainer1.Panel2.Controls.Add(this.descriptionTextBox);
-            this.splitContainer1.Panel2.Controls.Add(this.descriptionLabel);
-            this.splitContainer1.Panel2.Controls.Add(this.captionTextBox);
-            this.splitContainer1.Panel2.Controls.Add(this.captionLabel);
-            this.splitContainer1.Panel2.Resize += new System.EventHandler(this.splitContainer1_Panel2_Resize);
-            this.splitContainer1.Size = new System.Drawing.Size(699, 341);
-            this.splitContainer1.SplitterDistance = 286;
-            this.splitContainer1.SplitterWidth = 5;
+            this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel1);
+            this.splitContainer1.Size = new System.Drawing.Size(524, 266);
+            this.splitContainer1.SplitterDistance = 214;
             this.splitContainer1.TabIndex = 3;
             // 
             // categoriesTreeView
             // 
             this.categoriesTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.categoriesTreeView.Location = new System.Drawing.Point(0, 0);
-            this.categoriesTreeView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.categoriesTreeView.Name = "categoriesTreeView";
-            this.categoriesTreeView.Size = new System.Drawing.Size(286, 341);
+            this.categoriesTreeView.Size = new System.Drawing.Size(214, 266);
             this.categoriesTreeView.TabIndex = 0;
-            this.categoriesTreeView.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.categoriesTreeView_BeforeSelect);
             this.categoriesTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.categoriesTreeView_AfterSelect);
             // 
-            // isTextCheckBox
+            // tableLayoutPanel1
             // 
-            this.isTextCheckBox.AutoSize = true;
-            this.isTextCheckBox.Location = new System.Drawing.Point(288, 304);
-            this.isTextCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.isTextCheckBox.Name = "isTextCheckBox";
-            this.isTextCheckBox.Size = new System.Drawing.Size(105, 21);
-            this.isTextCheckBox.TabIndex = 5;
-            this.isTextCheckBox.Text = "Для текста";
-            this.isTextCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // isDecimalCheckBox
-            // 
-            this.isDecimalCheckBox.AutoSize = true;
-            this.isDecimalCheckBox.Location = new System.Drawing.Point(176, 304);
-            this.isDecimalCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.isDecimalCheckBox.Name = "isDecimalCheckBox";
-            this.isDecimalCheckBox.Size = new System.Drawing.Size(100, 21);
-            this.isDecimalCheckBox.TabIndex = 4;
-            this.isDecimalCheckBox.Text = "Для чисел";
-            this.isDecimalCheckBox.UseVisualStyleBackColor = true;
+            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33332F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel1.Controls.Add(this.typeLabel, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.isTextCheckBox, 2, 5);
+            this.tableLayoutPanel1.Controls.Add(this.captionLabel, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.isDecimalCheckBox, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.isObligatoryCheckBox, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.captionTextBox, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.descriptionLabel, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.descriptionTextBox, 0, 4);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 6;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(306, 266);
+            this.tableLayoutPanel1.TabIndex = 8;
             // 
             // descriptionTextBox
             // 
-            this.descriptionTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.descriptionTextBox.Location = new System.Drawing.Point(3, 136);
-            this.descriptionTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel1.SetColumnSpan(this.descriptionTextBox, 3);
+            this.descriptionTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.descriptionTextBox.Location = new System.Drawing.Point(3, 135);
             this.descriptionTextBox.Multiline = true;
             this.descriptionTextBox.Name = "descriptionTextBox";
-            this.descriptionTextBox.Size = new System.Drawing.Size(405, 161);
+            this.descriptionTextBox.Size = new System.Drawing.Size(300, 104);
             this.descriptionTextBox.TabIndex = 3;
+            this.descriptionTextBox.TextChanged += new System.EventHandler(this.Controls_ValueChanged);
             // 
             // descriptionLabel
             // 
-            this.descriptionLabel.AutoSize = true;
-            this.descriptionLabel.Location = new System.Drawing.Point(0, 120);
-            this.descriptionLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.tableLayoutPanel1.SetColumnSpan(this.descriptionLabel, 3);
+            this.descriptionLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.descriptionLabel.Location = new System.Drawing.Point(3, 116);
             this.descriptionLabel.Name = "descriptionLabel";
-            this.descriptionLabel.Size = new System.Drawing.Size(117, 17);
+            this.descriptionLabel.Size = new System.Drawing.Size(300, 16);
             this.descriptionLabel.TabIndex = 2;
             this.descriptionLabel.Text = "Дополнительно:";
             // 
             // captionTextBox
             // 
-            this.captionTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.captionTextBox.Location = new System.Drawing.Point(0, 64);
-            this.captionTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel1.SetColumnSpan(this.captionTextBox, 3);
+            this.captionTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.captionTextBox.Location = new System.Drawing.Point(3, 39);
             this.captionTextBox.Multiline = true;
             this.captionTextBox.Name = "captionTextBox";
-            this.captionTextBox.Size = new System.Drawing.Size(408, 60);
+            this.captionTextBox.Size = new System.Drawing.Size(300, 74);
             this.captionTextBox.TabIndex = 1;
-            this.captionTextBox.TextChanged += new System.EventHandler(this.captionTextBox_TextChanged);
+            this.captionTextBox.TextChanged += new System.EventHandler(this.Controls_ValueChanged);
             // 
             // captionLabel
             // 
-            this.captionLabel.AutoSize = true;
-            this.captionLabel.Location = new System.Drawing.Point(0, 40);
-            this.captionLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.tableLayoutPanel1.SetColumnSpan(this.captionLabel, 3);
+            this.captionLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.captionLabel.Location = new System.Drawing.Point(3, 20);
             this.captionLabel.Name = "captionLabel";
-            this.captionLabel.Size = new System.Drawing.Size(80, 17);
+            this.captionLabel.Size = new System.Drawing.Size(300, 16);
             this.captionLabel.TabIndex = 0;
             this.captionLabel.Text = "Заголовок:";
+            // 
+            // typeLabel
+            // 
+            this.typeLabel.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.tableLayoutPanel1.SetColumnSpan(this.typeLabel, 3);
+            this.typeLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.typeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.typeLabel.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.typeLabel.Location = new System.Drawing.Point(3, 0);
+            this.typeLabel.Name = "typeLabel";
+            this.typeLabel.Size = new System.Drawing.Size(300, 20);
+            this.typeLabel.TabIndex = 0;
+            this.typeLabel.Text = "label1";
+            this.typeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // isTextCheckBox
+            // 
+            this.isTextCheckBox.AutoSize = true;
+            this.isTextCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.isTextCheckBox.Location = new System.Drawing.Point(206, 245);
+            this.isTextCheckBox.Name = "isTextCheckBox";
+            this.isTextCheckBox.Size = new System.Drawing.Size(97, 18);
+            this.isTextCheckBox.TabIndex = 5;
+            this.isTextCheckBox.Text = "Для текста";
+            this.isTextCheckBox.UseVisualStyleBackColor = true;
+            this.isTextCheckBox.CheckedChanged += new System.EventHandler(this.Controls_ValueChanged);
+            // 
+            // isDecimalCheckBox
+            // 
+            this.isDecimalCheckBox.AutoSize = true;
+            this.isDecimalCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.isDecimalCheckBox.Location = new System.Drawing.Point(104, 245);
+            this.isDecimalCheckBox.Name = "isDecimalCheckBox";
+            this.isDecimalCheckBox.Size = new System.Drawing.Size(96, 18);
+            this.isDecimalCheckBox.TabIndex = 4;
+            this.isDecimalCheckBox.Text = "Для чисел";
+            this.isDecimalCheckBox.UseVisualStyleBackColor = true;
+            this.isDecimalCheckBox.CheckedChanged += new System.EventHandler(this.Controls_ValueChanged);
             // 
             // isObligatoryCheckBox
             // 
             this.isObligatoryCheckBox.AutoSize = true;
-            this.isObligatoryCheckBox.Location = new System.Drawing.Point(8, 304);
+            this.isObligatoryCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.isObligatoryCheckBox.Location = new System.Drawing.Point(2, 244);
+            this.isObligatoryCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.isObligatoryCheckBox.Name = "isObligatoryCheckBox";
-            this.isObligatoryCheckBox.Size = new System.Drawing.Size(128, 21);
+            this.isObligatoryCheckBox.Size = new System.Drawing.Size(97, 20);
             this.isObligatoryCheckBox.TabIndex = 6;
             this.isObligatoryCheckBox.Text = "Обязательный";
             this.isObligatoryCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // mnuCategories
-            // 
-            this.mnuCategories.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuCategoriesAddCategory});
-            this.mnuCategories.Name = "mnuCategories";
-            this.mnuCategories.Size = new System.Drawing.Size(94, 24);
-            this.mnuCategories.Text = "Категории";
-            // 
-            // mnuCategoriesAddCategory
-            // 
-            this.mnuCategoriesAddCategory.Name = "mnuCategoriesAddCategory";
-            this.mnuCategoriesAddCategory.Size = new System.Drawing.Size(229, 26);
-            this.mnuCategoriesAddCategory.Text = "Добавить категорию";
-            // 
-            // mnuFileOpen
-            // 
-            this.mnuFileOpen.Name = "mnuFileOpen";
-            this.mnuFileOpen.Size = new System.Drawing.Size(212, 30);
-            this.mnuFileOpen.Text = "Открыть файл...";
-            // 
-            // mnuFileSaveAs
-            // 
-            this.mnuFileSaveAs.Name = "mnuFileSaveAs";
-            this.mnuFileSaveAs.Size = new System.Drawing.Size(212, 30);
-            this.mnuFileSaveAs.Text = "Сохранить как...";
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(209, 6);
-            // 
-            // captionPanel
-            // 
-            this.captionPanel.BackColor = System.Drawing.SystemColors.Highlight;
-            this.captionPanel.Controls.Add(this.typeLabel);
-            this.captionPanel.Location = new System.Drawing.Point(0, 0);
-            this.captionPanel.Name = "captionPanel";
-            this.captionPanel.Size = new System.Drawing.Size(400, 32);
-            this.captionPanel.TabIndex = 7;
-            // 
-            // typeLabel
-            // 
-            this.typeLabel.AutoSize = true;
-            this.typeLabel.BackColor = System.Drawing.SystemColors.Highlight;
-            this.typeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.typeLabel.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.typeLabel.Location = new System.Drawing.Point(16, 8);
-            this.typeLabel.Name = "typeLabel";
-            this.typeLabel.Size = new System.Drawing.Size(59, 20);
-            this.typeLabel.TabIndex = 0;
-            this.typeLabel.Text = "label1";
+            this.isObligatoryCheckBox.CheckedChanged += new System.EventHandler(this.Controls_ValueChanged);
             // 
             // CategoriesEditorDialog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(699, 422);
+            this.ClientSize = new System.Drawing.Size(524, 343);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "CategoriesEditorDialog";
@@ -412,11 +420,10 @@
             this.toolStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.captionPanel.ResumeLayout(false);
-            this.captionPanel.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -455,7 +462,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuFileOpen;
         private System.Windows.Forms.ToolStripMenuItem mnuFileSaveAs;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
-        private System.Windows.Forms.Panel captionPanel;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label typeLabel;
     }
 }

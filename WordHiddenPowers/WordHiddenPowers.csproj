@@ -158,7 +158,6 @@
     <Compile Include="Const\Panes.cs" />
     <Compile Include="Controls\CategoriesComboBox.cs" />
     <Compile Include="Controls\CategoriesPicker.cs" />
-    <Compile Include="Controls\CategoryTreeNode.cs" />
     <Compile Include="Controls\ComboControl.cs" />
     <Compile Include="Controls\NoteListBox.cs">
       <SubType>Component</SubType>
@@ -176,7 +175,6 @@
       <DependentUpon>ReitingBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\SubcategoriesComboBox.cs" />
-    <Compile Include="Controls\SubcategoryTreeNode.cs" />
     <Compile Include="Controls\TableEditBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
