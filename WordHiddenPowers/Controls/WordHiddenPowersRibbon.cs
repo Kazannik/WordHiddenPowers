@@ -4,7 +4,6 @@ using Microsoft.Office.Tools.Ribbon;
 using System.Windows.Forms;
 using WordHiddenPowers.Repositoryes;
 using System.IO;
-using WordHiddenPowers.Dialogs;
 using WordHiddenPowers.Panes;
 
 namespace WordHiddenPowers
@@ -36,7 +35,7 @@ namespace WordHiddenPowers
                 OpenFileDialog dialog = new OpenFileDialog();
                 dialog.Multiselect = false;
                 dialog.Filter = dialogFilters;
-                if (dialog.ShowDialog( Utils.ShowDialogUtil.GetOwner()) == DialogResult.OK)
+                if (Utils.ShowDialogUtil.ShowDialogObj(dialog) == DialogResult.OK)
                 {
                     try
                     {
@@ -56,14 +55,14 @@ namespace WordHiddenPowers
                     {
                     }
                 }
-            }                
+            }
         }
 
         private void savePowersButton_Click(object sender, RibbonControlEventArgs e)
         {
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Filter = dialogFilters;
-            if (dialog.ShowDialog(Utils.ShowDialogUtil.GetOwner()) == DialogResult.OK)
+            if (Utils.ShowDialogUtil.ShowDialogObj(dialog) == DialogResult.OK)
             {
                 try
                 {
