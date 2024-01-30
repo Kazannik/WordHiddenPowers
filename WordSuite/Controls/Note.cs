@@ -2,7 +2,7 @@
 {
     public class Note: WordHiddenPowers.Repositoryes.Models.Note
     {
-        public static Note Create(WordHiddenPowers.Repositoryes.RepositoryDataSet.DecimalPowersRow dataRow, WordHiddenPowers.Repositoryes.Models.Subcategory subcategory)
+        public static Note Create(WordHiddenPowers.Repositoryes.RepositoryDataSet.DecimalPowersRow dataRow, WordHiddenPowers.Categories.Subcategory subcategory)
         {
             return new Note(id: dataRow.id,
                 subcategory: subcategory,
@@ -14,7 +14,7 @@
                 dataRow: dataRow);
         }
 
-        public static Note Create(WordHiddenPowers.Repositoryes.RepositoryDataSet.TextPowersRow dataRow, WordHiddenPowers.Repositoryes.Models.Subcategory subcategory)
+        public static Note Create(WordHiddenPowers.Repositoryes.RepositoryDataSet.TextPowersRow dataRow, WordHiddenPowers.Categories.Subcategory subcategory)
         {
             return new Note(id: dataRow.id,
                 subcategory: subcategory,
@@ -27,7 +27,7 @@
         }
 
         private Note(int id, 
-            WordHiddenPowers.Repositoryes.Models.Subcategory subcategory,
+            WordHiddenPowers.Categories.Subcategory subcategory,
             string description, 
             double value, 
             int reiting, 
@@ -44,7 +44,7 @@
         { }
 
         private Note(int id,
-            WordHiddenPowers.Repositoryes.Models.Subcategory subcategory,
+            WordHiddenPowers.Categories.Subcategory subcategory,
             string description,
             string value,
             int reiting,

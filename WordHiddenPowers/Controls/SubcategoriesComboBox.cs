@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
-using WordHiddenPowers.Repositoryes.Models;
+using WordHiddenPowers.Categories;
+using WordHiddenPowers.Repositoryes;
 
 namespace WordHiddenPowers.Controls
 {
-    public class SubcategoriesComboBox : ComboControl<SubcategoriesComboBox.SubcategoriesItem, Subcategory>
+    public class SubcategoriesComboBox : ComboControl<SubcategoriesComboBox.SubcategoriesItem>
     {
         #region Initialize
 
@@ -19,6 +20,16 @@ namespace WordHiddenPowers.Controls
         }
 
         #endregion
+
+        public void InitializeSource(RepositoryDataSet dataSet, Category category)
+        {
+            Items.Clear();
+            foreach (RepositoryDataSet.SubcategoriesRow dataRow in dataSet.Subcategories.Get(category.Id))
+            {
+                Subcategory subcategory = Subcategory.Create( category, dataRow);
+                Add(subcategory);
+            }
+        }
 
         public class SubcategoriesItem : IComboBoxItem
         {

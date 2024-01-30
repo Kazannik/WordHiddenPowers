@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms.Design;
-using WordHiddenPowers.Repositoryes.Models;
+using WordHiddenPowers.Categories;
+using WordHiddenPowers.Repositoryes;
 
 namespace WordHiddenPowers.Controls
 {
     [ToolStripItemDesignerAvailability(ToolStripItemDesignerAvailability.All)]
-    public class CategoriesComboBox : ComboControl<CategoriesComboBox.CategoriesItem, Category>
+    public class CategoriesComboBox : ComboControl<CategoriesComboBox.CategoriesItem>
     {
         #region Initialize
 
@@ -15,30 +16,24 @@ namespace WordHiddenPowers.Controls
         [DebuggerNonUserCode()]
         public CategoriesComboBox(IContainer container):base(container: container) { }
         
+
+        public void InitializeSource(RepositoryDataSet dataSet)
+        {
+            Items.Clear();
+
+            foreach (RepositoryDataSet.CategoriesRow dataRow in dataSet.Categories)
+            {
+                Category category = Category.Create(dataRow);
+                Add(category);
+            }
+        }
+
+
         public int Add(Category category)
         {
             return Add(new CategoriesItem(category: category));
         }
 
-        #endregion
-
-        public class CategoriesItem : IComboBoxItem
-        {
-            public CategoriesItem(Category category)
-            {
-                Content = category;
-                Code = category.Id;
-                Text = category.Caption;
-            }
-
-            public int Code { get; }
-            public string Text { get; }
-            public Category Content { get; }
-
-            public override string ToString()
-            {
-                return Text;
-            }
-        }
+        #endregion       
     }
 }

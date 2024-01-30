@@ -148,5 +148,11 @@ namespace WordHiddenPowers
             WordHiddenPowersPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as WordHiddenPowersPane;
             pane.ShowDocumentKeysDialog();
         }
+
+        private void fieldAddButton_Click(object sender, RibbonControlEventArgs e)
+        {
+            WordHiddenPowersPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as WordHiddenPowersPane;
+            WordHiddenPowers.Utils.WordUtil.AddField(pane.Document, Globals.ThisAddIn.Application.Selection , 1);
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace WordHiddenPowers.Controls
     [DesignerCategory("code")]
     [ToolboxBitmap(typeof(ComboBox))]
     [ComVisible(false)]
-    public abstract class ComboControl <T, C> : ComboBox where T: ComboControl<T, C>.IComboBoxItem
+    public abstract class ComboControl <T> : ComboBox where T: ComboControl<T>.IComboBoxItem
     {
         protected StringFormat sfCode;
         protected StringFormat sfCaption;
@@ -55,8 +55,7 @@ namespace WordHiddenPowers.Controls
             sfCaption.Alignment = StringAlignment.Near;
             sfCaption.LineAlignment = StringAlignment.Near;
             sfCaption.FormatFlags = StringFormatFlags.NoClip | StringFormatFlags.NoWrap;
-
-
+            
             InitializeComponent();
 
             base.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -212,8 +211,6 @@ namespace WordHiddenPowers.Controls
         {
             int Code { get; }
             string Text { get; }
-            C Content { get; }
-            string ToString();
         }
     }
 }

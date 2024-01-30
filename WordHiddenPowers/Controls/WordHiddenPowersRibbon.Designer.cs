@@ -48,15 +48,20 @@
             this.group2 = this.Factory.CreateRibbonGroup();
             this.editTableButton = this.Factory.CreateRibbonButton();
             this.paneVisibleButton = this.Factory.CreateRibbonToggleButton();
+            this.group3 = this.Factory.CreateRibbonGroup();
+            this.fieldsUpdateButton = this.Factory.CreateRibbonButton();
+            this.fieldAddButton = this.Factory.CreateRibbonButton();
             this.WordHiddenPowersTab.SuspendLayout();
             this.group1.SuspendLayout();
             this.group2.SuspendLayout();
+            this.group3.SuspendLayout();
             this.SuspendLayout();
             // 
             // WordHiddenPowersTab
             // 
             this.WordHiddenPowersTab.Groups.Add(this.group1);
             this.WordHiddenPowersTab.Groups.Add(this.group2);
+            this.WordHiddenPowersTab.Groups.Add(this.group3);
             this.WordHiddenPowersTab.Label = "Дополнительные данные";
             this.WordHiddenPowersTab.Name = "WordHiddenPowersTab";
             // 
@@ -170,6 +175,24 @@
             this.paneVisibleButton.ShowImage = true;
             this.paneVisibleButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.paneVisibleButton_Click);
             // 
+            // group3
+            // 
+            this.group3.Items.Add(this.fieldsUpdateButton);
+            this.group3.Items.Add(this.fieldAddButton);
+            this.group3.Label = "group3";
+            this.group3.Name = "group3";
+            // 
+            // fieldsUpdateButton
+            // 
+            this.fieldsUpdateButton.Label = "Update";
+            this.fieldsUpdateButton.Name = "fieldsUpdateButton";
+            // 
+            // fieldAddButton
+            // 
+            this.fieldAddButton.Label = "Add";
+            this.fieldAddButton.Name = "fieldAddButton";
+            this.fieldAddButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.fieldAddButton_Click);
+            // 
             // WordHiddenPowersRibbon
             // 
             this.Name = "WordHiddenPowersRibbon";
@@ -181,6 +204,8 @@
             this.group1.PerformLayout();
             this.group2.ResumeLayout(false);
             this.group2.PerformLayout();
+            this.group3.ResumeLayout(false);
+            this.group3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -201,6 +226,9 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator2;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton editCategoriesButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton editDocumentKeysButton;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group3;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton fieldsUpdateButton;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton fieldAddButton;
     }
 
     partial class ThisRibbonCollection

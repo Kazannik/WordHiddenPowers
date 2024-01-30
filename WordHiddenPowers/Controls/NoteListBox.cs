@@ -4,12 +4,12 @@ using System.Data;
 using System.Windows.Forms;
 using WordHiddenPowers.Repositoryes;
 using WordHiddenPowers.Repositoryes.Models;
+using WordHiddenPowers.Categories;
 
 namespace WordHiddenPowers.Controls
 {
     public class NoteListBox : ListBox
     {
-
         private RepositoryDataSet source;
 
         private IDictionary<int, Subcategory> subcategories;
@@ -149,7 +149,7 @@ namespace WordHiddenPowers.Controls
         
         protected override void Sort()
         {
-            if (this.Items.Count > 1)
+            if (Items.Count > 1)
             {
                 bool swapped;
                 do
@@ -302,7 +302,7 @@ namespace WordHiddenPowers.Controls
         {
             foreach (Note item in Items)
             {
-                this.Invalidate(item.removeButton);                
+                Invalidate(item.removeButton);                
             }
         }
 
@@ -310,12 +310,12 @@ namespace WordHiddenPowers.Controls
         {
             if (DesignMode) return;
 
-            this.BeginUpdate();
+            BeginUpdate();
             Items.Clear();
 
             if (source == null)
             {
-                this.EndUpdate();
+                EndUpdate();
                 return;
             }                
             
@@ -359,7 +359,7 @@ namespace WordHiddenPowers.Controls
             //    this.Items.Add(note);
             //}
 
-            this.EndUpdate();
+            EndUpdate();
         }
     }
 }

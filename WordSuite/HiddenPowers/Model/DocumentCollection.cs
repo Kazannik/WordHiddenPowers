@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using WordHiddenPowers.Data;
 using WordSuite.Controls;
 using WordSuite.Repositoryes;
-using AddIn = WordHiddenPowers.Repositoryes.Models;
+using AddIn = WordHiddenPowers.Categories;
 
 namespace WordSuite.HiddenPowers.Model
 {

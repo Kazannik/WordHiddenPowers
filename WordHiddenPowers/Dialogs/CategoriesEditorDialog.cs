@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
+using WordHiddenPowers.Categories;
 using WordHiddenPowers.Panes;
 using WordHiddenPowers.Repositoryes.Models;
 
@@ -189,6 +191,26 @@ namespace WordHiddenPowers.Dialogs
                 }
             }
             return false;
+        }
+
+        private void FileOpen_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Текстовый документ (.txt)|*.txt";
+            dialog.Multiselect = false;
+            if (dialog.ShowDialog(this) == DialogResult.OK)
+            {
+                StreamReader reader = new StreamReader(dialog.FileName);
+
+                while (reader.EndOfStream)
+                {
+                    string line = reader.ReadLine().Trim();
+                    if (line.IndexOf("\\*") == 0)
+                    {
+
+                    }
+                }
+            }
         }
     }
 }

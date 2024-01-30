@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WordHiddenPowers.Repositoryes;
-using Word = WordHiddenPowers.Repositoryes.Models;
+using Word = WordHiddenPowers.Categories;
 
 namespace WordSuite.Controls
 {

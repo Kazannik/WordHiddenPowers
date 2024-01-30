@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using WordHiddenPowers.Repositoryes;
 
-namespace WordHiddenPowers.Repositoryes.Models
+namespace WordHiddenPowers.Categories
 {
-    public class Category: IComparable<Category>
+    public class Category: IComparable<Category>, Controls.ComboControl<Category>.IComboBoxItem
     {
         public static Category Create(DataRow dataRow)
         {

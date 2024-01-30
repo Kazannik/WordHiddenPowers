@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Drawing;
 using System.Data;
-using System.Windows.Forms;
-using Word = Microsoft.Office.Interop.Word;
+using System.Drawing;
 using System.IO;
-using WordHiddenPowers.Repositoryes;
-using Microsoft.Office.Core;
 using System.Text;
+using System.Windows.Forms;
 using WordHiddenPowers.Dialogs;
-using System.Reflection;
+using WordHiddenPowers.Repositoryes;
 using WordHiddenPowers.Repositoryes.Models;
 using WordHiddenPowers.Utils;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Panes
 {
@@ -188,7 +186,7 @@ namespace WordHiddenPowers.Panes
 
         public void AddTextNote(Word.Selection selection)
         {
-            TextNoteDialog dialog = new TextNoteDialog(selection);
+            TextNoteDialog dialog = new TextNoteDialog(PowersDataSet, selection);
             dialogs.Add(dialog);
             if (dialog.ShowDialog() == DialogResult.OK)
             {
@@ -201,7 +199,7 @@ namespace WordHiddenPowers.Panes
 
         public void AddDecimalNote(Word.Selection selection)
         {
-            DecimalNoteDialog dialog = new DecimalNoteDialog(selection);
+            DecimalNoteDialog dialog = new DecimalNoteDialog(PowersDataSet, selection);
             dialogs.Add(dialog);
             if (dialog.ShowDialog() == DialogResult.OK)
             {

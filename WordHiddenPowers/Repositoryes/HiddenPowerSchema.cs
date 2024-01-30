@@ -2,6 +2,7 @@
 using System.Data;
 using System.Linq;
 using WordHiddenPowers.Repositoryes.Models;
+using System.Collections.Generic;
 
 namespace WordHiddenPowers.Repositoryes
 {
@@ -31,7 +32,6 @@ namespace WordHiddenPowers.Repositoryes
                     row.EndEdit();
                 }
             }
-
 
             public void Remove(Note note)
             {
@@ -101,6 +101,10 @@ namespace WordHiddenPowers.Repositoryes
 
         partial class SubcategoriesDataTable
         {
+            public IEnumerable<SubcategoriesRow> Get(int categoryId)
+            {
+                return this.AsEnumerable().Where(x => x.category_id == categoryId);
+            }
         }
 
         partial class CategoriesDataTable

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using WordHiddenPowers.Repositoryes;
 
-namespace WordHiddenPowers.Repositoryes.Models
+namespace WordHiddenPowers.Categories
 {
     public class Subcategory : IComparable<Subcategory>
     {

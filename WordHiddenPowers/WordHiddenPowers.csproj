@@ -154,6 +154,7 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="Categories\CategoryCollection.cs" />
     <Compile Include="Const\Globals.cs" />
     <Compile Include="Const\Panes.cs" />
     <Compile Include="Controls\CategoriesComboBox.cs" />
@@ -215,6 +216,12 @@
     <Compile Include="Dialogs\DocumentKeysDialog.Designer.cs">
       <DependentUpon>DocumentKeysDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\CreadeNoteDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\CreadeNoteDialog.Designer.cs">
+      <DependentUpon>CreadeNoteDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\TextNoteDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -247,11 +254,13 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Repositoryes\Models\Category.cs" />
+    <Compile Include="Categories\Category.cs" />
     <Compile Include="Repositoryes\Models\Note.cs" />
-    <Compile Include="Repositoryes\Models\Subcategory.cs" />
+    <Compile Include="Categories\Subcategory.cs" />
+    <Compile Include="Service\Categories.cs" />
     <Compile Include="Utils\HiddenPowerDocument.cs" />
     <Compile Include="Utils\ShowDialogUtil.cs" />
+    <Compile Include="Utils\WordUtil.cs" />
     <EmbeddedResource Include="Controls\NumericTextBox.resx">
       <DependentUpon>NumericTextBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -275,6 +284,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\DocumentKeysDialog.resx">
       <DependentUpon>DocumentKeysDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\CreadeNoteDialog.resx">
+      <DependentUpon>CreadeNoteDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\TextNoteDialog.resx">
       <DependentUpon>TextNoteDialog.cs</DependentUpon>
@@ -526,6 +538,10 @@
   <ItemGroup>
     <None Include="TestFiles\regions.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Files\Example.txt" />
+  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
