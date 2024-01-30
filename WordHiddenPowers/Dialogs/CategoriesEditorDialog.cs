@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 using WordHiddenPowers.Categories;
 using WordHiddenPowers.Panes;
@@ -200,17 +201,19 @@ namespace WordHiddenPowers.Dialogs
             dialog.Multiselect = false;
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
-                StreamReader reader = new StreamReader(dialog.FileName);
+                pane.PowersDataSet.Categories.Clear();
+                pane.PowersDataSet.Subcategories.Clear();
 
-                while (reader.EndOfStream)
-                {
-                    string line = reader.ReadLine().Trim();
-                    if (line.IndexOf("\\*") == 0)
-                    {
+                string content = File.ReadAllText(dialog.FileName, Encoding.GetEncoding(1251));
+                Utils.Categories.CreateFromText(pane.PowersDataSet, content);
 
-                    }
-                }
+                pane.CommitVariables();
             }
+        }
+
+        private void mnuFileSaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

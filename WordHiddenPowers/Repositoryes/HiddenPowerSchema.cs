@@ -1,8 +1,8 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using System.Linq;
 using WordHiddenPowers.Repositoryes.Models;
 using System.Collections.Generic;
+using WordHiddenPowers.Categories;
 
 namespace WordHiddenPowers.Repositoryes
 {
@@ -101,14 +101,82 @@ namespace WordHiddenPowers.Repositoryes
 
         partial class SubcategoriesDataTable
         {
-            public IEnumerable<SubcategoriesRow> Get(int categoryId)
+            public IEnumerable<SubcategoriesRow> Get(int categoryId, bool isText)
             {
-                return this.AsEnumerable().Where(x => x.category_id == categoryId);
+                return this.AsEnumerable().Where(x => x.category_id == categoryId && x.IsText == isText);
+            }
+            
+            public Subcategory Add(Category category, Subcategory subcategory)
+            {
+                SubcategoriesRow row = (SubcategoriesRow)Rows.Add(subcategory.ToObjectsArray());
+
+                return Subcategory.Create( category, row);
+            }
+
+            public void Write(Subcategory subcategory)
+            {
+                SubcategoriesRow row = GetRow(subcategory.Id) as SubcategoriesRow;
+                if (row != null)
+                {
+                    row.BeginEdit();
+                    row.Caption = subcategory.Caption;
+                    row.category_id = subcategory.Category.Id;
+                    row.Description = subcategory.Description;
+                    row.IsDecimal = subcategory.IsDecimal;
+                    row.IsObligatory = subcategory.IsObligatory;
+                    row.IsText = subcategory.IsText;
+                    row.EndEdit();
+                }
+            }
+
+            private DataRow GetRow(int id)
+            {
+                foreach (DataRow row in Rows)
+                {
+                    if ((int)row["id"] == id)
+                        return row;
+                }
+                return null;
             }
         }
 
         partial class CategoriesDataTable
         {
+            public Category Add(Category category)
+            {
+                CategoriesRow row =(CategoriesRow) Rows.Add(category.ToObjectsArray());
+                return Category.Create(row);
+            }
+
+            public Category Get(int id)
+            {
+                CategoriesRow row = GetRow(id) as CategoriesRow;
+                return Category.Create(row);
+            }
+
+            public void Write(Category category)
+            {
+                CategoriesRow row = GetRow(category.Id) as CategoriesRow;
+                if (row != null)
+                {
+                    row.BeginEdit();
+                    row.Caption = category.Caption;
+                    row.Description = category.Description;
+                    row.IsObligatory = category.IsObligatory;
+                    row.EndEdit();
+                }
+            }
+
+            private DataRow GetRow(int id)
+            {
+                foreach (DataRow row in Rows)
+                {
+                    if ((int)row["id"] == id)
+                        return row;
+                }
+                return null;
+            }
+
         }
     }
 }

@@ -74,10 +74,9 @@
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Location = new System.Drawing.Point(0, 400);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 321);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(699, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(611, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -90,8 +89,7 @@
             this.mnuCategories});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(699, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(611, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -106,57 +104,58 @@
             this.toolStripMenuItem2,
             this.mnuFileExitToolStripMenuItem});
             this.mnuFileToolStripMenuItem.Name = "mnuFileToolStripMenuItem";
-            this.mnuFileToolStripMenuItem.Size = new System.Drawing.Size(57, 24);
+            this.mnuFileToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.mnuFileToolStripMenuItem.Text = "Файл";
             // 
             // mnuFileNewToolStripMenuItem
             // 
             this.mnuFileNewToolStripMenuItem.Image = global::WordHiddenPowers.Properties.Resources.GroupContTypeNew_24;
             this.mnuFileNewToolStripMenuItem.Name = "mnuFileNewToolStripMenuItem";
-            this.mnuFileNewToolStripMenuItem.Size = new System.Drawing.Size(212, 30);
+            this.mnuFileNewToolStripMenuItem.Size = new System.Drawing.Size(182, 30);
             this.mnuFileNewToolStripMenuItem.Text = "Создать структуру";
             // 
             // mnuFileOpen
             // 
             this.mnuFileOpen.Name = "mnuFileOpen";
-            this.mnuFileOpen.Size = new System.Drawing.Size(212, 30);
+            this.mnuFileOpen.Size = new System.Drawing.Size(182, 30);
             this.mnuFileOpen.Text = "Открыть файл...";
             this.mnuFileOpen.Click += new System.EventHandler(this.FileOpen_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(209, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(179, 6);
             // 
             // mnuFileSaveToolStripMenuItem
             // 
             this.mnuFileSaveToolStripMenuItem.Image = global::WordHiddenPowers.Properties.Resources.Save_24;
             this.mnuFileSaveToolStripMenuItem.Name = "mnuFileSaveToolStripMenuItem";
-            this.mnuFileSaveToolStripMenuItem.Size = new System.Drawing.Size(212, 30);
+            this.mnuFileSaveToolStripMenuItem.Size = new System.Drawing.Size(182, 30);
             this.mnuFileSaveToolStripMenuItem.Text = "Сохранить";
+            this.mnuFileSaveToolStripMenuItem.Click += new System.EventHandler(this.mnuFileSaveToolStripMenuItem_Click);
             // 
             // mnuFileSaveAs
             // 
             this.mnuFileSaveAs.Name = "mnuFileSaveAs";
-            this.mnuFileSaveAs.Size = new System.Drawing.Size(212, 30);
+            this.mnuFileSaveAs.Size = new System.Drawing.Size(182, 30);
             this.mnuFileSaveAs.Text = "Сохранить как...";
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(209, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(179, 6);
             // 
             // mnuFileExitToolStripMenuItem
             // 
             this.mnuFileExitToolStripMenuItem.Image = global::WordHiddenPowers.Properties.Resources.WindowClose_24;
             this.mnuFileExitToolStripMenuItem.Name = "mnuFileExitToolStripMenuItem";
-            this.mnuFileExitToolStripMenuItem.Size = new System.Drawing.Size(212, 30);
+            this.mnuFileExitToolStripMenuItem.Size = new System.Drawing.Size(182, 30);
             this.mnuFileExitToolStripMenuItem.Text = "Закрыть";
             // 
             // mnuEdit
             // 
             this.mnuEdit.Name = "mnuEdit";
-            this.mnuEdit.Size = new System.Drawing.Size(76, 24);
+            this.mnuEdit.Size = new System.Drawing.Size(64, 20);
             this.mnuEdit.Text = "mnuEdit";
             // 
             // mnuCategories
@@ -164,13 +163,13 @@
             this.mnuCategories.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuCategoriesAddCategory});
             this.mnuCategories.Name = "mnuCategories";
-            this.mnuCategories.Size = new System.Drawing.Size(94, 24);
+            this.mnuCategories.Size = new System.Drawing.Size(76, 20);
             this.mnuCategories.Text = "Категории";
             // 
             // mnuCategoriesAddCategory
             // 
             this.mnuCategoriesAddCategory.Name = "mnuCategoriesAddCategory";
-            this.mnuCategoriesAddCategory.Size = new System.Drawing.Size(229, 26);
+            this.mnuCategoriesAddCategory.Size = new System.Drawing.Size(188, 22);
             this.mnuCategoriesAddCategory.Text = "Добавить категорию";
             // 
             // toolStrip1
@@ -186,9 +185,9 @@
             this.addSubcategoryButton,
             this.toolStripSeparator3,
             this.toolStripButton5});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 28);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(699, 31);
+            this.toolStrip1.Size = new System.Drawing.Size(611, 31);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -257,8 +256,7 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 59);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 55);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -268,18 +266,16 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel1);
-            this.splitContainer1.Size = new System.Drawing.Size(699, 341);
-            this.splitContainer1.SplitterDistance = 285;
-            this.splitContainer1.SplitterWidth = 5;
+            this.splitContainer1.Size = new System.Drawing.Size(611, 266);
+            this.splitContainer1.SplitterDistance = 249;
             this.splitContainer1.TabIndex = 3;
             // 
             // categoriesTreeView
             // 
             this.categoriesTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.categoriesTreeView.Location = new System.Drawing.Point(0, 0);
-            this.categoriesTreeView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.categoriesTreeView.Name = "categoriesTreeView";
-            this.categoriesTreeView.Size = new System.Drawing.Size(285, 341);
+            this.categoriesTreeView.Size = new System.Drawing.Size(249, 266);
             this.categoriesTreeView.TabIndex = 0;
             this.categoriesTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.categoriesTreeView_AfterSelect);
             // 
@@ -299,16 +295,15 @@
             this.tableLayoutPanel1.Controls.Add(this.descriptionTextBox, 0, 4);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 6;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(409, 341);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(358, 266);
             this.tableLayoutPanel1.TabIndex = 8;
             // 
             // typeLabel
@@ -318,10 +313,9 @@
             this.typeLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.typeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.typeLabel.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.typeLabel.Location = new System.Drawing.Point(4, 0);
-            this.typeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.typeLabel.Location = new System.Drawing.Point(3, 0);
             this.typeLabel.Name = "typeLabel";
-            this.typeLabel.Size = new System.Drawing.Size(401, 25);
+            this.typeLabel.Size = new System.Drawing.Size(352, 20);
             this.typeLabel.TabIndex = 0;
             this.typeLabel.Text = "label1";
             this.typeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -330,10 +324,9 @@
             // 
             this.isTextCheckBox.AutoSize = true;
             this.isTextCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.isTextCheckBox.Location = new System.Drawing.Point(276, 315);
-            this.isTextCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.isTextCheckBox.Location = new System.Drawing.Point(241, 245);
             this.isTextCheckBox.Name = "isTextCheckBox";
-            this.isTextCheckBox.Size = new System.Drawing.Size(129, 22);
+            this.isTextCheckBox.Size = new System.Drawing.Size(114, 18);
             this.isTextCheckBox.TabIndex = 5;
             this.isTextCheckBox.Text = "Для текста";
             this.isTextCheckBox.UseVisualStyleBackColor = true;
@@ -343,10 +336,9 @@
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.captionLabel, 3);
             this.captionLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.captionLabel.Location = new System.Drawing.Point(4, 25);
-            this.captionLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.captionLabel.Location = new System.Drawing.Point(3, 20);
             this.captionLabel.Name = "captionLabel";
-            this.captionLabel.Size = new System.Drawing.Size(401, 20);
+            this.captionLabel.Size = new System.Drawing.Size(352, 16);
             this.captionLabel.TabIndex = 0;
             this.captionLabel.Text = "Заголовок:";
             // 
@@ -354,10 +346,9 @@
             // 
             this.isDecimalCheckBox.AutoSize = true;
             this.isDecimalCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.isDecimalCheckBox.Location = new System.Drawing.Point(140, 315);
-            this.isDecimalCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.isDecimalCheckBox.Location = new System.Drawing.Point(122, 245);
             this.isDecimalCheckBox.Name = "isDecimalCheckBox";
-            this.isDecimalCheckBox.Size = new System.Drawing.Size(128, 22);
+            this.isDecimalCheckBox.Size = new System.Drawing.Size(113, 18);
             this.isDecimalCheckBox.TabIndex = 4;
             this.isDecimalCheckBox.Text = "Для чисел";
             this.isDecimalCheckBox.UseVisualStyleBackColor = true;
@@ -367,10 +358,10 @@
             // 
             this.isObligatoryCheckBox.AutoSize = true;
             this.isObligatoryCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.isObligatoryCheckBox.Location = new System.Drawing.Point(3, 313);
-            this.isObligatoryCheckBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.isObligatoryCheckBox.Location = new System.Drawing.Point(2, 244);
+            this.isObligatoryCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.isObligatoryCheckBox.Name = "isObligatoryCheckBox";
-            this.isObligatoryCheckBox.Size = new System.Drawing.Size(130, 26);
+            this.isObligatoryCheckBox.Size = new System.Drawing.Size(115, 20);
             this.isObligatoryCheckBox.TabIndex = 6;
             this.isObligatoryCheckBox.Text = "Обязательный";
             this.isObligatoryCheckBox.UseVisualStyleBackColor = true;
@@ -380,11 +371,10 @@
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.captionTextBox, 3);
             this.captionTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.captionTextBox.Location = new System.Drawing.Point(4, 49);
-            this.captionTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.captionTextBox.Location = new System.Drawing.Point(3, 39);
             this.captionTextBox.Multiline = true;
             this.captionTextBox.Name = "captionTextBox";
-            this.captionTextBox.Size = new System.Drawing.Size(401, 90);
+            this.captionTextBox.Size = new System.Drawing.Size(352, 74);
             this.captionTextBox.TabIndex = 1;
             this.captionTextBox.TextChanged += new System.EventHandler(this.Controls_ValueChanged);
             // 
@@ -392,10 +382,9 @@
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.descriptionLabel, 3);
             this.descriptionLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.descriptionLabel.Location = new System.Drawing.Point(4, 143);
-            this.descriptionLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.descriptionLabel.Location = new System.Drawing.Point(3, 116);
             this.descriptionLabel.Name = "descriptionLabel";
-            this.descriptionLabel.Size = new System.Drawing.Size(401, 20);
+            this.descriptionLabel.Size = new System.Drawing.Size(352, 16);
             this.descriptionLabel.TabIndex = 2;
             this.descriptionLabel.Text = "Дополнительно:";
             // 
@@ -403,26 +392,24 @@
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.descriptionTextBox, 3);
             this.descriptionTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.descriptionTextBox.Location = new System.Drawing.Point(4, 167);
-            this.descriptionTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.descriptionTextBox.Location = new System.Drawing.Point(3, 135);
             this.descriptionTextBox.Multiline = true;
             this.descriptionTextBox.Name = "descriptionTextBox";
-            this.descriptionTextBox.Size = new System.Drawing.Size(401, 140);
+            this.descriptionTextBox.Size = new System.Drawing.Size(352, 104);
             this.descriptionTextBox.TabIndex = 3;
             this.descriptionTextBox.TextChanged += new System.EventHandler(this.Controls_ValueChanged);
             // 
             // CategoriesEditorDialog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(699, 422);
+            this.ClientSize = new System.Drawing.Size(611, 343);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "CategoriesEditorDialog";

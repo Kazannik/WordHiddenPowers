@@ -154,7 +154,6 @@
     can be found.
   -->
   <ItemGroup>
-    <Compile Include="Categories\CategoryCollection.cs" />
     <Compile Include="Const\Globals.cs" />
     <Compile Include="Const\Panes.cs" />
     <Compile Include="Controls\CategoriesComboBox.cs" />
@@ -258,6 +257,7 @@
     <Compile Include="Repositoryes\Models\Note.cs" />
     <Compile Include="Categories\Subcategory.cs" />
     <Compile Include="Service\Categories.cs" />
+    <Compile Include="Utils\Categories.cs" />
     <Compile Include="Utils\HiddenPowerDocument.cs" />
     <Compile Include="Utils\ShowDialogUtil.cs" />
     <Compile Include="Utils\WordUtil.cs" />

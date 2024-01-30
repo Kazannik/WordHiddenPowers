@@ -1,5 +1,6 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
+using WordHiddenPowers.Categories;
+using WordHiddenPowers.Repositoryes;
 using WordHiddenPowers.Repositoryes.Models;
 using Word = Microsoft.Office.Interop.Word;
 
@@ -7,7 +8,7 @@ namespace WordHiddenPowers.Dialogs
 {
     public partial class CreateNoteDialog : Form
     {
-        private Repositoryes.RepositoryDataSet dataSet;
+        private RepositoryDataSet dataSet;
 
         public string SelectionText { get; }
 
@@ -22,8 +23,23 @@ namespace WordHiddenPowers.Dialogs
                 return raitingBox.Value;
             }
         }
-
         
+        public Category Category
+        {
+            get
+            {
+                return categoriesComboBox.SelectedContent;
+            }
+        }
+        
+        public Subcategory Subcategory
+        {
+            get
+            {
+                return subcategoriesComboBox.SelectedContent;
+            }
+        }
+
         public string Description
         {
             get
@@ -32,46 +48,59 @@ namespace WordHiddenPowers.Dialogs
             }
         }
 
+        public bool IsText { get; }
+
         public CreateNoteDialog()
         {
             InitializeComponent();
+            okButton.Enabled = false;
         }
 
-        public CreateNoteDialog(Repositoryes.RepositoryDataSet dataSet, Word.Selection selection)
+        public CreateNoteDialog(RepositoryDataSet dataSet, Word.Selection selection, bool isText)
         {
             this.dataSet = dataSet;
 
             InitializeComponent();
+
+            IsText = isText;
 
             SelectionText = selection.Text;
             SelectionStart = selection.Start;
             SelectionEnd = selection.End;
 
             categoriesComboBox.InitializeSource(this.dataSet);
-
+            okButton.Enabled = false;
         }
 
-        public CreateNoteDialog(Note note)
+        public CreateNoteDialog(RepositoryDataSet dataSet, Note note, bool isText)
         {
-            InitializeComponent();
+            this.dataSet = dataSet;
 
-            raitingBox.Value = note.Reiting;
-            descriptionTextBox.Text = note.Description;
+            InitializeComponent();
+            
+            IsText = isText;
 
             SelectionText = string.Empty;
             SelectionStart = note.WordSelectionStart;
             SelectionEnd = note.WordSelectionEnd;
+
+            raitingBox.Value = note.Reiting;
+            descriptionTextBox.Text = note.Description;
+
+            categoriesComboBox.InitializeSource(this.dataSet);
+            categoriesComboBox.SelectedItem = categoriesComboBox.GetItem(note.Category.Id);
+            subcategoriesComboBox.SelectedItem = subcategoriesComboBox.GetItem(note.Subcategory.Id);
         }
 
-
-        protected override void OnResize(EventArgs e)
+        private void categoriesComboBox_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            okButton.Location = new System.Drawing.Point(Width - 242, Height - 89);
-            cancelButton.Location = new System.Drawing.Point(Width - 132, Height - 89);
-            raitingBox.Location = new System.Drawing.Point(16, Height - 95);
-            descriptionTextBox.Location = new System.Drawing.Point(16, Height - 167);
+            subcategoriesComboBox.InitializeSource(dataSet, (Category) categoriesComboBox.SelectedItem, IsText);
+            okButton.Enabled = categoriesComboBox.SelectedIndex >= 0 && subcategoriesComboBox.SelectedIndex >= 0;
+        }
 
-            base.OnResize(e);
+        private void subcategoriesComboBox_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            okButton.Enabled = categoriesComboBox.SelectedIndex >= 0 && subcategoriesComboBox.SelectedIndex >= 0;
         }
     }
 }

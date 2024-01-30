@@ -5,26 +5,26 @@ namespace WordHiddenPowers.Panes
 {
     partial class WordHiddenPowersPane
     {
-
         public void ShowDocumentKeysDialog()
         {
             Form dialog = new DocumentKeysDialog(this);
             dialogs.Add(dialog);
-            dialog.ShowDialog();
+            Utils.ShowDialogUtil.ShowDialog(dialog);
         }
 
         public void ShowEditCategoriesDialog()
         {
             Form dialog = new CategoriesEditorDialog(this);
             dialogs.Add(dialog);
-            dialog.ShowDialog();
+           Utils.ShowDialogUtil.ShowDialog(dialog);
+            noteListBox.ReadData();
         }
 
         public void ShowCreateTableDialog()
         {
             Form dialog = new CreateTableDialog(this);
             dialogs.Add(dialog);
-            dialog.ShowDialog();
+            Utils.ShowDialogUtil.ShowDialog(dialog);
         }
 
         public void ShowEditTableDialog()

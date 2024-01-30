@@ -7,7 +7,7 @@ using WordHiddenPowers.Repositoryes;
 namespace WordHiddenPowers.Controls
 {
     [ToolStripItemDesignerAvailability(ToolStripItemDesignerAvailability.All)]
-    public class CategoriesComboBox : ComboControl<CategoriesComboBox.CategoriesItem>
+    public class CategoriesComboBox : ComboControl<Category>
     {
         #region Initialize
 
@@ -26,13 +26,7 @@ namespace WordHiddenPowers.Controls
                 Category category = Category.Create(dataRow);
                 Add(category);
             }
-        }
-
-
-        public int Add(Category category)
-        {
-            return Add(new CategoriesItem(category: category));
-        }
+        }      
 
         #endregion       
     }

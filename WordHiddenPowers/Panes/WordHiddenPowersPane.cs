@@ -191,7 +191,7 @@ namespace WordHiddenPowers.Panes
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 PowersDataSet.TextPowers.Rows.Add(new object[]
-                { null, 0, 0, dialog.Description, dialog.Value, dialog.Reiting, dialog.SelectionStart, dialog.SelectionEnd });
+                { null, dialog.Category.Id, dialog.Subcategory.Id, dialog.Description, dialog.Value, dialog.Reiting, dialog.SelectionStart, dialog.SelectionEnd });
 
                 CommitVariables();
             }
@@ -204,7 +204,7 @@ namespace WordHiddenPowers.Panes
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 PowersDataSet.DecimalPowers.Rows.Add(new object[] 
-                { null, 0, 0, dialog.Description, dialog.Value, dialog.Reiting, dialog.SelectionStart, dialog.SelectionEnd });
+                { null, dialog.Category.Id, dialog.Subcategory.Id, dialog.Description, dialog.Value, dialog.Reiting, dialog.SelectionStart, dialog.SelectionEnd });
 
                 CommitVariables();
             }                
@@ -232,6 +232,7 @@ namespace WordHiddenPowers.Panes
             writer.Close();
 
             CommitVariables(Const.Globals.CATEGORIES_VARIABLE_NAME,builder.ToString());
+
         }
                
         private void CommitVariables(string name, string value)
@@ -260,13 +261,13 @@ namespace WordHiddenPowers.Panes
             {
                 if (note.IsText)
                 {
-                    TextNoteDialog dialog = new TextNoteDialog(note);
+                    TextNoteDialog dialog = new TextNoteDialog(PowersDataSet, note);
                     dialogs.Add(dialog);
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
                         PowersDataSet.TextPowers.Set(note.Id,
-                            0,
-                            0,
+                            dialog.Category.Id,
+                            dialog.Subcategory.Id,
                             dialog.Description,
                             dialog.Value,
                             dialog.Reiting,
@@ -276,13 +277,13 @@ namespace WordHiddenPowers.Panes
                 }
                 else
                 {
-                    DecimalNoteDialog dialog = new DecimalNoteDialog(note);
+                    DecimalNoteDialog dialog = new DecimalNoteDialog(PowersDataSet, note);
                     dialogs.Add(dialog);
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
                         PowersDataSet.DecimalPowers.Set(note.Id,
-                            0,
-                            0,
+                            dialog.Category.Id,
+                            dialog.Subcategory.Id,
                             dialog.Description,
                             dialog.Value,
                             dialog.Reiting,

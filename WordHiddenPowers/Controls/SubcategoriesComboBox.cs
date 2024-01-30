@@ -5,7 +5,7 @@ using WordHiddenPowers.Repositoryes;
 
 namespace WordHiddenPowers.Controls
 {
-    public class SubcategoriesComboBox : ComboControl<SubcategoriesComboBox.SubcategoriesItem>
+    public class SubcategoriesComboBox : ComboControl<Subcategory>
     {
         #region Initialize
 
@@ -13,40 +13,17 @@ namespace WordHiddenPowers.Controls
 
         [DebuggerNonUserCode()]
         public SubcategoriesComboBox(IContainer container) : base(container: container) { }
-
-        public int Add(Subcategory subcategory)
-        {
-            return Add(new SubcategoriesItem(subcategory: subcategory));
-        }
-
+                
         #endregion
 
-        public void InitializeSource(RepositoryDataSet dataSet, Category category)
+        public void InitializeSource(RepositoryDataSet dataSet, Category category, bool isText)
         {
             Items.Clear();
-            foreach (RepositoryDataSet.SubcategoriesRow dataRow in dataSet.Subcategories.Get(category.Id))
+            foreach (RepositoryDataSet.SubcategoriesRow dataRow in dataSet.Subcategories.Get(category.Id, isText))
             {
                 Subcategory subcategory = Subcategory.Create( category, dataRow);
                 Add(subcategory);
             }
-        }
-
-        public class SubcategoriesItem : IComboBoxItem
-        {
-            public SubcategoriesItem(Subcategory subcategory)
-            {
-                Content = subcategory;
-                Code = subcategory.Id;
-                Text = subcategory.Caption;
-            }
-
-            public int Code { get; }
-            public string Text { get; }
-            public Subcategory Content { get; }
-            public override string ToString()
-            {
-                return Text;
-            }
-        }
+        }        
     }
 }

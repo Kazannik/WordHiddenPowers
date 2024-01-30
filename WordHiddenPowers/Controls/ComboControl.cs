@@ -108,7 +108,7 @@ namespace WordHiddenPowers.Controls
 
             if (Items.Count <= e.Index) return;
             int itemCode = this[e.Index].Code;
-            string itemCodeString = itemCode.ToString();
+            string itemCodeString = (itemCode + 1).ToString();
             string itemCaptionString = this[e.Index].Text.Trim();
             if ((e.State & DrawItemState.ComboBoxEdit) == DrawItemState.ComboBoxEdit)
             {
@@ -124,8 +124,8 @@ namespace WordHiddenPowers.Controls
                 {
                     backCodeBrush = new LinearGradientBrush(rectCode, Color.FromArgb(249, 249, 249), Color.FromArgb(241, 241, 241), LinearGradientMode.Vertical);
                     foreCodeBrush = new SolidBrush(Color.FromArgb(0, 102, 204));
-                    backCaptionBrush = System.Drawing.SystemBrushes.Highlight;
-                    foreCaptionBrush = new SolidBrush(Color.FromArgb(0, 102, 204));
+                    backCaptionBrush = SystemBrushes.Highlight;
+                    foreCaptionBrush = SystemBrushes.HighlightText;
                     borderPen = new Pen(Color.FromArgb(0, 102, 204), 1);
                 }
                 else
@@ -152,6 +152,21 @@ namespace WordHiddenPowers.Controls
             get
             {
                 return (T)Items[index: index];
+            }
+        }
+
+        public T SelectedContent
+        {
+            get
+            {
+                if (SelectedItem != null)
+                {
+                    return (T)SelectedItem;
+                }
+                else
+                {
+                    return default(T);
+                }
             }
         }
 

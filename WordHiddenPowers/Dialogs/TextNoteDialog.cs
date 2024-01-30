@@ -1,4 +1,5 @@
-﻿using WordHiddenPowers.Repositoryes.Models;
+﻿using WordHiddenPowers.Repositoryes;
+using WordHiddenPowers.Repositoryes.Models;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Dialogs
@@ -14,14 +15,14 @@ namespace WordHiddenPowers.Dialogs
             }
         }
         
-        public TextNoteDialog(Repositoryes.RepositoryDataSet dataSet, Word.Selection selection) : base(dataSet, selection)
+        public TextNoteDialog(RepositoryDataSet dataSet, Word.Selection selection) : base(dataSet, selection, true)
         {
             InitializeComponent();
 
             valueTextBox.Text = selection.Text;
         }
 
-        public TextNoteDialog(Note note): base(note)
+        public TextNoteDialog(RepositoryDataSet dataSet, Note note): base(dataSet, note, true)
         {
             InitializeComponent();
 

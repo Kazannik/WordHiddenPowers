@@ -55,6 +55,22 @@ namespace WordHiddenPowers.Categories
 
         public bool IsObligatory { get; set; }
 
+        public int Code
+        {
+            get
+            {
+                return Id;
+            }
+        }
+
+        public string Text
+        {
+            get
+            {
+                return Caption;
+            }
+        }
+
         public object[] ToObjectsArray()
         {
             return (new object[] { Id < 0 ? null: (object) Id,
