@@ -81,7 +81,7 @@
             this.Name = "DocumentKeysDialog";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "DocumentsKeysDialog";
+            this.Text = "Заголовки документов";
             this.ResumeLayout(false);
             this.PerformLayout();
 

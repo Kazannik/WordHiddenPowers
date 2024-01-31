@@ -256,7 +256,6 @@
     <Compile Include="Categories\Category.cs" />
     <Compile Include="Repositoryes\Models\Note.cs" />
     <Compile Include="Categories\Subcategory.cs" />
-    <Compile Include="Service\Categories.cs" />
     <Compile Include="Utils\Categories.cs" />
     <Compile Include="Utils\HiddenPowerDocument.cs" />
     <Compile Include="Utils\ShowDialogUtil.cs" />
@@ -541,7 +540,9 @@
   <ItemGroup>
     <Content Include="Files\Example.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Service\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

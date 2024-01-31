@@ -9,8 +9,25 @@ namespace WordHiddenPowers.Repositoryes.Models
 {
     public class Note: INotifyPropertyChanged, IComparable<Note>
     {
-        internal Rectangle rectagle;
+        internal Controls.NoteListBox owner;
+
+        internal Rectangle rectangle;
+
+        internal Controls.NoteListBox.NoteState state = Controls.NoteListBox.NoteState.Passive;
+
         internal Rectangle removeButton;
+
+        public bool Selected
+        {
+            get
+            {
+                return owner.SelectedNote.Equals(this);
+            }
+            set
+            {
+                owner.SelectedNote = this;
+            }
+        }
 
         internal static Note Create(DataRow dataRow, Subcategory subcategory)
         {

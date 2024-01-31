@@ -28,14 +28,13 @@ namespace WordHiddenPowers.Panes
 
             PowersDataSet = new RepositoryDataSet();
 
-            PowersDataSet.DocumentKeys.DocumentKeysRowChanged += new RepositoryDataSet.DocumentKeysRowChangeEventHandler(DocumentKeys_DocumentKeysRowChanged);
-
             InitializeComponent();
-
-            noteListBox.PowersDataSet = PowersDataSet;
 
             InitializeVariables();            
 
+            PowersDataSet.DocumentKeys.DocumentKeysRowChanged += new RepositoryDataSet.DocumentKeysRowChangeEventHandler(DocumentKeys_DocumentKeysRowChanged);
+            
+            noteListBox.PowersDataSet = PowersDataSet;
         }
 
         private void DocumentKeys_DocumentKeysRowChanged(object sender, RepositoryDataSet.DocumentKeysRowChangeEvent e)

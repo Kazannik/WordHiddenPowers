@@ -101,6 +101,12 @@ namespace WordHiddenPowers.Repositoryes
 
         partial class SubcategoriesDataTable
         {
+            public Subcategory Get(Category category, int subcategoryId)
+            {
+                SubcategoriesRow row =(SubcategoriesRow) GetRow(subcategoryId);                
+                return Subcategory.Create(category, row);
+            }
+
             public IEnumerable<SubcategoriesRow> Get(int categoryId, bool isText)
             {
                 return this.AsEnumerable().Where(x => x.category_id == categoryId && x.IsText == isText);

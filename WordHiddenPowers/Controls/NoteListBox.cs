@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using WordHiddenPowers.Repositoryes;
 using WordHiddenPowers.Repositoryes.Models;
 using WordHiddenPowers.Categories;
+using System;
 
 namespace WordHiddenPowers.Controls
 {
@@ -25,10 +26,10 @@ namespace WordHiddenPowers.Controls
             {
                 if (source != null)
                 {
-                    source.DecimalPowers.DecimalPowersRowChanged -= DecimalPowers_DecimalPowersRowChanged;
-                    source.TextPowers.TextPowersRowChanged -= TextPowers_TextPowersRowChanged;
-                    source.DecimalPowers.DecimalPowersRowDeleted -= DecimalPowers_DecimalPowersRowChanged;
-                    source.TextPowers.TextPowersRowDeleted -= TextPowers_TextPowersRowChanged;
+                    source.DecimalPowers.DecimalPowersRowChanged -= DecimalPowers_RowChanged;
+                    source.TextPowers.TextPowersRowChanged -= TextPowers_RowChanged;
+                    source.DecimalPowers.DecimalPowersRowDeleted -= DecimalPowers_RowChanged;
+                    source.TextPowers.TextPowersRowDeleted -= TextPowers_RowChanged;
                     source.DecimalPowers.TableCleared -= TablesPowers_TableCleared;
                     source.TextPowers.TableCleared -= TablesPowers_TableCleared;
                 }
@@ -37,10 +38,12 @@ namespace WordHiddenPowers.Controls
                 if (source != null)
                 {
                     ReadData();
-                    source.DecimalPowers.DecimalPowersRowChanged += new RepositoryDataSet.DecimalPowersRowChangeEventHandler(DecimalPowers_DecimalPowersRowChanged);
-                    source.TextPowers.TextPowersRowChanged += new RepositoryDataSet.TextPowersRowChangeEventHandler(TextPowers_TextPowersRowChanged);
-                    source.DecimalPowers.DecimalPowersRowDeleted += new RepositoryDataSet.DecimalPowersRowChangeEventHandler(DecimalPowers_DecimalPowersRowChanged);
-                    source.TextPowers.TextPowersRowDeleted += new RepositoryDataSet.TextPowersRowChangeEventHandler(TextPowers_TextPowersRowChanged);
+
+                    Items.Clear();
+                    source.DecimalPowers.DecimalPowersRowChanged += new RepositoryDataSet.DecimalPowersRowChangeEventHandler(DecimalPowers_RowChanged);
+                    source.TextPowers.TextPowersRowChanged += new RepositoryDataSet.TextPowersRowChangeEventHandler(TextPowers_RowChanged);
+                    source.DecimalPowers.DecimalPowersRowDeleted += new RepositoryDataSet.DecimalPowersRowChangeEventHandler(DecimalPowers_RowChanged);
+                    source.TextPowers.TextPowersRowDeleted += new RepositoryDataSet.TextPowersRowChangeEventHandler(TextPowers_RowChanged);
                     source.DecimalPowers.TableCleared += new DataTableClearEventHandler(TablesPowers_TableCleared);
                     source.TextPowers.TableCleared += new DataTableClearEventHandler(TablesPowers_TableCleared);
                 }
@@ -51,7 +54,7 @@ namespace WordHiddenPowers.Controls
             }
         }
 
-        private void DecimalPowers_DecimalPowersRowChanged(object sender, RepositoryDataSet.DecimalPowersRowChangeEvent e)
+        private void DecimalPowers_RowChanged(object sender, RepositoryDataSet.DecimalPowersRowChangeEvent e)
         {
             if (e.Action == DataRowAction.Add)
             {
@@ -68,12 +71,14 @@ namespace WordHiddenPowers.Controls
                 note.Description = e.Row.Description;
                 note.Reiting = e.Row.Reiting;
                 note.Value = e.Row.Value;
-                if (note.rectagle != null)
-                    Invalidate(note.rectagle);
+                Category category = source.Categories.Get(e.Row.category_id);
+                note.Subcategory = source.Subcategories.Get(category, e.Row.subcategory_id);
+                if (note.rectangle != null)
+                    Invalidate(note.rectangle);
             }
         }
 
-        private void TextPowers_TextPowersRowChanged(object sender, RepositoryDataSet.TextPowersRowChangeEvent e)
+        private void TextPowers_RowChanged(object sender, RepositoryDataSet.TextPowersRowChangeEvent e)
         {
             if (e.Action == DataRowAction.Add)
             {
@@ -91,19 +96,16 @@ namespace WordHiddenPowers.Controls
                 note.Description = e.Row.Description;
                 note.Reiting = e.Row.Reiting;
                 note.Value = e.Row.Value;
-                if (note.rectagle !=null)
-                    Invalidate(note.rectagle);     
+                if (note.rectangle !=null)
+                    Invalidate(note.rectangle);     
             }
         }
-
-                     
 
         private void TablesPowers_TableCleared(object sender, DataTableClearEventArgs e)
         {
             Items.Clear();
         }
-
-
+        
         private Note GetNote(DataRow dataRow)
         {
             foreach (Note item in Items)
@@ -127,8 +129,7 @@ namespace WordHiddenPowers.Controls
             }
             return null;
         }
-
-
+        
         private Note GetNote(int x, int y)
         {
             foreach (Note item in Items)
@@ -172,48 +173,97 @@ namespace WordHiddenPowers.Controls
                 while (swapped);
             }
         }
+
+        private Note HoveringNote;
+        private Note ClickedNote;
+        internal Note SelectedNote;
+
+        public Note this[int x, int y]
+        {
+            get
+            {
+                foreach (Note item in Items)
+                {
+                    if (item.rectangle != null &&
+                        item.rectangle.Contains(new Point(x, y)))
+                    {
+                        return item;
+                    }
+                }
+                return null;
+            }
+        }
         
-        Note noteHoverRemoveButton;
-        Note oldNoteHoverRemoveButton;
-
-        Note noteDownRemoveButton;
-
+        public int Add(Note item)
+        {
+            item.owner = this;
+            return Items.Add(item);
+        }
+       
+        public void Insert(int index, Note item)
+        {
+            item.owner = this;
+            Items.Insert(index, item);
+        }
+        
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.None)
+            Note focusNote = this[e.X, e.Y];
+            if (focusNote != null)
             {
-                oldNoteHoverRemoveButton = noteDownRemoveButton;
-                noteHoverRemoveButton = GetNote(e.X, e.Y);
-                if (oldNoteHoverRemoveButton != null)
-                    Invalidate(oldNoteHoverRemoveButton.removeButton);
-                if (noteHoverRemoveButton != null)
-                    Invalidate(noteHoverRemoveButton.removeButton);
-                else
-                    InvalidateRemoveButtons();
+                Cursor = Cursors.Hand;
+                if (HoveringNote != focusNote)
+                {
+                    HoveringNote = focusNote;
+                    Invalidate(HoveringNote.rectangle);
+                }
+            }
+            else
+            {
+                if (HoveringNote != null)
+                {
+                    Rectangle rec = HoveringNote.rectangle;
+                    HoveringNote = null;
+                    Invalidate(rec);
+                }
+                this.Cursor = Cursors.Default;
             }
             base.OnMouseMove(e);
         }
-
-        protected override void OnMouseDown(MouseEventArgs e)
+                
+        protected override void OnMouseClick(MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            Note note = this[e.X, e.Y];
+            if (note != null)
             {
-                noteHoverRemoveButton = null;
-                noteDownRemoveButton = GetNote(e.X, e.Y);
-                if (noteDownRemoveButton !=null)
-                    Invalidate(noteDownRemoveButton.removeButton);
+                switch (e.Button)
+                {
+                    case MouseButtons.Left:
+                        SelectedNote = note;
+                        //OnButtonClick(new EventArgs());
+                        Invalidate();
+                        break;
+                    case MouseButtons.Right:
+                        Invalidate();
+                        break;
+                }
             }
-            base.OnMouseDown(e);
+            base.OnMouseClick(e);
         }
 
-
-        protected override void OnMouseUp(MouseEventArgs e)
+       
+        protected override void OnMouseLeave(EventArgs e)
         {
-            noteHoverRemoveButton = null;
-            noteDownRemoveButton = null;
-            InvalidateRemoveButtons();
-            base.OnMouseUp(e);
+            if (HoveringNote != null)
+            {
+                Rectangle rec = HoveringNote.rectangle;
+                HoveringNote = null;
+                Invalidate(rec);
+            }
+            base.OnMouseLeave(e);
         }
+
+
         protected override void OnDrawItem(DrawItemEventArgs e)
         {
             const TextFormatFlags flags = TextFormatFlags.Left | TextFormatFlags.VerticalCenter;
@@ -227,7 +277,7 @@ namespace WordHiddenPowers.Controls
                 else
                 {
                     Note note = Items[e.Index] as Note;
-                    note.rectagle = e.Bounds;
+                    note.rectangle = e.Bounds;
 
                     DrawRemoveButton(note, e);
                     DrawReiting(note, e);
@@ -281,21 +331,21 @@ namespace WordHiddenPowers.Controls
             note.removeButton.Width = 14;
             note.removeButton.Height = 14;
 
-            if (note.Equals(noteHoverRemoveButton))
-            {
-                e.Graphics.FillRectangle(Brushes.Red, note.removeButton);
-                e.Graphics.DrawRectangle(SystemPens.ControlDarkDark, note.removeButton);
-            }
-            else if (note.Equals(noteDownRemoveButton))
-            {
-                e.Graphics.FillRectangle(Brushes.Blue, note.removeButton);
-                e.Graphics.DrawRectangle(SystemPens.ControlDarkDark, note.removeButton);
-            }
-            else
-            {
-                e.Graphics.FillRectangle(new SolidBrush(BackColor), note.removeButton);
-                e.Graphics.DrawRectangle(SystemPens.ControlDark, note.removeButton);
-            }            
+            //if (note.Equals(noteHoverRemoveButton))
+            //{
+            //    e.Graphics.FillRectangle(Brushes.Red, note.removeButton);
+            //    e.Graphics.DrawRectangle(SystemPens.ControlDarkDark, note.removeButton);
+            //}
+            //else if (note.Equals(noteDownRemoveButton))
+            //{
+            //    e.Graphics.FillRectangle(Brushes.Blue, note.removeButton);
+            //    e.Graphics.DrawRectangle(SystemPens.ControlDarkDark, note.removeButton);
+            //}
+            //else
+            //{
+            //    e.Graphics.FillRectangle(new SolidBrush(BackColor), note.removeButton);
+            //    e.Graphics.DrawRectangle(SystemPens.ControlDark, note.removeButton);
+            //}            
         }
 
         private void InvalidateRemoveButtons()
@@ -311,7 +361,6 @@ namespace WordHiddenPowers.Controls
             if (DesignMode) return;
 
             BeginUpdate();
-            Items.Clear();
 
             if (source == null)
             {
@@ -360,6 +409,21 @@ namespace WordHiddenPowers.Controls
             //}
 
             EndUpdate();
+        }
+
+
+       
+
+
+      
+        
+        
+        internal enum NoteState : int
+        {
+            Disabled = 0,
+            Passive = 1,
+            Hovering = 2,
+            Selected = 3
         }
     }
 }
