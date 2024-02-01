@@ -1,0 +1,617 @@
+<?xml version="1.0" standalone="yes"?>
+<RepositoryDataSet xmlns="http://tempuri.org/DictionaryXMLSchema.xsd">
+  <xs:schema id="RepositoryDataSet" targetNamespace="http://tempuri.org/DictionaryXMLSchema.xsd" xmlns:mstns="http://tempuri.org/DictionaryXMLSchema.xsd" xmlns="http://tempuri.org/DictionaryXMLSchema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" attributeFormDefault="qualified" elementFormDefault="qualified">
+    <xs:element name="RepositoryDataSet" msdata:IsDataSet="true" msdata:Locale="ru">
+      <xs:complexType>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="TextPowers">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="id" msdata:AutoIncrement="true" type="xs:int" />
+                <xs:element name="category_id" type="xs:int" default="0" />
+                <xs:element name="subcategory_id" type="xs:int" default="0" />
+                <xs:element name="Description" type="xs:string" minOccurs="0" />
+                <xs:element name="Value" type="xs:string" minOccurs="0" />
+                <xs:element name="Reiting" type="xs:int" default="0" />
+                <xs:element name="WordSelectionStart" type="xs:int" default="0" />
+                <xs:element name="WordSelectionEnd" type="xs:int" default="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="Categories">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="id" msdata:AutoIncrement="true" type="xs:int" />
+                <xs:element name="Caption" type="xs:string" minOccurs="0" />
+                <xs:element name="Description" type="xs:string" minOccurs="0" />
+                <xs:element name="IsObligatory" type="xs:boolean" default="false" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="Subcategories">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="id" msdata:AutoIncrement="true" type="xs:int" />
+                <xs:element name="category_id" type="xs:int" default="0" />
+                <xs:element name="Caption" type="xs:string" minOccurs="0" />
+                <xs:element name="Description" type="xs:string" minOccurs="0" />
+                <xs:element name="IsDecimal" type="xs:boolean" default="true" />
+                <xs:element name="IsText" type="xs:boolean" default="true" />
+                <xs:element name="IsObligatory" type="xs:boolean" default="false" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="DecimalPowers">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="id" msdata:AutoIncrement="true" type="xs:int" />
+                <xs:element name="category_id" type="xs:int" default="0" />
+                <xs:element name="subcategory_id" type="xs:int" default="0" />
+                <xs:element name="Description" type="xs:string" minOccurs="0" />
+                <xs:element name="Value" type="xs:double" default="0" />
+                <xs:element name="Reiting" type="xs:int" default="0" />
+                <xs:element name="WordSelectionStart" type="xs:int" default="0" />
+                <xs:element name="WordSelectionEnd" type="xs:int" default="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="ColumnsHeaders">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="id" msdata:AutoIncrement="true" type="xs:int" />
+                <xs:element name="Header" type="xs:string" minOccurs="0" />
+                <xs:element name="Bold" type="xs:boolean" default="false" />
+                <xs:element name="BackColor" type="xs:int" default="-1" />
+                <xs:element name="Color" type="xs:int" default="-16777216" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="RowsHeaders">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="id" msdata:AutoIncrement="true" type="xs:int" />
+                <xs:element name="Header" type="xs:string" minOccurs="0" />
+                <xs:element name="Bold" type="xs:boolean" default="false" />
+                <xs:element name="BackColor" type="xs:int" default="-1" />
+                <xs:element name="Color" type="xs:int" default="-16777216" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="DocumentKeys">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="id" msdata:AutoIncrement="true" type="xs:int" minOccurs="0" />
+                <xs:element name="Caption" type="xs:string" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+      <xs:unique name="StringPowersTableKey" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//mstns:TextPowers" />
+        <xs:field xpath="mstns:id" />
+      </xs:unique>
+      <xs:unique name="CategoriesTableKey" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//mstns:Categories" />
+        <xs:field xpath="mstns:id" />
+      </xs:unique>
+      <xs:unique name="SubcategoriesTableKey" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//mstns:Subcategories" />
+        <xs:field xpath="mstns:id" />
+      </xs:unique>
+      <xs:unique name="DesimalPowersTableKey" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//mstns:DecimalPowers" />
+        <xs:field xpath="mstns:id" />
+      </xs:unique>
+      <xs:unique name="ColumnsHeadersTableKey" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//mstns:ColumnsHeaders" />
+        <xs:field xpath="mstns:id" />
+      </xs:unique>
+      <xs:unique name="RowsHeadersTableKey" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//mstns:RowsHeaders" />
+        <xs:field xpath="mstns:id" />
+      </xs:unique>
+    </xs:element>
+  </xs:schema>
+  <Categories>
+    <id>0</id>
+    <Caption>Наименование категории</Caption>
+    <Description>Пояснение к первой категории</Description>
+    <IsObligatory>true</IsObligatory>
+  </Categories>
+  <Subcategories>
+    <id>0</id>
+    <category_id>0</category_id>
+    <Caption>Наименование текстовой подкатегории</Caption>
+    <Description>Пояснение к подкатегории</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>1</id>
+    <category_id>0</category_id>
+    <Caption>Наименование числовой подкатегории</Caption>
+    <Description>Пояснение к подкатеогории</Description>
+    <IsDecimal>true</IsDecimal>
+    <IsText>false</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>2</id>
+    <category_id>0</category_id>
+    <Caption>Наименование обязательной числовой подкатегории</Caption>
+    <Description>Пояснение к подкатегории  </Description>
+    <IsDecimal>true</IsDecimal>
+    <IsText>false</IsText>
+    <IsObligatory>true</IsObligatory>
+  </Subcategories>
+  <ColumnsHeaders>
+    <id>0</id>
+    <Header>Графа 1</Header>
+    <Bold>false</Bold>
+    <BackColor>-1</BackColor>
+    <Color>-16777216</Color>
+  </ColumnsHeaders>
+  <ColumnsHeaders>
+    <id>1</id>
+    <Header>Графа 2</Header>
+    <Bold>false</Bold>
+    <BackColor>-1</BackColor>
+    <Color>-16777216</Color>
+  </ColumnsHeaders>
+  <ColumnsHeaders>
+    <id>2</id>
+    <Header>Графа 3</Header>
+    <Bold>false</Bold>
+    <BackColor>-1</BackColor>
+    <Color>-16777216</Color>
+  </ColumnsHeaders>
+  <RowsHeaders>
+    <id>0</id>
+    <Header>Строка 1</Header>
+    <Bold>false</Bold>
+    <BackColor>-1</BackColor>
+    <Color>-16777216</Color>
+  </RowsHeaders>
+  <RowsHeaders>
+    <id>1</id>
+    <Header>Строка 2</Header>
+    <Bold>false</Bold>
+    <BackColor>-1</BackColor>
+    <Color>-16777216</Color>
+  </RowsHeaders>
+  <RowsHeaders>
+    <id>2</id>
+    <Header>Строка 3</Header>
+    <Bold>false</Bold>
+    <BackColor>-1</BackColor>
+    <Color>-16777216</Color>
+  </RowsHeaders>
+  <RowsHeaders>
+    <id>3</id>
+    <Header>Строка 4</Header>
+    <Bold>false</Bold>
+    <BackColor>-1</BackColor>
+    <Color>-16777216</Color>
+  </RowsHeaders>
+  <RowsHeaders>
+    <id>4</id>
+    <Header>Строка 5</Header>
+    <Bold>false</Bold>
+    <BackColor>-1</BackColor>
+    <Color>-16777216</Color>
+  </RowsHeaders>
+  <DocumentKeys>
+    <id>0</id>
+    <Caption>Респ. Адыгея</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>1</id>
+    <Caption>Респ. Алтай</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>2</id>
+    <Caption>Алтайский край</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>3</id>
+    <Caption>Амурская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>4</id>
+    <Caption>Архангельская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>5</id>
+    <Caption>Астраханская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>6</id>
+    <Caption>Респ. Башкортостан</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>7</id>
+    <Caption>Белгородская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>8</id>
+    <Caption>Брянская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>9</id>
+    <Caption>Респ. Бурятия</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>10</id>
+    <Caption>Владимирская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>11</id>
+    <Caption>Волгоградская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>12</id>
+    <Caption>Вологодская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>13</id>
+    <Caption>Воронежская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>14</id>
+    <Caption>Республика Дагестан</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>15</id>
+    <Caption>Донецкая Народная Респ.</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>16</id>
+    <Caption>Еврейская а.о.</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>17</id>
+    <Caption>Забайкальский край</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>18</id>
+    <Caption>Запорожская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>19</id>
+    <Caption>Ивановская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>20</id>
+    <Caption>Респ. Ингушетия</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>21</id>
+    <Caption>Иркутская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>22</id>
+    <Caption>Респ. Крым</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>23</id>
+    <Caption>Кабардино-Балк. респ.</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>24</id>
+    <Caption>Калининградская обл.</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>25</id>
+    <Caption>Республика Калмыкия</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>26</id>
+    <Caption>Калужская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>27</id>
+    <Caption>Камчатский край</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>28</id>
+    <Caption>Карачаево-Черк. респ.</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>29</id>
+    <Caption>Республика Карелия</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>30</id>
+    <Caption>Кемеровская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>31</id>
+    <Caption>Кировская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>32</id>
+    <Caption>Респ. Коми</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>33</id>
+    <Caption>Костромская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>34</id>
+    <Caption>Краснодарский край</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>35</id>
+    <Caption>Красноярский край</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>36</id>
+    <Caption>Курганская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>37</id>
+    <Caption>Курская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>38</id>
+    <Caption>Ленинградская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>39</id>
+    <Caption>Липецкая область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>40</id>
+    <Caption>Луганская Народная Респ.</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>41</id>
+    <Caption>Магаданская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>42</id>
+    <Caption>Респ. Марий Эл</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>43</id>
+    <Caption>Респ. Мордовия</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>44</id>
+    <Caption>Москва</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>45</id>
+    <Caption>Московская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>46</id>
+    <Caption>Мурманская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>47</id>
+    <Caption>Ненецкий а.о.</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>48</id>
+    <Caption>Нижегородская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>49</id>
+    <Caption>Новгородская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>50</id>
+    <Caption>Новосибирская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>51</id>
+    <Caption>Омская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>52</id>
+    <Caption>Оренбургская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>53</id>
+    <Caption>Орловская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>54</id>
+    <Caption>Пензенская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>55</id>
+    <Caption>Пермский край</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>56</id>
+    <Caption>Приморский край</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>57</id>
+    <Caption>Псковская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>58</id>
+    <Caption>Ростовская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>59</id>
+    <Caption>Рязанская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>60</id>
+    <Caption>Самарская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>61</id>
+    <Caption>Санкт-Петербург</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>62</id>
+    <Caption>Саратовская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>63</id>
+    <Caption>Респ. Саха (Якутия)</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>64</id>
+    <Caption>Сахалинская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>65</id>
+    <Caption>Свердловская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>66</id>
+    <Caption>Севастополь</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>67</id>
+    <Caption>Респ. Северная Осетия</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>68</id>
+    <Caption>Смоленская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>69</id>
+    <Caption>Ставропольский край</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>70</id>
+    <Caption>Тамбовская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>71</id>
+    <Caption>Респ. Татарстан</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>72</id>
+    <Caption>Тверская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>73</id>
+    <Caption>Томская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>74</id>
+    <Caption>Тульская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>75</id>
+    <Caption>Респ. Тыва</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>76</id>
+    <Caption>Тюменская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>77</id>
+    <Caption>Удмуртская Респ.</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>78</id>
+    <Caption>Ульяновская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>79</id>
+    <Caption>Хабаровский край</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>80</id>
+    <Caption>Респ. Хакасия</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>81</id>
+    <Caption>Ханты-Мансийский а.о.</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>82</id>
+    <Caption>Херсонская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>83</id>
+    <Caption>Челябинская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>84</id>
+    <Caption>Чеченская Респ.</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>85</id>
+    <Caption>Чувашская Респ.</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>86</id>
+    <Caption>Чукотский а.о.</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>87</id>
+    <Caption>Ямало-Ненецкий а.о.</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>88</id>
+    <Caption>Ярославская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>89</id>
+    <Caption>Восточно-Сибирская транспортная прокуратура</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>90</id>
+    <Caption>Дальневосточная транспортная прокуратура</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>91</id>
+    <Caption>Западно-Сибирская транспортная прокуратура</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>92</id>
+    <Caption>Московская межрегиональная транспортная прокуратура</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>93</id>
+    <Caption>Приволжская транспортная прокуратура</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>94</id>
+    <Caption>Северо-Западная транспортная прокуратура</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>95</id>
+    <Caption>Уральская транспортная прокуратура</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>96</id>
+    <Caption>Южная транспортная прокуратура</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>97</id>
+    <Caption>Волжская природоохранная прокуратура</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>98</id>
+    <Caption>Амурская бассейновая природоохранная прокуратура</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>99</id>
+    <Caption>Байкальская межрегиональная природоохранная прокуратура</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>100</id>
+    <Caption>комплекс Байконур</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>101</id>
+    <Caption>Университет прокуратуры РФ</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>102</id>
+    <Caption>Главная военная прокуратура</Caption>
+  </DocumentKeys>
+</RepositoryDataSet>

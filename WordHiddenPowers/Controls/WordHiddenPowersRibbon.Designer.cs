@@ -35,49 +35,71 @@
         private void InitializeComponent()
         {
             this.WordHiddenPowersTab = this.Factory.CreateRibbonTab();
-            this.group1 = this.Factory.CreateRibbonGroup();
+            this.maketGroup = this.Factory.CreateRibbonGroup();
+            this.separator1 = this.Factory.CreateRibbonSeparator();
+            this.separator2 = this.Factory.CreateRibbonSeparator();
+            this.panesGroup = this.Factory.CreateRibbonGroup();
+            this.AnalizerGroup = this.Factory.CreateRibbonGroup();
             this.newPowersButton = this.Factory.CreateRibbonButton();
             this.deletePowersButton = this.Factory.CreateRibbonButton();
-            this.separator1 = this.Factory.CreateRibbonSeparator();
             this.openPowersButton = this.Factory.CreateRibbonButton();
             this.savePowersButton = this.Factory.CreateRibbonButton();
-            this.separator2 = this.Factory.CreateRibbonSeparator();
             this.editDocumentKeysButton = this.Factory.CreateRibbonButton();
             this.editCategoriesButton = this.Factory.CreateRibbonButton();
             this.createTableButton = this.Factory.CreateRibbonButton();
-            this.group2 = this.Factory.CreateRibbonGroup();
             this.editTableButton = this.Factory.CreateRibbonButton();
             this.paneVisibleButton = this.Factory.CreateRibbonToggleButton();
-            this.group3 = this.Factory.CreateRibbonGroup();
             this.fieldsUpdateButton = this.Factory.CreateRibbonButton();
             this.fieldAddButton = this.Factory.CreateRibbonButton();
             this.WordHiddenPowersTab.SuspendLayout();
-            this.group1.SuspendLayout();
-            this.group2.SuspendLayout();
-            this.group3.SuspendLayout();
+            this.maketGroup.SuspendLayout();
+            this.panesGroup.SuspendLayout();
+            this.AnalizerGroup.SuspendLayout();
             this.SuspendLayout();
             // 
             // WordHiddenPowersTab
             // 
-            this.WordHiddenPowersTab.Groups.Add(this.group1);
-            this.WordHiddenPowersTab.Groups.Add(this.group2);
-            this.WordHiddenPowersTab.Groups.Add(this.group3);
+            this.WordHiddenPowersTab.Groups.Add(this.maketGroup);
+            this.WordHiddenPowersTab.Groups.Add(this.panesGroup);
+            this.WordHiddenPowersTab.Groups.Add(this.AnalizerGroup);
             this.WordHiddenPowersTab.Label = "Дополнительные данные";
             this.WordHiddenPowersTab.Name = "WordHiddenPowersTab";
             // 
-            // group1
+            // maketGroup
             // 
-            this.group1.Items.Add(this.newPowersButton);
-            this.group1.Items.Add(this.deletePowersButton);
-            this.group1.Items.Add(this.separator1);
-            this.group1.Items.Add(this.openPowersButton);
-            this.group1.Items.Add(this.savePowersButton);
-            this.group1.Items.Add(this.separator2);
-            this.group1.Items.Add(this.editDocumentKeysButton);
-            this.group1.Items.Add(this.editCategoriesButton);
-            this.group1.Items.Add(this.createTableButton);
-            this.group1.Label = "Макет данных";
-            this.group1.Name = "group1";
+            this.maketGroup.Items.Add(this.newPowersButton);
+            this.maketGroup.Items.Add(this.deletePowersButton);
+            this.maketGroup.Items.Add(this.separator1);
+            this.maketGroup.Items.Add(this.openPowersButton);
+            this.maketGroup.Items.Add(this.savePowersButton);
+            this.maketGroup.Items.Add(this.separator2);
+            this.maketGroup.Items.Add(this.editDocumentKeysButton);
+            this.maketGroup.Items.Add(this.editCategoriesButton);
+            this.maketGroup.Items.Add(this.createTableButton);
+            this.maketGroup.Label = "Макет данных";
+            this.maketGroup.Name = "maketGroup";
+            // 
+            // separator1
+            // 
+            this.separator1.Name = "separator1";
+            // 
+            // separator2
+            // 
+            this.separator2.Name = "separator2";
+            // 
+            // panesGroup
+            // 
+            this.panesGroup.Items.Add(this.editTableButton);
+            this.panesGroup.Items.Add(this.paneVisibleButton);
+            this.panesGroup.Label = "Панель управления";
+            this.panesGroup.Name = "panesGroup";
+            // 
+            // AnalizerGroup
+            // 
+            this.AnalizerGroup.Items.Add(this.fieldsUpdateButton);
+            this.AnalizerGroup.Items.Add(this.fieldAddButton);
+            this.AnalizerGroup.Label = "Анализ данных";
+            this.AnalizerGroup.Name = "AnalizerGroup";
             // 
             // newPowersButton
             // 
@@ -94,10 +116,6 @@
             this.deletePowersButton.OfficeImageId = "Delete";
             this.deletePowersButton.ShowImage = true;
             this.deletePowersButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.deletePowersButton_Click);
-            // 
-            // separator1
-            // 
-            this.separator1.Name = "separator1";
             // 
             // openPowersButton
             // 
@@ -119,10 +137,6 @@
             this.savePowersButton.OfficeImageId = "FileSaveAs";
             this.savePowersButton.ShowImage = true;
             this.savePowersButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.savePowersButton_Click);
-            // 
-            // separator2
-            // 
-            this.separator2.Name = "separator2";
             // 
             // editDocumentKeysButton
             // 
@@ -150,13 +164,6 @@
             this.createTableButton.ShowImage = true;
             this.createTableButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.createTableButton_Click);
             // 
-            // group2
-            // 
-            this.group2.Items.Add(this.editTableButton);
-            this.group2.Items.Add(this.paneVisibleButton);
-            this.group2.Label = "Панель управления";
-            this.group2.Name = "group2";
-            // 
             // editTableButton
             // 
             this.editTableButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -174,13 +181,6 @@
             this.paneVisibleButton.OfficeImageId = "MenuToDoBar";
             this.paneVisibleButton.ShowImage = true;
             this.paneVisibleButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.paneVisibleButton_Click);
-            // 
-            // group3
-            // 
-            this.group3.Items.Add(this.fieldsUpdateButton);
-            this.group3.Items.Add(this.fieldAddButton);
-            this.group3.Label = "group3";
-            this.group3.Name = "group3";
             // 
             // fieldsUpdateButton
             // 
@@ -200,12 +200,12 @@
             this.Tabs.Add(this.WordHiddenPowersTab);
             this.WordHiddenPowersTab.ResumeLayout(false);
             this.WordHiddenPowersTab.PerformLayout();
-            this.group1.ResumeLayout(false);
-            this.group1.PerformLayout();
-            this.group2.ResumeLayout(false);
-            this.group2.PerformLayout();
-            this.group3.ResumeLayout(false);
-            this.group3.PerformLayout();
+            this.maketGroup.ResumeLayout(false);
+            this.maketGroup.PerformLayout();
+            this.panesGroup.ResumeLayout(false);
+            this.panesGroup.PerformLayout();
+            this.AnalizerGroup.ResumeLayout(false);
+            this.AnalizerGroup.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -213,12 +213,12 @@
         #endregion
 
         internal Microsoft.Office.Tools.Ribbon.RibbonTab WordHiddenPowersTab;
-        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup maketGroup;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton newPowersButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton openPowersButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton savePowersButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton deletePowersButton;
-        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group2;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup panesGroup;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton paneVisibleButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton createTableButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton editTableButton;
@@ -226,7 +226,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator2;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton editCategoriesButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton editDocumentKeysButton;
-        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group3;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup AnalizerGroup;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton fieldsUpdateButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton fieldAddButton;
     }

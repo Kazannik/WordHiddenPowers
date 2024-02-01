@@ -55,7 +55,7 @@ namespace WordHiddenPowers.Panes
             }
             else
             {
-                ActivePane = links.Add(new WordHiddenPowersPane(Doc), Const.Panes.PANE_TITLE);
+                ActivePane = links.Add(new NotesPane(Doc), Const.Panes.PANE_TITLE);
                 Add(Doc.DocID, ActivePane);
                 ActivePane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
                 ActivePane.Width = 400;
@@ -76,7 +76,7 @@ namespace WordHiddenPowers.Panes
         {
             if (ContainsKey(Doc.DocID))
             {
-                WordHiddenPowersPane pane = base[Doc.DocID].Control as WordHiddenPowersPane;
+                NotesPane pane = base[Doc.DocID].Control as NotesPane;
                 pane.CommitVariables();
 
                 base[Doc.DocID].VisibleChanged -= Pane_VisibleChanged;
@@ -120,7 +120,7 @@ namespace WordHiddenPowers.Panes
         {
             if (ActivePane != null)
             {
-                WordHiddenPowersPane pane = ActivePane.Control as WordHiddenPowersPane;
+                NotesPane pane = ActivePane.Control as NotesPane;
                 pane.AddDecimalNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
             }
         }
@@ -129,7 +129,7 @@ namespace WordHiddenPowers.Panes
         {
             if (ActivePane != null)
             {
-                WordHiddenPowersPane pane = ActivePane.Control as WordHiddenPowersPane;
+                NotesPane pane = ActivePane.Control as NotesPane;
                 pane.AddTextNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
             }               
         }

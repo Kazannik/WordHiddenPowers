@@ -35,21 +35,18 @@ namespace WordHiddenPowers.Controls
                 }
                 source = value;
 
+                Items.Clear();
+
+                ReadData();
+
                 if (source != null)
                 {
-                    ReadData();
-
-                    Items.Clear();
                     source.DecimalPowers.DecimalPowersRowChanged += new RepositoryDataSet.DecimalPowersRowChangeEventHandler(DecimalPowers_RowChanged);
                     source.TextPowers.TextPowersRowChanged += new RepositoryDataSet.TextPowersRowChangeEventHandler(TextPowers_RowChanged);
                     source.DecimalPowers.DecimalPowersRowDeleted += new RepositoryDataSet.DecimalPowersRowChangeEventHandler(DecimalPowers_RowChanged);
                     source.TextPowers.TextPowersRowDeleted += new RepositoryDataSet.TextPowersRowChangeEventHandler(TextPowers_RowChanged);
                     source.DecimalPowers.TableCleared += new DataTableClearEventHandler(TablesPowers_TableCleared);
                     source.TextPowers.TableCleared += new DataTableClearEventHandler(TablesPowers_TableCleared);
-                }
-                else
-                {
-                    Items.Clear();
                 }
             }
         }
@@ -174,9 +171,8 @@ namespace WordHiddenPowers.Controls
             }
         }
 
+
         private Note HoveringNote;
-        private Note ClickedNote;
-        internal Note SelectedNote;
 
         public Note this[int x, int y]
         {
@@ -233,25 +229,50 @@ namespace WordHiddenPowers.Controls
                 
         protected override void OnMouseClick(MouseEventArgs e)
         {
+
             Note note = this[e.X, e.Y];
             if (note != null)
             {
-                switch (e.Button)
-                {
-                    case MouseButtons.Left:
-                        SelectedNote = note;
-                        //OnButtonClick(new EventArgs());
-                        Invalidate();
-                        break;
-                    case MouseButtons.Right:
-                        Invalidate();
-                        break;
-                }
+                //switch (e.Button)
+                //{
+                //    case MouseButtons.Left:
+                //        SelectedNote = note;
+                //        //OnButtonClick(new EventArgs());
+                //        Invalidate();
+                //        break;
+                //    case MouseButtons.Right:
+                //        Invalidate();
+                //        break;
+                //}
+                OnNoteMouseClick(new NoteListMouseEventArgs(note, e));
             }
             base.OnMouseClick(e);
         }
 
-       
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            Note note = this[e.X, e.Y];
+            if (note != null)
+            {
+                SelectedItem = note;
+                OnNoteMouseDown(new NoteListMouseEventArgs((Note)SelectedItem, e));
+            }
+            base.OnMouseDown(e);                             
+        }
+
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            if (SelectedItem != null)
+            {                
+                if (e.Button== MouseButtons.Right)
+                {
+                    OnNoteMouseClick(new NoteListMouseEventArgs((Note)SelectedItem, e));
+                }
+                OnNoteMouseUp(new NoteListMouseEventArgs((Note)SelectedItem, e));
+           }
+            base.OnMouseUp(e);
+        }
+
         protected override void OnMouseLeave(EventArgs e)
         {
             if (HoveringNote != null)
@@ -262,7 +283,6 @@ namespace WordHiddenPowers.Controls
             }
             base.OnMouseLeave(e);
         }
-
 
         protected override void OnDrawItem(DrawItemEventArgs e)
         {
@@ -321,7 +341,7 @@ namespace WordHiddenPowers.Controls
             rect.X += 20;
             rect.Width -= 20;
 
-           //e.Graphics.DrawRectangle(Pens.Red, rect);
+           e.Graphics.DrawRectangle(Pens.Red, rect);
         }
 
         private void DrawRemoveButton(Note note, DrawItemEventArgs e)
@@ -358,16 +378,9 @@ namespace WordHiddenPowers.Controls
 
         public void ReadData()
         {
-            if (DesignMode) return;
+            if (DesignMode || source == null) return;
 
             BeginUpdate();
-
-            if (source == null)
-            {
-                EndUpdate();
-                return;
-            }                
-            
             IDictionary<int, Category> categories = new Dictionary<int, Category>();
             if (source.Categories.Rows.Count > 0)
             {
@@ -400,30 +413,44 @@ namespace WordHiddenPowers.Controls
                     subcategories.Add(subcategory.Id, subcategory);
                 }
             }
-
-            //foreach (DataRow row in source.DecimalPowers.Rows)
-            //{
-            //    Subcategory subcategory = subcategories[(int)row["subcategory_id"]];
-            //    Note note = Note.Create(row, subcategory);
-            //    this.Items.Add(note);
-            //}
-
             EndUpdate();
         }
-
-
-       
-
-
-      
-        
-        
+                
         internal enum NoteState : int
         {
             Disabled = 0,
             Passive = 1,
             Hovering = 2,
             Selected = 3
+        }
+
+        public event EventHandler<NoteListMouseEventArgs> NoteMouseClick;
+        public event EventHandler<NoteListMouseEventArgs> NoteMouseDown;
+        public event EventHandler<NoteListMouseEventArgs> NoteMouseUp;
+
+        protected virtual void OnNoteMouseClick(NoteListMouseEventArgs e)
+        {
+            NoteMouseClick?.Invoke(this, e);
+        }
+                
+        protected virtual void OnNoteMouseDown(NoteListMouseEventArgs e)
+        {
+            NoteMouseDown?.Invoke(this, e);
+        }
+
+        protected virtual void OnNoteMouseUp(NoteListMouseEventArgs e)
+        {
+            NoteMouseUp?.Invoke(this, e);
+        }
+
+        public class NoteListMouseEventArgs : MouseEventArgs
+        {
+            public NoteListMouseEventArgs(Note note, MouseEventArgs arg): base(arg.Button, arg.Clicks, arg.X, arg.Y, arg.Delta)
+            {
+                Note = note;                
+            }
+
+            public Note Note { get; }
         }
     }
 }

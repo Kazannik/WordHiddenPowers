@@ -21,11 +21,11 @@ namespace WordHiddenPowers.Repositoryes.Models
         {
             get
             {
-                return owner.SelectedNote.Equals(this);
+                return owner.SelectedItem.Equals(this);
             }
             set
             {
-                owner.SelectedNote = this;
+                owner.SelectedItem = this;
             }
         }
 

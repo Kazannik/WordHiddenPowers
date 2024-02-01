@@ -45,7 +45,7 @@ namespace WordHiddenPowers
             if (this.Application.Documents.Count > 0)
             {
                 panes.WindowActivate(this.Application.ActiveDocument);
-                Panes.WordHiddenPowersPane pane = (Panes.WordHiddenPowersPane)panes.ActivePane.Control;
+                Panes.NotesPane pane = (Panes.NotesPane)panes.ActivePane.Control;
                 pane.InitializeVariables();
             }          
         }
@@ -84,7 +84,7 @@ namespace WordHiddenPowers
 
         private void Application_DocumentOpen(Word.Document Doc)
         {
-            Panes.WordHiddenPowersPane pane = (Panes.WordHiddenPowersPane)panes.ActivePane.Control;
+            Panes.NotesPane pane = (Panes.NotesPane)panes.ActivePane.Control;
             pane.InitializeVariables();
         }
 

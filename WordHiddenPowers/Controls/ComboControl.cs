@@ -222,10 +222,33 @@ namespace WordHiddenPowers.Controls
             return default(T);
         }
 
+        protected override void OnSelectedIndexChanged(EventArgs e)
+        {
+            OnSelectedItemChanged(new ComboBoxItemEventArgs(SelectedContent));
+            base.OnSelectedIndexChanged(e);
+        }
+
         public interface IComboBoxItem
         {
             int Code { get; }
             string Text { get; }
+        }
+
+        public event EventHandler<ComboBoxItemEventArgs> SelectedItemChanged;
+
+        protected virtual void OnSelectedItemChanged(ComboBoxItemEventArgs e)
+        {
+            SelectedItemChanged?.Invoke(this, e);
+        }
+
+        public class ComboBoxItemEventArgs : EventArgs
+        {
+            public ComboBoxItemEventArgs(T item): base()
+            {
+                Item = item;
+            }
+
+            public T Item { get; }
         }
     }
 }

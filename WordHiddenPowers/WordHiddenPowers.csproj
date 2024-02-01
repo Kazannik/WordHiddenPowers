@@ -239,17 +239,12 @@
     <Compile Include="Dialogs\TableSettingDialog.Designer.cs">
       <DependentUpon>TableSettingDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Panes\AnalizerPane.cs" />
+    <Compile Include="Panes\NotesPane.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Panes\PaneCollection.cs" />
-    <Compile Include="Panes\WordHiddenPowersPane.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Panes\WordHiddenPowersPane.Designer.cs">
-      <DependentUpon>WordHiddenPowersPane.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Panes\WordHiddenPowersPane.Dialogs.cs">
-      <DependentUpon>WordHiddenPowersPane.cs</DependentUpon>
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="Panes\WordHiddenPowersPane.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -296,8 +291,8 @@
     <EmbeddedResource Include="Dialogs\TableSettingDialog.resx">
       <DependentUpon>TableSettingDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Panes\WordHiddenPowersPane.resx">
-      <DependentUpon>WordHiddenPowersPane.cs</DependentUpon>
+    <EmbeddedResource Include="Panes\NotesPane.resx">
+      <DependentUpon>NotesPane.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -539,6 +534,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Files\Example.txt" />
+    <Content Include="Files\ListDocs.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Service\" />
