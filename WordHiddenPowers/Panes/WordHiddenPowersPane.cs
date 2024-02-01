@@ -6,6 +6,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using WordHiddenPowers.Dialogs;
+using WordHiddenPowers.Documents;
 using WordHiddenPowers.Repositoryes;
 using WordHiddenPowers.Utils;
 using Word = Microsoft.Office.Interop.Word;
@@ -15,8 +16,10 @@ namespace WordHiddenPowers.Panes
     [DesignerCategory("code")]
     public class WordHiddenPowersPane : UserControl
     {
+        private DocumentCollection importDocuments;
+
         protected System.Collections.Generic.IList<Form> dialogs = null;
-        protected IContainer components;
+        private IContainer components;
                 
         public Word.Document Document { get; }
 
@@ -148,6 +151,26 @@ namespace WordHiddenPowers.Panes
             dialogs.Add(dialog);
             dialog.Show();
             OnPropertiesChanged(new EventArgs());
+        }
+
+
+        public void ImportDataFromWordDocuments()
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            if (ShowDialogUtil.ShowDialogObj(dialog) == DialogResult.OK)
+            {
+                importDocuments = FileSystem.ImportFiles(dialog.SelectedPath);
+            }
+        }
+        
+        public void ShowAnalizerDialog()
+        {
+            
+        }
+
+        public void ShowTableViewerDialog()
+        {
+            
         }
 
         protected override void Dispose(bool disposing)

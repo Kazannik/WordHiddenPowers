@@ -221,6 +221,12 @@
     <Compile Include="Dialogs\CreadeNoteDialog.Designer.cs">
       <DependentUpon>CreadeNoteDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\TableViewerDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\TableViewerDialog.Designer.cs">
+      <DependentUpon>TableViewerDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\TextNoteDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -239,6 +245,16 @@
     <Compile Include="Dialogs\TableSettingDialog.Designer.cs">
       <DependentUpon>TableSettingDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Documents\Document.cs" />
+    <Compile Include="Documents\DocumentCollection.cs" />
+    <Compile Include="Documents\DocumentsSchema.cs">
+      <DependentUpon>DocumentsSchema.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Documents\DocumentsSchema.Designer.cs">
+      <DependentUpon>DocumentsSchema.xsd</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Panes\AnalizerPane.cs" />
     <Compile Include="Panes\NotesPane.cs">
       <SubType>UserControl</SubType>
@@ -252,7 +268,9 @@
     <Compile Include="Repositoryes\Models\Note.cs" />
     <Compile Include="Categories\Subcategory.cs" />
     <Compile Include="Utils\Categories.cs" />
+    <Compile Include="Utils\FileSystem.cs" />
     <Compile Include="Utils\HiddenPowerDocument.cs" />
+    <Compile Include="Utils\MicrosoftDocuments.cs" />
     <Compile Include="Utils\ShowDialogUtil.cs" />
     <Compile Include="Utils\WordUtil.cs" />
     <EmbeddedResource Include="Controls\NumericTextBox.resx">
@@ -282,6 +300,9 @@
     <EmbeddedResource Include="Dialogs\CreadeNoteDialog.resx">
       <DependentUpon>CreadeNoteDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\TableViewerDialog.resx">
+      <DependentUpon>TableViewerDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\TextNoteDialog.resx">
       <DependentUpon>TextNoteDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -304,6 +325,17 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="Documents\DocumentsSchema.xsc">
+      <DependentUpon>DocumentsSchema.xsd</DependentUpon>
+    </None>
+    <None Include="Documents\DocumentsSchema.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DocumentsSchema.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Documents\DocumentsSchema.xss">
+      <DependentUpon>DocumentsSchema.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

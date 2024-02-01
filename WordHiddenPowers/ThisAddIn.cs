@@ -22,9 +22,9 @@ namespace WordHiddenPowers
         {
             get
             {
-                if (panes.Contains(this.Application.ActiveDocument))
+                if (panes.Contains(Application.ActiveDocument))
                 {
-                    return (Panes.WordHiddenPowersPane) panes[this.Application.ActiveDocument].Control;
+                    return (Panes.WordHiddenPowersPane) panes[Application.ActiveDocument].Control;
                 }
                 else
                 {
@@ -42,15 +42,15 @@ namespace WordHiddenPowers
 
             #endregion
 
-            if (this.Application.Documents.Count > 0)
+            if (Application.Documents.Count > 0)
             {
-                panes.WindowActivate(this.Application.ActiveDocument);
+                panes.WindowActivate(Application.ActiveDocument);
                 Panes.NotesPane pane = (Panes.NotesPane)panes.ActivePane.Control;
                 pane.InitializeVariables();
             }          
         }
 
-        private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
+        private void ThisAddIn_Shutdown(object sender, EventArgs e)
         {
             panes.Dispose();
         }
@@ -63,12 +63,12 @@ namespace WordHiddenPowers
         /// </summary>
         private void InternalStartup()
         {
-            this.Startup += new EventHandler(ThisAddIn_Startup);
-            this.Shutdown += new EventHandler(ThisAddIn_Shutdown);
-            this.Application.DocumentOpen += new Word.ApplicationEvents4_DocumentOpenEventHandler(Application_DocumentOpen);
-            this.Application.DocumentBeforeClose += new Word.ApplicationEvents4_DocumentBeforeCloseEventHandler(Application_DocumentBeforeClose);
-            this.Application.WindowActivate += new Word.ApplicationEvents4_WindowActivateEventHandler(Application_WindowActivate);
-            this.Application.WindowDeactivate +=new Word.ApplicationEvents4_WindowDeactivateEventHandler(Application_WindowDeactivate);
+            Startup += new EventHandler(ThisAddIn_Startup);
+            Shutdown += new EventHandler(ThisAddIn_Shutdown);
+            Application.DocumentOpen += new Word.ApplicationEvents4_DocumentOpenEventHandler(Application_DocumentOpen);
+            Application.DocumentBeforeClose += new Word.ApplicationEvents4_DocumentBeforeCloseEventHandler(Application_DocumentBeforeClose);
+            Application.WindowActivate += new Word.ApplicationEvents4_WindowActivateEventHandler(Application_WindowActivate);
+            Application.WindowDeactivate +=new Word.ApplicationEvents4_WindowDeactivateEventHandler(Application_WindowDeactivate);
         }
         
         private void Application_WindowActivate(Word.Document Doc, Word.Window Wn)

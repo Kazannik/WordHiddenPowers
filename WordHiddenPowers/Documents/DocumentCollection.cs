@@ -5,42 +5,42 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WordHiddenPowers.Categories;
 using WordHiddenPowers.Data;
-using WordSuite.Controls;
-using WordSuite.Repositoryes;
-using AddIn = WordHiddenPowers.Categories;
+using WordHiddenPowers.Repositoryes;
+using WordHiddenPowers.Repositoryes.Models;
 
-namespace WordSuite.HiddenPowers.Model
+namespace WordHiddenPowers.Documents
 {
-    public class DocumentCollection: List<Document>
+    public class DocumentCollection : List<Document>
     {
-        private IDictionary<int, AddIn.Category> categories;
-        private IDictionary<int, AddIn.Subcategory> subcategories;
+        private IDictionary<int, Category> categories;
+        private IDictionary<int, Subcategory> subcategories;
         private IList<Note> notes;
 
-        private IDictionary<AddIn.Subcategory, double> sumDecimalNotes;
-        
+        private IDictionary<Subcategory, double> sumDecimalNotes;
+
         public DocumentCollection()
         {
             PowersDataSet = new RepositoryDataSet();
 
-            subcategories = new Dictionary<int, AddIn.Subcategory>();
-            categories = new Dictionary<int, AddIn.Category>();
+            subcategories = new Dictionary<int,Subcategory>();
+            categories = new Dictionary<int, Category>();
             notes = new List<Note>();
-            sumDecimalNotes = new Dictionary<AddIn.Subcategory, double>();
+            sumDecimalNotes = new Dictionary<Subcategory, double>();
         }
 
 
         public RepositoryDataSet PowersDataSet { get; }
 
         public Table SumTable { get; private set; }
-        
+
         public new void Add(Document item)
         {
-            if (base.Count==0)
+            if (Count == 0)
             {
                 SumTable = new Table(item.Table.Rows.Count, item.Table.ColumnCount);
-                                
+
                 string xml = item.PowersDataSetToXml();
                 SetXml(PowersDataSet, xml);
                 PowersDataSet.DecimalPowers.Clear();
@@ -80,32 +80,32 @@ namespace WordSuite.HiddenPowers.Model
             {
                 foreach (DataRow row in item.PowersDataSet.Categories.Rows)
                 {
-                    AddIn.Category category = AddIn.Category.Create(row);
+                    Category category = Category.Create(row);
                     if (!categories.ContainsKey(category.Id))
                         categories.Add(category.Id, category);
                 }
             }
             else
             {
-                AddIn.Category category = AddIn.Category.Default();
+                Category category = Category.Default();
                 if (!categories.ContainsKey(category.Id))
                     categories.Add(category.Id, category);
             }
-                        
+
             if (item.PowersDataSet.Subcategories.Rows.Count > 0)
             {
                 foreach (DataRow row in item.PowersDataSet.Subcategories.Rows)
                 {
-                    AddIn.Subcategory subcategory = AddIn.Subcategory.Create(categories[(int)row["category_id"]], row);
+                    Subcategory subcategory = Subcategory.Create(categories[(int)row["category_id"]], row);
                     if (!subcategories.ContainsKey(subcategory.Id))
                         subcategories.Add(subcategory.Id, subcategory);
                 }
             }
             else
             {
-                foreach (AddIn.Category category in categories.Values)
+                foreach (Category category in categories.Values)
                 {
-                    AddIn.Subcategory subcategory = AddIn.Subcategory.Default(category: category);
+                    Subcategory subcategory = Subcategory.Default(category: category);
                     if (!subcategories.ContainsKey(subcategory.Id))
                         subcategories.Add(subcategory.Id, subcategory);
                 }
@@ -113,12 +113,12 @@ namespace WordSuite.HiddenPowers.Model
 
             foreach (DataRow row in item.PowersDataSet.DecimalPowers.Rows)
             {
-                AddIn.Subcategory subcategory = subcategories[(int)row["subcategory_id"]];
+                Subcategory subcategory = subcategories[(int)row["subcategory_id"]];
                 Note note = Note.Create((WordHiddenPowers.Repositoryes.RepositoryDataSet.DecimalPowersRow)row, subcategory);
                 notes.Add(note);
                 if (!sumDecimalNotes.ContainsKey(note.Subcategory))
                 {
-                    sumDecimalNotes.Add(note.Subcategory,(double) note.Value);
+                    sumDecimalNotes.Add(note.Subcategory, (double)note.Value);
                 }
                 else
                 {
@@ -128,7 +128,7 @@ namespace WordSuite.HiddenPowers.Model
 
             foreach (DataRow row in item.PowersDataSet.TextPowers.Rows)
             {
-                AddIn.Subcategory subcategory = subcategories[(int)row["subcategory_id"]];
+                Subcategory subcategory = subcategories[(int)row["subcategory_id"]];
                 Note note = Note.Create((WordHiddenPowers.Repositoryes.RepositoryDataSet.TextPowersRow)row, subcategory);
                 notes.Add(note);
             }

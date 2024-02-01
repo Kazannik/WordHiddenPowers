@@ -154,5 +154,23 @@ namespace WordHiddenPowers
             WordHiddenPowersPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as WordHiddenPowersPane;
             WordHiddenPowers.Utils.WordUtil.AddField(pane.Document, Globals.ThisAddIn.Application.Selection , 1);
         }
+
+        private void analizerImportButton_Click(object sender, RibbonControlEventArgs e)
+        {
+            WordHiddenPowersPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as WordHiddenPowersPane;
+            pane.ImportDataFromWordDocuments();
+        }
+
+        private void analizerTableViewerButton_Click(object sender, RibbonControlEventArgs e)
+        {
+            WordHiddenPowersPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as WordHiddenPowersPane;
+            pane.ShowTableViewerDialog();
+        }
+
+        private void analizerDialogButton_Click(object sender, RibbonControlEventArgs e)
+        {
+            WordHiddenPowersPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as WordHiddenPowersPane;
+            pane.ShowAnalizerDialog();
+        }
     }
 }

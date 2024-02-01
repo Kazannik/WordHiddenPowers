@@ -18,8 +18,8 @@ namespace WordHiddenPowers.Panes
 
         public PaneCollection(CustomTaskPaneCollection collection, RibbonToggleButton button)
         {
-            this.links = collection;
-            this.buttonVisible = button;
+            links = collection;
+            buttonVisible = button;
             
             Word.Application application = Globals.ThisAddIn.Application as Word.Application;
             application.WindowSelectionChange += new Word.ApplicationEvents4_WindowSelectionChangeEventHandler(ApplicationObject_WindowSelectionChange);
@@ -44,7 +44,7 @@ namespace WordHiddenPowers.Panes
 
         public bool Contains(Word.Document Doc)
         {
-            return base.ContainsKey(Doc.DocID);
+            return ContainsKey(Doc.DocID);
         }
 
         public void WindowActivate(Word.Document Doc)
@@ -81,7 +81,7 @@ namespace WordHiddenPowers.Panes
 
                 base[Doc.DocID].VisibleChanged -= Pane_VisibleChanged;
                 links.Remove(base[Doc.DocID]);
-                base.Remove(Doc.DocID);
+                Remove(Doc.DocID);
             }           
         }
 

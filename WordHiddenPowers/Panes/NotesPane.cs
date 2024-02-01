@@ -437,6 +437,30 @@ namespace WordHiddenPowers.Panes
             this.noteContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
-        }        
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+
+            if (dialogs != null)
+            {
+                foreach (Form form in dialogs)
+                {
+                    if (form != null)
+                    {
+                        form.Close();
+                        form.Dispose();
+                    }
+                }
+                dialogs.Clear();
+            }
+
+            base.Dispose(disposing);
+        }
+
     }
 }

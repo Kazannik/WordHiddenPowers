@@ -51,6 +51,9 @@
             this.paneVisibleButton = this.Factory.CreateRibbonToggleButton();
             this.fieldsUpdateButton = this.Factory.CreateRibbonButton();
             this.fieldAddButton = this.Factory.CreateRibbonButton();
+            this.analizerImportButton = this.Factory.CreateRibbonButton();
+            this.analizerDialogButton = this.Factory.CreateRibbonButton();
+            this.analizerTableViewerButton = this.Factory.CreateRibbonButton();
             this.WordHiddenPowersTab.SuspendLayout();
             this.maketGroup.SuspendLayout();
             this.panesGroup.SuspendLayout();
@@ -96,8 +99,11 @@
             // 
             // AnalizerGroup
             // 
+            this.AnalizerGroup.Items.Add(this.analizerTableViewerButton);
+            this.AnalizerGroup.Items.Add(this.analizerDialogButton);
             this.AnalizerGroup.Items.Add(this.fieldsUpdateButton);
             this.AnalizerGroup.Items.Add(this.fieldAddButton);
+            this.AnalizerGroup.Items.Add(this.analizerImportButton);
             this.AnalizerGroup.Label = "Анализ данных";
             this.AnalizerGroup.Name = "AnalizerGroup";
             // 
@@ -193,6 +199,30 @@
             this.fieldAddButton.Name = "fieldAddButton";
             this.fieldAddButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.fieldAddButton_Click);
             // 
+            // analizerImportButton
+            // 
+            this.analizerImportButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.analizerImportButton.Label = "Импортировать данные...";
+            this.analizerImportButton.Name = "analizerImportButton";
+            this.analizerImportButton.ShowImage = true;
+            this.analizerImportButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.analizerImportButton_Click);
+            // 
+            // analizerDialogButton
+            // 
+            this.analizerDialogButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.analizerDialogButton.Label = "Анализ данных...";
+            this.analizerDialogButton.Name = "analizerDialogButton";
+            this.analizerDialogButton.ShowImage = true;
+            this.analizerDialogButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.analizerDialogButton_Click);
+            // 
+            // analizerTableViewerButton
+            // 
+            this.analizerTableViewerButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.analizerTableViewerButton.Label = "Табличные данные";
+            this.analizerTableViewerButton.Name = "analizerTableViewerButton";
+            this.analizerTableViewerButton.ShowImage = true;
+            this.analizerTableViewerButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.analizerTableViewerButton_Click);
+            // 
             // WordHiddenPowersRibbon
             // 
             this.Name = "WordHiddenPowersRibbon";
@@ -229,6 +259,9 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup AnalizerGroup;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton fieldsUpdateButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton fieldAddButton;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton analizerImportButton;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton analizerTableViewerButton;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton analizerDialogButton;
     }
 
     partial class ThisRibbonCollection
