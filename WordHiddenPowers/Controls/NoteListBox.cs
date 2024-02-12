@@ -299,8 +299,8 @@ namespace WordHiddenPowers.Controls
                     Note note = Items[e.Index] as Note;
                     note.rectangle = e.Bounds;
 
-                    DrawRemoveButton(note, e);
-                    DrawReiting(note, e);
+                    //DrawRemoveButton(note, e);
+                    //DrawReiting(note, e);
 
                     if (note.IsText)
                         DrawTextItem(note, e);
@@ -313,24 +313,31 @@ namespace WordHiddenPowers.Controls
 
         private void DrawDecimalItem(Note note, DrawItemEventArgs e)
         {
-            
+            const TextFormatFlags flags = TextFormatFlags.Left | TextFormatFlags.Top;
 
-            const TextFormatFlags flags = TextFormatFlags.Left | TextFormatFlags.VerticalCenter;
-            string noteValue = note.Value.ToString();
+            Rectangle captionRectangle = new Rectangle(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, 20);
+            TextRenderer.DrawText(e.Graphics, note.Category.Caption as string, e.Font, captionRectangle, Color.RosyBrown, flags);
 
-            //e.Graphics.DrawRectangle(Pens.Red, 2, e.Bounds.Y + 2, 14, 14); // Simulate an icon.
+            Rectangle subcategoryRectangle = new Rectangle(e.Bounds.X, e.Bounds.Y + 20, e.Bounds.Width, 20);
+            TextRenderer.DrawText(e.Graphics, note.Subcategory.Caption as string, e.Font, subcategoryRectangle, Color.YellowGreen, flags);
 
-            //var textRect = e.Bounds;
-            //textRect.X += 20;
-            //textRect.Width -= 20;
-            //string itemText = DesignMode ? "NoteListBox" : Items[e.Index].ToString();
-            TextRenderer.DrawText(e.Graphics, noteValue, e.Font, e.Bounds, e.ForeColor, flags);
+            Rectangle textRectangle = new Rectangle(e.Bounds.X, e.Bounds.Y + 40, e.Bounds.Width, e.Bounds.Height - 40);
+            TextRenderer.DrawText(e.Graphics, note.Value.ToString() as string, e.Font, textRectangle, e.ForeColor, flags | TextFormatFlags.WordBreak);
         }
 
         private void DrawTextItem(Note note, DrawItemEventArgs e)
         {
-            const TextFormatFlags flags = TextFormatFlags.Left | TextFormatFlags.VerticalCenter;
-            TextRenderer.DrawText(e.Graphics, note.Value as string, e.Font, e.Bounds, e.ForeColor, flags);
+                       
+            const TextFormatFlags flags = TextFormatFlags.Left | TextFormatFlags.Top;
+
+            Rectangle captionRectangle = new Rectangle(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, 20);
+            TextRenderer.DrawText(e.Graphics, note.Category.Caption as string, e.Font, captionRectangle, Color.Red, flags);
+
+            Rectangle subcategoryRectangle = new Rectangle(e.Bounds.X, e.Bounds.Y + 20, e.Bounds.Width, 20);
+            TextRenderer.DrawText(e.Graphics, note.Subcategory.Caption as string, e.Font, subcategoryRectangle, Color.Green, flags);
+            
+            Rectangle textRectangle = new Rectangle(e.Bounds.X, e.Bounds.Y + 40, e.Bounds.Width, e.Bounds.Height - 40);
+            TextRenderer.DrawText(e.Graphics, note.Value as string, e.Font, textRectangle, e.ForeColor, flags| TextFormatFlags.WordBreak);
 
         }
 

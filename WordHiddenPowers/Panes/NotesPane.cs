@@ -377,7 +377,7 @@ namespace WordHiddenPowers.Panes
             // 
             this.noteListBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.noteListBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.noteListBox.ItemHeight = 40;
+            this.noteListBox.ItemHeight = 80;
             this.noteListBox.Location = new System.Drawing.Point(0, 0);
             this.noteListBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.noteListBox.Name = "noteListBox";
