@@ -84,8 +84,11 @@ namespace WordHiddenPowers
 
         private void Application_DocumentOpen(Word.Document Doc)
         {
-            Panes.NotesPane pane = (Panes.NotesPane)panes.ActivePane.Control;
-            pane.InitializeVariables();
+            if (panes.Count > 0)
+            {
+                Panes.NotesPane pane = (Panes.NotesPane)panes.ActivePane.Control;
+                pane.InitializeVariables();
+            }
         }
 
 

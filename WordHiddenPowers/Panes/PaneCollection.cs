@@ -47,19 +47,26 @@ namespace WordHiddenPowers.Panes
             return ContainsKey(Doc.DocID);
         }
 
-        public void WindowActivate(Word.Document Doc)
+        public CustomTaskPane GetPane(Word.Document Doc)
         {
             if (ContainsKey(Doc.DocID))
             {
-                ActivePane = base[Doc.DocID];
+                return base[Doc.DocID];
             }
             else
             {
-                ActivePane = links.Add(new NotesPane(Doc), Const.Panes.PANE_TITLE);
-                Add(Doc.DocID, ActivePane);
-                ActivePane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
-                ActivePane.Width = 400;
+                CustomTaskPane pane = links.Add(new NotesPane(Doc), Const.Panes.PANE_TITLE);
+                Add(Doc.DocID, pane);
+                pane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
+                pane.Width = 400;
+                return pane;
            }
+        }
+
+
+        public void WindowActivate(Word.Document Doc)
+        {
+            ActivePane = GetPane(Doc);           
             ActivePane.Visible = buttonVisible.Checked;
             ActivePane.VisibleChanged += new EventHandler(Pane_VisibleChanged);
         }
@@ -82,7 +89,7 @@ namespace WordHiddenPowers.Panes
                 base[Doc.DocID].VisibleChanged -= Pane_VisibleChanged;
                 links.Remove(base[Doc.DocID]);
                 Remove(Doc.DocID);
-            }           
+            }                     
         }
 
         void Pane_VisibleChanged(object sender, EventArgs e)

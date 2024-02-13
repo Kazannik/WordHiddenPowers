@@ -45,31 +45,36 @@ namespace WordHiddenPowers.Panes
         {
             if (Document.Variables.Count > 0)
             {
-                Word.Variable title = HiddenPowerDocument.GetVariable(Document.Variables, Const.Globals.TITLE_VARIABLE_NAME);
+                Word.Variable title = HiddenPowerDocument.GetVariable(Document.Variables, 
+                    Const.Globals.TITLE_VARIABLE_NAME);
                 if (title != null)
                 {
                     return true;
                 }
 
-                Word.Variable date = HiddenPowerDocument.GetVariable(Document.Variables, Const.Globals.DATE_VARIABLE_NAME);
+                Word.Variable date = HiddenPowerDocument.GetVariable(Document.Variables, 
+                    Const.Globals.DATE_VARIABLE_NAME);
                 if (date != null)
                 {
                     return true;
                 }
 
-                Word.Variable description = HiddenPowerDocument.GetVariable(Document.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME);
+                Word.Variable description = HiddenPowerDocument.GetVariable(Document.Variables, 
+                    Const.Globals.DESCRIPTION_VARIABLE_NAME);
                 if (description != null)
                 {
                     return true;
                 }
 
-                Word.Variable categories = HiddenPowerDocument.GetVariable(Document.Variables, Const.Globals.CATEGORIES_VARIABLE_NAME);
+                Word.Variable categories = HiddenPowerDocument.GetVariable(Document.Variables, 
+                    Const.Globals.XML_VARIABLE_NAME);
                 if (categories != null)
                 {
                     return true;
                 }
 
-                Word.Variable table = HiddenPowerDocument.GetVariable(Document.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+                Word.Variable table = HiddenPowerDocument.GetVariable(Document.Variables, 
+                    Const.Globals.TABLE_VARIABLE_NAME);
                 if (table != null)
                 {
                     return true;
@@ -80,19 +85,22 @@ namespace WordHiddenPowers.Panes
 
         public void CommitVariables()
         {
-            StringBuilder builder = new StringBuilder();
-            StringWriter writer = new StringWriter(builder);
-            PowersDataSet.WriteXml(writer, XmlWriteMode.WriteSchema);
-            writer.Close();
-            CommitVariables(Const.Globals.CATEGORIES_VARIABLE_NAME, builder.ToString());
+            if (PowersDataSet.HasChanges())
+            {
+                StringBuilder builder = new StringBuilder();
+                StringWriter writer = new StringWriter(builder);
+                PowersDataSet.WriteXml(writer, XmlWriteMode.WriteSchema);
+                writer.Close();
+                CommitVariables(Const.Globals.XML_VARIABLE_NAME, builder.ToString());
+            }
         }
 
         protected void CommitVariables(string name, string value)
         {
             Word.Variable variable = HiddenPowerDocument.GetVariable(Document.Variables, name);
-            if (variable == null)
+            if (variable == null && !string.IsNullOrWhiteSpace(value))
                 Document.Variables.Add(name, value);
-            else
+            else if (variable != null && variable.Value != value)
                 variable.Value = value;
         }
 
@@ -108,7 +116,7 @@ namespace WordHiddenPowers.Panes
                 DeleteVariable(Const.Globals.TITLE_VARIABLE_NAME);
                 DeleteVariable(Const.Globals.DATE_VARIABLE_NAME);
                 DeleteVariable(Const.Globals.DESCRIPTION_VARIABLE_NAME);
-                DeleteVariable(Const.Globals.CATEGORIES_VARIABLE_NAME);
+                DeleteVariable(Const.Globals.XML_VARIABLE_NAME);
                 DeleteVariable(Const.Globals.TABLE_VARIABLE_NAME);
             }
         }
@@ -125,7 +133,7 @@ namespace WordHiddenPowers.Panes
         {
             Form dialog = new DocumentKeysDialog(this);
             dialogs.Add(dialog);
-            Utils.ShowDialogUtil.ShowDialog(dialog);
+            ShowDialogUtil.ShowDialog(dialog);
             OnPropertiesChanged(new EventArgs());
         }
 
@@ -133,7 +141,7 @@ namespace WordHiddenPowers.Panes
         {
             Form dialog = new CategoriesEditorDialog(this);
             dialogs.Add(dialog);
-            Utils.ShowDialogUtil.ShowDialog(dialog);
+            ShowDialogUtil.ShowDialog(dialog);
             OnPropertiesChanged(new EventArgs());
         }
 

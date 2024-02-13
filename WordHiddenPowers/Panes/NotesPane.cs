@@ -38,15 +38,16 @@ namespace WordHiddenPowers.Panes
 
         public NotesPane(Word.Document Doc) : base(Doc)
         {
-            PropertiesChanged += new EventHandler<EventArgs>(NotesPane_PropertiesChanged);
-
             InitializeComponent();
             
             InitializeVariables();
 
+            PropertiesChanged += new EventHandler<EventArgs>(NotesPane_PropertiesChanged);
+
             PowersDataSet.DocumentKeys.DocumentKeysRowChanged += new RepositoryDataSet.DocumentKeysRowChangeEventHandler(DocumentKeys_DocumentKeysRowChanged);
 
             noteListBox.PowersDataSet = PowersDataSet;
+            
         }
 
         private void NotesPane_PropertiesChanged(object sender, EventArgs e)
@@ -101,7 +102,7 @@ namespace WordHiddenPowers.Panes
                             dialog.SelectionEnd);
                     }
                 }
-                base.CommitVariables();
+                CommitVariables();
             }
         }
 
@@ -177,11 +178,20 @@ namespace WordHiddenPowers.Panes
             if (Document.Variables.Count > 0)
             {
                 DataSetRefresh();
+                string title = GetVariable(Const.Globals.TITLE_VARIABLE_NAME);
+                if (titleComboBox.Text != title)
+                    titleComboBox.Text = title;
 
-                titleComboBox.Text = GetVariable(Const.Globals.TITLE_VARIABLE_NAME);
-                string date = GetVariable(Const.Globals.DATE_VARIABLE_NAME);
-                dateTimePicker.Value = string.IsNullOrWhiteSpace(date) ? DateTime.Today: DateTime.Parse(date);
-                descriptionTextBox.Text = GetVariable(Const.Globals.DESCRIPTION_VARIABLE_NAME);
+                string strDate = GetVariable(Const.Globals.DATE_VARIABLE_NAME);
+                DateTime date = string.IsNullOrWhiteSpace(strDate) ? DateTime.Today: DateTime.Parse(strDate);
+                if (dateTimePicker.Value != date)
+                    dateTimePicker.Value = date; 
+
+                string description = GetVariable(Const.Globals.DESCRIPTION_VARIABLE_NAME);
+                if (descriptionTextBox.Text != description)
+                    descriptionTextBox.Text = description;
+
+                Document.Saved = true;
             }
         }
 
@@ -210,7 +220,7 @@ namespace WordHiddenPowers.Panes
 
         public void DataSetRefresh()
         {
-            Word.Variable categories = HiddenPowerDocument.GetVariable(Document.Variables, Const.Globals.CATEGORIES_VARIABLE_NAME);
+            Word.Variable categories = HiddenPowerDocument.GetVariable(Document.Variables, Const.Globals.XML_VARIABLE_NAME);
             if (categories != null)
             {
                 StringReader reader = new StringReader(categories.Value);
@@ -235,7 +245,7 @@ namespace WordHiddenPowers.Panes
                 PowersDataSet.TextPowers.Rows.Add(new object[]
                 { null, dialog.Category.Id, dialog.Subcategory.Id, dialog.Description, dialog.Value, dialog.Reiting, dialog.SelectionStart, dialog.SelectionEnd });
 
-                base.CommitVariables();
+                CommitVariables();
             }
         }
 
@@ -248,7 +258,7 @@ namespace WordHiddenPowers.Panes
                 PowersDataSet.DecimalPowers.Rows.Add(new object[]
                 { null, dialog.Category.Id, dialog.Subcategory.Id, dialog.Description, dialog.Value, dialog.Reiting, dialog.SelectionStart, dialog.SelectionEnd });
 
-                base.CommitVariables();
+                CommitVariables();
             }
         }
 
@@ -262,11 +272,11 @@ namespace WordHiddenPowers.Panes
 
 
 
-        private new void CommitVariables()
+        public new void CommitVariables()
         {
-            CommitVariables(Const.Globals.TITLE_VARIABLE_NAME, titleComboBox.Text);
-            CommitVariables(Const.Globals.DATE_VARIABLE_NAME, dateTimePicker.Value.ToShortDateString());
-            CommitVariables(Const.Globals.DESCRIPTION_VARIABLE_NAME, descriptionTextBox.Text);
+            CommitVariables(Const.Globals.TITLE_VARIABLE_NAME, Title);
+            CommitVariables(Const.Globals.DATE_VARIABLE_NAME, Date.ToShortDateString());
+            CommitVariables(Const.Globals.DESCRIPTION_VARIABLE_NAME, Description);
 
             base.CommitVariables();
         }       

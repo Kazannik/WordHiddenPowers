@@ -65,7 +65,7 @@ namespace WordHiddenPowers.Documents
                 }
 
                 Document document = new Document(fileName, titleValue, dateValue, descriptionValue, tableValue);
-                Word.Variable categories = GetVariable(Doc.Variables, Const.Globals.CATEGORIES_VARIABLE_NAME);
+                Word.Variable categories = GetVariable(Doc.Variables, Const.Globals.XML_VARIABLE_NAME);
                 if (categories != null)
                 {
                     StringReader reader = new StringReader(categories.Value);

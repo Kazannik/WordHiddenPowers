@@ -11,7 +11,7 @@ namespace WordHiddenPowers.Const
         public const string TITLE_VARIABLE_NAME = "TitleHiddenPower";
         public const string DESCRIPTION_VARIABLE_NAME = "DescriptionHiddenPower";
         public const string DATE_VARIABLE_NAME = "DateHiddenPower";
-        public const string CATEGORIES_VARIABLE_NAME = "CategoriesHiddenPower";
+        public const string XML_VARIABLE_NAME = "XmlHiddenPower";
         public const string TABLE_VARIABLE_NAME = "TableHiddenPower";
 
     }

@@ -119,7 +119,8 @@ namespace WordHiddenPowers
         private void paneVisibleButton_Click(object sender, RibbonControlEventArgs e)
         {
             RibbonToggleButton button = (RibbonToggleButton)sender;
-            if (button.Id == Globals.Ribbons.WordHiddenPowersRibbon.paneVisibleButton.Id)
+            if (button.Id == Globals.Ribbons.WordHiddenPowersRibbon.paneVisibleButton.Id &&
+                Globals.ThisAddIn.Panes.Count > 0)
             {
                 Globals.ThisAddIn.Panes.ActivePane.Visible = Globals.Ribbons.WordHiddenPowersRibbon.paneVisibleButton.Checked;
             }           
