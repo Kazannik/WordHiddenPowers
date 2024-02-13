@@ -10,6 +10,16 @@ namespace WordHiddenPowers.Repositoryes
 
     partial class RepositoryDataSet
     {
+
+        public IEnumerable<CategoriesRow> GetCategories(bool isText)
+        {            
+                return (from subcategory in Subcategories.Where(s => s.IsText == isText)
+                        join category in Categories on subcategory.category_id equals category.id
+                        select category)
+                        .GroupBy(x => x.id).Select(y => y.First());            
+           
+        }
+        
         partial class RowsHeadersDataTable
         {
         }
@@ -147,7 +157,7 @@ namespace WordHiddenPowers.Repositoryes
         }
 
         partial class CategoriesDataTable
-        {
+        {                        
             public Category Add(Category category)
             {
                 CategoriesRow row =(CategoriesRow) Rows.Add(category.ToObjectsArray());

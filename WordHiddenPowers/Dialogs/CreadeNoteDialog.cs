@@ -68,7 +68,7 @@ namespace WordHiddenPowers.Dialogs
             SelectionStart = selection.Start;
             SelectionEnd = selection.End;
 
-            categoriesComboBox.InitializeSource(this.dataSet);
+            categoriesComboBox.InitializeSource(this.dataSet, isText);
             okButton.Enabled = false;
         }
 
@@ -87,7 +87,7 @@ namespace WordHiddenPowers.Dialogs
             raitingBox.Value = note.Reiting;
             descriptionTextBox.Text = note.Description;
 
-            categoriesComboBox.InitializeSource(this.dataSet);
+            categoriesComboBox.InitializeSource(this.dataSet, isText);
             categoriesComboBox.SelectedItem = categoriesComboBox.GetItem(note.Category.Id);
             subcategoriesComboBox.SelectedItem = subcategoriesComboBox.GetItem(note.Subcategory.Id);
         }

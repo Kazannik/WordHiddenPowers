@@ -17,11 +17,11 @@ namespace WordHiddenPowers.Controls
         public CategoriesComboBox(IContainer container):base(container: container) { }
         
 
-        public void InitializeSource(RepositoryDataSet dataSet)
+        public void InitializeSource(RepositoryDataSet dataSet, bool isText)
         {
             Items.Clear();
 
-            foreach (RepositoryDataSet.CategoriesRow dataRow in dataSet.Categories)
+            foreach (RepositoryDataSet.CategoriesRow dataRow in dataSet.GetCategories(isText))
             {
                 Category category = Category.Create(dataRow);
                 Add(category);

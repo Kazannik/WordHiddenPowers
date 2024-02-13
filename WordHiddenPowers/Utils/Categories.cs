@@ -15,13 +15,13 @@ namespace WordHiddenPowers.Utils
             Regex regexObligatoryCategory = new Regex(@"^\s*\x21\s*\x23\s{1,}\S");
             Regex regexCategory = new Regex(@"^\s*\x23\s{1,}\S");
 
-            Regex regexSubcategory = new Regex(@"^\s*([DT!]\s*){1,3}\x23{2}\s*\S");
+            Regex regexSubcategory = new Regex(@"^\s*([DS!]\s*){1,3}\x23{2}\s*\S");
 
             Regex regexObligatoryDecimalSubcategory = new Regex(@"^\s*\x44\s*\x21\s*\x23{2}\s{1,}\S");
             Regex regexDecimalSubcategory = new Regex(@"^\s*\x44\s*\x23{2}\s{1,}\S");
 
-            Regex regexObligatoryTextSubcategory = new Regex(@"^\s*\x54\s*\x21\s*\x23{2}\s{1,}\S");
-            Regex regexTextSubcategory = new Regex(@"^\s*\x54\s*\x23{2}\s{1,}\S");
+            Regex regexObligatoryTextSubcategory = new Regex(@"^\s*\x53\s*\x21\s*\x23{2}\s{1,}\S");
+            Regex regexTextSubcategory = new Regex(@"^\s*\x53\s*\x23{2}\s{1,}\S");
 
             Regex regexDescription = new Regex(@"^\s*\x3a\s*\S");
 
@@ -49,7 +49,7 @@ namespace WordHiddenPowers.Utils
                     regexCategory.IsMatch(line))
                 {
                     Match match = regexCategory.Match(line);
-                    addingCategory = Category.Create(line.Substring(match.Index - 1), string.Empty, false);
+                    addingCategory = Category.Create(line.Substring(match.Index + match.Value.IndexOf("#") + 1), string.Empty, false);
                     addingCategory = dataSet.Categories.Add(addingCategory);
                     addingSubcategory = null;
                 }
@@ -57,7 +57,7 @@ namespace WordHiddenPowers.Utils
                     regexObligatoryCategory.IsMatch(line))
                 {
                     Match match = regexObligatoryCategory.Match(line);
-                    addingCategory = Category.Create(line.Substring(match.Length - 1), string.Empty, true);
+                    addingCategory = Category.Create(line.Substring(match.Index + match.Value.IndexOf("#") + 1), string.Empty, true);
                     addingCategory = dataSet.Categories.Add(addingCategory);
                     addingSubcategory = null;
                 }
@@ -65,10 +65,10 @@ namespace WordHiddenPowers.Utils
                     regexSubcategory.IsMatch(line))
                 {
                     Match match = regexSubcategory.Match(line);
-                    string caption = line.Substring(match.Length - 1);
-                    string attr = line.Substring(0, match.Length - 1);
+                    string caption = line.Substring(match.Index + match.Value.IndexOf("##") + 2);
+                    string attr = line.Substring(0, match.Value.IndexOf("##"));
 
-                    addingSubcategory = Subcategory.Create(addingCategory, caption, string.Empty, attr.Contains("D"), attr.Contains("T"), attr.Contains("!"));
+                    addingSubcategory = Subcategory.Create(addingCategory, caption, string.Empty, attr.Contains("D"), attr.Contains("S"), attr.Contains("!"));
                     addingSubcategory = dataSet.Subcategories.Add(addingCategory, addingSubcategory);
                 }                
                 else if (mode == ReadMode.Default &&
