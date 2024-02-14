@@ -173,5 +173,54 @@ namespace WordHiddenPowers
             WordHiddenPowersPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as WordHiddenPowersPane;
             pane.ShowAnalizerDialog();
         }
+
+
+        private enum NoteType
+        {
+            Text = 0,
+            Decimal = 1
+        }
+
+        private NoteType lastNoteType = NoteType.Text;
+
+        private void AddTextNoteButton_Click(object sender, RibbonControlEventArgs e)
+        {
+            NotesPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as NotesPane;
+            if (pane !=null)
+                pane.AddTextNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
+
+            lastNoteType = NoteType.Text;
+            AddLastNoteTypeButton.Description = Const.Content.TEXT_NOTE_DESCRIPTION;
+            AddLastNoteTypeButton.Label = Const.Content.TEXT_NOTE_LABEL;
+            AddLastNoteTypeButton.OfficeImageId = Const.Content.TEXT_NOTE_OFFICE_IMAGE_ID;
+            AddLastNoteTypeButton.ScreenTip = Const.Content.TEXT_NOTE_SCREEN_TIP;
+            AddLastNoteTypeButton.SuperTip = Const.Content.TEXT_NOTE_SUPER_TIP;
+        }
+
+        private void AddDecimalNoteButton_Click(object sender, RibbonControlEventArgs e)
+        {
+            NotesPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as NotesPane;
+            if (pane != null)
+                pane.AddDecimalNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
+
+            lastNoteType = NoteType.Decimal;
+            AddLastNoteTypeButton.Description = Const.Content.DECIMAL_NOTE_DESCRIPTION;
+            AddLastNoteTypeButton.Label = Const.Content.DECIMAL_NOTE_LABEL;
+            AddLastNoteTypeButton.OfficeImageId = Const.Content.DECIMAL_NOTE_OFFICE_IMAGE_ID;
+            AddLastNoteTypeButton.ScreenTip = Const.Content.DECIMAL_NOTE_SCREEN_TIP;
+            AddLastNoteTypeButton.SuperTip = Const.Content.DECIMAL_NOTE_SUPER_TIP;
+        }
+
+        private void AddLastNoteTypeButton_Click(object sender, RibbonControlEventArgs e)
+        {
+            NotesPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as NotesPane;
+            if (pane != null)
+            {
+                if (lastNoteType == NoteType.Text)
+                    pane.AddTextNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
+                else
+                    pane.AddDecimalNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
+            }
+        }
     }
 }

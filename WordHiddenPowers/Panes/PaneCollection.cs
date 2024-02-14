@@ -26,8 +26,8 @@ namespace WordHiddenPowers.Panes
 
             application.CommandBars["Text"].Reset();
 
-            buttonSelectTextCategory = AddButtons(application.CommandBars["Text"], "Текстовые дополнительные данные...", 9267, Const.Panes.BUTTON_STRING_TAG, true, AddTextNoteClick);
-            buttonSelectDecimalCategory = AddButtons(application.CommandBars["Text"], "Числовые дополнительные данные...", 9267, Const.Panes.BUTTON_DECIMAL_TAG, false, AddDecimalNoteClick);   
+            buttonSelectTextCategory = AddButtons(application.CommandBars["Text"], Const.Content.TEXT_NOTE_MENU_CAPTION, Const.Content.TEXT_NOTE_FACE_ID, Const.Panes.BUTTON_STRING_TAG, true, AddTextNoteClick);
+            buttonSelectDecimalCategory = AddButtons(application.CommandBars["Text"], Const.Content.DECIMAL_NOTE_MENU_CAPTION, Const.Content.DECIMAL_NOTE_FACE_ID, Const.Panes.BUTTON_DECIMAL_TAG, false, AddDecimalNoteClick);   
 
 
         }

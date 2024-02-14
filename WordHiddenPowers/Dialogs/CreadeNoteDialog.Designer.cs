@@ -44,7 +44,7 @@
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cancelButton.Location = new System.Drawing.Point(557, 400);
-            this.cancelButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cancelButton.Margin = new System.Windows.Forms.Padding(4);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(100, 27);
             this.cancelButton.TabIndex = 28;
@@ -55,7 +55,7 @@
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.okButton.Location = new System.Drawing.Point(448, 400);
-            this.okButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.okButton.Margin = new System.Windows.Forms.Padding(4);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(100, 27);
             this.okButton.TabIndex = 27;
@@ -66,7 +66,7 @@
             this.tableLayoutPanel1.SetColumnSpan(this.descriptionTextBox, 3);
             this.descriptionTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.descriptionTextBox.Location = new System.Drawing.Point(4, 322);
-            this.descriptionTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.descriptionTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.descriptionTextBox.Multiline = true;
             this.descriptionTextBox.Name = "descriptionTextBox";
             this.descriptionTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -87,7 +87,7 @@
             this.tableLayoutPanel1.Controls.Add(this.categoriesComboBox, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 6;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
@@ -109,7 +109,7 @@
             this.subcategoriesComboBox.IntegralHeight = false;
             this.subcategoriesComboBox.ItemHeight = 20;
             this.subcategoriesComboBox.Location = new System.Drawing.Point(4, 36);
-            this.subcategoriesComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.subcategoriesComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.subcategoriesComboBox.MaxDropDownItems = 20;
             this.subcategoriesComboBox.Name = "subcategoriesComboBox";
             this.subcategoriesComboBox.Size = new System.Drawing.Size(435, 26);
@@ -136,7 +136,7 @@
             this.categoriesComboBox.IntegralHeight = false;
             this.categoriesComboBox.ItemHeight = 20;
             this.categoriesComboBox.Location = new System.Drawing.Point(4, 4);
-            this.categoriesComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.categoriesComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.categoriesComboBox.MaxDropDownItems = 20;
             this.categoriesComboBox.Name = "categoriesComboBox";
             this.categoriesComboBox.Size = new System.Drawing.Size(435, 26);
@@ -152,7 +152,7 @@
             this.ClientSize = new System.Drawing.Size(661, 441);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "CreateNoteDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Текстовые данные";
