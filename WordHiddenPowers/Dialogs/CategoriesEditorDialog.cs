@@ -6,7 +6,7 @@ using System.Text;
 using System.Windows.Forms;
 using WordHiddenPowers.Categories;
 using WordHiddenPowers.Panes;
-using WordHiddenPowers.Repositoryes.Models;
+using WordHiddenPowers.Repositoryes;
 
 namespace WordHiddenPowers.Dialogs
 {

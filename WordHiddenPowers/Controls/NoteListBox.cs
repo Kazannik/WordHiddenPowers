@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Data;
 using System.Windows.Forms;
 using WordHiddenPowers.Repositoryes;
-using WordHiddenPowers.Repositoryes.Models;
 using WordHiddenPowers.Categories;
 using System;
 

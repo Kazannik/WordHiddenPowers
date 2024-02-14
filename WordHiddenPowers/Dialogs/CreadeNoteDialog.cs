@@ -1,7 +1,6 @@
 ﻿using System.Windows.Forms;
 using WordHiddenPowers.Categories;
 using WordHiddenPowers.Repositoryes;
-using WordHiddenPowers.Repositoryes.Models;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Dialogs

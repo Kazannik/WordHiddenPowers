@@ -6,7 +6,6 @@ using System.IO;
 using System.Windows.Forms;
 using WordHiddenPowers.Dialogs;
 using WordHiddenPowers.Repositoryes;
-using WordHiddenPowers.Repositoryes.Models;
 using WordHiddenPowers.Utils;
 using Word = Microsoft.Office.Interop.Word;
 

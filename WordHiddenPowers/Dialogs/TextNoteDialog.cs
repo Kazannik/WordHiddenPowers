@@ -1,5 +1,4 @@
 ﻿using WordHiddenPowers.Repositoryes;
-using WordHiddenPowers.Repositoryes.Models;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Dialogs
