@@ -5,7 +5,6 @@ using System.Text;
 using WordHiddenPowers.Categories;
 using WordHiddenPowers.Data;
 using WordHiddenPowers.Repositoryes;
-using WordHiddenPowers.Repositoryes.Models;
 
 namespace WordHiddenPowers.Documents
 {

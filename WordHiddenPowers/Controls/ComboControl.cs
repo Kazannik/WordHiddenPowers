@@ -64,7 +64,7 @@ namespace WordHiddenPowers.Controls
             DropDownWidth = 80;
             base.AutoSize = false;
             Width = 80;
-            DropDownHeight = 80;
+            DropDownHeight = 180;
             Items.Clear();
         }
 

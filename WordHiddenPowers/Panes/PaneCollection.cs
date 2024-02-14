@@ -112,7 +112,8 @@ namespace WordHiddenPowers.Panes
             Office.CommandBarButton button = GetButton(application.CommandBars["Text"], Const.Panes.BUTTON_STRING_TAG);
             if (button != null)
             {
-                if (Sel.Text.Length > 1)
+                if (Sel != null && 
+                    !string.IsNullOrWhiteSpace(Sel.Text))
                 {
                     button.Enabled = true;
                 }

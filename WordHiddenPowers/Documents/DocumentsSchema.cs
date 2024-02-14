@@ -1,6 +1,6 @@
 ﻿using System.Data;
 using System.Linq;
-using WordHiddenPowers.Repositoryes.Models;
+using WordHiddenPowers.Repositoryes;
 using System.Collections.Generic;
 using WordHiddenPowers.Categories;
 

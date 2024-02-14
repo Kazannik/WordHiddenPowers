@@ -5,7 +5,7 @@ using System.Data;
 using System.Drawing;
 using WordHiddenPowers.Categories;
 
-namespace WordHiddenPowers.Repositoryes.Models
+namespace WordHiddenPowers.Repositoryes
 {
     public class Note: INotifyPropertyChanged, IComparable<Note>
     {

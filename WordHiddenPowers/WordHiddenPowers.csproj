@@ -290,7 +290,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Categories\Category.cs" />
-    <Compile Include="Repositoryes\Models\Note.cs" />
+    <Compile Include="Repositoryes\Note.cs" />
     <Compile Include="Categories\Subcategory.cs" />
     <Compile Include="Utils\Categories.cs" />
     <Compile Include="Utils\FileSystem.cs" />

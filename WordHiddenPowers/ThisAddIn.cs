@@ -13,7 +13,10 @@ using Microsoft.Office.Tools;
 namespace WordHiddenPowers
 {
     public partial class ThisAddIn
-    {        
+    {
+        Documents.DocumentCollection documents;
+
+
         Panes.PaneCollection panes; 
                       
         public Panes.PaneCollection Panes { get { return panes; } }

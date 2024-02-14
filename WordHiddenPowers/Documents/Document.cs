@@ -18,6 +18,8 @@ namespace WordHiddenPowers.Documents
 
         public Table Table { get; }
 
+        public bool ContentHide { get; set; }
+
         public RepositoryDataSet PowersDataSet { get; }
 
         private Document(string fileName, string title, DateTime date, string description, Table table)
@@ -28,6 +30,7 @@ namespace WordHiddenPowers.Documents
             Date = date;
             Description = description;
             Table = table;
+            ContentHide = false;
         }
 
         public static Document Create(string fileName, Word._Document Doc)
@@ -65,10 +68,10 @@ namespace WordHiddenPowers.Documents
                 }
 
                 Document document = new Document(fileName, titleValue, dateValue, descriptionValue, tableValue);
-                Word.Variable categories = GetVariable(Doc.Variables, Const.Globals.XML_VARIABLE_NAME);
-                if (categories != null)
+                Word.Variable content = GetVariable(Doc.Variables, Const.Globals.XML_VARIABLE_NAME);
+                if (content != null)
                 {
-                    StringReader reader = new StringReader(categories.Value);
+                    StringReader reader = new StringReader(content.Value);
                     document.PowersDataSet.ReadXml(reader, System.Data.XmlReadMode.IgnoreSchema);
                     reader.Close();
                 }
