@@ -184,9 +184,7 @@ namespace WordHiddenPowers
 
         private void AddTextNoteButton_Click(object sender, RibbonControlEventArgs e)
         {
-            //NotesPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as NotesPane;
-            //if (pane !=null)
-            //    pane.AddTextNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
+            Globals.ThisAddIn.Documents.ActiveDocument.AddTextNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
 
             lastNoteType = NoteType.Text;
             AddLastNoteTypeButton.Description = Const.Content.TEXT_NOTE_DESCRIPTION;
@@ -198,9 +196,7 @@ namespace WordHiddenPowers
 
         private void AddDecimalNoteButton_Click(object sender, RibbonControlEventArgs e)
         {
-            //NotesPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as NotesPane;
-            //if (pane != null)
-            //    pane.AddDecimalNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
+            Globals.ThisAddIn.Documents.ActiveDocument.AddDecimalNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
 
             lastNoteType = NoteType.Decimal;
             AddLastNoteTypeButton.Description = Const.Content.DECIMAL_NOTE_DESCRIPTION;
@@ -212,14 +208,10 @@ namespace WordHiddenPowers
 
         private void AddLastNoteTypeButton_Click(object sender, RibbonControlEventArgs e)
         {
-            NotesPane pane =  Globals.ThisAddIn.Documents.ActiveDocument.Pane as NotesPane;
-            if (pane != null)
-            {
-                if (lastNoteType == NoteType.Text)
-                    pane.AddTextNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
-                else
-                    pane.AddDecimalNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
-            }
+            if (lastNoteType == NoteType.Text)
+                Globals.ThisAddIn.Documents.ActiveDocument.AddTextNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
+            else
+                Globals.ThisAddIn.Documents.ActiveDocument.AddDecimalNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
         }        
     }
 }

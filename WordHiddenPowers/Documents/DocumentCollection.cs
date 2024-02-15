@@ -1,50 +1,69 @@
-﻿using Microsoft.Office.Tools;
-using Microsoft.Office.Tools.Ribbon;
+﻿using Microsoft.Office.Tools.Ribbon;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Text;
 using WordHiddenPowers.Categories;
 using WordHiddenPowers.Data;
 using WordHiddenPowers.Repositoryes;
-using Word = Microsoft.Office.Interop.Word;
 using Office = Microsoft.Office.Core;
-using System.Collections;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Documents
 {
     public class DocumentCollection : IEnumerable<Document>, IDisposable
     {
+        private Word.Application application;
+
         internal RibbonToggleButton paneVisibleButton;
+        private Office.CommandBarButton buttonSelectDecimalCategory;
+        private Office.CommandBarButton buttonSelectTextCategory;
+
 
         private IDictionary<int, Document> documents;
 
         private IDictionary<int, Category> categories;
         private IDictionary<int, Subcategory> subcategories;
-        private IList<Note> notes;
+        IList<Note> notes;
 
         private IDictionary<Subcategory, double> sumDecimalNotes;
 
         public DocumentCollection(RibbonToggleButton paneVisibleButton)
         {
+            application = Globals.ThisAddIn.Application as Word.Application;
             documents = new Dictionary<int, Document>();
+            notes = new List<Note>();
 
             this.paneVisibleButton = paneVisibleButton;
             this.paneVisibleButton.Checked = false;
             this.paneVisibleButton.Click += new RibbonControlEventHandler(PaneVisibleButtonClick);
 
-           /// this.panes = Globals.ThisAddIn.CustomTaskPanes;
+            application.WindowSelectionChange += new Word.ApplicationEvents4_WindowSelectionChangeEventHandler(Document_WindowSelectionChange);
+
+            application.CommandBars["Text"].Reset();
+
+            buttonSelectTextCategory = AddButtons(application.CommandBars["Text"], Const.Content.TEXT_NOTE_MENU_CAPTION, Const.Content.TEXT_NOTE_FACE_ID, Const.Panes.BUTTON_STRING_TAG, true, AddTextNoteClick);
+            buttonSelectDecimalCategory = AddButtons(application.CommandBars["Text"], Const.Content.DECIMAL_NOTE_MENU_CAPTION, Const.Content.DECIMAL_NOTE_FACE_ID, Const.Panes.BUTTON_DECIMAL_TAG, false, AddDecimalNoteClick);
+
+
 
             PowersDataSet = new RepositoryDataSet();
 
             subcategories = new Dictionary<int,Subcategory>();
             categories = new Dictionary<int, Category>();
-            notes = new List<Note>();
             sumDecimalNotes = new Dictionary<Subcategory, double>();
         }
 
-        public Document ActiveDocument { get; private set; }
+        public Document ActiveDocument
+        {
+            get
+            {
+                return GetDocument(application.ActiveDocument);
+            }
+        }
 
         private void PaneVisibleButtonClick(object sender, RibbonControlEventArgs e)
         {
@@ -58,21 +77,80 @@ namespace WordHiddenPowers.Documents
             //}
         }
 
+
+        private void Document_WindowSelectionChange(Word.Selection Sel)
+        {
+            Word.Application application = Globals.ThisAddIn.Application as Word.Application;
+            Office.CommandBarButton button = GetButton(application.CommandBars["Text"], Const.Panes.BUTTON_STRING_TAG);
+            if (button != null)
+            {
+                if (Sel != null &&
+                    !string.IsNullOrWhiteSpace(Sel.Text))
+                {
+                    button.Enabled = true;
+                }
+                else
+                {
+                    button.Enabled = false;
+                }
+            }
+        }
+
+
+        private void AddDecimalNoteClick(Office.CommandBarButton Ctrl, ref bool CancelDefault)
+        {
+            if (ActiveDocument != null)
+            {
+                ActiveDocument.AddDecimalNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
+            }
+        }
+
+        private void AddTextNoteClick(Office.CommandBarButton Ctrl, ref bool CancelDefault)
+        {
+            if (ActiveDocument != null)
+            {
+                ActiveDocument.AddTextNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
+            }
+        }
+
+        private Office.CommandBarButton AddButtons(Office.CommandBar popupCommandBar, string caption, int faceId, string tag, bool beginGroup, Office._CommandBarButtonEvents_ClickEventHandler clickFunctionDelegate)
+        {
+            var commandBarButton = GetButton(popupCommandBar, tag);
+            if (commandBarButton == null)
+            {
+                commandBarButton = (Office.CommandBarButton)popupCommandBar.Controls.Add
+                    (Office.MsoControlType.msoControlButton);
+                commandBarButton.Caption = caption;
+                commandBarButton.FaceId = faceId;
+                commandBarButton.Tag = tag;
+                commandBarButton.BeginGroup = beginGroup;
+                commandBarButton.Click += new Office._CommandBarButtonEvents_ClickEventHandler(clickFunctionDelegate);
+            }
+            return commandBarButton;
+        }
+
+        private Office.CommandBarButton GetButton(Office.CommandBar popupCommandBar, string tag)
+        {
+            foreach (var commandBarButton in popupCommandBar.Controls.OfType<Office.CommandBarButton>())
+            {
+                if (commandBarButton.Tag.Equals(tag))
+                {
+                    return commandBarButton;
+                }
+            }
+            return null;
+        }
+
         #region Documents Command
 
         public void Activate(Word.Document Doc, Word.Window Wn)
         {
-            if (!documents.ContainsKey(Doc.DocID))
-            {
-                documents.Add(Doc.DocID, Document.Create(this, Doc.FullName, Doc));
-            }
-            ActiveDocument = documents[Doc.DocID];
             paneVisibleButton.Checked = ActiveDocument.CustomPane.Visible;
         }
 
         public void Deactivate(Word.Document Doc, Word.Window Wn)
         {
-            ActiveDocument = null;
+
         }
 
         public void Open(Word.Document Doc)
@@ -81,7 +159,6 @@ namespace WordHiddenPowers.Documents
             {
                 documents.Add(Doc.DocID, Document.Create(this, Doc.FullName, Doc));
             }
-            ActiveDocument = documents[Doc.DocID];
             paneVisibleButton.Checked = ActiveDocument.CustomPane.Visible;
         }
 
@@ -91,6 +168,16 @@ namespace WordHiddenPowers.Documents
             {
                 documents.Remove(Doc.DocID);
             }
+        }
+
+
+        private Document GetDocument(Word.Document Doc)
+        {
+            if (!documents.ContainsKey(Doc.DocID))
+            {
+                documents.Add(Doc.DocID, Document.Create(this, Doc.FullName, Doc));
+            }
+            return documents[Doc.DocID];
         }
 
         #endregion

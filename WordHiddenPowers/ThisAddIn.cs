@@ -16,27 +16,6 @@ namespace WordHiddenPowers
     {
         public Documents.DocumentCollection Documents { get; private set; }
 
-
-        //Panes.PaneCollection panes; 
-                      
-        //public Panes.PaneCollection Panes { get { return panes; } }
-        
-        //public Panes.WordHiddenPowersPane ActivePane
-        //{
-        //    get
-        //    {
-        //        if (panes.Contains(Application.ActiveDocument))
-        //        {
-        //            return (Panes.WordHiddenPowersPane) panes[Application.ActiveDocument].Control;
-        //        }
-        //        else
-        //        {
-        //            return null;
-        //        }
-        //    }
-        //}
-
-
         private void ThisAddIn_Startup(object sender, EventArgs e)
         {
             Documents = new Documents.DocumentCollection(Globals.Ribbons.WordHiddenPowersRibbon.paneVisibleButton);

@@ -14,7 +14,7 @@ namespace WordHiddenPowers.Controls
 
         private IDictionary<int, Subcategory> subcategories;
         
-        public RepositoryDataSet PowersDataSet
+        public RepositoryDataSet DataSet
         {
             get
             {
@@ -31,6 +31,10 @@ namespace WordHiddenPowers.Controls
                     source.TextPowers.TextPowersRowDeleted -= TextPowers_RowChanged;
                     source.DecimalPowers.TableCleared -= TablesPowers_TableCleared;
                     source.TextPowers.TableCleared -= TablesPowers_TableCleared;
+
+                    source.Subcategories.SubcategoriesRowChanged -= Subcategories_RowChanged;
+                    source.Subcategories.SubcategoriesRowDeleted -= Subcategories_RowChanged;
+                    source.Subcategories.TableCleared -= Subcategories_TableCleared;
                 }
                 source = value;
 
@@ -46,8 +50,22 @@ namespace WordHiddenPowers.Controls
                     source.TextPowers.TextPowersRowDeleted += new RepositoryDataSet.TextPowersRowChangeEventHandler(TextPowers_RowChanged);
                     source.DecimalPowers.TableCleared += new DataTableClearEventHandler(TablesPowers_TableCleared);
                     source.TextPowers.TableCleared += new DataTableClearEventHandler(TablesPowers_TableCleared);
+
+                    source.Subcategories.SubcategoriesRowChanged += new RepositoryDataSet.SubcategoriesRowChangeEventHandler(Subcategories_RowChanged);
+                    source.Subcategories.SubcategoriesRowDeleted += new RepositoryDataSet.SubcategoriesRowChangeEventHandler(Subcategories_RowChanged);
+                    source.Subcategories.TableCleared += new DataTableClearEventHandler(Subcategories_TableCleared);
                 }
             }
+        }
+
+        private void Subcategories_TableCleared(object sender, DataTableClearEventArgs e)
+        {
+            ReadData();
+        }
+
+        private void Subcategories_RowChanged(object sender, RepositoryDataSet.SubcategoriesRowChangeEvent e)
+        {
+            ReadData();
         }
 
         private void DecimalPowers_RowChanged(object sender, RepositoryDataSet.DecimalPowersRowChangeEvent e)
@@ -417,6 +435,15 @@ namespace WordHiddenPowers.Controls
                 {
                     Subcategory subcategory = Subcategory.Default(category: category);
                     subcategories.Add(subcategory.Id, subcategory);
+                }
+            }
+
+            if (source.TextPowers.Rows.Count > 0 ||
+                source.DecimalPowers.Rows.Count > 0)
+            {
+                foreach (Note note in source.GetNotes())
+                {
+                    Add(note);
                 }
             }
             EndUpdate();

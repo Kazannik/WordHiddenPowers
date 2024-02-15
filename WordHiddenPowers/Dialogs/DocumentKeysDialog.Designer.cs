@@ -30,7 +30,7 @@
         {
             this.cancelButton = new System.Windows.Forms.Button();
             this.okButton = new System.Windows.Forms.Button();
-            this.collectionTextBox1 = new System.Windows.Forms.TextBox();
+            this.collectionTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // cancelButton
@@ -54,17 +54,17 @@
             this.okButton.Text = "&ОК";
             this.okButton.Click += new System.EventHandler(this.okButton_Click);
             // 
-            // collectionTextBox1
+            // collectionTextBox
             // 
-            this.collectionTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.collectionTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.collectionTextBox1.Location = new System.Drawing.Point(12, 12);
-            this.collectionTextBox1.Multiline = true;
-            this.collectionTextBox1.Name = "collectionTextBox1";
-            this.collectionTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.collectionTextBox1.Size = new System.Drawing.Size(444, 275);
-            this.collectionTextBox1.TabIndex = 31;
+            this.collectionTextBox.Location = new System.Drawing.Point(12, 12);
+            this.collectionTextBox.Multiline = true;
+            this.collectionTextBox.Name = "collectionTextBox";
+            this.collectionTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.collectionTextBox.Size = new System.Drawing.Size(444, 275);
+            this.collectionTextBox.TabIndex = 31;
             // 
             // DocumentKeysDialog
             // 
@@ -72,7 +72,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
             this.ClientSize = new System.Drawing.Size(468, 340);
-            this.Controls.Add(this.collectionTextBox1);
+            this.Controls.Add(this.collectionTextBox);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
@@ -91,6 +91,6 @@
 
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Button okButton;
-        private System.Windows.Forms.TextBox collectionTextBox1;
+        private System.Windows.Forms.TextBox collectionTextBox;
     }
 }

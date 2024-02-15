@@ -32,20 +32,20 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.mnuFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuFileNewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuFileNew = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuFileOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnuFileSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuFileSave = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuFileSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnuFileExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuFileExit = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCategories = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCategoriesAddCategory = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.fileNewButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.fileSaveButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.addCategoryButton = new System.Windows.Forms.ToolStripButton();
             this.addSubcategoryButton = new System.Windows.Forms.ToolStripButton();
@@ -96,23 +96,23 @@
             // mnuFileToolStripMenuItem
             // 
             this.mnuFileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuFileNewToolStripMenuItem,
+            this.mnuFileNew,
             this.mnuFileOpen,
             this.toolStripMenuItem1,
-            this.mnuFileSaveToolStripMenuItem,
+            this.mnuFileSave,
             this.mnuFileSaveAs,
             this.toolStripMenuItem2,
-            this.mnuFileExitToolStripMenuItem});
+            this.mnuFileExit});
             this.mnuFileToolStripMenuItem.Name = "mnuFileToolStripMenuItem";
             this.mnuFileToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.mnuFileToolStripMenuItem.Text = "Файл";
             // 
-            // mnuFileNewToolStripMenuItem
+            // mnuFileNew
             // 
-            this.mnuFileNewToolStripMenuItem.Image = global::WordHiddenPowers.Properties.Resources.GroupContTypeNew_24;
-            this.mnuFileNewToolStripMenuItem.Name = "mnuFileNewToolStripMenuItem";
-            this.mnuFileNewToolStripMenuItem.Size = new System.Drawing.Size(182, 30);
-            this.mnuFileNewToolStripMenuItem.Text = "Создать структуру";
+            this.mnuFileNew.Image = global::WordHiddenPowers.Properties.Resources.GroupContTypeNew_24;
+            this.mnuFileNew.Name = "mnuFileNew";
+            this.mnuFileNew.Size = new System.Drawing.Size(182, 30);
+            this.mnuFileNew.Text = "Создать структуру";
             // 
             // mnuFileOpen
             // 
@@ -126,13 +126,13 @@
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(179, 6);
             // 
-            // mnuFileSaveToolStripMenuItem
+            // mnuFileSave
             // 
-            this.mnuFileSaveToolStripMenuItem.Image = global::WordHiddenPowers.Properties.Resources.Save_24;
-            this.mnuFileSaveToolStripMenuItem.Name = "mnuFileSaveToolStripMenuItem";
-            this.mnuFileSaveToolStripMenuItem.Size = new System.Drawing.Size(182, 30);
-            this.mnuFileSaveToolStripMenuItem.Text = "Сохранить";
-            this.mnuFileSaveToolStripMenuItem.Click += new System.EventHandler(this.mnuFileSaveToolStripMenuItem_Click);
+            this.mnuFileSave.Image = global::WordHiddenPowers.Properties.Resources.Save_24;
+            this.mnuFileSave.Name = "mnuFileSave";
+            this.mnuFileSave.Size = new System.Drawing.Size(182, 30);
+            this.mnuFileSave.Text = "Сохранить";
+            this.mnuFileSave.Click += new System.EventHandler(this.FileSave_Click);
             // 
             // mnuFileSaveAs
             // 
@@ -145,12 +145,12 @@
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(179, 6);
             // 
-            // mnuFileExitToolStripMenuItem
+            // mnuFileExit
             // 
-            this.mnuFileExitToolStripMenuItem.Image = global::WordHiddenPowers.Properties.Resources.WindowClose_24;
-            this.mnuFileExitToolStripMenuItem.Name = "mnuFileExitToolStripMenuItem";
-            this.mnuFileExitToolStripMenuItem.Size = new System.Drawing.Size(182, 30);
-            this.mnuFileExitToolStripMenuItem.Text = "Закрыть";
+            this.mnuFileExit.Image = global::WordHiddenPowers.Properties.Resources.WindowClose_24;
+            this.mnuFileExit.Name = "mnuFileExit";
+            this.mnuFileExit.Size = new System.Drawing.Size(182, 30);
+            this.mnuFileExit.Text = "Закрыть";
             // 
             // mnuEdit
             // 
@@ -177,9 +177,9 @@
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
+            this.fileNewButton,
             this.toolStripSeparator1,
-            this.toolStripButton2,
+            this.fileSaveButton,
             this.toolStripSeparator2,
             this.addCategoryButton,
             this.addSubcategoryButton,
@@ -191,29 +191,28 @@
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripButton1
+            // fileNewButton
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = global::WordHiddenPowers.Properties.Resources.GroupContTypeNew_24;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(28, 28);
-            this.toolStripButton1.Text = "toolStripButton1";
+            this.fileNewButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.fileNewButton.Image = global::WordHiddenPowers.Properties.Resources.GroupContTypeNew_24;
+            this.fileNewButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.fileNewButton.Name = "fileNewButton";
+            this.fileNewButton.Size = new System.Drawing.Size(28, 28);
+            this.fileNewButton.Text = "toolStripButton1";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
             // 
-            // toolStripButton2
+            // fileSaveButton
             // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = global::WordHiddenPowers.Properties.Resources.Save_24;
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(28, 28);
-            this.toolStripButton2.Text = "toolStripButton2";
-            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
+            this.fileSaveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.fileSaveButton.Image = global::WordHiddenPowers.Properties.Resources.Save_24;
+            this.fileSaveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.fileSaveButton.Name = "fileSaveButton";
+            this.fileSaveButton.Size = new System.Drawing.Size(28, 28);
+            this.fileSaveButton.Text = "toolStripButton2";
             // 
             // toolStripSeparator2
             // 
@@ -359,7 +358,7 @@
             this.isObligatoryCheckBox.AutoSize = true;
             this.isObligatoryCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.isObligatoryCheckBox.Location = new System.Drawing.Point(2, 244);
-            this.isObligatoryCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.isObligatoryCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.isObligatoryCheckBox.Name = "isObligatoryCheckBox";
             this.isObligatoryCheckBox.Size = new System.Drawing.Size(115, 20);
             this.isObligatoryCheckBox.TabIndex = 6;
@@ -437,12 +436,12 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem mnuFileToolStripMenuItem;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripMenuItem mnuFileNewToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem mnuFileSaveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton fileNewButton;
+        private System.Windows.Forms.ToolStripMenuItem mnuFileNew;
+        private System.Windows.Forms.ToolStripMenuItem mnuFileSave;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem mnuFileExitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripMenuItem mnuFileExit;
+        private System.Windows.Forms.ToolStripButton fileSaveButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem mnuEdit;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;

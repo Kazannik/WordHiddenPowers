@@ -18,7 +18,7 @@ namespace WordHiddenPowers.Dialogs
 
             nameLabel.Text = this.document.Doc.Name;
 
-            tableEditBox.PowersDataSet = this.document.DataSet;
+            tableEditBox.DataSet = this.document.DataSet;
 
             ReadValues();
         }
@@ -32,7 +32,7 @@ namespace WordHiddenPowers.Dialogs
                 tableEditBox.Table = Data.Table.Create(variable.Value);                
             } else
             {
-                tableEditBox.Table = new Data.Table(tableEditBox.PowersDataSet.RowsHeaders.Count, tableEditBox.PowersDataSet.ColumnsHeaders.Count);
+                tableEditBox.Table = new Data.Table(tableEditBox.DataSet.RowsHeaders.Count, tableEditBox.DataSet.ColumnsHeaders.Count);
             }
         }
         

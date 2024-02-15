@@ -34,6 +34,8 @@ namespace WordHiddenPowers.Data
         
         public static Table Create(string text)
         {
+            if (string.IsNullOrWhiteSpace(text)) return new Table(0, 0);
+
             string[] rows = text.Split( new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             string[] cells = rows[0].Split( new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
             Table table = new Table(rows.Length, cells.Length);

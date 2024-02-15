@@ -19,7 +19,7 @@
             }
 
             Table = null;
-            PowersDataSet = null;
+            DataSet = null;
             base.Dispose(disposing);
         }
 

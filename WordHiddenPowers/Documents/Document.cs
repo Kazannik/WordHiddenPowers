@@ -11,6 +11,7 @@ using Office = Microsoft.Office.Core;
 using WordHiddenPowers.Dialogs;
 using System.Windows.Forms;
 using WordHiddenPowers.Utils;
+using System.Collections.Generic;
 
 namespace WordHiddenPowers.Documents
 {
@@ -28,12 +29,29 @@ namespace WordHiddenPowers.Documents
             {
                 if (pane == null)
                 {
-                    pane = Globals.ThisAddIn.CustomTaskPanes.Add(new NotesPane(Doc), Const.Panes.PANE_TITLE);
+                    pane = Globals.ThisAddIn.CustomTaskPanes.Add(new NotesPane(this), Const.Panes.PANE_TITLE);
                     pane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
                     pane.Width = 400;
                     pane.VisibleChanged += new EventHandler(Pane_VisibleChanged);
+                    NotesPane note = pane.Control as NotesPane;
+                    note.PropertiesChanged += new EventHandler<EventArgs>(NotesPane_PropertiesChanged);
                 }
                 return pane;
+            }
+        }
+
+        private void NotesPane_PropertiesChanged(object sender, EventArgs e)
+        {
+            if (Caption != Pane.Caption) Caption = Pane.Caption;
+            if (Date != Pane.Date) Date = Pane.Date;
+            if (Description != Pane.Description) Description = Pane.Description;
+            if (DataSet.HasChanges())
+            {
+                StringBuilder builder = new StringBuilder();
+                StringWriter writer = new StringWriter(builder);
+                DataSet.WriteXml(writer, XmlWriteMode.WriteSchema);
+                writer.Close();
+                CommitVariables(Const.Globals.XML_VARIABLE_NAME, builder.ToString());
             }
         }
 
@@ -41,7 +59,7 @@ namespace WordHiddenPowers.Documents
         {
             get
             {                
-                return CustomPane as NotesPane;
+                return CustomPane.Control as NotesPane;
             }           
         }
 
@@ -142,7 +160,7 @@ namespace WordHiddenPowers.Documents
                     if (content != null)
                     {
                         StringReader reader = new StringReader(content.Value);
-                        dataSet.ReadXml(reader, System.Data.XmlReadMode.IgnoreSchema);
+                        dataSet.ReadXml(reader, XmlReadMode.IgnoreSchema);
                         reader.Close();
                     }
                 }
@@ -156,7 +174,7 @@ namespace WordHiddenPowers.Documents
         {
             this.parent = parent;
             dataSet = new RepositoryDataSet();
-            dialogs = new System.Collections.Generic.List<Form>();
+            dialogs = new List<Form>();
             FileName = fileName;
             ContentHide = false;
             Doc = doc;
@@ -217,6 +235,7 @@ namespace WordHiddenPowers.Documents
             CommitVariables(Const.Globals.CAPTION_VARIABLE_NAME, Caption);
             CommitVariables(Const.Globals.DATE_VARIABLE_NAME, Date.ToShortDateString());
             CommitVariables(Const.Globals.DESCRIPTION_VARIABLE_NAME, Description);
+            CommitVariables(Const.Globals.TABLE_VARIABLE_NAME, Table.ToString());
 
             if (DataSet.HasChanges())
             {
@@ -238,13 +257,20 @@ namespace WordHiddenPowers.Documents
                 variable.Value = value;
         }
 
+
+                
+       
+
+
+
+
         public bool VariablesExists()
         {
             if (Doc.Variables.Count > 0)
             {
-                Word.Variable title = GetVariable(Doc.Variables,
+                Word.Variable caption = GetVariable(Doc.Variables,
                     Const.Globals.CAPTION_VARIABLE_NAME);
-                if (title != null)
+                if (caption != null)
                 {
                     return true;
                 }
@@ -263,19 +289,19 @@ namespace WordHiddenPowers.Documents
                     return true;
                 }
 
-                Word.Variable categories = GetVariable(Doc.Variables,
-                    Const.Globals.XML_VARIABLE_NAME);
-                if (categories != null)
-                {
-                    return true;
-                }
-
                 Word.Variable table = GetVariable(Doc.Variables,
                     Const.Globals.TABLE_VARIABLE_NAME);
                 if (table != null)
                 {
                     return true;
                 }
+
+                Word.Variable content = GetVariable(Doc.Variables,
+                    Const.Globals.XML_VARIABLE_NAME);
+                if (content != null)
+                {
+                    return true;
+                }               
             }
             return false;
         }
@@ -292,8 +318,8 @@ namespace WordHiddenPowers.Documents
                 DeleteVariable(Const.Globals.CAPTION_VARIABLE_NAME);
                 DeleteVariable(Const.Globals.DATE_VARIABLE_NAME);
                 DeleteVariable(Const.Globals.DESCRIPTION_VARIABLE_NAME);
-                DeleteVariable(Const.Globals.XML_VARIABLE_NAME);
                 DeleteVariable(Const.Globals.TABLE_VARIABLE_NAME);
+                DeleteVariable(Const.Globals.XML_VARIABLE_NAME);
             }
         }
 
@@ -304,7 +330,7 @@ namespace WordHiddenPowers.Documents
                 variable.Delete();
         }
 
-        protected System.Collections.Generic.IList<Form> dialogs = null;
+        protected IList<Form> dialogs = null;
 
         public void ShowDocumentKeysDialog()
         {
@@ -318,8 +344,10 @@ namespace WordHiddenPowers.Documents
         {
             Form dialog = new CategoriesEditorDialog(DataSet);
             dialogs.Add(dialog);
-            ShowDialogUtil.ShowDialog(dialog);
-            //OnPropertiesChanged(new EventArgs());
+            if (ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
+            {
+                Pane.DataSetRefresh();
+            }
         }
 
         public void ShowCreateTableDialog()
@@ -357,8 +385,31 @@ namespace WordHiddenPowers.Documents
         {
 
         }
-        
-                
+
+        public void AddTextNote(Word.Selection selection)
+        {
+            TextNoteDialog dialog = new TextNoteDialog(DataSet, selection);
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                DataSet.TextPowers.Rows.Add(new object[]
+                { null, dialog.Category.Id, dialog.Subcategory.Id, dialog.Description, dialog.Value, dialog.Reiting, dialog.SelectionStart, dialog.SelectionEnd });
+
+                CommitVariables();
+            }
+        }
+
+        public void AddDecimalNote(Word.Selection selection)
+        {
+            DecimalNoteDialog dialog = new DecimalNoteDialog(DataSet, selection);
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                DataSet.DecimalPowers.Rows.Add(new object[]
+                { null, dialog.Category.Id, dialog.Subcategory.Id, dialog.Description, dialog.Value, dialog.Reiting, dialog.SelectionStart, dialog.SelectionEnd });
+
+                CommitVariables();
+            }
+        }
+
         public void Dispose()
         {
             if (dialogs != null)

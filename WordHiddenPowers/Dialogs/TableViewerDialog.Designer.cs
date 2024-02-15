@@ -147,7 +147,7 @@
             this.tableEditBox.Location = new System.Drawing.Point(0, 0);
             this.tableEditBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tableEditBox.Name = "tableEditBox";
-            this.tableEditBox.PowersDataSet = null;
+            this.tableEditBox.DataSet = null;
             this.tableEditBox.Size = new System.Drawing.Size(397, 341);
             this.tableEditBox.TabIndex = 4;
             this.tableEditBox.Table = null;

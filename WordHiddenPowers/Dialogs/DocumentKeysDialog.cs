@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using WordHiddenPowers.Panes;
 using WordHiddenPowers.Repositoryes;
 
 namespace WordHiddenPowers.Dialogs
@@ -25,7 +24,7 @@ namespace WordHiddenPowers.Dialogs
 
         private void ReadDocumentKeysCollection()
         {
-            collectionTextBox1.Text = string.Empty;
+            collectionTextBox.Text = string.Empty;
             string result = string.Empty;
             for (int i = 0; i < DataSet.DocumentKeys.Rows.Count; i++)
             {
@@ -33,12 +32,12 @@ namespace WordHiddenPowers.Dialogs
                     result += Environment.NewLine;
                 result += DataSet.DocumentKeys.Rows[i]["Caption"].ToString();
             }
-            collectionTextBox1.Text = result;
+            collectionTextBox.Text = result;
         }
         
         private void WriteDocumentKeysCollection()
         {
-            string[] lines = collectionTextBox1.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            string[] lines = collectionTextBox.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             DataSet.DocumentKeys.Clear();
 
             foreach (string item in lines)

@@ -34,12 +34,7 @@ namespace WordHiddenPowers.Dialogs
             AddCategoryFunctionEnabled();
         }
 
-        private void toolStripButton2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-
+        
         private void SaveTableStructure()
         {
             DataSet.Categories.Clear();
@@ -209,7 +204,7 @@ namespace WordHiddenPowers.Dialogs
             }
         }
 
-        private void mnuFileSaveToolStripMenuItem_Click(object sender, EventArgs e)
+        private void FileSave_Click(object sender, EventArgs e)
         {
 
         }

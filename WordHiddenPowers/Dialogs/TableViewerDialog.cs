@@ -27,7 +27,7 @@ namespace WordHiddenPowers.Dialogs
             dataSet.DecimalPowers.Clear();
             dataSet.TextPowers.Clear();
             
-            tableEditBox.PowersDataSet = dataSet;
+            tableEditBox.DataSet = dataSet;
             
             tableEditBox.Table = SumTable;
         }

@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using WordHiddenPowers.Dialogs;
+using WordHiddenPowers.Documents;
 using WordHiddenPowers.Repositoryes;
 using WordHiddenPowers.Utils;
 using Word = Microsoft.Office.Interop.Word;
@@ -27,39 +28,36 @@ namespace WordHiddenPowers.Panes
         private ToolStripSeparator toolStripMenuItem1;
         private ToolStripMenuItem mnuNoteRemove;
         private ToolStripMenuItem mnuNoteOpen;
-        private ComboBox titleComboBox;
+        private ComboBox captionComboBox;
 
         public NotesPane(): base()
         {
-            PropertiesChanged += new EventHandler<EventArgs>(NotesPane_PropertiesChanged);
             InitializeComponent();
         }
 
-        public NotesPane(Word._Document Doc) : base(Doc)
+        public NotesPane(Document document) : base(document)
         {
             InitializeComponent();
             
             InitializeVariables();
 
-            PropertiesChanged += new EventHandler<EventArgs>(NotesPane_PropertiesChanged);
-
-            PowersDataSet.DocumentKeys.DocumentKeysRowChanged += new RepositoryDataSet.DocumentKeysRowChangeEventHandler(DocumentKeys_DocumentKeysRowChanged);
-
-            noteListBox.PowersDataSet = PowersDataSet;
-            
+            noteListBox.DataSet = Document.DataSet;  
+                      
+            Document.DataSet.DocumentKeys.DocumentKeysRowChanged += new RepositoryDataSet.DocumentKeysRowChangeEventHandler(DocumentKeys_RowChanged);
         }
 
-        private void NotesPane_PropertiesChanged(object sender, EventArgs e)
+        protected override void OnPropertiesChanged(EventArgs e)
         {
             noteListBox.ReadData();
+            base.OnPropertiesChanged(e);
         }
-
+                
         private void NoteOpen_Click(object sender, EventArgs e)
         {
             Note note = noteListBox.SelectedItem as Note;
             if (note != null)
             {
-                Word.Range range = Document.Range(note.WordSelectionStart, note.WordSelectionEnd);
+                Word.Range range = Document.Doc.Range(note.WordSelectionStart, note.WordSelectionEnd);
                 range.Select();
             }
         }
@@ -71,10 +69,10 @@ namespace WordHiddenPowers.Panes
             {
                 if (note.IsText)
                 {
-                    TextNoteDialog dialog = new TextNoteDialog(PowersDataSet, note);
+                    TextNoteDialog dialog = new TextNoteDialog(Document.DataSet, note);
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
-                        PowersDataSet.TextPowers.Set(note.Id,
+                        Document.DataSet.TextPowers.Set(note.Id,
                             dialog.Category.Id,
                             dialog.Subcategory.Id,
                             dialog.Description,
@@ -86,10 +84,10 @@ namespace WordHiddenPowers.Panes
                 }
                 else
                 {
-                    DecimalNoteDialog dialog = new DecimalNoteDialog(PowersDataSet, note);
+                    DecimalNoteDialog dialog = new DecimalNoteDialog(Document.DataSet, note);
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
-                        PowersDataSet.DecimalPowers.Set(note.Id,
+                        Document.DataSet.DecimalPowers.Set(note.Id,
                             dialog.Category.Id,
                             dialog.Subcategory.Id,
                             dialog.Description,
@@ -99,7 +97,6 @@ namespace WordHiddenPowers.Panes
                             dialog.SelectionEnd);
                     }
                 }
-                CommitVariables();
             }
         }
 
@@ -109,11 +106,9 @@ namespace WordHiddenPowers.Panes
             if (note != null)
             {
                 if (note.IsText)
-                    PowersDataSet.TextPowers.Remove(note);
+                    Document.DataSet.TextPowers.Remove(note);
                 else
-                    PowersDataSet.DecimalPowers.Remove(note);
-
-                CommitVariables();
+                    Document.DataSet.DecimalPowers.Remove(note);
             }
         }
 
@@ -126,20 +121,21 @@ namespace WordHiddenPowers.Panes
         }
 
         
-        private void DocumentKeys_DocumentKeysRowChanged(object sender, RepositoryDataSet.DocumentKeysRowChangeEvent e)
+        private void DocumentKeys_RowChanged(object sender, RepositoryDataSet.DocumentKeysRowChangeEvent e)
         {
-            titleComboBox.BeginUpdate();
-            titleComboBox.Items.Clear();
-            foreach (DataRow row in PowersDataSet.DocumentKeys.Rows)
+            captionComboBox.BeginUpdate();
+            captionComboBox.Items.Clear();
+            foreach (DataRow row in Document.DataSet.DocumentKeys.Rows)
             {
-                titleComboBox.Items.Add(row["Caption"]);
+                captionComboBox.Items.Add(row["Caption"]);
             }
-            titleComboBox.EndUpdate();
-        }
+            captionComboBox.EndUpdate();
+            base.OnPropertiesChanged(new EventArgs());
+       }
 
-        public string Title
+        public string Caption
         {
-            get { return titleComboBox.Text; }
+            get { return captionComboBox.Text; }
         }
 
         public DateTime Date
@@ -153,15 +149,15 @@ namespace WordHiddenPowers.Panes
         }
 
 
-        private void splitContainer1_Panel1_Resize(object sender, EventArgs e)
+        private void Panel1_Resize(object sender, EventArgs e)
         {
             SplitterPanel panel = (SplitterPanel)sender;
 
             titleLabel.Location = new Point(0, 0);
-            titleComboBox.Location = new Point(0, titleLabel.Height);
-            titleComboBox.Width = panel.Width;
-            dateLabel.Location = new Point(0, titleComboBox.Top + titleComboBox.Height + 4);
-            dateTimePicker.Location = new Point(dateLabel.Width + 8, titleComboBox.Top + titleComboBox.Height + 4);
+            captionComboBox.Location = new Point(0, titleLabel.Height);
+            captionComboBox.Width = panel.Width;
+            dateLabel.Location = new Point(0, captionComboBox.Top + captionComboBox.Height + 4);
+            dateTimePicker.Location = new Point(dateLabel.Width + 8, captionComboBox.Top + captionComboBox.Height + 4);
             descriptionLabel.Location = new Point(0, dateLabel.Top + dateLabel.Height + 4);
             descriptionTextBox.Location = new Point(0, descriptionLabel.Top + descriptionLabel.Height);
             descriptionTextBox.Width = panel.Width;
@@ -170,12 +166,22 @@ namespace WordHiddenPowers.Panes
 
         public void InitializeVariables()
         {
-            if (Document.Variables.Count > 0)
+            if (Document.Doc.Variables.Count > 0)
             {
-                DataSetRefresh();
-                string title = GetVariable(Const.Globals.CAPTION_VARIABLE_NAME);
-                if (titleComboBox.Text != title)
-                    titleComboBox.Text = title;
+                if (DataSetRefresh())
+                {
+                    captionComboBox.BeginUpdate();
+                    captionComboBox.Items.Clear();
+                    foreach (DataRow row in Document.DataSet.DocumentKeys.Rows)
+                    {
+                        captionComboBox.Items.Add(row["Caption"]);
+                    }
+                    captionComboBox.EndUpdate();
+                }
+
+                string caption = GetVariable(Const.Globals.CAPTION_VARIABLE_NAME);
+                if (captionComboBox.Text != caption)
+                    captionComboBox.Text = caption;
 
                 string strDate = GetVariable(Const.Globals.DATE_VARIABLE_NAME);
                 DateTime date = string.IsNullOrWhiteSpace(strDate) ? DateTime.Today: DateTime.Parse(strDate);
@@ -185,14 +191,12 @@ namespace WordHiddenPowers.Panes
                 string description = GetVariable(Const.Globals.DESCRIPTION_VARIABLE_NAME);
                 if (descriptionTextBox.Text != description)
                     descriptionTextBox.Text = description;
-
-                Document.Saved = true;
             }
         }
 
         private string GetVariable(string name)
         {
-            Word.Variable variable = HiddenPowerDocument.GetVariable(Document.Variables, name);
+            Word.Variable variable = HiddenPowerDocument.GetVariable(Document.Doc.Variables, name);
             if (variable != null)
                 return variable.Value;
             else
@@ -201,72 +205,38 @@ namespace WordHiddenPowers.Panes
 
                      
 
-        public void DataSetRefresh()
+        public bool DataSetRefresh()
         {
-            Word.Variable categories = HiddenPowerDocument.GetVariable(Document.Variables, Const.Globals.XML_VARIABLE_NAME);
-            if (categories != null)
+            Word.Variable content = HiddenPowerDocument.GetVariable(Document.Doc.Variables, Const.Globals.XML_VARIABLE_NAME);
+            if (content != null)
             {
-                StringReader reader = new StringReader(categories.Value);
+                StringReader reader = new StringReader(content.Value);
 
-                foreach (DataTable table in PowersDataSet.Tables)
+                foreach (DataTable table in Document.DataSet.Tables)
                 {
                     table.Clear();
                 }
 
-                PowersDataSet.ReadXml(reader, XmlReadMode.IgnoreSchema);
+                Document.DataSet.ReadXml(reader, XmlReadMode.IgnoreSchema);
                 reader.Close();
+                return true;
             }
+            else
+                return false;
         }
 
-
-        public void AddTextNote(Word.Selection selection)
-        {
-            TextNoteDialog dialog = new TextNoteDialog(PowersDataSet, selection);
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                PowersDataSet.TextPowers.Rows.Add(new object[]
-                { null, dialog.Category.Id, dialog.Subcategory.Id, dialog.Description, dialog.Value, dialog.Reiting, dialog.SelectionStart, dialog.SelectionEnd });
-
-                CommitVariables();
-            }
-        }
-
-        public void AddDecimalNote(Word.Selection selection)
-        {
-            DecimalNoteDialog dialog = new DecimalNoteDialog(PowersDataSet, selection);
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                PowersDataSet.DecimalPowers.Rows.Add(new object[]
-                { null, dialog.Category.Id, dialog.Subcategory.Id, dialog.Description, dialog.Value, dialog.Reiting, dialog.SelectionStart, dialog.SelectionEnd });
-
-                CommitVariables();
-            }
-        }
-
-
-
+        
         // add the button to the context menus that you need to support
         //AddButton(applicationObject.CommandBars["Text"]);
         //AddButton(applicationObject.CommandBars["Table Text"]);
         //AddButton(applicationObject.CommandBars["Table Cells"]);
-
-
-
-
-        public new void CommitVariables()
-        {
-            CommitVariables(Const.Globals.CAPTION_VARIABLE_NAME, Title);
-            CommitVariables(Const.Globals.DATE_VARIABLE_NAME, Date.ToShortDateString());
-            CommitVariables(Const.Globals.DESCRIPTION_VARIABLE_NAME, Description);
-
-            base.CommitVariables();
-        }       
+               
         
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.titleComboBox = new System.Windows.Forms.ComboBox();
+            this.captionComboBox = new System.Windows.Forms.ComboBox();
             this.descriptionTextBox = new System.Windows.Forms.TextBox();
             this.descriptionLabel = new System.Windows.Forms.Label();
             this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
@@ -289,78 +259,84 @@ namespace WordHiddenPowers.Panes
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(2);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.titleComboBox);
+            this.splitContainer1.Panel1.Controls.Add(this.captionComboBox);
             this.splitContainer1.Panel1.Controls.Add(this.descriptionTextBox);
             this.splitContainer1.Panel1.Controls.Add(this.descriptionLabel);
             this.splitContainer1.Panel1.Controls.Add(this.dateTimePicker);
             this.splitContainer1.Panel1.Controls.Add(this.dateLabel);
             this.splitContainer1.Panel1.Controls.Add(this.titleLabel);
-            this.splitContainer1.Panel1.Resize += new System.EventHandler(this.splitContainer1_Panel1_Resize);
+            this.splitContainer1.Panel1.Resize += new System.EventHandler(this.Panel1_Resize);
             this.splitContainer1.Panel1MinSize = 140;
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.noteListBox);
-            this.splitContainer1.Size = new System.Drawing.Size(325, 322);
+            this.splitContainer1.Size = new System.Drawing.Size(244, 262);
             this.splitContainer1.SplitterDistance = 140;
+            this.splitContainer1.SplitterWidth = 3;
             this.splitContainer1.TabIndex = 2;
             // 
-            // titleComboBox
+            // captionComboBox
             // 
-            this.titleComboBox.FormattingEnabled = true;
-            this.titleComboBox.Location = new System.Drawing.Point(4, 18);
-            this.titleComboBox.Margin = new System.Windows.Forms.Padding(4);
-            this.titleComboBox.Name = "titleComboBox";
-            this.titleComboBox.Size = new System.Drawing.Size(316, 24);
-            this.titleComboBox.TabIndex = 1;
+            this.captionComboBox.FormattingEnabled = true;
+            this.captionComboBox.Location = new System.Drawing.Point(3, 15);
+            this.captionComboBox.Name = "captionComboBox";
+            this.captionComboBox.Size = new System.Drawing.Size(238, 21);
+            this.captionComboBox.TabIndex = 1;
+            this.captionComboBox.SelectedIndexChanged += new System.EventHandler(this.NotesPane_PropertiesChanged);
+            this.captionComboBox.TextChanged += new System.EventHandler(this.NotesPane_PropertiesChanged);
             // 
             // descriptionTextBox
             // 
-            this.descriptionTextBox.Location = new System.Drawing.Point(0, 22);
-            this.descriptionTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.descriptionTextBox.Location = new System.Drawing.Point(0, 18);
+            this.descriptionTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.descriptionTextBox.Multiline = true;
             this.descriptionTextBox.Name = "descriptionTextBox";
-            this.descriptionTextBox.Size = new System.Drawing.Size(325, 118);
+            this.descriptionTextBox.Size = new System.Drawing.Size(245, 97);
             this.descriptionTextBox.TabIndex = 5;
+            this.descriptionTextBox.TextChanged += new System.EventHandler(this.NotesPane_PropertiesChanged);
             // 
             // descriptionLabel
             // 
             this.descriptionLabel.AutoSize = true;
-            this.descriptionLabel.Location = new System.Drawing.Point(8, 80);
+            this.descriptionLabel.Location = new System.Drawing.Point(6, 65);
+            this.descriptionLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.descriptionLabel.Name = "descriptionLabel";
-            this.descriptionLabel.Size = new System.Drawing.Size(117, 17);
+            this.descriptionLabel.Size = new System.Drawing.Size(90, 13);
             this.descriptionLabel.TabIndex = 4;
             this.descriptionLabel.Text = "Дополнительно:";
             // 
             // dateTimePicker
             // 
-            this.dateTimePicker.Location = new System.Drawing.Point(56, 48);
-            this.dateTimePicker.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dateTimePicker.Location = new System.Drawing.Point(42, 39);
+            this.dateTimePicker.Margin = new System.Windows.Forms.Padding(2);
             this.dateTimePicker.Name = "dateTimePicker";
-            this.dateTimePicker.Size = new System.Drawing.Size(152, 22);
+            this.dateTimePicker.Size = new System.Drawing.Size(115, 20);
             this.dateTimePicker.TabIndex = 3;
             // 
             // dateLabel
             // 
             this.dateLabel.AutoSize = true;
-            this.dateLabel.Location = new System.Drawing.Point(8, 48);
+            this.dateLabel.Location = new System.Drawing.Point(6, 39);
+            this.dateLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.dateLabel.Name = "dateLabel";
-            this.dateLabel.Size = new System.Drawing.Size(46, 17);
+            this.dateLabel.Size = new System.Drawing.Size(36, 13);
             this.dateLabel.TabIndex = 2;
             this.dateLabel.Text = "Дата:";
             // 
             // titleLabel
             // 
             this.titleLabel.AutoSize = true;
-            this.titleLabel.Location = new System.Drawing.Point(56, 7);
+            this.titleLabel.Location = new System.Drawing.Point(42, 6);
+            this.titleLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(80, 17);
+            this.titleLabel.Size = new System.Drawing.Size(64, 13);
             this.titleLabel.TabIndex = 0;
             this.titleLabel.Text = "Заголовок:";
             // 
@@ -370,10 +346,10 @@ namespace WordHiddenPowers.Panes
             this.noteListBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.noteListBox.ItemHeight = 80;
             this.noteListBox.Location = new System.Drawing.Point(0, 0);
-            this.noteListBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.noteListBox.Margin = new System.Windows.Forms.Padding(2);
             this.noteListBox.Name = "noteListBox";
-            this.noteListBox.PowersDataSet = null;
-            this.noteListBox.Size = new System.Drawing.Size(325, 178);
+            this.noteListBox.DataSet = null;
+            this.noteListBox.Size = new System.Drawing.Size(244, 119);
             this.noteListBox.TabIndex = 6;
             this.noteListBox.NoteMouseClick += new System.EventHandler<WordHiddenPowers.Controls.NoteListBox.NoteListMouseEventArgs>(this.noteListBox_NoteClick);
             // 
@@ -386,37 +362,37 @@ namespace WordHiddenPowers.Panes
             this.toolStripMenuItem1,
             this.mnuNoteRemove});
             this.noteContextMenu.Name = "noteContextMenu";
-            this.noteContextMenu.Size = new System.Drawing.Size(242, 82);
+            this.noteContextMenu.Size = new System.Drawing.Size(204, 76);
             // 
             // mnuNoteOpen
             // 
             this.mnuNoteOpen.Name = "mnuNoteOpen";
-            this.mnuNoteOpen.Size = new System.Drawing.Size(241, 24);
+            this.mnuNoteOpen.Size = new System.Drawing.Size(203, 22);
             this.mnuNoteOpen.Text = "Открыть";
             this.mnuNoteOpen.Click += new System.EventHandler(this.NoteOpen_Click);
             // 
             // mnuNoteEdit
             // 
             this.mnuNoteEdit.Name = "mnuNoteEdit";
-            this.mnuNoteEdit.Size = new System.Drawing.Size(241, 24);
+            this.mnuNoteEdit.Size = new System.Drawing.Size(203, 22);
             this.mnuNoteEdit.Text = "Редактировать запись...";
             this.mnuNoteEdit.Click += new System.EventHandler(this.NoteEdit_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(238, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(200, 6);
             // 
             // mnuNoteRemove
             // 
             this.mnuNoteRemove.Name = "mnuNoteRemove";
-            this.mnuNoteRemove.Size = new System.Drawing.Size(241, 24);
+            this.mnuNoteRemove.Size = new System.Drawing.Size(203, 22);
             this.mnuNoteRemove.Text = "Удалить запись";
             this.mnuNoteRemove.Click += new System.EventHandler(this.NoteRemove_Click);
             // 
             // NotesPane
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.splitContainer1);
             this.Name = "NotesPane";
@@ -430,6 +406,11 @@ namespace WordHiddenPowers.Panes
 
         }
 
+        private void NotesPane_PropertiesChanged(object sender, EventArgs e)
+        {
+            base.OnPropertiesChanged(new EventArgs());
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -438,7 +419,6 @@ namespace WordHiddenPowers.Panes
             }
             
             base.Dispose(disposing);
-        }
-
+        }       
     }
 }

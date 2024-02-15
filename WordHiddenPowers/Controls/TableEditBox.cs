@@ -16,7 +16,7 @@ namespace WordHiddenPowers.Controls
             InitializeComponent();
         }
                
-        public RepositoryDataSet PowersDataSet
+        public RepositoryDataSet DataSet
         {
             get
             {
