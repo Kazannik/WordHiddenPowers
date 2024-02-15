@@ -115,7 +115,7 @@
             // 
             this.raitingBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.raitingBox.Location = new System.Drawing.Point(2, 378);
-            this.raitingBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.raitingBox.Margin = new System.Windows.Forms.Padding(2);
             this.raitingBox.Name = "raitingBox";
             this.raitingBox.Size = new System.Drawing.Size(672, 42);
             this.raitingBox.TabIndex = 32;
@@ -140,7 +140,7 @@
             // CreateNoteDialog
             // 
             this.AcceptButton = this.okButton;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
             this.ClientSize = new System.Drawing.Size(868, 422);
