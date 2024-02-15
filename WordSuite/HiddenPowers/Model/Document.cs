@@ -41,7 +41,7 @@ namespace WordSuite.HiddenPowers.Model
 
             if (Doc.Variables.Count > 0)
             {
-                Word.Variable title = GetVariable(Doc.Variables, HiddenPowerConst.TITLE_VARIABLE_NAME);
+                Word.Variable title = GetVariable(Doc.Variables, HiddenPowerConst.CAPTION_VARIABLE_NAME);
                 if (title != null)
                 {
                     titleValue = title.Value;

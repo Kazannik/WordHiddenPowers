@@ -15,22 +15,22 @@ namespace WordHiddenPowers
         
         private void newPowersButton_Click(object sender, RibbonControlEventArgs e)
         {
-            if (Globals.ThisAddIn.ActivePane !=null)
+            if (Globals.ThisAddIn.Documents.ActiveDocument !=null)
             {
-                Globals.ThisAddIn.ActivePane.PowersDataSet.RowsHeaders.Clear();
-                Globals.ThisAddIn.ActivePane.PowersDataSet.ColumnsHeaders.Clear();
-                Globals.ThisAddIn.ActivePane.PowersDataSet.Categories.Clear();
-                Globals.ThisAddIn.ActivePane.PowersDataSet.Subcategories.Clear();
-                Globals.ThisAddIn.ActivePane.PowersDataSet.DecimalPowers.Clear();
-                Globals.ThisAddIn.ActivePane.PowersDataSet.TextPowers.Clear();
+                Globals.ThisAddIn.Documents.ActiveDocument.DataSet.RowsHeaders.Clear();
+                Globals.ThisAddIn.Documents.ActiveDocument.DataSet.ColumnsHeaders.Clear();
+                Globals.ThisAddIn.Documents.ActiveDocument.DataSet.Categories.Clear();
+                Globals.ThisAddIn.Documents.ActiveDocument.DataSet.Subcategories.Clear();
+                Globals.ThisAddIn.Documents.ActiveDocument.DataSet.DecimalPowers.Clear();
+                Globals.ThisAddIn.Documents.ActiveDocument.DataSet.TextPowers.Clear();
 
-                Globals.ThisAddIn.ActivePane.CommitVariables();
+                Globals.ThisAddIn.Documents.ActiveDocument.CommitVariables();
             }
         }
 
         private void openPowersButton_Click(object sender, RibbonControlEventArgs e)
         {
-            if (Globals.ThisAddIn.ActivePane != null)
+            if (Globals.ThisAddIn.Documents.ActiveDocument != null)
             {
                 OpenFileDialog dialog = new OpenFileDialog();
                 dialog.Multiselect = false;
@@ -39,17 +39,17 @@ namespace WordHiddenPowers
                 {
                     try
                     {
-                        Globals.ThisAddIn.ActivePane.PowersDataSet.RowsHeaders.Clear();
-                        Globals.ThisAddIn.ActivePane.PowersDataSet.ColumnsHeaders.Clear();
-                        Globals.ThisAddIn.ActivePane.PowersDataSet.Categories.Clear();
-                        Globals.ThisAddIn.ActivePane.PowersDataSet.Subcategories.Clear();
+                        Globals.ThisAddIn.Documents.ActiveDocument.DataSet.RowsHeaders.Clear();
+                        Globals.ThisAddIn.Documents.ActiveDocument.DataSet.ColumnsHeaders.Clear();
+                        Globals.ThisAddIn.Documents.ActiveDocument.DataSet.Categories.Clear();
+                        Globals.ThisAddIn.Documents.ActiveDocument.DataSet.Subcategories.Clear();
 
-                        Globals.ThisAddIn.ActivePane.PowersDataSet.ReadXml(dialog.FileName, System.Data.XmlReadMode.IgnoreSchema);
+                        Globals.ThisAddIn.Documents.ActiveDocument.DataSet.ReadXml(dialog.FileName, System.Data.XmlReadMode.IgnoreSchema);
 
-                        Globals.ThisAddIn.ActivePane.PowersDataSet.DecimalPowers.Clear();
-                        Globals.ThisAddIn.ActivePane.PowersDataSet.TextPowers.Clear();
+                        Globals.ThisAddIn.Documents.ActiveDocument.DataSet.DecimalPowers.Clear();
+                        Globals.ThisAddIn.Documents.ActiveDocument.DataSet.TextPowers.Clear();
 
-                        Globals.ThisAddIn.ActivePane.CommitVariables();
+                        Globals.ThisAddIn.Documents.ActiveDocument.CommitVariables();
                     }
                     catch (Exception)
                     {
@@ -66,9 +66,9 @@ namespace WordHiddenPowers
             {
                 try
                 {
-                    Globals.ThisAddIn.ActivePane.CommitVariables();
+                    Globals.ThisAddIn.Documents.ActiveDocument.CommitVariables();
 
-                    string xml = GetXml(Globals.ThisAddIn.ActivePane.PowersDataSet);
+                    string xml = GetXml(Globals.ThisAddIn.Documents.ActiveDocument.DataSet);
                     RepositoryDataSet powersDataSet = new RepositoryDataSet();
                     SetXml(powersDataSet, xml);
                     powersDataSet.DecimalPowers.Clear();
@@ -101,13 +101,13 @@ namespace WordHiddenPowers
 
         private void deletePowersButton_Click(object sender, RibbonControlEventArgs e)
         {
-            if (Globals.ThisAddIn.ActivePane != null)
+            if (Globals.ThisAddIn.Documents.ActiveDocument != null)
             {
-                if (Globals.ThisAddIn.ActivePane.VariablesExists())
+                if (Globals.ThisAddIn.Documents.ActiveDocument.VariablesExists())
                 {
                     if ( MessageBox.Show("Удалить дополнительные данные из документа?", "Удаление скрытых данных", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)== DialogResult.Yes)
                     {
-                        Globals.ThisAddIn.ActivePane.DeleteVariables();
+                        Globals.ThisAddIn.Documents.ActiveDocument.DeleteVariables();
                     }
                 } else
                 {
@@ -118,66 +118,59 @@ namespace WordHiddenPowers
 
         private void paneVisibleButton_Click(object sender, RibbonControlEventArgs e)
         {
-            RibbonToggleButton button = (RibbonToggleButton)sender;
-            if (button.Id == Globals.Ribbons.WordHiddenPowersRibbon.paneVisibleButton.Id &&
-                Globals.ThisAddIn.Panes.Count > 0)
-            {
-                Globals.ThisAddIn.Panes.ActivePane.Visible = Globals.Ribbons.WordHiddenPowersRibbon.paneVisibleButton.Checked;
-            }           
+            //RibbonToggleButton button = (RibbonToggleButton)sender;
+            //if (button.Id == Globals.Ribbons.WordHiddenPowersRibbon.paneVisibleButton.Id &&
+            //    Globals.ThisAddIn.Panes.Count > 0)
+            //{
+            //    Globals.ThisAddIn.Panes.ActivePane.Visible = Globals.Ribbons.WordHiddenPowersRibbon.paneVisibleButton.Checked;
+            //}           
         }
 
         private void createTableButton_Click(object sender, RibbonControlEventArgs e)
         {
-            WordHiddenPowersPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as WordHiddenPowersPane;
-            pane.ShowCreateTableDialog();                           
+            Globals.ThisAddIn.Documents.ActiveDocument.ShowCreateTableDialog();                           
         }
 
         private void editTableButton_Click(object sender, RibbonControlEventArgs e)
         {
-            WordHiddenPowersPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as WordHiddenPowersPane;
-            pane.ShowEditTableDialog();
+            Globals.ThisAddIn.Documents.ActiveDocument.ShowEditTableDialog();
         }
 
         private void editCategoriesButton_Click(object sender, RibbonControlEventArgs e)
         {
-            WordHiddenPowersPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as WordHiddenPowersPane;
-            pane.ShowEditCategoriesDialog();
+            Globals.ThisAddIn.Documents.ActiveDocument.ShowEditCategoriesDialog();
         }
 
         private void editDocumentKeysButton_Click(object sender, RibbonControlEventArgs e)
         {
-            WordHiddenPowersPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as WordHiddenPowersPane;
-            pane.ShowDocumentKeysDialog();
+            Globals.ThisAddIn.Documents.ActiveDocument.ShowDocumentKeysDialog();
         }
 
         private void fieldAddButton_Click(object sender, RibbonControlEventArgs e)
         {
-            WordHiddenPowersPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as WordHiddenPowersPane;
-            WordHiddenPowers.Utils.WordUtil.AddField(pane.Document, Globals.ThisAddIn.Application.Selection , 1);
+            //WordHiddenPowersPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as WordHiddenPowersPane;
+            //WordHiddenPowers.Utils.WordUtil.AddField(pane.Document, Globals.ThisAddIn.Application.Selection , 1);
         }
 
         private void fieldsUpdateButton_Click(object sender, RibbonControlEventArgs e)
         {
-            WordHiddenPowersPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as WordHiddenPowersPane;
-            WordHiddenPowers.Utils.WordUtil.UpdateField(pane.Document, Globals.ThisAddIn.Application.Selection, 1);
+            //WordHiddenPowersPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as WordHiddenPowersPane;
+            //WordHiddenPowers.Utils.WordUtil.UpdateField(pane.Document, Globals.ThisAddIn.Application.Selection, 1);
         }
 
         private void analizerImportButton_Click(object sender, RibbonControlEventArgs e)
         {
-            WordHiddenPowersPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as WordHiddenPowersPane;
-            pane.ImportDataFromWordDocuments();
+            Globals.ThisAddIn.Documents.ActiveDocument.ImportDataFromWordDocuments();
         }
 
         private void analizerTableViewerButton_Click(object sender, RibbonControlEventArgs e)
         {
-            WordHiddenPowersPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as WordHiddenPowersPane;
-            pane.ShowTableViewerDialog();
+            Globals.ThisAddIn.Documents.ActiveDocument.ShowTableViewerDialog();
         }
 
         private void analizerDialogButton_Click(object sender, RibbonControlEventArgs e)
         {
-            WordHiddenPowersPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as WordHiddenPowersPane;
-            pane.ShowAnalizerDialog();
+            Globals.ThisAddIn.Documents.ActiveDocument.ShowAnalizerDialog();
         }
 
 
@@ -191,9 +184,9 @@ namespace WordHiddenPowers
 
         private void AddTextNoteButton_Click(object sender, RibbonControlEventArgs e)
         {
-            NotesPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as NotesPane;
-            if (pane !=null)
-                pane.AddTextNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
+            //NotesPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as NotesPane;
+            //if (pane !=null)
+            //    pane.AddTextNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
 
             lastNoteType = NoteType.Text;
             AddLastNoteTypeButton.Description = Const.Content.TEXT_NOTE_DESCRIPTION;
@@ -205,9 +198,9 @@ namespace WordHiddenPowers
 
         private void AddDecimalNoteButton_Click(object sender, RibbonControlEventArgs e)
         {
-            NotesPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as NotesPane;
-            if (pane != null)
-                pane.AddDecimalNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
+            //NotesPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as NotesPane;
+            //if (pane != null)
+            //    pane.AddDecimalNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
 
             lastNoteType = NoteType.Decimal;
             AddLastNoteTypeButton.Description = Const.Content.DECIMAL_NOTE_DESCRIPTION;
@@ -219,7 +212,7 @@ namespace WordHiddenPowers
 
         private void AddLastNoteTypeButton_Click(object sender, RibbonControlEventArgs e)
         {
-            NotesPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as NotesPane;
+            NotesPane pane =  Globals.ThisAddIn.Documents.ActiveDocument.Pane as NotesPane;
             if (pane != null)
             {
                 if (lastNoteType == NoteType.Text)
@@ -227,8 +220,6 @@ namespace WordHiddenPowers
                 else
                     pane.AddDecimalNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
             }
-        }
-
-        
+        }        
     }
 }

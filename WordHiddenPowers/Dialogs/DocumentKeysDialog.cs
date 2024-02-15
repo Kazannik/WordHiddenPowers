@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Windows.Forms;
 using WordHiddenPowers.Panes;
+using WordHiddenPowers.Repositoryes;
 
 namespace WordHiddenPowers.Dialogs
 {
     public partial class DocumentKeysDialog : Form
     {
-        WordHiddenPowersPane pane;
+        private RepositoryDataSet DataSet;
 
-        public DocumentKeysDialog(WordHiddenPowersPane pane)
+        public DocumentKeysDialog(RepositoryDataSet dataSet)
         {
-            this.pane = pane;
+            DataSet = dataSet;
 
             InitializeComponent();
 
@@ -26,11 +27,11 @@ namespace WordHiddenPowers.Dialogs
         {
             collectionTextBox1.Text = string.Empty;
             string result = string.Empty;
-            for (int i = 0; i < pane.PowersDataSet.DocumentKeys.Rows.Count; i++)
+            for (int i = 0; i < DataSet.DocumentKeys.Rows.Count; i++)
             {
                 if (!string.IsNullOrEmpty(result))
                     result += Environment.NewLine;
-                result += pane.PowersDataSet.DocumentKeys.Rows[i]["Caption"].ToString();
+                result += DataSet.DocumentKeys.Rows[i]["Caption"].ToString();
             }
             collectionTextBox1.Text = result;
         }
@@ -38,14 +39,12 @@ namespace WordHiddenPowers.Dialogs
         private void WriteDocumentKeysCollection()
         {
             string[] lines = collectionTextBox1.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-            pane.PowersDataSet.DocumentKeys.Clear();
+            DataSet.DocumentKeys.Clear();
 
             foreach (string item in lines)
             {
-                pane.PowersDataSet.DocumentKeys.Rows.Add(new object[] { null, item });
+                DataSet.DocumentKeys.Rows.Add(new object[] { null, item });
             }
-
-            pane.CommitVariables();
         }        
     }
 }

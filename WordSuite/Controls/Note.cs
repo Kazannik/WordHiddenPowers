@@ -1,6 +1,6 @@
 ﻿namespace WordSuite.Controls
 {
-    public class Note: WordHiddenPowers.Repositoryes.Models.Note
+    public class Note: WordHiddenPowers.Repositoryes.Note
     {
         public static Note Create(WordHiddenPowers.Repositoryes.RepositoryDataSet.DecimalPowersRow dataRow, WordHiddenPowers.Categories.Subcategory subcategory)
         {

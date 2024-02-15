@@ -27,59 +27,43 @@ namespace WordHiddenPowers.Repositoryes
             {
                 owner.SelectedItem = this;
             }
-        }
-
-        internal static Note Create(DataRow dataRow, Subcategory subcategory)
-        {
-            if (dataRow["Value"].GetType() == typeof(double))
-            {
-                return new Note(id: (int)dataRow["id"],
-                    subcategory: subcategory,
-                    description: dataRow["Description"] as string,
-                    value: (double)dataRow["Value"],
-                    reiting: (int)dataRow["Reiting"],
-                    wordSelectionStart: (int)dataRow["WordSelectionStart"],
-                    wordSelectionEnd: (int)dataRow["WordSelectionEnd"],
-                    dataRow: dataRow);
-            }
-            else
-            {
-                return new Note(id: (int)dataRow["id"],
-                    subcategory: subcategory,
-                    description: dataRow["Description"] as string,
-                    value: dataRow["Value"] as string,
-                    reiting: (int)dataRow["Reiting"],
-                    wordSelectionStart: (int)dataRow["WordSelectionStart"],
-                    wordSelectionEnd: (int)dataRow["WordSelectionEnd"],
-                    dataRow: dataRow);
-            }            
-        }
+        }      
 
         internal static Note Create(RepositoryDataSet.DecimalPowersRow dataRow, Subcategory subcategory)
         {
             return new Note(id: dataRow.id,
                 subcategory: subcategory,
-                description: dataRow.Description,
+                description: ! dataRow.IsDescriptionNull() ? dataRow.Description: string.Empty,
                 value: dataRow.Value,
                 reiting: dataRow.Reiting,
                 wordSelectionStart: dataRow.WordSelectionStart,
                 wordSelectionEnd: dataRow.WordSelectionEnd,
-                dataRow: dataRow);
+                dataRow: dataRow,
+                fileName: !dataRow.IsfileNameNull() ? dataRow.fileName : string.Empty,
+                fileCaption: !dataRow.IsfileCaptionNull() ? dataRow.fileCaption : string.Empty,
+                fileDescription: !dataRow.IsfileDescriptionNull() ? dataRow.fileDescription : string.Empty,
+                fileDate: !dataRow.IsfileDateNull() ? dataRow.fileDate : DateTime.Today);
         }
 
         internal static Note Create(RepositoryDataSet.TextPowersRow dataRow, Subcategory subcategory)
         {
             return new Note(id: dataRow.id,
                 subcategory: subcategory,
-                description: dataRow.Description,
+                description: !dataRow.IsDescriptionNull() ? dataRow.Description : string.Empty,
                 value: dataRow.Value,
                 reiting: dataRow.Reiting,
                 wordSelectionStart: dataRow.WordSelectionStart,
                 wordSelectionEnd: dataRow.WordSelectionEnd,
-                dataRow: dataRow);
+                dataRow: dataRow,
+                fileName: !dataRow.IsfileNameNull() ? dataRow.fileName: string.Empty,
+                fileCaption: !dataRow.IsfileCaptionNull() ? dataRow.fileCaption: string.Empty,
+                fileDescription: !dataRow.IsfileDescriptionNull() ? dataRow.fileDescription: string.Empty,
+                fileDate: !dataRow.IsfileDateNull() ? dataRow.fileDate: DateTime.Today,
+                fileContentHide: !dataRow.IsfileContentHideNull() ? dataRow.fileContentHide: false);
         }
 
-        protected Note(int id, Subcategory subcategory, string description, double value, int reiting, int wordSelectionStart, int wordSelectionEnd, object dataRow)
+        protected Note(int id, Subcategory subcategory, string description, double value, int reiting, int wordSelectionStart, int wordSelectionEnd, object dataRow, 
+            string fileName, string fileCaption, string fileDescription, DateTime fileDate)
         {
             Subcategory = subcategory;
             Id = id;
@@ -89,9 +73,16 @@ namespace WordHiddenPowers.Repositoryes
             WordSelectionStart = wordSelectionStart;
             WordSelectionEnd = wordSelectionEnd;
             DataRow = dataRow;
+
+            FileCaption = fileCaption;
+            FileContentHide = false;
+            FileDate = fileDate;
+            FileDescription = fileDescription;
+            FileName = FileName;
         }
 
-        protected Note(int id, Subcategory subcategory, string description, string value, int reiting, int wordSelectionStart, int wordSelectionEnd, object dataRow)
+        protected Note(int id, Subcategory subcategory, string description, string value, int reiting, int wordSelectionStart, int wordSelectionEnd, object dataRow,
+            string fileName, string fileCaption, string fileDescription, DateTime fileDate, bool fileContentHide)
         {
             Subcategory = subcategory;
             Id = id;
@@ -101,6 +92,12 @@ namespace WordHiddenPowers.Repositoryes
             WordSelectionStart = wordSelectionStart;
             WordSelectionEnd = wordSelectionEnd;
             DataRow = dataRow;
+
+            FileCaption = fileCaption;
+            FileContentHide = fileContentHide;
+            FileDate = fileDate;
+            FileDescription = fileDescription;
+            FileName = fileName;
         }
 
         public Category Category { get { return Subcategory.Category; } }
@@ -125,6 +122,16 @@ namespace WordHiddenPowers.Repositoryes
         }
 
         public object DataRow { get; }
+        
+        public string FileName { get; }
+
+        public string FileCaption { get; }
+
+        public string FileDescription { get; }
+        
+        public DateTime FileDate { get; }
+
+        public bool FileContentHide { get; set; }
 
         public object[]  ToObjectsArray()
         {
@@ -154,7 +161,7 @@ namespace WordHiddenPowers.Repositoryes
             return Compare(this, value);
         }
 
-        public int CompareTo(Object value)
+        public int CompareTo(object value)
         {
             if (value == null)
             {

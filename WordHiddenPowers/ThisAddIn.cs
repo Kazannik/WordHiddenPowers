@@ -14,48 +14,42 @@ namespace WordHiddenPowers
 {
     public partial class ThisAddIn
     {
-        Documents.DocumentCollection documents;
+        public Documents.DocumentCollection Documents { get; private set; }
 
 
-        Panes.PaneCollection panes; 
+        //Panes.PaneCollection panes; 
                       
-        public Panes.PaneCollection Panes { get { return panes; } }
+        //public Panes.PaneCollection Panes { get { return panes; } }
         
-        public Panes.WordHiddenPowersPane ActivePane
-        {
-            get
-            {
-                if (panes.Contains(Application.ActiveDocument))
-                {
-                    return (Panes.WordHiddenPowersPane) panes[Application.ActiveDocument].Control;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-        }
+        //public Panes.WordHiddenPowersPane ActivePane
+        //{
+        //    get
+        //    {
+        //        if (panes.Contains(Application.ActiveDocument))
+        //        {
+        //            return (Panes.WordHiddenPowersPane) panes[Application.ActiveDocument].Control;
+        //        }
+        //        else
+        //        {
+        //            return null;
+        //        }
+        //    }
+        //}
 
 
         private void ThisAddIn_Startup(object sender, EventArgs e)
         {
-            #region PowerPane
-
-            panes = new Panes.PaneCollection(CustomTaskPanes, Globals.Ribbons.WordHiddenPowersRibbon.paneVisibleButton);
-
-            #endregion
-
+            Documents = new Documents.DocumentCollection(Globals.Ribbons.WordHiddenPowersRibbon.paneVisibleButton);
+                      
             if (Application.Documents.Count > 0)
             {
-                panes.WindowActivate(Application.ActiveDocument);
-                Panes.NotesPane pane = (Panes.NotesPane)panes.ActivePane.Control;
-                pane.InitializeVariables();
+                Documents.Activate(Application.ActiveDocument, Application.ActiveDocument.ActiveWindow);
             }          
         }
 
         private void ThisAddIn_Shutdown(object sender, EventArgs e)
         {
-            panes.Dispose();
+            Documents.Dispose();
         }
                 
         #region Код, автоматически созданный VSTO
@@ -76,30 +70,23 @@ namespace WordHiddenPowers
         
         private void Application_WindowActivate(Word.Document Doc, Word.Window Wn)
         {
-            panes.WindowActivate(Doc);
+            Documents.Activate(Doc, Wn);
         }
 
         private void Application_WindowDeactivate(Word.Document Doc, Word.Window Wn)
         {
-            panes.WindowDeactivate(Doc);
+            Documents.Deactivate(Doc, Wn);
         }
-
-
+        
         private void Application_DocumentOpen(Word.Document Doc)
         {
-            if (panes.Count > 0)
-            {
-                Panes.NotesPane pane = (Panes.NotesPane)panes.ActivePane.Control;
-                pane.InitializeVariables();
-            }
+            Documents.Open(Doc);           
         }
-
-
+        
         private void Application_DocumentBeforeClose(Word.Document Doc, ref bool Cancel)
         {
-            panes.Remove(Doc);            
+            Documents.Remove(Doc);            
         }
-
         
         #endregion
     }

@@ -12,11 +12,11 @@ namespace WordHiddenPowers.Dialogs
 {
     public partial class CategoriesEditorDialog : Form
     {
-        WordHiddenPowersPane pane;
+        private RepositoryDataSet DataSet;
 
-        public CategoriesEditorDialog(WordHiddenPowersPane pane)
+        public CategoriesEditorDialog(RepositoryDataSet dataSet)
         {
-            this.pane = pane;
+            DataSet = dataSet;
 
             InitializeComponent();
 
@@ -42,14 +42,14 @@ namespace WordHiddenPowers.Dialogs
 
         private void SaveTableStructure()
         {
-            pane.PowersDataSet.Categories.Clear();
+            DataSet.Categories.Clear();
 
             foreach (TreeNode node in categoriesTreeView.Nodes)
             {
                 //pane.PowersDataSet.Categories.Rows.Add(new object[] { null, node.Category.Caption, node.Category.Description });
             }
 
-            pane.CommitVariables();
+           
         }
 
         private void captionTextBox_TextChanged(object sender, EventArgs e)
@@ -201,13 +201,11 @@ namespace WordHiddenPowers.Dialogs
             dialog.Multiselect = false;
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
-                pane.PowersDataSet.Categories.Clear();
-                pane.PowersDataSet.Subcategories.Clear();
+                DataSet.Categories.Clear();
+                DataSet.Subcategories.Clear();
 
                 string content = File.ReadAllText(dialog.FileName, Encoding.GetEncoding(1251));
-                Utils.Categories.CreateFromText(pane.PowersDataSet, content);
-
-                pane.CommitVariables();
+                Utils.Categories.CreateFromText(DataSet, content);                
             }
         }
 

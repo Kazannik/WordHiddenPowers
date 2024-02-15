@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Windows.Forms;
 using WordHiddenPowers.Panes;
+using WordHiddenPowers.Repositoryes;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Dialogs
 {
     public partial class TableEditorDialog : Form
     {
-        WordHiddenPowersPane pane;
+        private Documents.Document document;
 
-        public TableEditorDialog(WordHiddenPowersPane pane)
+        public TableEditorDialog(Documents.Document document)
         {
-            this.pane = pane;
+            this.document = document;
 
             InitializeComponent();
 
-            nameLabel.Text = this.pane.Document.Name;
+            nameLabel.Text = this.document.Doc.Name;
 
-            tableEditBox.PowersDataSet = this.pane.PowersDataSet;
+            tableEditBox.PowersDataSet = this.document.DataSet;
 
             ReadValues();
         }
@@ -25,7 +26,7 @@ namespace WordHiddenPowers.Dialogs
         
         private void ReadValues()
         {
-            Word.Variable variable = GetVariable(pane.Document.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+            Word.Variable variable = GetVariable(document.Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
             if (variable != null)
             {
                 tableEditBox.Table = Data.Table.Create(variable.Value);                
@@ -89,14 +90,14 @@ namespace WordHiddenPowers.Dialogs
                     }
                 }
 
-                Word.Variable variable = GetVariable(pane.Document.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+                Word.Variable variable = GetVariable(document.Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
                 if (variable != null)
                 {
                     variable.Value = tableEditBox.Table.ToString();
                 }
                 else
                 {
-                    pane.Document.Variables.Add(Const.Globals.TABLE_VARIABLE_NAME, tableEditBox.Table.ToString());
+                    document.Doc.Variables.Add(Const.Globals.TABLE_VARIABLE_NAME, tableEditBox.Table.ToString());
                 }
             }
         }

@@ -12,14 +12,14 @@ namespace WordHiddenPowers.Repositoryes
     {
 
         public IEnumerable<CategoriesRow> GetCategories(bool isText)
-        {            
-                return (from subcategory in Subcategories.Where(s => s.IsText == isText)
-                        join category in Categories on subcategory.category_id equals category.id
-                        select category)
-                        .GroupBy(x => x.id).Select(y => y.First());            
-           
+        {
+            return (from subcategory in Subcategories.Where(s => s.IsText == isText)
+                    join category in Categories on subcategory.category_id equals category.id
+                    select category)
+                    .GroupBy(x => x.id).Select(y => y.First());
+
         }
-        
+
         partial class RowsHeadersDataTable
         {
         }
@@ -113,7 +113,7 @@ namespace WordHiddenPowers.Repositoryes
         {
             public Subcategory Get(Category category, int subcategoryId)
             {
-                SubcategoriesRow row =(SubcategoriesRow) GetRow(subcategoryId);                
+                SubcategoriesRow row = (SubcategoriesRow)GetRow(subcategoryId);
                 return Subcategory.Create(category, row);
             }
 
@@ -121,12 +121,12 @@ namespace WordHiddenPowers.Repositoryes
             {
                 return this.AsEnumerable().Where(x => x.category_id == categoryId && x.IsText == isText);
             }
-            
+
             public Subcategory Add(Category category, Subcategory subcategory)
             {
                 SubcategoriesRow row = (SubcategoriesRow)Rows.Add(subcategory.ToObjectsArray());
 
-                return Subcategory.Create( category, row);
+                return Subcategory.Create(category, row);
             }
 
             public void Write(Subcategory subcategory)
@@ -157,10 +157,10 @@ namespace WordHiddenPowers.Repositoryes
         }
 
         partial class CategoriesDataTable
-        {                        
+        {
             public Category Add(Category category)
             {
-                CategoriesRow row =(CategoriesRow) Rows.Add(category.ToObjectsArray());
+                CategoriesRow row = (CategoriesRow)Rows.Add(category.ToObjectsArray());
                 return Category.Create(row);
             }
 

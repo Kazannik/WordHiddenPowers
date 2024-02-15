@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Linq;
-using WordHiddenPowers.Repositoryes.Models;
+using WordHiddenPowers.Repositoryes;
 
 namespace WordSuite.Repositoryes
 {

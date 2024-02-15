@@ -99,15 +99,15 @@
             // 
             this.subcategoriesComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.subcategoriesComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.subcategoriesComboBox.DropDownHeight = 220;
+            this.subcategoriesComboBox.DropDownHeight = 180;
             this.subcategoriesComboBox.DropDownWidth = 80;
             this.subcategoriesComboBox.FormattingEnabled = true;
             this.subcategoriesComboBox.IntegralHeight = false;
-            this.subcategoriesComboBox.ItemHeight = 19;
+            this.subcategoriesComboBox.ItemHeight = 22;
             this.subcategoriesComboBox.Location = new System.Drawing.Point(3, 33);
             this.subcategoriesComboBox.MaxDropDownItems = 20;
             this.subcategoriesComboBox.Name = "subcategoriesComboBox";
-            this.subcategoriesComboBox.Size = new System.Drawing.Size(670, 25);
+            this.subcategoriesComboBox.Size = new System.Drawing.Size(670, 28);
             this.subcategoriesComboBox.TabIndex = 34;
             this.subcategoriesComboBox.SelectedIndexChanged += new System.EventHandler(this.subcategoriesComboBox_SelectedIndexChanged);
             // 
@@ -125,15 +125,15 @@
             // 
             this.categoriesComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.categoriesComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.categoriesComboBox.DropDownHeight = 220;
+            this.categoriesComboBox.DropDownHeight = 180;
             this.categoriesComboBox.DropDownWidth = 80;
             this.categoriesComboBox.FormattingEnabled = true;
             this.categoriesComboBox.IntegralHeight = false;
-            this.categoriesComboBox.ItemHeight = 19;
+            this.categoriesComboBox.ItemHeight = 22;
             this.categoriesComboBox.Location = new System.Drawing.Point(3, 3);
             this.categoriesComboBox.MaxDropDownItems = 20;
             this.categoriesComboBox.Name = "categoriesComboBox";
-            this.categoriesComboBox.Size = new System.Drawing.Size(670, 25);
+            this.categoriesComboBox.Size = new System.Drawing.Size(670, 28);
             this.categoriesComboBox.TabIndex = 33;
             this.categoriesComboBox.SelectedIndexChanged += new System.EventHandler(this.categoriesComboBox_SelectedIndexChanged);
             // 

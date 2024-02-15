@@ -35,7 +35,7 @@
     <PublishUrl>publish\</PublishUrl>
     <InstallUrl />
     <TargetCulture>ru</TargetCulture>
-    <ApplicationVersion>1.0.0.7</ApplicationVersion>
+    <ApplicationVersion>1.2.0.0</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>false</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
@@ -272,14 +272,6 @@
     </Compile>
     <Compile Include="Documents\Document.cs" />
     <Compile Include="Documents\DocumentCollection.cs" />
-    <Compile Include="Documents\DocumentsSchema.cs">
-      <DependentUpon>DocumentsSchema.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Documents\DocumentsSchema.Designer.cs">
-      <DependentUpon>DocumentsSchema.xsd</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Panes\AnalizerPane.cs" />
     <Compile Include="Panes\NotesPane.cs">
       <SubType>UserControl</SubType>
@@ -350,17 +342,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="Documents\DocumentsSchema.xsc">
-      <DependentUpon>DocumentsSchema.xsd</DependentUpon>
-    </None>
-    <None Include="Documents\DocumentsSchema.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DocumentsSchema.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Documents\DocumentsSchema.xss">
-      <DependentUpon>DocumentsSchema.xsd</DependentUpon>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

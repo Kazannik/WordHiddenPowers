@@ -5,14 +5,12 @@ using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Utils
 {
-    public static class FileSystem
+    static class FileSystem
     {
-        public static DocumentCollection ImportFiles(string path)
+        public static DocumentCollection ImportFiles(DocumentCollection collection, string path)
         {
             if (Directory.Exists(path))
             {
-                DocumentCollection collection = new DocumentCollection();
-
                 Word._Application application = Globals.ThisAddIn.Application;
                 application.Visible = true;
 
@@ -23,7 +21,7 @@ namespace WordHiddenPowers.Utils
                         try
                         {
                             Word._Document document = application.Documents.Open(FileName: file.FullName, ReadOnly: true, Visible: false);
-                            collection.Add(Document.Create(file.FullName, document));
+                            collection.Add(Document.Create(collection, file.FullName, document));
                             document.Close();
                         }
                         catch (Exception) { }

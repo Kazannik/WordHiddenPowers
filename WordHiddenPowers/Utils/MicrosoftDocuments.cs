@@ -22,7 +22,7 @@ namespace WordHiddenPowers.Utils
             foreach (Document item in collection)
             {
                 Word.Paragraph paragraph = document.Content.Paragraphs.Add(ref oMissing);
-                paragraph.Range.Text = item.Title;
+                paragraph.Range.Text = item.Caption;
                 paragraph.Range.Font.Bold = 1;
                 paragraph.Format.SpaceAfter = 24;    //24 pt spacing after paragraph.
                 paragraph.Range.InsertParagraphAfter();

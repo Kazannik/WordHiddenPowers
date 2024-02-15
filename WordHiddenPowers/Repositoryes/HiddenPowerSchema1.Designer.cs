@@ -506,6 +506,16 @@ namespace WordHiddenPowers.Repositoryes {
             
             private global::System.Data.DataColumn columnWordSelectionEnd;
             
+            private global::System.Data.DataColumn columnfileName;
+            
+            private global::System.Data.DataColumn columnfileCaption;
+            
+            private global::System.Data.DataColumn columnfileDescription;
+            
+            private global::System.Data.DataColumn columnfileDate;
+            
+            private global::System.Data.DataColumn columnfileContentHide;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public TextPowersDataTable() {
@@ -605,6 +615,46 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn fileNameColumn {
+                get {
+                    return this.columnfileName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn fileCaptionColumn {
+                get {
+                    return this.columnfileCaption;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn fileDescriptionColumn {
+                get {
+                    return this.columnfileDescription;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn fileDateColumn {
+                get {
+                    return this.columnfileDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn fileContentHideColumn {
+                get {
+                    return this.columnfileContentHide;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -640,7 +690,7 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public TextPowersRow AddTextPowersRow(int category_id, int subcategory_id, string Description, string Value, int Reiting, int WordSelectionStart, int WordSelectionEnd) {
+            public TextPowersRow AddTextPowersRow(int category_id, int subcategory_id, string Description, string Value, int Reiting, int WordSelectionStart, int WordSelectionEnd, string fileName, string fileCaption, string fileDescription, System.DateTime fileDate, bool fileContentHide) {
                 TextPowersRow rowTextPowersRow = ((TextPowersRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -650,7 +700,12 @@ namespace WordHiddenPowers.Repositoryes {
                         Value,
                         Reiting,
                         WordSelectionStart,
-                        WordSelectionEnd};
+                        WordSelectionEnd,
+                        fileName,
+                        fileCaption,
+                        fileDescription,
+                        fileDate,
+                        fileContentHide};
                 rowTextPowersRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowTextPowersRow);
                 return rowTextPowersRow;
@@ -688,6 +743,11 @@ namespace WordHiddenPowers.Repositoryes {
                 this.columnReiting = base.Columns["Reiting"];
                 this.columnWordSelectionStart = base.Columns["WordSelectionStart"];
                 this.columnWordSelectionEnd = base.Columns["WordSelectionEnd"];
+                this.columnfileName = base.Columns["fileName"];
+                this.columnfileCaption = base.Columns["fileCaption"];
+                this.columnfileDescription = base.Columns["fileDescription"];
+                this.columnfileDate = base.Columns["fileDate"];
+                this.columnfileContentHide = base.Columns["fileContentHide"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -709,6 +769,16 @@ namespace WordHiddenPowers.Repositoryes {
                 base.Columns.Add(this.columnWordSelectionStart);
                 this.columnWordSelectionEnd = new global::System.Data.DataColumn("WordSelectionEnd", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnWordSelectionEnd);
+                this.columnfileName = new global::System.Data.DataColumn("fileName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnfileName);
+                this.columnfileCaption = new global::System.Data.DataColumn("fileCaption", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnfileCaption);
+                this.columnfileDescription = new global::System.Data.DataColumn("fileDescription", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnfileDescription);
+                this.columnfileDate = new global::System.Data.DataColumn("fileDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnfileDate);
+                this.columnfileContentHide = new global::System.Data.DataColumn("fileContentHide", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnfileContentHide);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("StringPowersTableKey", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -718,6 +788,7 @@ namespace WordHiddenPowers.Repositoryes {
                 this.columncategory_id.DefaultValue = ((int)(0));
                 this.columnsubcategory_id.AllowDBNull = false;
                 this.columnsubcategory_id.DefaultValue = ((int)(0));
+                this.columnValue.AllowDBNull = false;
                 this.columnReiting.AllowDBNull = false;
                 this.columnReiting.DefaultValue = ((int)(0));
                 this.columnWordSelectionStart.AllowDBNull = false;
@@ -1527,6 +1598,14 @@ namespace WordHiddenPowers.Repositoryes {
             
             private global::System.Data.DataColumn columnWordSelectionEnd;
             
+            private global::System.Data.DataColumn columnfileName;
+            
+            private global::System.Data.DataColumn columnfileCaption;
+            
+            private global::System.Data.DataColumn columnfileDescription;
+            
+            private global::System.Data.DataColumn columnfileDate;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public DecimalPowersDataTable() {
@@ -1626,6 +1705,38 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn fileNameColumn {
+                get {
+                    return this.columnfileName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn fileCaptionColumn {
+                get {
+                    return this.columnfileCaption;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn fileDescriptionColumn {
+                get {
+                    return this.columnfileDescription;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn fileDateColumn {
+                get {
+                    return this.columnfileDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1661,7 +1772,7 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DecimalPowersRow AddDecimalPowersRow(int category_id, int subcategory_id, string Description, double Value, int Reiting, int WordSelectionStart, int WordSelectionEnd) {
+            public DecimalPowersRow AddDecimalPowersRow(int category_id, int subcategory_id, string Description, double Value, int Reiting, int WordSelectionStart, int WordSelectionEnd, string fileName, string fileCaption, string fileDescription, System.DateTime fileDate) {
                 DecimalPowersRow rowDecimalPowersRow = ((DecimalPowersRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -1671,7 +1782,11 @@ namespace WordHiddenPowers.Repositoryes {
                         Value,
                         Reiting,
                         WordSelectionStart,
-                        WordSelectionEnd};
+                        WordSelectionEnd,
+                        fileName,
+                        fileCaption,
+                        fileDescription,
+                        fileDate};
                 rowDecimalPowersRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDecimalPowersRow);
                 return rowDecimalPowersRow;
@@ -1709,6 +1824,10 @@ namespace WordHiddenPowers.Repositoryes {
                 this.columnReiting = base.Columns["Reiting"];
                 this.columnWordSelectionStart = base.Columns["WordSelectionStart"];
                 this.columnWordSelectionEnd = base.Columns["WordSelectionEnd"];
+                this.columnfileName = base.Columns["fileName"];
+                this.columnfileCaption = base.Columns["fileCaption"];
+                this.columnfileDescription = base.Columns["fileDescription"];
+                this.columnfileDate = base.Columns["fileDate"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1730,6 +1849,14 @@ namespace WordHiddenPowers.Repositoryes {
                 base.Columns.Add(this.columnWordSelectionStart);
                 this.columnWordSelectionEnd = new global::System.Data.DataColumn("WordSelectionEnd", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnWordSelectionEnd);
+                this.columnfileName = new global::System.Data.DataColumn("fileName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnfileName);
+                this.columnfileCaption = new global::System.Data.DataColumn("fileCaption", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnfileCaption);
+                this.columnfileDescription = new global::System.Data.DataColumn("fileDescription", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnfileDescription);
+                this.columnfileDate = new global::System.Data.DataColumn("fileDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnfileDate);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("DesimalPowersTableKey", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -2845,12 +2972,7 @@ namespace WordHiddenPowers.Repositoryes {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string Value {
                 get {
-                    try {
-                        return ((string)(this[this.tableTextPowers.ValueColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Value\' в таблице \'TextPowers\' равно DBNull.", e);
-                    }
+                    return ((string)(this[this.tableTextPowers.ValueColumn]));
                 }
                 set {
                     this[this.tableTextPowers.ValueColumn] = value;
@@ -2892,6 +3014,86 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string fileName {
+                get {
+                    try {
+                        return ((string)(this[this.tableTextPowers.fileNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'fileName\' в таблице \'TextPowers\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableTextPowers.fileNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string fileCaption {
+                get {
+                    try {
+                        return ((string)(this[this.tableTextPowers.fileCaptionColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'fileCaption\' в таблице \'TextPowers\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableTextPowers.fileCaptionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string fileDescription {
+                get {
+                    try {
+                        return ((string)(this[this.tableTextPowers.fileDescriptionColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'fileDescription\' в таблице \'TextPowers\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableTextPowers.fileDescriptionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.DateTime fileDate {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tableTextPowers.fileDateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'fileDate\' в таблице \'TextPowers\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableTextPowers.fileDateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool fileContentHide {
+                get {
+                    try {
+                        return ((bool)(this[this.tableTextPowers.fileContentHideColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'fileContentHide\' в таблице \'TextPowers\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableTextPowers.fileContentHideColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsDescriptionNull() {
                 return this.IsNull(this.tableTextPowers.DescriptionColumn);
             }
@@ -2904,14 +3106,62 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsValueNull() {
-                return this.IsNull(this.tableTextPowers.ValueColumn);
+            public bool IsfileNameNull() {
+                return this.IsNull(this.tableTextPowers.fileNameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetValueNull() {
-                this[this.tableTextPowers.ValueColumn] = global::System.Convert.DBNull;
+            public void SetfileNameNull() {
+                this[this.tableTextPowers.fileNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsfileCaptionNull() {
+                return this.IsNull(this.tableTextPowers.fileCaptionColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetfileCaptionNull() {
+                this[this.tableTextPowers.fileCaptionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsfileDescriptionNull() {
+                return this.IsNull(this.tableTextPowers.fileDescriptionColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetfileDescriptionNull() {
+                this[this.tableTextPowers.fileDescriptionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsfileDateNull() {
+                return this.IsNull(this.tableTextPowers.fileDateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetfileDateNull() {
+                this[this.tableTextPowers.fileDateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsfileContentHideNull() {
+                return this.IsNull(this.tableTextPowers.fileContentHideColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetfileContentHideNull() {
+                this[this.tableTextPowers.fileContentHideColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -3243,6 +3493,70 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string fileName {
+                get {
+                    try {
+                        return ((string)(this[this.tableDecimalPowers.fileNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'fileName\' в таблице \'DecimalPowers\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDecimalPowers.fileNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string fileCaption {
+                get {
+                    try {
+                        return ((string)(this[this.tableDecimalPowers.fileCaptionColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'fileCaption\' в таблице \'DecimalPowers\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDecimalPowers.fileCaptionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string fileDescription {
+                get {
+                    try {
+                        return ((string)(this[this.tableDecimalPowers.fileDescriptionColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'fileDescription\' в таблице \'DecimalPowers\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDecimalPowers.fileDescriptionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.DateTime fileDate {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tableDecimalPowers.fileDateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'fileDate\' в таблице \'DecimalPowers\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDecimalPowers.fileDateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsDescriptionNull() {
                 return this.IsNull(this.tableDecimalPowers.DescriptionColumn);
             }
@@ -3251,6 +3565,54 @@ namespace WordHiddenPowers.Repositoryes {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetDescriptionNull() {
                 this[this.tableDecimalPowers.DescriptionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsfileNameNull() {
+                return this.IsNull(this.tableDecimalPowers.fileNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetfileNameNull() {
+                this[this.tableDecimalPowers.fileNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsfileCaptionNull() {
+                return this.IsNull(this.tableDecimalPowers.fileCaptionColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetfileCaptionNull() {
+                this[this.tableDecimalPowers.fileCaptionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsfileDescriptionNull() {
+                return this.IsNull(this.tableDecimalPowers.fileDescriptionColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetfileDescriptionNull() {
+                this[this.tableDecimalPowers.fileDescriptionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsfileDateNull() {
+                return this.IsNull(this.tableDecimalPowers.fileDateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetfileDateNull() {
+                this[this.tableDecimalPowers.fileDateColumn] = global::System.Convert.DBNull;
             }
         }
         

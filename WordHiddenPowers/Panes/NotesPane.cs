@@ -12,7 +12,7 @@ using Word = Microsoft.Office.Interop.Word;
 namespace WordHiddenPowers.Panes
 {
     [DesignerCategory("UserControl")]
-    class NotesPane : WordHiddenPowersPane
+    public class NotesPane : WordHiddenPowersPane
     {
         private IContainer components;
         private SplitContainer splitContainer1;
@@ -35,7 +35,7 @@ namespace WordHiddenPowers.Panes
             InitializeComponent();
         }
 
-        public NotesPane(Word.Document Doc) : base(Doc)
+        public NotesPane(Word._Document Doc) : base(Doc)
         {
             InitializeComponent();
             
@@ -72,7 +72,6 @@ namespace WordHiddenPowers.Panes
                 if (note.IsText)
                 {
                     TextNoteDialog dialog = new TextNoteDialog(PowersDataSet, note);
-                    dialogs.Add(dialog);
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
                         PowersDataSet.TextPowers.Set(note.Id,
@@ -88,7 +87,6 @@ namespace WordHiddenPowers.Panes
                 else
                 {
                     DecimalNoteDialog dialog = new DecimalNoteDialog(PowersDataSet, note);
-                    dialogs.Add(dialog);
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
                         PowersDataSet.DecimalPowers.Set(note.Id,
@@ -128,8 +126,6 @@ namespace WordHiddenPowers.Panes
         }
 
         
-
-
         private void DocumentKeys_DocumentKeysRowChanged(object sender, RepositoryDataSet.DocumentKeysRowChangeEvent e)
         {
             titleComboBox.BeginUpdate();
@@ -177,7 +173,7 @@ namespace WordHiddenPowers.Panes
             if (Document.Variables.Count > 0)
             {
                 DataSetRefresh();
-                string title = GetVariable(Const.Globals.TITLE_VARIABLE_NAME);
+                string title = GetVariable(Const.Globals.CAPTION_VARIABLE_NAME);
                 if (titleComboBox.Text != title)
                     titleComboBox.Text = title;
 
@@ -203,19 +199,7 @@ namespace WordHiddenPowers.Panes
                 return string.Empty;
         }
 
-        public new void DeleteVariables()
-        {
-            titleComboBox.Items.Clear();
-            titleComboBox.Text = string.Empty;
-            dateTimePicker.Text = string.Empty;
-            descriptionTextBox.Text = string.Empty;
-
-            base.DeleteVariables();
-        }
-
-        
-
-       
+                     
 
         public void DataSetRefresh()
         {
@@ -238,7 +222,6 @@ namespace WordHiddenPowers.Panes
         public void AddTextNote(Word.Selection selection)
         {
             TextNoteDialog dialog = new TextNoteDialog(PowersDataSet, selection);
-            dialogs.Add(dialog);
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 PowersDataSet.TextPowers.Rows.Add(new object[]
@@ -251,7 +234,6 @@ namespace WordHiddenPowers.Panes
         public void AddDecimalNote(Word.Selection selection)
         {
             DecimalNoteDialog dialog = new DecimalNoteDialog(PowersDataSet, selection);
-            dialogs.Add(dialog);
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 PowersDataSet.DecimalPowers.Rows.Add(new object[]
@@ -273,7 +255,7 @@ namespace WordHiddenPowers.Panes
 
         public new void CommitVariables()
         {
-            CommitVariables(Const.Globals.TITLE_VARIABLE_NAME, Title);
+            CommitVariables(Const.Globals.CAPTION_VARIABLE_NAME, Title);
             CommitVariables(Const.Globals.DATE_VARIABLE_NAME, Date.ToShortDateString());
             CommitVariables(Const.Globals.DESCRIPTION_VARIABLE_NAME, Description);
 
@@ -454,20 +436,7 @@ namespace WordHiddenPowers.Panes
             {
                 components.Dispose();
             }
-
-            if (dialogs != null)
-            {
-                foreach (Form form in dialogs)
-                {
-                    if (form != null)
-                    {
-                        form.Close();
-                        form.Dispose();
-                    }
-                }
-                dialogs.Clear();
-            }
-
+            
             base.Dispose(disposing);
         }
 
