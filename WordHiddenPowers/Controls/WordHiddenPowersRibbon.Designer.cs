@@ -11,6 +11,96 @@
             : base(Globals.Factory.GetRibbonFactory())
         {
             InitializeComponent();
+
+            addLastNoteTypeButton.Description = Const.Content.TEXT_NOTE_DESCRIPTION;
+            addLastNoteTypeButton.Label = Const.Content.TEXT_NOTE_LABEL;
+            addLastNoteTypeButton.OfficeImageId = Const.Content.TEXT_NOTE_OFFICE_IMAGE_ID;
+            addLastNoteTypeButton.ScreenTip = Const.Content.TEXT_NOTE_SCREEN_TIP;
+            addLastNoteTypeButton.SuperTip = Const.Content.TEXT_NOTE_SUPER_TIP;
+
+            addTextNoteButton.Description = Const.Content.TEXT_NOTE_DESCRIPTION;
+            addTextNoteButton.Label = Const.Content.TEXT_NOTE_LABEL;
+            addTextNoteButton.OfficeImageId = Const.Content.TEXT_NOTE_OFFICE_IMAGE_ID;
+            addTextNoteButton.ScreenTip = Const.Content.TEXT_NOTE_SCREEN_TIP;
+            addTextNoteButton.SuperTip = Const.Content.TEXT_NOTE_SUPER_TIP;
+
+            addDecimalNoteButton.Description = Const.Content.DECIMAL_NOTE_DESCRIPTION;
+            addDecimalNoteButton.Label = Const.Content.DECIMAL_NOTE_LABEL;
+            addDecimalNoteButton.OfficeImageId = Const.Content.DECIMAL_NOTE_OFFICE_IMAGE_ID;
+            addDecimalNoteButton.ScreenTip = Const.Content.DECIMAL_NOTE_SCREEN_TIP;
+            addDecimalNoteButton.SuperTip = Const.Content.DECIMAL_NOTE_SUPER_TIP;
+
+            newDataButton.Description = Const.Content.NEW_DATA_DESCRIPTION;
+            newDataButton.Label = Const.Content.NEW_DATA_LABEL;
+            newDataButton.OfficeImageId = Const.Content.NEW_DATA_OFFICE_IMAGE_ID;
+            newDataButton.ScreenTip = Const.Content.NEW_DATA_SCREEN_TIP;
+            newDataButton.SuperTip = Const.Content.NEW_DATA_SUPER_TIP;
+
+            deleteDataButton.Description = Const.Content.DELETE_DATA_DESCRIPTION;
+            deleteDataButton.Label = Const.Content.DELETE_DATA_LABEL;
+            deleteDataButton.OfficeImageId = Const.Content.DELETE_DATA_OFFICE_IMAGE_ID;
+            deleteDataButton.ScreenTip = Const.Content.DELETE_DATA_SCREEN_TIP;
+            deleteDataButton.SuperTip = Const.Content.DELETE_DATA_SUPER_TIP;
+
+            openDataButton.Description = Const.Content.OPEN_DATA_DESCRIPTION;
+            openDataButton.Label = Const.Content.OPEN_DATA_LABEL;
+            openDataButton.OfficeImageId = Const.Content.OPEN_DATA_OFFICE_IMAGE_ID;
+            openDataButton.ScreenTip = Const.Content.OPEN_DATA_SCREEN_TIP;
+            openDataButton.SuperTip = Const.Content.OPEN_DATA_SUPER_TIP;
+
+            saveDataButton.Description = Const.Content.SAVE_DATA_DESCRIPTION;
+            saveDataButton.Label = Const.Content.SAVE_DATA_LABEL;
+            saveDataButton.OfficeImageId = Const.Content.SAVE_DATA_OFFICE_IMAGE_ID;
+            saveDataButton.ScreenTip = Const.Content.SAVE_DATA_SCREEN_TIP;
+            saveDataButton.SuperTip = Const.Content.SAVE_DATA_SUPER_TIP;
+
+            editCategoriesButton.Description = Const.Content.EDIT_CATEGORIES_DESCRIPTION;
+            editCategoriesButton.Label = Const.Content.EDIT_CATEGORIES_LABEL;
+            editCategoriesButton.OfficeImageId = Const.Content.EDIT_CATEGORIES_OFFICE_IMAGE_ID;
+            editCategoriesButton.ScreenTip = Const.Content.EDIT_CATEGORIES_SCREEN_TIP;
+            editCategoriesButton.SuperTip = Const.Content.EDIT_CATEGORIES_SUPER_TIP;
+
+            createTableButton.Description = Const.Content.CREATE_TABLE_DESCRIPTION;
+            createTableButton.Label = Const.Content.CREATE_TABLE_LABEL;
+            createTableButton.OfficeImageId = Const.Content.CREATE_TABLE_OFFICE_IMAGE_ID;
+            createTableButton.ScreenTip = Const.Content.CREATE_TABLE_SCREEN_TIP;
+            createTableButton.SuperTip = Const.Content.CREATE_TABLE_SUPER_TIP;
+
+            editDocumentKeysButton.Description = Const.Content.EDIT_DOCUMENT_KEYS_DESCRIPTION;
+            editDocumentKeysButton.Label = Const.Content.EDIT_DOCUMENT_KEYS_LABEL;
+            editDocumentKeysButton.OfficeImageId = Const.Content.EDIT_DOCUMENT_KEYS_OFFICE_IMAGE_ID;
+            editDocumentKeysButton.ScreenTip = Const.Content.EDIT_DOCUMENT_KEYS_SCREEN_TIP;
+            editDocumentKeysButton.SuperTip = Const.Content.EDIT_DOCUMENT_KEYS_SUPER_TIP;
+
+            analizerImportButton.Description = Const.Content.ANALAIZER_IMPORT_DESCRIPTION;
+            analizerImportButton.Label = Const.Content.ANALAIZER_IMPORT_LABEL;
+            analizerImportButton.OfficeImageId = Const.Content.ANALAIZER_IMPORT_OFFICE_IMAGE_ID;
+            analizerImportButton.ScreenTip = Const.Content.ANALAIZER_IMPORT_SCREEN_TIP;
+            analizerImportButton.SuperTip = Const.Content.ANALAIZER_IMPORT_SUPER_TIP;
+
+            analizerTableViewerButton.Description = Const.Content.ANALAIZER_TABLE_DESCRIPTION;
+            analizerTableViewerButton.Label = Const.Content.ANALAIZER_TABLE_LABEL;
+            analizerTableViewerButton.OfficeImageId = Const.Content.ANALAIZER_TABLE_OFFICE_IMAGE_ID;
+            analizerTableViewerButton.ScreenTip = Const.Content.ANALAIZER_TABLE_SCREEN_TIP;
+            analizerTableViewerButton.SuperTip = Const.Content.ANALAIZER_TABLE_SUPER_TIP;
+
+            analizerDialogButton.Description = Const.Content.ANALAIZER_DIALOG_DESCRIPTION;
+            analizerDialogButton.Label = Const.Content.ANALAIZER_DIALOG_LABEL;
+            analizerDialogButton.OfficeImageId = Const.Content.ANALAIZER_DIALOG_OFFICE_IMAGE_ID;
+            analizerDialogButton.ScreenTip = Const.Content.ANALAIZER_DIALOG_SCREEN_TIP;
+            analizerDialogButton.SuperTip = Const.Content.ANALAIZER_DIALOG_SUPER_TIP;
+
+            editTableButton.Description = Const.Content.EDIT_TABLE_DESCRIPTION;
+            editTableButton.Label = Const.Content.EDIT_TABLE_LABEL;
+            editTableButton.OfficeImageId = Const.Content.EDIT_TABLE_OFFICE_IMAGE_ID;
+            editTableButton.ScreenTip = Const.Content.EDIT_TABLE_SCREEN_TIP;
+            editTableButton.SuperTip = Const.Content.EDIT_TABLE_SUPER_TIP;
+
+            paneVisibleButton.Description = Const.Content.PANE_VISIBLE_DESCRIPTION;
+            paneVisibleButton.Label = Const.Content.PANE_VISIBLE_LABEL;
+            paneVisibleButton.OfficeImageId = Const.Content.PANE_VISIBLE_OFFICE_IMAGE_ID;
+            paneVisibleButton.ScreenTip = Const.Content.PANE_VISIBLE_SCREEN_TIP;
+            paneVisibleButton.SuperTip = Const.Content.PANE_VISIBLE_SUPER_TIP;
         }
 
         /// <summary> 
@@ -36,11 +126,11 @@
         {
             this.WordHiddenPowersTab = this.Factory.CreateRibbonTab();
             this.maketGroup = this.Factory.CreateRibbonGroup();
-            this.newPowersButton = this.Factory.CreateRibbonButton();
-            this.deletePowersButton = this.Factory.CreateRibbonButton();
+            this.newDataButton = this.Factory.CreateRibbonButton();
+            this.deleteDataButton = this.Factory.CreateRibbonButton();
             this.separator1 = this.Factory.CreateRibbonSeparator();
-            this.openPowersButton = this.Factory.CreateRibbonButton();
-            this.savePowersButton = this.Factory.CreateRibbonButton();
+            this.openDataButton = this.Factory.CreateRibbonButton();
+            this.saveDataButton = this.Factory.CreateRibbonButton();
             this.separator2 = this.Factory.CreateRibbonSeparator();
             this.editCategoriesButton = this.Factory.CreateRibbonButton();
             this.createTableButton = this.Factory.CreateRibbonButton();
@@ -52,9 +142,9 @@
             this.fieldsUpdateButton = this.Factory.CreateRibbonButton();
             this.fieldAddButton = this.Factory.CreateRibbonButton();
             this.NotesGroup = this.Factory.CreateRibbonGroup();
-            this.AddLastNoteTypeButton = this.Factory.CreateRibbonSplitButton();
-            this.AddTextNoteButton = this.Factory.CreateRibbonButton();
-            this.AddDecimalNoteButton = this.Factory.CreateRibbonButton();
+            this.addLastNoteTypeButton = this.Factory.CreateRibbonSplitButton();
+            this.addTextNoteButton = this.Factory.CreateRibbonButton();
+            this.addDecimalNoteButton = this.Factory.CreateRibbonButton();
             this.editTableButton = this.Factory.CreateRibbonButton();
             this.separator3 = this.Factory.CreateRibbonSeparator();
             this.paneVisibleButton = this.Factory.CreateRibbonToggleButton();
@@ -74,11 +164,11 @@
             // 
             // maketGroup
             // 
-            this.maketGroup.Items.Add(this.newPowersButton);
-            this.maketGroup.Items.Add(this.deletePowersButton);
+            this.maketGroup.Items.Add(this.newDataButton);
+            this.maketGroup.Items.Add(this.deleteDataButton);
             this.maketGroup.Items.Add(this.separator1);
-            this.maketGroup.Items.Add(this.openPowersButton);
-            this.maketGroup.Items.Add(this.savePowersButton);
+            this.maketGroup.Items.Add(this.openDataButton);
+            this.maketGroup.Items.Add(this.saveDataButton);
             this.maketGroup.Items.Add(this.separator2);
             this.maketGroup.Items.Add(this.editCategoriesButton);
             this.maketGroup.Items.Add(this.createTableButton);
@@ -86,46 +176,46 @@
             this.maketGroup.Label = "Макет данных";
             this.maketGroup.Name = "maketGroup";
             // 
-            // newPowersButton
+            // newDataButton
             // 
-            this.newPowersButton.Label = "Создать макет данных";
-            this.newPowersButton.Name = "newPowersButton";
-            this.newPowersButton.OfficeImageId = "CreateSubsite";
-            this.newPowersButton.ShowImage = true;
-            this.newPowersButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.newPowersButton_Click);
+            this.newDataButton.Label = "Создать макет данных";
+            this.newDataButton.Name = "newDataButton";
+            this.newDataButton.OfficeImageId = "CreateSubsite";
+            this.newDataButton.ShowImage = true;
+            this.newDataButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.newPowersButton_Click);
             // 
-            // deletePowersButton
+            // deleteDataButton
             // 
-            this.deletePowersButton.Label = "Удалить данные";
-            this.deletePowersButton.Name = "deletePowersButton";
-            this.deletePowersButton.OfficeImageId = "Delete";
-            this.deletePowersButton.ShowImage = true;
-            this.deletePowersButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.deletePowersButton_Click);
+            this.deleteDataButton.Label = "Удалить данные";
+            this.deleteDataButton.Name = "deleteDataButton";
+            this.deleteDataButton.OfficeImageId = "Delete";
+            this.deleteDataButton.ShowImage = true;
+            this.deleteDataButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.deletePowersButton_Click);
             // 
             // separator1
             // 
             this.separator1.Name = "separator1";
             // 
-            // openPowersButton
+            // openDataButton
             // 
-            this.openPowersButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.openPowersButton.Description = "Открыть макет данных в котором сохранены настройки ";
-            this.openPowersButton.Label = "Открыть макет данных...";
-            this.openPowersButton.Name = "openPowersButton";
-            this.openPowersButton.OfficeImageId = "OpenSubsite";
-            this.openPowersButton.ScreenTip = "Открыть макет данных";
-            this.openPowersButton.ShowImage = true;
-            this.openPowersButton.SuperTip = "В макете данных сохранены все настройки, необходимые для анализа документов";
-            this.openPowersButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.openPowersButton_Click);
+            this.openDataButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.openDataButton.Description = "Открыть макет данных в котором сохранены настройки ";
+            this.openDataButton.Label = "Открыть макет данных...";
+            this.openDataButton.Name = "openDataButton";
+            this.openDataButton.OfficeImageId = "OpenSubsite";
+            this.openDataButton.ScreenTip = "Открыть макет данных";
+            this.openDataButton.ShowImage = true;
+            this.openDataButton.SuperTip = "В макете данных сохранены все настройки, необходимые для анализа документов";
+            this.openDataButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.openPowersButton_Click);
             // 
-            // savePowersButton
+            // saveDataButton
             // 
-            this.savePowersButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.savePowersButton.Label = "Сохранить макет данных...";
-            this.savePowersButton.Name = "savePowersButton";
-            this.savePowersButton.OfficeImageId = "FileSaveAs";
-            this.savePowersButton.ShowImage = true;
-            this.savePowersButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.savePowersButton_Click);
+            this.saveDataButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.saveDataButton.Label = "Сохранить макет данных...";
+            this.saveDataButton.Name = "saveDataButton";
+            this.saveDataButton.OfficeImageId = "FileSaveAs";
+            this.saveDataButton.ShowImage = true;
+            this.saveDataButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.savePowersButton_Click);
             // 
             // separator2
             // 
@@ -206,50 +296,46 @@
             // 
             // NotesGroup
             // 
-            this.NotesGroup.Items.Add(this.AddLastNoteTypeButton);
+            this.NotesGroup.Items.Add(this.addLastNoteTypeButton);
             this.NotesGroup.Items.Add(this.editTableButton);
             this.NotesGroup.Items.Add(this.separator3);
             this.NotesGroup.Items.Add(this.paneVisibleButton);
             this.NotesGroup.Label = "Дополнительные данные";
             this.NotesGroup.Name = "NotesGroup";
             // 
-            // AddLastNoteTypeButton
+            // addLastNoteTypeButton
             // 
-            this.AddLastNoteTypeButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.AddLastNoteTypeButton.Description = "Создание текстовой заметки";
-            this.AddLastNoteTypeButton.Items.Add(this.AddTextNoteButton);
-            this.AddLastNoteTypeButton.Items.Add(this.AddDecimalNoteButton);
-            this.AddLastNoteTypeButton.Label = "Текстовая заметка";
-            this.AddLastNoteTypeButton.Name = "AddLastNoteTypeButton";
-            this.AddLastNoteTypeButton.OfficeImageId = "FunctionsTextInsertGallery";
-            this.AddLastNoteTypeButton.ScreenTip = "Создать текстовую заметку";
-            this.AddLastNoteTypeButton.SuperTip = "Текстовая заметка позволяет сохранить текстовые сведения в массив дополнительных " +
+            this.addLastNoteTypeButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.addLastNoteTypeButton.Items.Add(this.addTextNoteButton);
+            this.addLastNoteTypeButton.Items.Add(this.addDecimalNoteButton);
+            this.addLastNoteTypeButton.Label = "Текстовая заметка";
+            this.addLastNoteTypeButton.Name = "addLastNoteTypeButton";
+            this.addLastNoteTypeButton.OfficeImageId = "FunctionsTextInsertGallery";
+            this.addLastNoteTypeButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AddLastNoteTypeButton_Click);
+            // 
+            // addTextNoteButton
+            // 
+            this.addTextNoteButton.Description = "Создание текстовой заметки";
+            this.addTextNoteButton.Label = "Текстовая заметка";
+            this.addTextNoteButton.Name = "addTextNoteButton";
+            this.addTextNoteButton.OfficeImageId = "FunctionsTextInsertGallery";
+            this.addTextNoteButton.ScreenTip = "Создать текстовую заметку";
+            this.addTextNoteButton.ShowImage = true;
+            this.addTextNoteButton.SuperTip = "Текстовая заметка позволяет сохранить текстовые сведения в массив дополнительных " +
     "данных для их дальнейшего анализа";
-            this.AddLastNoteTypeButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AddLastNoteTypeButton_Click);
+            this.addTextNoteButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AddTextNoteButton_Click);
             // 
-            // AddTextNoteButton
+            // addDecimalNoteButton
             // 
-            this.AddTextNoteButton.Description = "Создание текстовой заметки";
-            this.AddTextNoteButton.Label = "Текстовая заметка";
-            this.AddTextNoteButton.Name = "AddTextNoteButton";
-            this.AddTextNoteButton.OfficeImageId = "FunctionsTextInsertGallery";
-            this.AddTextNoteButton.ScreenTip = "Создать текстовую заметку";
-            this.AddTextNoteButton.ShowImage = true;
-            this.AddTextNoteButton.SuperTip = "Текстовая заметка позволяет сохранить текстовые сведения в массив дополнительных " +
-    "данных для их дальнейшего анализа";
-            this.AddTextNoteButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AddTextNoteButton_Click);
-            // 
-            // AddDecimalNoteButton
-            // 
-            this.AddDecimalNoteButton.Description = "Создание числовой заметки";
-            this.AddDecimalNoteButton.Label = "Числовая заметка";
-            this.AddDecimalNoteButton.Name = "AddDecimalNoteButton";
-            this.AddDecimalNoteButton.OfficeImageId = "FunctionsMathTrigInsertGallery";
-            this.AddDecimalNoteButton.ScreenTip = "Создать числовую заметку";
-            this.AddDecimalNoteButton.ShowImage = true;
-            this.AddDecimalNoteButton.SuperTip = "Числовая заметка позволяет суммировать значения в массиве дополнительных данных д" +
+            this.addDecimalNoteButton.Description = "Создание числовой заметки";
+            this.addDecimalNoteButton.Label = "Числовая заметка";
+            this.addDecimalNoteButton.Name = "addDecimalNoteButton";
+            this.addDecimalNoteButton.OfficeImageId = "FunctionsMathTrigInsertGallery";
+            this.addDecimalNoteButton.ScreenTip = "Создать числовую заметку";
+            this.addDecimalNoteButton.ShowImage = true;
+            this.addDecimalNoteButton.SuperTip = "Числовая заметка позволяет суммировать значения в массиве дополнительных данных д" +
     "ля их дальнейшего анализа";
-            this.AddDecimalNoteButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AddDecimalNoteButton_Click);
+            this.addDecimalNoteButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AddDecimalNoteButton_Click);
             // 
             // editTableButton
             // 
@@ -271,7 +357,6 @@
             this.paneVisibleButton.Name = "paneVisibleButton";
             this.paneVisibleButton.OfficeImageId = "MenuToDoBar";
             this.paneVisibleButton.ShowImage = true;
-            this.paneVisibleButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.paneVisibleButton_Click);
             // 
             // WordHiddenPowersRibbon
             // 
@@ -294,10 +379,10 @@
 
         internal Microsoft.Office.Tools.Ribbon.RibbonTab WordHiddenPowersTab;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup maketGroup;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton newPowersButton;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton openPowersButton;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton savePowersButton;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton deletePowersButton;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton newDataButton;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton openDataButton;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton saveDataButton;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton deleteDataButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton paneVisibleButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton createTableButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton editTableButton;
@@ -312,9 +397,9 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton analizerTableViewerButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton analizerDialogButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup NotesGroup;
-        internal Microsoft.Office.Tools.Ribbon.RibbonSplitButton AddLastNoteTypeButton;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton AddTextNoteButton;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton AddDecimalNoteButton;
+        internal Microsoft.Office.Tools.Ribbon.RibbonSplitButton addLastNoteTypeButton;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton addTextNoteButton;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton addDecimalNoteButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator3;
     }
 

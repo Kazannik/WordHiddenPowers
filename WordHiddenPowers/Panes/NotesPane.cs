@@ -54,6 +54,11 @@ namespace WordHiddenPowers.Panes
                 
         private void NoteOpen_Click(object sender, EventArgs e)
         {
+            NoteOpen();
+        }
+
+        private void NoteOpen()
+        {
             Note note = noteListBox.SelectedItem as Note;
             if (note != null)
             {
@@ -80,6 +85,7 @@ namespace WordHiddenPowers.Panes
                             dialog.Reiting,
                             dialog.SelectionStart,
                             dialog.SelectionEnd);
+                        Document.CommitVariables();
                     }
                 }
                 else
@@ -95,6 +101,7 @@ namespace WordHiddenPowers.Panes
                             dialog.Reiting,
                             dialog.SelectionStart,
                             dialog.SelectionEnd);
+                        Document.CommitVariables();
                     }
                 }
             }
@@ -120,7 +127,14 @@ namespace WordHiddenPowers.Panes
             }
         }
 
-        
+        private void noteListBox_NoteMouseDoubleClick(object sender, Controls.NoteListBox.NoteListMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                NoteOpen();
+            }
+        }
+
         private void DocumentKeys_RowChanged(object sender, RepositoryDataSet.DocumentKeysRowChangeEvent e)
         {
             captionComboBox.BeginUpdate();
@@ -194,9 +208,6 @@ namespace WordHiddenPowers.Panes
             }
         }
 
-        
-
-                     
 
         public bool DataSetRefresh()
         {
@@ -251,7 +262,7 @@ namespace WordHiddenPowers.Panes
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(2);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -269,81 +280,83 @@ namespace WordHiddenPowers.Panes
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.noteListBox);
-            this.splitContainer1.Size = new System.Drawing.Size(244, 262);
-            this.splitContainer1.SplitterDistance = 140;
-            this.splitContainer1.SplitterWidth = 3;
+            this.splitContainer1.Size = new System.Drawing.Size(366, 362);
+            this.splitContainer1.SplitterDistance = 193;
             this.splitContainer1.TabIndex = 2;
             // 
             // captionComboBox
             // 
             this.captionComboBox.FormattingEnabled = true;
-            this.captionComboBox.Location = new System.Drawing.Point(3, 15);
+            this.captionComboBox.Location = new System.Drawing.Point(4, 20);
+            this.captionComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.captionComboBox.Name = "captionComboBox";
-            this.captionComboBox.Size = new System.Drawing.Size(238, 21);
+            this.captionComboBox.Size = new System.Drawing.Size(355, 26);
             this.captionComboBox.TabIndex = 1;
             this.captionComboBox.SelectedIndexChanged += new System.EventHandler(this.NotesPane_PropertiesChanged);
             this.captionComboBox.TextChanged += new System.EventHandler(this.NotesPane_PropertiesChanged);
             // 
             // descriptionTextBox
             // 
-            this.descriptionTextBox.Location = new System.Drawing.Point(0, 18);
-            this.descriptionTextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.descriptionTextBox.Location = new System.Drawing.Point(0, 25);
+            this.descriptionTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.descriptionTextBox.Multiline = true;
             this.descriptionTextBox.Name = "descriptionTextBox";
-            this.descriptionTextBox.Size = new System.Drawing.Size(245, 97);
+            this.descriptionTextBox.Size = new System.Drawing.Size(365, 132);
             this.descriptionTextBox.TabIndex = 5;
             this.descriptionTextBox.TextChanged += new System.EventHandler(this.NotesPane_PropertiesChanged);
             // 
             // descriptionLabel
             // 
             this.descriptionLabel.AutoSize = true;
-            this.descriptionLabel.Location = new System.Drawing.Point(6, 65);
-            this.descriptionLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.descriptionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.descriptionLabel.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            this.descriptionLabel.Location = new System.Drawing.Point(9, 90);
             this.descriptionLabel.Name = "descriptionLabel";
-            this.descriptionLabel.Size = new System.Drawing.Size(90, 13);
+            this.descriptionLabel.Size = new System.Drawing.Size(131, 17);
             this.descriptionLabel.TabIndex = 4;
             this.descriptionLabel.Text = "Дополнительно:";
             // 
             // dateTimePicker
             // 
-            this.dateTimePicker.Location = new System.Drawing.Point(42, 39);
-            this.dateTimePicker.Margin = new System.Windows.Forms.Padding(2);
+            this.dateTimePicker.Location = new System.Drawing.Point(63, 54);
+            this.dateTimePicker.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dateTimePicker.Name = "dateTimePicker";
-            this.dateTimePicker.Size = new System.Drawing.Size(115, 20);
+            this.dateTimePicker.Size = new System.Drawing.Size(170, 24);
             this.dateTimePicker.TabIndex = 3;
             // 
             // dateLabel
             // 
             this.dateLabel.AutoSize = true;
-            this.dateLabel.Location = new System.Drawing.Point(6, 39);
-            this.dateLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.dateLabel.Location = new System.Drawing.Point(9, 54);
             this.dateLabel.Name = "dateLabel";
-            this.dateLabel.Size = new System.Drawing.Size(36, 13);
+            this.dateLabel.Size = new System.Drawing.Size(47, 18);
             this.dateLabel.TabIndex = 2;
             this.dateLabel.Text = "Дата:";
             // 
             // titleLabel
             // 
             this.titleLabel.AutoSize = true;
-            this.titleLabel.Location = new System.Drawing.Point(42, 6);
-            this.titleLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.titleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.titleLabel.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            this.titleLabel.Location = new System.Drawing.Point(63, 8);
             this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(64, 13);
+            this.titleLabel.Size = new System.Drawing.Size(90, 17);
             this.titleLabel.TabIndex = 0;
             this.titleLabel.Text = "Заголовок:";
             // 
             // noteListBox
             // 
+            this.noteListBox.DataSet = null;
             this.noteListBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.noteListBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.noteListBox.ItemHeight = 80;
             this.noteListBox.Location = new System.Drawing.Point(0, 0);
-            this.noteListBox.Margin = new System.Windows.Forms.Padding(2);
+            this.noteListBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.noteListBox.Name = "noteListBox";
-            this.noteListBox.DataSet = null;
-            this.noteListBox.Size = new System.Drawing.Size(244, 119);
+            this.noteListBox.Size = new System.Drawing.Size(366, 165);
             this.noteListBox.TabIndex = 6;
             this.noteListBox.NoteMouseClick += new System.EventHandler<WordHiddenPowers.Controls.NoteListBox.NoteListMouseEventArgs>(this.noteListBox_NoteClick);
+            this.noteListBox.NoteMouseDoubleClick += new System.EventHandler<WordHiddenPowers.Controls.NoteListBox.NoteListMouseEventArgs>(this.noteListBox_NoteMouseDoubleClick);
             // 
             // noteContextMenu
             // 
@@ -354,40 +367,43 @@ namespace WordHiddenPowers.Panes
             this.toolStripMenuItem1,
             this.mnuNoteRemove});
             this.noteContextMenu.Name = "noteContextMenu";
-            this.noteContextMenu.Size = new System.Drawing.Size(204, 76);
+            this.noteContextMenu.Size = new System.Drawing.Size(242, 82);
             // 
             // mnuNoteOpen
             // 
             this.mnuNoteOpen.Name = "mnuNoteOpen";
-            this.mnuNoteOpen.Size = new System.Drawing.Size(203, 22);
+            this.mnuNoteOpen.Size = new System.Drawing.Size(241, 24);
             this.mnuNoteOpen.Text = "Открыть";
             this.mnuNoteOpen.Click += new System.EventHandler(this.NoteOpen_Click);
             // 
             // mnuNoteEdit
             // 
             this.mnuNoteEdit.Name = "mnuNoteEdit";
-            this.mnuNoteEdit.Size = new System.Drawing.Size(203, 22);
+            this.mnuNoteEdit.Size = new System.Drawing.Size(241, 24);
             this.mnuNoteEdit.Text = "Редактировать запись...";
             this.mnuNoteEdit.Click += new System.EventHandler(this.NoteEdit_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(200, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(238, 6);
             // 
             // mnuNoteRemove
             // 
             this.mnuNoteRemove.Name = "mnuNoteRemove";
-            this.mnuNoteRemove.Size = new System.Drawing.Size(203, 22);
+            this.mnuNoteRemove.Size = new System.Drawing.Size(241, 24);
             this.mnuNoteRemove.Text = "Удалить запись";
             this.mnuNoteRemove.Click += new System.EventHandler(this.NoteRemove_Click);
             // 
             // NotesPane
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.splitContainer1);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.Name = "NotesPane";
+            this.Size = new System.Drawing.Size(366, 362);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -411,6 +427,8 @@ namespace WordHiddenPowers.Panes
             }
             
             base.Dispose(disposing);
-        }       
+        }
+
+        
     }
 }

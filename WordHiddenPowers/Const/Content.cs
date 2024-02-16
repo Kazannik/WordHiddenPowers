@@ -74,5 +74,94 @@
         public const int DECIMAL_NOTE_FACE_ID = 12820;
 
 
+        //newDataButton
+        //deleteDataButton
+        //openDataButton
+        //saveDataButton
+
+        //editCategoriesButton
+        //createTableButton
+        //editDocumentKeysButton
+
+        //analizerImportButton
+        //analizerTableViewerButton
+        //analizerDialogButton
+
+        //editTableButton
+        //paneVisibleButton
+
+        public const string NEW_DATA_LABEL = "Макет данных";
+        public const string NEW_DATA_DESCRIPTION = "Создание макета данных";
+        public const string NEW_DATA_SCREEN_TIP = "Создать макет данных";
+        public const string NEW_DATA_SUPER_TIP = "Для проведения анализа первоначально необходима подготовка макета данных, который состоит из макета таблица и списка категорий и подкатегорий заметок.";
+        public const string NEW_DATA_OFFICE_IMAGE_ID = "CreateSubsite";
+
+        public const string DELETE_DATA_LABEL = "Удалить макет данных";
+        public const string DELETE_DATA_DESCRIPTION = "Удаление макета данных";
+        public const string DELETE_DATA_SCREEN_TIP = "Удалить макет данных";
+        public const string DELETE_DATA_SUPER_TIP = "В случае, если данные более не нужны, имеется возможность их удалить из документа.";
+        public const string DELETE_DATA_OFFICE_IMAGE_ID = "Delete";
+
+        public const string OPEN_DATA_LABEL = "Открыть макет данных";
+        public const string OPEN_DATA_DESCRIPTION = "Открытие макета данных";
+        public const string OPEN_DATA_SCREEN_TIP = "Открыть макет данных";
+        public const string OPEN_DATA_SUPER_TIP = "Макет данных, состоящий их макета таблицы, списка категорий заметок, их подкатегорий, а также списка заголовков документов, может быть сохранен в отдельный файл для дальнейшего включения макета данных в другие документы.";
+        public const string OPEN_DATA_OFFICE_IMAGE_ID = "OpenSubsite";
+
+        public const string SAVE_DATA_LABEL = "Сохранить макет данных";
+        public const string SAVE_DATA_DESCRIPTION = "Сохранение макета данных";
+        public const string SAVE_DATA_SCREEN_TIP = "Сохранить макет данных";
+        public const string SAVE_DATA_SUPER_TIP = "Сохраненный макет данных, состоящий их макета таблицы, списка категорий заметок, их подкатегорий, а также списка заголовков документов, может быть сохранен в отдельный файл и применен к другим анализирумым документам";
+        public const string SAVE_DATA_OFFICE_IMAGE_ID = "FileSaveAs";
+
+        public const string EDIT_CATEGORIES_LABEL = "Категория заметок";
+        public const string EDIT_CATEGORIES_DESCRIPTION = "Создание категорий и подкатегорий заметок";
+        public const string EDIT_CATEGORIES_SCREEN_TIP = "Создать категории и подкатегории заметок";
+        public const string EDIT_CATEGORIES_SUPER_TIP = "Категории и подкатегории необходимы для классификации и группировки сохраненных заметок.";
+        public const string EDIT_CATEGORIES_OFFICE_IMAGE_ID = "EditXPath";
+
+        public const string CREATE_TABLE_LABEL = "Таблица данных";
+        public const string CREATE_TABLE_DESCRIPTION = "Создание числовой заметки";
+        public const string CREATE_TABLE_SCREEN_TIP = "Создать числовую заметку";
+        public const string CREATE_TABLE_SUPER_TIP = "Числовая заметка позволяет суммировать значения в массиве дополнительных данных для их дальнейшего анализа";
+        public const string CREATE_TABLE_OFFICE_IMAGE_ID = "GroupCreateTableSql";
+
+        public const string EDIT_DOCUMENT_KEYS_LABEL = "Заголовки документов";
+        public const string EDIT_DOCUMENT_KEYS_DESCRIPTION = "Создание списка заголовков документов";
+        public const string EDIT_DOCUMENT_KEYS_SCREEN_TIP = "Создать список заголовков документов";
+        public const string EDIT_DOCUMENT_KEYS_SUPER_TIP = "Числовая заметка позволяет суммировать значения в массиве дополнительных данных для их дальнейшего анализа";
+        public const string EDIT_DOCUMENT_KEYS_OFFICE_IMAGE_ID = "ControlPropertyListControlEditChoices";
+
+        public const string ANALAIZER_IMPORT_LABEL = "Импорт данных";
+        public const string ANALAIZER_IMPORT_DESCRIPTION = "Создание числовой заметки";
+        public const string ANALAIZER_IMPORT_SCREEN_TIP = "Создать числовую заметку";
+        public const string ANALAIZER_IMPORT_SUPER_TIP = "Числовая заметка позволяет суммировать значения в массиве дополнительных данных для их дальнейшего анализа";
+        public const string ANALAIZER_IMPORT_OFFICE_IMAGE_ID = "FunctionsMathTrigInsertGallery";
+
+        public const string ANALAIZER_TABLE_LABEL = "Сводные табличные данные";
+        public const string ANALAIZER_TABLE_DESCRIPTION = "Создание числовой заметки";
+        public const string ANALAIZER_TABLE_SCREEN_TIP = "Создать числовую заметку";
+        public const string ANALAIZER_TABLE_SUPER_TIP = "Числовая заметка позволяет суммировать значения в массиве дополнительных данных для их дальнейшего анализа";
+        public const string ANALAIZER_TABLE_OFFICE_IMAGE_ID = "FunctionsMathTrigInsertGallery";
+
+        public const string ANALAIZER_DIALOG_LABEL = "Анализ данных";
+        public const string ANALAIZER_DIALOG_DESCRIPTION = "Создание числовой заметки";
+        public const string ANALAIZER_DIALOG_SCREEN_TIP = "Создать числовую заметку";
+        public const string ANALAIZER_DIALOG_SUPER_TIP = "Числовая заметка позволяет суммировать значения в массиве дополнительных данных для их дальнейшего анализа";
+        public const string ANALAIZER_DIALOG_OFFICE_IMAGE_ID = "FunctionsMathTrigInsertGallery";
+
+        public const string EDIT_TABLE_LABEL = "Табличные данные";
+        public const string EDIT_TABLE_DESCRIPTION = "Создание и редактирование табличных данных";
+        public const string EDIT_TABLE_SCREEN_TIP = "Создать или редактировать табличные данные";
+        public const string EDIT_TABLE_SUPER_TIP = "Табличные данные позволяют накапливать анализируемые показатели, сформировав их в таблицу";
+        public const string EDIT_TABLE_OFFICE_IMAGE_ID = "TableStyleModify";
+
+        public const string PANE_VISIBLE_LABEL = "Панель заметок";
+        public const string PANE_VISIBLE_DESCRIPTION = "Панель управления заметками";
+        public const string PANE_VISIBLE_SCREEN_TIP = "Панель управления заметками";
+        public const string PANE_VISIBLE_SUPER_TIP = "Панель управления заметками позволяет просматривать, редактировать или удалять ранее созданные заметки.";
+        public const string PANE_VISIBLE_OFFICE_IMAGE_ID = "MenuToDoBar";
+
+
     }
 }

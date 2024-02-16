@@ -246,22 +246,10 @@ namespace WordHiddenPowers.Controls
                 
         protected override void OnMouseClick(MouseEventArgs e)
         {
-
             Note note = this[e.X, e.Y];
             if (note != null)
             {
-                //switch (e.Button)
-                //{
-                //    case MouseButtons.Left:
-                //        SelectedNote = note;
-                //        //OnButtonClick(new EventArgs());
-                //        Invalidate();
-                //        break;
-                //    case MouseButtons.Right:
-                //        Invalidate();
-                //        break;
-                //}
-                OnNoteMouseClick(new NoteListMouseEventArgs(note, e));
+                OnNoteMouseClick(new NoteListMouseEventArgs((Note)SelectedItem, e));
             }
             base.OnMouseClick(e);
         }
@@ -271,7 +259,6 @@ namespace WordHiddenPowers.Controls
             Note note = this[e.X, e.Y];
             if (note != null)
             {
-                SelectedItem = note;
                 OnNoteMouseDown(new NoteListMouseEventArgs((Note)SelectedItem, e));
             }
             base.OnMouseDown(e);                             
@@ -288,6 +275,16 @@ namespace WordHiddenPowers.Controls
                 OnNoteMouseUp(new NoteListMouseEventArgs((Note)SelectedItem, e));
            }
             base.OnMouseUp(e);
+        }
+
+        protected override void OnMouseDoubleClick(MouseEventArgs e)
+        {
+            Note note = this[e.X, e.Y];
+            if (note != null)
+            {
+                OnNoteMouseDoubleClick(new NoteListMouseEventArgs((Note)SelectedItem, e));
+            }
+            base.OnMouseDoubleClick(e);
         }
 
         protected override void OnMouseLeave(EventArgs e)
@@ -458,6 +455,7 @@ namespace WordHiddenPowers.Controls
         }
 
         public event EventHandler<NoteListMouseEventArgs> NoteMouseClick;
+        public event EventHandler<NoteListMouseEventArgs> NoteMouseDoubleClick;
         public event EventHandler<NoteListMouseEventArgs> NoteMouseDown;
         public event EventHandler<NoteListMouseEventArgs> NoteMouseUp;
 
@@ -465,7 +463,12 @@ namespace WordHiddenPowers.Controls
         {
             NoteMouseClick?.Invoke(this, e);
         }
-                
+
+        protected virtual void OnNoteMouseDoubleClick(NoteListMouseEventArgs e)
+        {
+            NoteMouseDoubleClick?.Invoke(this, e);
+        }
+
         protected virtual void OnNoteMouseDown(NoteListMouseEventArgs e)
         {
             NoteMouseDown?.Invoke(this, e);

@@ -58,16 +58,7 @@ namespace WordHiddenPowers
             }
         }
 
-        private void paneVisibleButton_Click(object sender, RibbonControlEventArgs e)
-        {
-            //RibbonToggleButton button = (RibbonToggleButton)sender;
-            //if (button.Id == Globals.Ribbons.WordHiddenPowersRibbon.paneVisibleButton.Id &&
-            //    Globals.ThisAddIn.Panes.Count > 0)
-            //{
-            //    Globals.ThisAddIn.Panes.ActivePane.Visible = Globals.Ribbons.WordHiddenPowersRibbon.paneVisibleButton.Checked;
-            //}           
-        }
-
+        
         private void createTableButton_Click(object sender, RibbonControlEventArgs e)
         {
             Globals.ThisAddIn.Documents.ActiveDocument.ShowCreateTableDialog();                           
@@ -129,11 +120,11 @@ namespace WordHiddenPowers
             Globals.ThisAddIn.Documents.ActiveDocument.AddTextNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
 
             lastNoteType = NoteType.Text;
-            AddLastNoteTypeButton.Description = Const.Content.TEXT_NOTE_DESCRIPTION;
-            AddLastNoteTypeButton.Label = Const.Content.TEXT_NOTE_LABEL;
-            AddLastNoteTypeButton.OfficeImageId = Const.Content.TEXT_NOTE_OFFICE_IMAGE_ID;
-            AddLastNoteTypeButton.ScreenTip = Const.Content.TEXT_NOTE_SCREEN_TIP;
-            AddLastNoteTypeButton.SuperTip = Const.Content.TEXT_NOTE_SUPER_TIP;
+            addLastNoteTypeButton.Description = Const.Content.TEXT_NOTE_DESCRIPTION;
+            addLastNoteTypeButton.Label = Const.Content.TEXT_NOTE_LABEL;
+            addLastNoteTypeButton.OfficeImageId = Const.Content.TEXT_NOTE_OFFICE_IMAGE_ID;
+            addLastNoteTypeButton.ScreenTip = Const.Content.TEXT_NOTE_SCREEN_TIP;
+            addLastNoteTypeButton.SuperTip = Const.Content.TEXT_NOTE_SUPER_TIP;
         }
 
         private void AddDecimalNoteButton_Click(object sender, RibbonControlEventArgs e)
@@ -141,11 +132,11 @@ namespace WordHiddenPowers
             Globals.ThisAddIn.Documents.ActiveDocument.AddDecimalNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
 
             lastNoteType = NoteType.Decimal;
-            AddLastNoteTypeButton.Description = Const.Content.DECIMAL_NOTE_DESCRIPTION;
-            AddLastNoteTypeButton.Label = Const.Content.DECIMAL_NOTE_LABEL;
-            AddLastNoteTypeButton.OfficeImageId = Const.Content.DECIMAL_NOTE_OFFICE_IMAGE_ID;
-            AddLastNoteTypeButton.ScreenTip = Const.Content.DECIMAL_NOTE_SCREEN_TIP;
-            AddLastNoteTypeButton.SuperTip = Const.Content.DECIMAL_NOTE_SUPER_TIP;
+            addLastNoteTypeButton.Description = Const.Content.DECIMAL_NOTE_DESCRIPTION;
+            addLastNoteTypeButton.Label = Const.Content.DECIMAL_NOTE_LABEL;
+            addLastNoteTypeButton.OfficeImageId = Const.Content.DECIMAL_NOTE_OFFICE_IMAGE_ID;
+            addLastNoteTypeButton.ScreenTip = Const.Content.DECIMAL_NOTE_SCREEN_TIP;
+            addLastNoteTypeButton.SuperTip = Const.Content.DECIMAL_NOTE_SUPER_TIP;
         }
 
         private void AddLastNoteTypeButton_Click(object sender, RibbonControlEventArgs e)
