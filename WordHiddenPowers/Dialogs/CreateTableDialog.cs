@@ -131,9 +131,11 @@ namespace WordHiddenPowers.Dialogs
             for (int i = 1; i < dataGridView.Rows.Count; i++)
             {
                 document.DataSet.RowsHeaders.Rows.Add(new object[] { null, dataGridView.Rows[i].Cells["HEADER"].Value.ToString() });
-            }              
+            }
+            
+            HiddenPowerDocument.CommitVariable(document.Doc.Variables, Const.Globals.XML_VARIABLE_NAME, document.DataSet);
         }
-                
+
         private void Delete_Click(object sender, EventArgs e)
         {
 

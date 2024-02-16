@@ -36,9 +36,10 @@
             // 
             this.numericTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.numericTextBox1.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.numericTextBox1.Location = new System.Drawing.Point(681, 15);
+            this.numericTextBox1.Location = new System.Drawing.Point(943, 18);
+            this.numericTextBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericTextBox1.Name = "numericTextBox1";
-            this.numericTextBox1.Size = new System.Drawing.Size(182, 29);
+            this.numericTextBox1.Size = new System.Drawing.Size(158, 34);
             this.numericTextBox1.TabIndex = 33;
             this.numericTextBox1.Text = "0";
             this.numericTextBox1.Value = 0D;
@@ -46,12 +47,11 @@
             // 
             // DecimalNoteDialog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(868, 185);
+            this.ClientSize = new System.Drawing.Size(1116, 222);
             this.Controls.Add(this.numericTextBox1);
-            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "DecimalNoteDialog";

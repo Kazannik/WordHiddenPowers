@@ -21,8 +21,7 @@ namespace WordHiddenPowers.Controls
             get
             {
                 return source;
-            }
-            
+            }            
             set
             {
                 source = value;

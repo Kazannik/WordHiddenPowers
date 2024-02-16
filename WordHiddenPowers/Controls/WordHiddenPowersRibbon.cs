@@ -1,10 +1,5 @@
-﻿using System;
-using System.Text;
-using Microsoft.Office.Tools.Ribbon;
+﻿using Microsoft.Office.Tools.Ribbon;
 using System.Windows.Forms;
-using WordHiddenPowers.Repositoryes;
-using System.IO;
-using WordHiddenPowers.Panes;
 
 namespace WordHiddenPowers
 {
@@ -17,15 +12,7 @@ namespace WordHiddenPowers
         {
             if (Globals.ThisAddIn.Documents.ActiveDocument !=null)
             {
-                Globals.ThisAddIn.Documents.ActiveDocument.DataSet.RowsHeaders.Clear();
-                Globals.ThisAddIn.Documents.ActiveDocument.DataSet.ColumnsHeaders.Clear();
-                Globals.ThisAddIn.Documents.ActiveDocument.DataSet.Categories.Clear();
-                Globals.ThisAddIn.Documents.ActiveDocument.DataSet.Subcategories.Clear();
-                Globals.ThisAddIn.Documents.ActiveDocument.DataSet.DecimalPowers.Clear();
-                Globals.ThisAddIn.Documents.ActiveDocument.DataSet.TextPowers.Clear();
-
-                Globals.ThisAddIn.Documents.ActiveDocument.CommitVariables();
-            }
+                Globals.ThisAddIn.Documents.ActiveDocument.NewData();            }
         }
 
         private void openPowersButton_Click(object sender, RibbonControlEventArgs e)
@@ -37,23 +24,7 @@ namespace WordHiddenPowers
                 dialog.Filter = dialogFilters;
                 if (Utils.ShowDialogUtil.ShowDialogObj(dialog) == DialogResult.OK)
                 {
-                    try
-                    {
-                        Globals.ThisAddIn.Documents.ActiveDocument.DataSet.RowsHeaders.Clear();
-                        Globals.ThisAddIn.Documents.ActiveDocument.DataSet.ColumnsHeaders.Clear();
-                        Globals.ThisAddIn.Documents.ActiveDocument.DataSet.Categories.Clear();
-                        Globals.ThisAddIn.Documents.ActiveDocument.DataSet.Subcategories.Clear();
-
-                        Globals.ThisAddIn.Documents.ActiveDocument.DataSet.ReadXml(dialog.FileName, System.Data.XmlReadMode.IgnoreSchema);
-
-                        Globals.ThisAddIn.Documents.ActiveDocument.DataSet.DecimalPowers.Clear();
-                        Globals.ThisAddIn.Documents.ActiveDocument.DataSet.TextPowers.Clear();
-
-                        Globals.ThisAddIn.Documents.ActiveDocument.CommitVariables();
-                    }
-                    catch (Exception)
-                    {
-                    }
+                    Globals.ThisAddIn.Documents.ActiveDocument.LoadData(dialog.FileName);                    
                 }
             }
         }
@@ -64,40 +35,11 @@ namespace WordHiddenPowers
             dialog.Filter = dialogFilters;
             if (Utils.ShowDialogUtil.ShowDialogObj(dialog) == DialogResult.OK)
             {
-                try
-                {
-                    Globals.ThisAddIn.Documents.ActiveDocument.CommitVariables();
-
-                    string xml = GetXml(Globals.ThisAddIn.Documents.ActiveDocument.DataSet);
-                    RepositoryDataSet powersDataSet = new RepositoryDataSet();
-                    SetXml(powersDataSet, xml);
-                    powersDataSet.DecimalPowers.Clear();
-                    powersDataSet.TextPowers.Clear();
-                    powersDataSet.WriteXml(dialog.FileName, System.Data.XmlWriteMode.WriteSchema);
-                }
-                catch (Exception)
-                {
-
-                }
+                Globals.ThisAddIn.Documents.ActiveDocument.CommitVariables();
+                Globals.ThisAddIn.Documents.ActiveDocument.SaveData(dialog.FileName);               
             }
         }
-
-
-        private string GetXml(RepositoryDataSet dataSet)
-        {
-            StringBuilder builder = new StringBuilder();
-            StringWriter writer = new StringWriter(builder);
-            dataSet.WriteXml(writer, System.Data.XmlWriteMode.WriteSchema);
-            writer.Close();
-            return builder.ToString();
-        }
-
-        private void SetXml(RepositoryDataSet dataSet, string xml)
-        {
-            StringReader reader = new StringReader(xml);
-            dataSet.ReadXml(reader, System.Data.XmlReadMode.IgnoreSchema);
-            reader.Close();
-        }
+                
 
         private void deletePowersButton_Click(object sender, RibbonControlEventArgs e)
         {

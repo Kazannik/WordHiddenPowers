@@ -47,11 +47,7 @@ namespace WordHiddenPowers.Documents
             if (Description != Pane.Description) Description = Pane.Description;
             if (DataSet.HasChanges())
             {
-                StringBuilder builder = new StringBuilder();
-                StringWriter writer = new StringWriter(builder);
-                DataSet.WriteXml(writer, XmlWriteMode.WriteSchema);
-                writer.Close();
-                CommitVariables(Const.Globals.XML_VARIABLE_NAME, builder.ToString());
+                HiddenPowerDocument.CommitVariable(array: Doc.Variables, variableName: Const.Globals.XML_VARIABLE_NAME, dataSet: DataSet);
             }
         }
 
@@ -71,7 +67,7 @@ namespace WordHiddenPowers.Documents
         {
             get
             {
-                Word.Variable caption = GetVariable(Doc.Variables, Const.Globals.CAPTION_VARIABLE_NAME);
+                Word.Variable caption = HiddenPowerDocument.GetVariable(Doc.Variables, Const.Globals.CAPTION_VARIABLE_NAME);
                 if (caption != null)
                 {
                     return caption.Value;
@@ -83,7 +79,7 @@ namespace WordHiddenPowers.Documents
             } 
             set
             {
-                CommitVariables(Const.Globals.CAPTION_VARIABLE_NAME, value: value);
+                HiddenPowerDocument.CommitVariable(array: Doc.Variables, variableName: Const.Globals.CAPTION_VARIABLE_NAME, value: value);
             }
         }
 
@@ -91,7 +87,7 @@ namespace WordHiddenPowers.Documents
         {
             get
             {
-                Word.Variable date = GetVariable(Doc.Variables, Const.Globals.DATE_VARIABLE_NAME);
+                Word.Variable date = HiddenPowerDocument.GetVariable(Doc.Variables, Const.Globals.DATE_VARIABLE_NAME);
                 if (date != null)
                 {
                     return DateTime.Parse(date.Value);
@@ -103,7 +99,7 @@ namespace WordHiddenPowers.Documents
             }
             set
             {
-                CommitVariables(Const.Globals.DATE_VARIABLE_NAME, value: value.ToShortDateString());
+                HiddenPowerDocument.CommitVariable(array: Doc.Variables, variableName: Const.Globals.DATE_VARIABLE_NAME, value: value.ToShortDateString());
             }
         }
 
@@ -111,7 +107,7 @@ namespace WordHiddenPowers.Documents
         {
             get
             {
-                Word.Variable description = GetVariable(Doc.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME);
+                Word.Variable description = HiddenPowerDocument.GetVariable(Doc.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME);
                 if (description != null)
                 {
                     return description.Value;
@@ -123,7 +119,7 @@ namespace WordHiddenPowers.Documents
             }
             set
             {
-                CommitVariables(Const.Globals.DESCRIPTION_VARIABLE_NAME, value: value);
+                HiddenPowerDocument.CommitVariable(array: Doc.Variables, variableName: Const.Globals.DESCRIPTION_VARIABLE_NAME, value: value);
             }
         }
 
@@ -131,7 +127,7 @@ namespace WordHiddenPowers.Documents
         {
             get
             {
-                Word.Variable table = GetVariable(Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+                Word.Variable table = HiddenPowerDocument.GetVariable(Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
                 if (table != null)
                 {
                     return Table.Create(table.Value);
@@ -143,7 +139,7 @@ namespace WordHiddenPowers.Documents
             }
             set
             {
-                CommitVariables(Const.Globals.TABLE_VARIABLE_NAME, value: value.ToString());
+                HiddenPowerDocument.CommitVariable(Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME, value: value.ToString());
             }
         }
 
@@ -156,13 +152,14 @@ namespace WordHiddenPowers.Documents
                 if (dataSet == null)
                 {
                     dataSet = new RepositoryDataSet();
-                    Word.Variable content = GetVariable(Doc.Variables, Const.Globals.XML_VARIABLE_NAME);
+                    Word.Variable content = HiddenPowerDocument.GetVariable(Doc.Variables, Const.Globals.XML_VARIABLE_NAME);
                     if (content != null)
                     {
                         StringReader reader = new StringReader(content.Value);
                         dataSet.ReadXml(reader, XmlReadMode.IgnoreSchema);
-                        reader.Close();
+                        reader.Close();                        
                     }
+                    dataSet.AcceptChanges();
                 }
                 return dataSet;
             }
@@ -173,7 +170,6 @@ namespace WordHiddenPowers.Documents
         private Document(DocumentCollection parent, string fileName, Word._Document doc)
         {
             this.parent = parent;
-            dataSet = new RepositoryDataSet();
             dialogs = new List<Form>();
             FileName = fileName;
             ContentHide = false;
@@ -191,34 +187,7 @@ namespace WordHiddenPowers.Documents
             Document document = new Document(parent: parent, fileName: fileName, doc: Doc);
             return document;
         }
-
-        private static Word.Variable GetVariable(Word.Variables array, string variableName)
-        {
-            for (int i = 1; i <= array.Count; i++)
-            {
-                if (array[i].Name == variableName)
-                {
-                    return array[i];
-                }
-            }
-            return null;
-        }
-
-        public string PowersDataSetToXml()
-        {
-            string xml = GetXml(DataSet);
-            return xml;
-        }
-
-        private string GetXml(RepositoryDataSet dataSet)
-        {
-            StringBuilder builder = new StringBuilder();
-            StringWriter writer = new StringWriter(builder);
-            dataSet.WriteXml(writer, System.Data.XmlWriteMode.WriteSchema);
-            writer.Close();
-            return builder.ToString();
-        }
-        
+               
         public void NewData()
         {
             DataSet.RowsHeaders.Clear();
@@ -227,76 +196,114 @@ namespace WordHiddenPowers.Documents
             DataSet.Subcategories.Clear();
             DataSet.DecimalPowers.Clear();
             DataSet.TextPowers.Clear();
+
             CommitVariables();
+        }
+
+        public void LoadData(string fileName)
+        {
+            try
+            {
+                DataSet.RowsHeaders.Clear();
+                DataSet.ColumnsHeaders.Clear();
+                DataSet.Categories.Clear();
+                DataSet.Subcategories.Clear();
+                DataSet.DocumentKeys.Clear();
+
+                DataSet.ReadXml(fileName, XmlReadMode.IgnoreSchema);
+
+                DataSet.DecimalPowers.Clear();
+                DataSet.TextPowers.Clear();
+
+                CommitVariables();
+            }
+            catch (Exception ex)
+            {
+                ShowDialogUtil.ShowErrorDialog(ex.Message);
+            }
+        }
+
+        public void SaveData(string fileName)
+        {
+            try
+            {
+                string xml = GetXml(Globals.ThisAddIn.Documents.ActiveDocument.DataSet);
+                RepositoryDataSet powersDataSet = new RepositoryDataSet();
+                SetXml(powersDataSet, xml);
+                powersDataSet.DecimalPowers.Clear();
+                powersDataSet.TextPowers.Clear();
+                powersDataSet.WriteXml(fileName, System.Data.XmlWriteMode.WriteSchema);
+            }
+            catch (Exception ex)
+            {
+                ShowDialogUtil.ShowErrorDialog(ex.Message);
+            }
+        }
+        
+        private string GetXml(RepositoryDataSet dataSet)
+        {
+            StringBuilder builder = new StringBuilder();
+            StringWriter writer = new StringWriter(builder);
+            dataSet.WriteXml(writer, System.Data.XmlWriteMode.WriteSchema);
+            writer.Close();
+            return builder.ToString();
+        }
+
+        private void SetXml(RepositoryDataSet dataSet, string xml)
+        {
+            StringReader reader = new StringReader(xml);
+            dataSet.ReadXml(reader, System.Data.XmlReadMode.IgnoreSchema);
+            reader.Close();
         }
 
         public void CommitVariables()
         {
-            CommitVariables(Const.Globals.CAPTION_VARIABLE_NAME, Caption);
-            CommitVariables(Const.Globals.DATE_VARIABLE_NAME, Date.ToShortDateString());
-            CommitVariables(Const.Globals.DESCRIPTION_VARIABLE_NAME, Description);
-            CommitVariables(Const.Globals.TABLE_VARIABLE_NAME, Table.ToString());
+            HiddenPowerDocument.CommitVariable(Doc.Variables, Const.Globals.CAPTION_VARIABLE_NAME, Caption);
+            HiddenPowerDocument.CommitVariable(Doc.Variables, Const.Globals.DATE_VARIABLE_NAME, Date.ToShortDateString());
+            HiddenPowerDocument.CommitVariable(Doc.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME, Description);
+            HiddenPowerDocument.CommitVariable(Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME, Table.ToString());
 
             if (DataSet.HasChanges())
-            {
-                StringBuilder builder = new StringBuilder();
-                StringWriter writer = new StringWriter(builder);
-                DataSet.WriteXml(writer, XmlWriteMode.WriteSchema);
-                writer.Close();
-                CommitVariables(Const.Globals.XML_VARIABLE_NAME, builder.ToString());
+            {                
+                HiddenPowerDocument.CommitVariable(Doc.Variables, Const.Globals.XML_VARIABLE_NAME, DataSet);
             }
         }
            
 
-        protected void CommitVariables(string name, string value)
-        {
-            Word.Variable variable = GetVariable(Doc.Variables, name);
-            if (variable == null && !string.IsNullOrWhiteSpace(value))
-                Doc.Variables.Add(name, value);
-            else if (variable != null && variable.Value != value)
-                variable.Value = value;
-        }
-
-
                 
-       
-
-
-
-
         public bool VariablesExists()
         {
             if (Doc.Variables.Count > 0)
             {
-                Word.Variable caption = GetVariable(Doc.Variables,
+                Word.Variable caption = HiddenPowerDocument.GetVariable(Doc.Variables,
                     Const.Globals.CAPTION_VARIABLE_NAME);
                 if (caption != null)
                 {
                     return true;
                 }
 
-                Word.Variable date = GetVariable(Doc.Variables,
+                Word.Variable date = HiddenPowerDocument.GetVariable(Doc.Variables,
                     Const.Globals.DATE_VARIABLE_NAME);
                 if (date != null)
                 {
                     return true;
                 }
 
-                Word.Variable description = GetVariable(Doc.Variables,
+                Word.Variable description = HiddenPowerDocument.GetVariable(Doc.Variables,
                     Const.Globals.DESCRIPTION_VARIABLE_NAME);
                 if (description != null)
                 {
                     return true;
                 }
 
-                Word.Variable table = GetVariable(Doc.Variables,
+                Word.Variable table = HiddenPowerDocument.GetVariable(Doc.Variables,
                     Const.Globals.TABLE_VARIABLE_NAME);
                 if (table != null)
                 {
                     return true;
                 }
 
-                Word.Variable content = GetVariable(Doc.Variables,
+                Word.Variable content = HiddenPowerDocument.GetVariable(Doc.Variables,
                     Const.Globals.XML_VARIABLE_NAME);
                 if (content != null)
                 {
@@ -315,21 +322,15 @@ namespace WordHiddenPowers.Documents
 
             if (Doc.Variables.Count > 0)
             {
-                DeleteVariable(Const.Globals.CAPTION_VARIABLE_NAME);
-                DeleteVariable(Const.Globals.DATE_VARIABLE_NAME);
-                DeleteVariable(Const.Globals.DESCRIPTION_VARIABLE_NAME);
-                DeleteVariable(Const.Globals.TABLE_VARIABLE_NAME);
-                DeleteVariable(Const.Globals.XML_VARIABLE_NAME);
+                HiddenPowerDocument.DeleteVariable(Doc.Variables, Const.Globals.CAPTION_VARIABLE_NAME);
+                HiddenPowerDocument.DeleteVariable(Doc.Variables, Const.Globals.DATE_VARIABLE_NAME);
+                HiddenPowerDocument.DeleteVariable(Doc.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME);
+                HiddenPowerDocument.DeleteVariable(Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+                HiddenPowerDocument.DeleteVariable(Doc.Variables, Const.Globals.XML_VARIABLE_NAME);
             }
         }
 
-        private void DeleteVariable(string name)
-        {
-            Word.Variable variable = GetVariable(Doc.Variables, name);
-            if (variable != null)
-                variable.Delete();
-        }
-
+       
         protected IList<Form> dialogs = null;
 
         public void ShowDocumentKeysDialog()
@@ -342,7 +343,7 @@ namespace WordHiddenPowers.Documents
 
         public void ShowEditCategoriesDialog()
         {
-            Form dialog = new CategoriesEditorDialog(DataSet);
+            Form dialog = new CategoriesEditorDialog(this);
             dialogs.Add(dialog);
             if (ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
             {

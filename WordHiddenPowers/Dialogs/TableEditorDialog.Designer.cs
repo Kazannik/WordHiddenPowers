@@ -159,7 +159,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Таблица данных";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TableEditorDialog_FormClosing);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TableEditorDialog_FormClosed);
             this.topCaptionPanel.ResumeLayout(false);
             this.topCaptionPanel.PerformLayout();
             this.toolStrip1.ResumeLayout(false);

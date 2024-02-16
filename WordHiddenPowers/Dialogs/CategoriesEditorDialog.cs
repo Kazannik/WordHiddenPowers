@@ -1,22 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using WordHiddenPowers.Categories;
-using WordHiddenPowers.Panes;
-using WordHiddenPowers.Repositoryes;
+using WordHiddenPowers.Utils;
 
 namespace WordHiddenPowers.Dialogs
 {
     public partial class CategoriesEditorDialog : Form
     {
-        private RepositoryDataSet DataSet;
+        private Documents.Document document;
 
-        public CategoriesEditorDialog(RepositoryDataSet dataSet)
+        public CategoriesEditorDialog(Documents.Document document)
         {
-            DataSet = dataSet;
+            this.document = document;
 
             InitializeComponent();
 
@@ -37,7 +34,7 @@ namespace WordHiddenPowers.Dialogs
         
         private void SaveTableStructure()
         {
-            DataSet.Categories.Clear();
+            document.DataSet.Categories.Clear();
 
             foreach (TreeNode node in categoriesTreeView.Nodes)
             {
@@ -196,17 +193,36 @@ namespace WordHiddenPowers.Dialogs
             dialog.Multiselect = false;
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
-                DataSet.Categories.Clear();
-                DataSet.Subcategories.Clear();
+                document.DataSet.Categories.Clear();
+                document.DataSet.Subcategories.Clear();
 
                 string content = File.ReadAllText(dialog.FileName, Encoding.GetEncoding(1251));
-                Utils.Categories.CreateFromText(DataSet, content);                
+                Utils.Categories.CreateFromText(document.DataSet, content);                
             }
         }
 
         private void FileSave_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void CategoriesEditorDialog_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                if (document.DataSet.HasChanges())
+                {
+                    DialogResult result = MessageBox.Show("Зафиксировать категории данных?", "Категории данные", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        HiddenPowerDocument.CommitVariable(document.Doc.Variables, Const.Globals.XML_VARIABLE_NAME, document.DataSet);
+                    }
+                    else if (result == DialogResult.Cancel)
+                    {
+                        e.Cancel = true;
+                    }
+                }
+            }
         }
     }
 }

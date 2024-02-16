@@ -49,9 +49,6 @@ namespace WordHiddenPowers.Documents
             buttonSelectDecimalCategory = AddButtons(application.CommandBars["Text"], Const.Content.DECIMAL_NOTE_MENU_CAPTION, Const.Content.DECIMAL_NOTE_FACE_ID, Const.Panes.BUTTON_DECIMAL_TAG, false, AddDecimalNoteClick);
 
 
-
-            PowersDataSet = new RepositoryDataSet();
-
             subcategories = new Dictionary<int,Subcategory>();
             categories = new Dictionary<int, Category>();
             sumDecimalNotes = new Dictionary<Subcategory, double>();
@@ -190,7 +187,7 @@ namespace WordHiddenPowers.Documents
         #endregion
 
 
-        public RepositoryDataSet PowersDataSet { get; }
+      
 
         public Table SumTable { get; private set; }
 

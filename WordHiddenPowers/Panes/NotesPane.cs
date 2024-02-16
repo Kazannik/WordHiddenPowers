@@ -179,29 +179,22 @@ namespace WordHiddenPowers.Panes
                     captionComboBox.EndUpdate();
                 }
 
-                string caption = GetVariable(Const.Globals.CAPTION_VARIABLE_NAME);
+                string caption = HiddenPowerDocument.GetVariableValue(Document.Doc.Variables, Const.Globals.CAPTION_VARIABLE_NAME);
                 if (captionComboBox.Text != caption)
                     captionComboBox.Text = caption;
 
-                string strDate = GetVariable(Const.Globals.DATE_VARIABLE_NAME);
+                string strDate = HiddenPowerDocument.GetVariableValue(Document.Doc.Variables, Const.Globals.DATE_VARIABLE_NAME);
                 DateTime date = string.IsNullOrWhiteSpace(strDate) ? DateTime.Today: DateTime.Parse(strDate);
                 if (dateTimePicker.Value != date)
                     dateTimePicker.Value = date; 
 
-                string description = GetVariable(Const.Globals.DESCRIPTION_VARIABLE_NAME);
+                string description = HiddenPowerDocument.GetVariableValue(Document.Doc.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME);
                 if (descriptionTextBox.Text != description)
                     descriptionTextBox.Text = description;
             }
         }
 
-        private string GetVariable(string name)
-        {
-            Word.Variable variable = HiddenPowerDocument.GetVariable(Document.Doc.Variables, name);
-            if (variable != null)
-                return variable.Value;
-            else
-                return string.Empty;
-        }
+        
 
                      
 
@@ -210,15 +203,14 @@ namespace WordHiddenPowers.Panes
             Word.Variable content = HiddenPowerDocument.GetVariable(Document.Doc.Variables, Const.Globals.XML_VARIABLE_NAME);
             if (content != null)
             {
-                StringReader reader = new StringReader(content.Value);
-
                 foreach (DataTable table in Document.DataSet.Tables)
                 {
                     table.Clear();
                 }
-
+                StringReader reader = new StringReader(content.Value);
                 Document.DataSet.ReadXml(reader, XmlReadMode.IgnoreSchema);
                 reader.Close();
+                Document.DataSet.AcceptChanges();
                 return true;
             }
             else

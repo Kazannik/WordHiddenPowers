@@ -22,5 +22,14 @@ namespace WordHiddenPowers.Utils
             mainWindow.ReleaseHandle();
             return dialogResult;
         }
+
+        public static DialogResult ShowErrorDialog(string text)
+        {
+            NativeWindow mainWindow = new NativeWindow();
+            mainWindow.AssignHandle(Process.GetCurrentProcess().MainWindowHandle);
+            DialogResult dialogResult = MessageBox.Show(owner: mainWindow, text: text, caption: Const.Globals.ADDIN_TITLE, buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Error);
+            mainWindow.ReleaseHandle();
+            return dialogResult;
+        }
     }
 }

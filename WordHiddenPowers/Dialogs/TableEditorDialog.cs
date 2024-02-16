@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using WordHiddenPowers.Panes;
-using WordHiddenPowers.Repositoryes;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Dialogs
@@ -35,12 +33,7 @@ namespace WordHiddenPowers.Dialogs
                 tableEditBox.Table = new Data.Table(tableEditBox.DataSet.RowsHeaders.Count, tableEditBox.DataSet.ColumnsHeaders.Count);
             }
         }
-        
-        private void TableEditorDialog_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            
-        }
-
+                
         private Word.Variable GetVariable(Word.Variables array, string variableName)
         {
             for (int i = 1; i <= array.Count; i++)
@@ -83,22 +76,22 @@ namespace WordHiddenPowers.Dialogs
                     if (result == DialogResult.Yes)
                     {
                         tableEditBox.CommitValue();
+
+                        Word.Variable variable = GetVariable(document.Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+                        if (variable != null)
+                        {
+                            variable.Value = tableEditBox.Table.ToString();
+                        }
+                        else
+                        {
+                            document.Doc.Variables.Add(Const.Globals.TABLE_VARIABLE_NAME, tableEditBox.Table.ToString());
+                        }
                     }
                     else if (result == DialogResult.Cancel)
                     {
                         e.Cancel = true;
                     }
-                }
-
-                Word.Variable variable = GetVariable(document.Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
-                if (variable != null)
-                {
-                    variable.Value = tableEditBox.Table.ToString();
-                }
-                else
-                {
-                    document.Doc.Variables.Add(Const.Globals.TABLE_VARIABLE_NAME, tableEditBox.Table.ToString());
-                }
+                }                
             }
         }
     }
