@@ -2653,6 +2653,10 @@ namespace WordHiddenPowers.Repositoryes {
             
             private global::System.Data.DataColumn columnCaption;
             
+            private global::System.Data.DataColumn columnDescription1;
+            
+            private global::System.Data.DataColumn columnDescription2;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public DocumentKeysDataTable() {
@@ -2704,6 +2708,22 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn Description1Column {
+                get {
+                    return this.columnDescription1;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn Description2Column {
+                get {
+                    return this.columnDescription2;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2739,11 +2759,13 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DocumentKeysRow AddDocumentKeysRow(string Caption) {
+            public DocumentKeysRow AddDocumentKeysRow(string Caption, string Description1, string Description2) {
                 DocumentKeysRow rowDocumentKeysRow = ((DocumentKeysRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
-                        Caption};
+                        Caption,
+                        Description1,
+                        Description2};
                 rowDocumentKeysRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDocumentKeysRow);
                 return rowDocumentKeysRow;
@@ -2768,6 +2790,8 @@ namespace WordHiddenPowers.Repositoryes {
             internal void InitVars() {
                 this.columnid = base.Columns["id"];
                 this.columnCaption = base.Columns["Caption"];
+                this.columnDescription1 = base.Columns["Description1"];
+                this.columnDescription2 = base.Columns["Description2"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2777,6 +2801,10 @@ namespace WordHiddenPowers.Repositoryes {
                 base.Columns.Add(this.columnid);
                 this.columnCaption = new global::System.Data.DataColumn("Caption", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCaption);
+                this.columnDescription1 = new global::System.Data.DataColumn("Description1", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDescription1);
+                this.columnDescription2 = new global::System.Data.DataColumn("Description2", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDescription2);
                 this.columnid.AutoIncrement = true;
                 this.columnCaption.AllowDBNull = false;
             }
@@ -3833,6 +3861,38 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Description1 {
+                get {
+                    try {
+                        return ((string)(this[this.tableDocumentKeys.Description1Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Description1\' в таблице \'DocumentKeys\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDocumentKeys.Description1Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Description2 {
+                get {
+                    try {
+                        return ((string)(this[this.tableDocumentKeys.Description2Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Description2\' в таблице \'DocumentKeys\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDocumentKeys.Description2Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsidNull() {
                 return this.IsNull(this.tableDocumentKeys.idColumn);
             }
@@ -3841,6 +3901,30 @@ namespace WordHiddenPowers.Repositoryes {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetidNull() {
                 this[this.tableDocumentKeys.idColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsDescription1Null() {
+                return this.IsNull(this.tableDocumentKeys.Description1Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetDescription1Null() {
+                this[this.tableDocumentKeys.Description1Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsDescription2Null() {
+                return this.IsNull(this.tableDocumentKeys.Description2Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetDescription2Null() {
+                this[this.tableDocumentKeys.Description2Column] = global::System.Convert.DBNull;
             }
         }
         

@@ -1,6 +1,5 @@
 ﻿using System;
-using System.IO;
-using System.Text;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using WordHiddenPowers.Data;
 using WordHiddenPowers.Repositoryes;
@@ -10,42 +9,83 @@ namespace WordHiddenPowers.Dialogs
 {
     public partial class TableViewerDialog : Form
     {
-        public Table SumTable;
+        private RepositoryDataSet dataSet;
 
-        public TableViewerDialog(RepositoryDataSet powersDataSet, Table table)
+        private List<Table> dataBase;
+
+        private Table summTable;
+
+        public TableViewerDialog(RepositoryDataSet dataSet)
         {
-            SumTable = table;
-
             InitializeComponent();
 
             nameLabel.Text = "";
 
-            RepositoryDataSet dataSet = new RepositoryDataSet();
+            this.dataSet = dataSet;
+            
+            tableEditBox.DataSet = this.dataSet;
 
-            string xml = GetXml(powersDataSet);
-            SetXml(dataSet, xml);
-            dataSet.DecimalPowers.Clear();
-            dataSet.TextPowers.Clear();
-            
-            tableEditBox.DataSet = dataSet;
-            
-            tableEditBox.Table = SumTable;
+            InitializeDatabase();
         }
 
-        private string GetXml(RepositoryDataSet dataSet)
+        
+        private void InitializeDatabase()
         {
-            StringBuilder builder = new StringBuilder();
-            StringWriter writer = new StringWriter(builder);
-            dataSet.WriteXml(writer, System.Data.XmlWriteMode.WriteSchema);
-            writer.Close();
-            return builder.ToString();
+            if (dataSet == null) return;
+
+            dataBase = new List<Table>();
+
+            foreach (RepositoryDataSet.DocumentKeysRow row in  dataSet.DocumentKeys)
+            {
+                Table table = Table.Create(row.Description2, row.Caption, row.Description1);
+                if (!table.IsEmpty) dataBase.Add(table);
+            }
+
+            if (dataBase.Count > 0)
+            {
+                summTable = dataBase[0].Clone();
+                listView1.Items.Clear();
+                foreach (Table table in dataBase)
+                {
+                    ListViewItem item = listView1.Items.Add(table.Caption);
+                    item.SubItems.Add("0");
+                    item.SubItems.Add("0");
+                    item.Tag = table;
+
+                    summTable = summTable + table;
+                }
+
+                dataBase.Add(summTable);
+
+                ListViewItem summItem = listView1.Items.Add("Итого:");
+                summItem.SubItems.Add("0");
+                summItem.SubItems.Add("0");
+                summItem.Tag = summTable;
+
+                summItem.Selected = true;
+
+                listView1.Refresh();
+            }
         }
 
-        private void SetXml(RepositoryDataSet dataSet, string xml)
+        private void tableEditBox_SelectedCell(object sender, Controls.TableEditBox.TableEventArgs e)
         {
-            StringReader reader = new StringReader(xml);
-            dataSet.ReadXml(reader, System.Data.XmlReadMode.IgnoreSchema);
-            reader.Close();
+            foreach (ListViewItem item in listView1.Items)
+            {
+                Table table =(Table) item.Tag;
+                item.SubItems[1].Text = table.Rows[e.Cell.RowIndex][e.Cell.ColumnIndex].Value.ToString();
+                item.SubItems[2].Text = (((double)table.Rows[e.Cell.RowIndex][e.Cell.ColumnIndex].Value) * 100 / ((double)summTable.Rows[e.Cell.RowIndex][e.Cell.ColumnIndex].Value)).ToString("0.00");
+            }
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                Table table = (Table)listView1.SelectedItems[0].Tag;
+                tableEditBox.Table = table;
+                nameLabel.Text = listView1.SelectedItems[0].Text;
+            }
         }
 
         private void TableEditorDialog_FormClosed(object sender, FormClosedEventArgs e)
@@ -64,12 +104,7 @@ namespace WordHiddenPowers.Dialogs
             }
             return null;
         }
-
-        private void tableEditBox_ValueChanged(object sender, EventArgs e)
-        {
-            saveButton.Enabled = tableEditBox.IsChanged;
-        }
-
+                
         private void clearButton_Click(object sender, EventArgs e)
         {
             tableEditBox.ClearValues();
@@ -101,17 +136,7 @@ namespace WordHiddenPowers.Dialogs
                         e.Cancel = true;
                     }
                 }
-
-                //Word.Variable variable = GetVariable(pane.Document.Variables, WordHiddenPowers.Const.Globals.TABLE_VARIABLE_NAME);
-                //if (variable != null)
-                //{
-                //    variable.Value = tableEditBox.Table.ToString();
-                //}
-                //else
-                //{
-                //    pane.Document.Variables.Add(WordHiddenPowers.Const.Globals.TABLE_VARIABLE_NAME, tableEditBox.Table.ToString());
-                //}
             }
-        }
+        }        
     }
 }

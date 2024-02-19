@@ -15,6 +15,8 @@ namespace WordHiddenPowers.Controls
         {
             InitializeComponent();
         }
+        
+        public bool ReadOnly { get; set; }
                
         public RepositoryDataSet DataSet
         {
@@ -80,6 +82,8 @@ namespace WordHiddenPowers.Controls
                         bool columnBold = bool.Parse(source.ColumnsHeaders.Rows[c]["Bold"].ToString());
                         int columnColor = int.Parse(source.ColumnsHeaders.Rows[c]["Color"].ToString());
                         int columnBackColor = int.Parse(source.ColumnsHeaders.Rows[c]["BackColor"].ToString());
+
+                        dataGridView.Rows[r].Cells[c].ReadOnly = ReadOnly;
 
                        // -16777216
 
@@ -189,7 +193,34 @@ namespace WordHiddenPowers.Controls
         protected virtual void OnValueChanged(EventArgs e)
         {
             ValueChanged?.Invoke(this, e);
-        }        
+        }
+
+        private void dataGridView_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dataGridView.SelectedCells.Count > 0)
+                DoSelectedCell();
+        }
+
+        public event EventHandler<TableEventArgs> SelectedCell;
+
+        public void DoSelectedCell()
+        {
+            OnSelectedCell(new TableEventArgs(dataGridView.SelectedCells[0]));
+        }
+
+        protected virtual void OnSelectedCell(TableEventArgs e)
+        {
+            SelectedCell?.Invoke(this, e);
+        }
+        public class TableEventArgs : EventArgs
+        {
+            public TableEventArgs(DataGridViewCell cell) : base()
+            {
+                Cell = cell;
+            }
+
+            public DataGridViewCell Cell { get; }
+        }
     }
 }
 

@@ -23,6 +23,8 @@ namespace WordHiddenPowers.Documents
 
         private CustomTaskPane pane;
 
+        private RepositoryDataSet importDataSet;
+
         public CustomTaskPane CustomPane
         {
             get
@@ -67,15 +69,7 @@ namespace WordHiddenPowers.Documents
         {
             get
             {
-                Word.Variable caption = HiddenPowerDocument.GetVariable(Doc.Variables, Const.Globals.CAPTION_VARIABLE_NAME);
-                if (caption != null)
-                {
-                    return caption.Value;
-                }
-                else
-                {
-                    return string.Empty;
-                }
+                return HiddenPowerDocument.GetCaption(Doc);                
             } 
             set
             {
@@ -87,15 +81,7 @@ namespace WordHiddenPowers.Documents
         {
             get
             {
-                Word.Variable date = HiddenPowerDocument.GetVariable(Doc.Variables, Const.Globals.DATE_VARIABLE_NAME);
-                if (date != null)
-                {
-                    return DateTime.Parse(date.Value);
-                }
-                else
-                {
-                    return DateTime.Today;
-                }
+                return HiddenPowerDocument.GetDate(Doc);        
             }
             set
             {
@@ -107,15 +93,7 @@ namespace WordHiddenPowers.Documents
         {
             get
             {
-                Word.Variable description = HiddenPowerDocument.GetVariable(Doc.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME);
-                if (description != null)
-                {
-                    return description.Value;
-                }
-                else
-                {
-                    return string.Empty;
-                }
+                return HiddenPowerDocument.GetDescription(Doc);                
             }
             set
             {
@@ -127,15 +105,7 @@ namespace WordHiddenPowers.Documents
         {
             get
             {
-                Word.Variable table = HiddenPowerDocument.GetVariable(Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
-                if (table != null)
-                {
-                    return Table.Create(table.Value);
-                }
-                else
-                {
-                    return Table.Create(string.Empty);
-                }
+                return HiddenPowerDocument.GetTable(Doc);               
             }
             set
             {
@@ -225,36 +195,9 @@ namespace WordHiddenPowers.Documents
 
         public void SaveData(string fileName)
         {
-            try
-            {
-                string xml = GetXml(Globals.ThisAddIn.Documents.ActiveDocument.DataSet);
-                RepositoryDataSet powersDataSet = new RepositoryDataSet();
-                SetXml(powersDataSet, xml);
-                powersDataSet.DecimalPowers.Clear();
-                powersDataSet.TextPowers.Clear();
-                powersDataSet.WriteXml(fileName, System.Data.XmlWriteMode.WriteSchema);
-            }
-            catch (Exception ex)
-            {
-                ShowDialogUtil.ShowErrorDialog(ex.Message);
-            }
+            Xml.SaveData(Globals.ThisAddIn.Documents.ActiveDocument.DataSet, fileName);           
         }
-        
-        private string GetXml(RepositoryDataSet dataSet)
-        {
-            StringBuilder builder = new StringBuilder();
-            StringWriter writer = new StringWriter(builder);
-            dataSet.WriteXml(writer, System.Data.XmlWriteMode.WriteSchema);
-            writer.Close();
-            return builder.ToString();
-        }
-
-        private void SetXml(RepositoryDataSet dataSet, string xml)
-        {
-            StringReader reader = new StringReader(xml);
-            dataSet.ReadXml(reader, System.Data.XmlReadMode.IgnoreSchema);
-            reader.Close();
-        }
+               
 
         public void CommitVariables()
         {
@@ -363,7 +306,7 @@ namespace WordHiddenPowers.Documents
         {
             Form dialog = new TableEditorDialog(this);
             dialogs.Add(dialog);
-            dialog.Show();
+            ShowDialogUtil.ShowDialog(dialog);
             //OnPropertiesChanged(new EventArgs());
         }
 
@@ -373,8 +316,15 @@ namespace WordHiddenPowers.Documents
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             if (ShowDialogUtil.ShowDialogObj(dialog) == DialogResult.OK)
             {
-                // importDocuments = FileSystem.ImportFiles(dialog.SelectedPath);
+                importDataSet = FileSystem.ImportFiles(dialog.SelectedPath);
             }
+        }
+
+        public void ShowTableViewerDialog()
+        {
+            TableViewerDialog dialog = new TableViewerDialog(importDataSet);
+            dialogs.Add(dialog);
+            ShowDialogUtil.ShowDialog(dialog);
         }
 
         public void ShowAnalizerDialog()
@@ -382,10 +332,7 @@ namespace WordHiddenPowers.Documents
 
         }
 
-        public void ShowTableViewerDialog()
-        {
-
-        }
+       
 
         public void AddTextNote(Word.Selection selection)
         {

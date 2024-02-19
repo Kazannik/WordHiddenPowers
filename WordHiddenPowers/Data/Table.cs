@@ -14,10 +14,39 @@ namespace WordHiddenPowers.Data
             }
         }
 
+        public string Caption { get; private set; }
+
+        public string FileName { get; private set; }
+
         public int ColumnCount { get; }
 
         public RowCollection Rows { get; }
         
+        public bool IsEmpty
+        {
+            get { return Rows.Count == 0 || ColumnCount == 0; }
+        }
+
+        public void Clear()
+        {
+            Caption = string.Empty;
+            FileName = string.Empty;
+
+            for (int r = 0; r < Rows.Count; r++)
+            {
+                for (int c = 0; c < ColumnCount; c++)
+                {
+                    Rows[r][c].Value = 0;
+                }
+            }
+        }
+
+
+        public Table Clone()
+        {
+            return new Table(Rows.Count, ColumnCount);
+        }
+
         public new string ToString()
         {
             string result = string.Empty;
@@ -31,8 +60,13 @@ namespace WordHiddenPowers.Data
             }
             return result;
         }
-        
+
         public static Table Create(string text)
+        {
+            return Table.Create(text: text, caption: string.Empty, fileName: string.Empty);
+        }
+
+        public static Table Create(string text, string caption, string fileName)
         {
             if (string.IsNullOrWhiteSpace(text)) return new Table(0, 0);
 
@@ -48,7 +82,57 @@ namespace WordHiddenPowers.Data
                     table.Rows[r][c].Value = int.Parse(cells[c]);
                 }
             }
+            table.Caption = caption;
+            table.FileName = fileName;
             return table;
+        }
+        
+        public static Table operator +(Table a, Table b)
+        {
+            for (int r = 0; r < a.Rows.Count; r++)
+            {
+                for (int c = 0; c < a.ColumnCount; c++)
+                {
+                    a.Rows[r][c].Value = a.Rows[r][c].Value + b.Rows[r][c].Value;
+                }
+            }
+            return a;
+        }
+
+        public static Table operator -(Table a, Table b)
+        {
+            for (int r = 0; r < a.Rows.Count; r++)
+            {
+                for (int c = 0; c < a.ColumnCount; c++)
+                {
+                    a.Rows[r][c].Value = a.Rows[r][c].Value - b.Rows[r][c].Value;
+                }
+            }
+            return a;
+        }
+        
+        public static Table operator *(Table a, int b)
+        {
+            for (int r = 0; r < a.Rows.Count; r++)
+            {
+                for (int c = 0; c < a.ColumnCount; c++)
+                {
+                    a.Rows[r][c].Value = a.Rows[r][c].Value * b;
+                }
+            }
+            return a;
+        }
+
+        public static Table operator /(Table a, int b)
+        {
+            for (int r = 0; r < a.Rows.Count; r++)
+            {
+                for (int c = 0; c < a.ColumnCount; c++)
+                {
+                    a.Rows[r][c].Value = a.Rows[r][c].Value / b;
+                }
+            }
+            return a;
         }
     }
 }

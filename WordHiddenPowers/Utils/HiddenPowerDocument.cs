@@ -2,6 +2,7 @@
 using System.Data;
 using System.IO;
 using System.Text;
+using WordHiddenPowers.Data;
 using WordHiddenPowers.Repositoryes;
 using Word = Microsoft.Office.Interop.Word;
 
@@ -36,7 +37,7 @@ namespace WordHiddenPowers.Utils
             else if (variable != null && variable.Value != value)
                 variable.Value = value;
         }
-        
+
         public static void CommitVariable(Word.Variables array, string variableName, RepositoryDataSet dataSet)
         {
             StringBuilder builder = new StringBuilder();
@@ -51,8 +52,42 @@ namespace WordHiddenPowers.Utils
             Word.Variable variable = GetVariable(array: array, variableName: variableName);
             if (variable != null) variable.Delete();
         }
+                
+        public static string GetCaption(Word._Document Doc)
+        {
+            return GetVariableValue(Doc.Variables, Const.Globals.CAPTION_VARIABLE_NAME);
+        }
 
+        public static string GetDescription(Word._Document Doc)
+        {
+            return GetVariableValue(Doc.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME);
+        }
 
+        public static DateTime GetDate(Word._Document Doc)
+        {
+            string value = GetVariableValue(Doc.Variables, Const.Globals.DATE_VARIABLE_NAME);
+            DateTime result;
+            if (DateTime.TryParse(value, out result))
+            {
+                return result;
+            }
+            else
+            {
+                return DateTime.Today;
+            }            
+        }
 
+        public static Table GetTable(Word._Document Doc)
+        {
+            string value = GetVariableValue(Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+            return Table.Create(value);            
+        }
+        
+        public static bool ExistsContent(Word._Document Doc)
+        {
+            Word.Variable content = HiddenPowerDocument.GetVariable(Doc.Variables,
+                   Const.Globals.XML_VARIABLE_NAME);
+            return content != null;            
+        }
     }
 }

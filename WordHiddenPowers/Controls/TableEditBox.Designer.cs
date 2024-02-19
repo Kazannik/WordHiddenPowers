@@ -66,6 +66,7 @@
             this.dataGridView.Size = new System.Drawing.Size(411, 416);
             this.dataGridView.TabIndex = 2;
             this.dataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.data_CellValueChanged);
+            this.dataGridView.SelectionChanged += new System.EventHandler(this.dataGridView_SelectionChanged);
             // 
             // TableEditBox
             // 

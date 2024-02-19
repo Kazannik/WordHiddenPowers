@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using WordHiddenPowers.Categories;
@@ -10,6 +11,18 @@ namespace WordHiddenPowers.Repositoryes
     partial class RepositoryDataSet
     {
 
+        public void AddNote(Note note, string fileName, string caption, string description, DateTime date)
+        {
+            if (note.IsText)
+            {
+                TextPowers.AddTextPowersRow(note.Category.Id, note.Subcategory.Id, note.Description, note.Value.ToString(), note.Reiting, note.WordSelectionStart, note.WordSelectionEnd, fileName, caption, description, date, false);
+            }
+            else
+            {
+                DecimalPowers.AddDecimalPowersRow(note.Category.Id, note.Subcategory.Id, note.Description, (double) note.Value, note.Reiting, note.WordSelectionStart, note.WordSelectionEnd, fileName, caption, description, date);
+            }
+        }
+
         public IEnumerable<Note> GetNotes()
         {
             return ((from row in TextPowers select Note.Create(row, GetSubcategory(row.subcategory_id)))
@@ -19,7 +32,7 @@ namespace WordHiddenPowers.Repositoryes
 
         private Subcategory GetSubcategory(int id)
         {
-            int categoryId =(int) Subcategories.GetRow(id)["category_id"];
+            int categoryId = (int)Subcategories.GetRow(id)["category_id"];
             Category category = Categories.Get(categoryId);
             return Subcategories.Get(category, id);
         }
@@ -81,7 +94,7 @@ namespace WordHiddenPowers.Repositoryes
 
         partial class DecimalPowersDataTable
         {
-                       
+
             public void Set(int id, int categoryId, int subcategoryId, string description, double value, int reiting, int wordSelectionStart, int wordSelectionEnd)
             {
                 DecimalPowersRow row = GetRow(id) as DecimalPowersRow;
