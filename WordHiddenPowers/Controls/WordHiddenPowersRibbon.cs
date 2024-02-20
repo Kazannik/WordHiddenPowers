@@ -78,19 +78,7 @@ namespace WordHiddenPowers
         {
             Globals.ThisAddIn.Documents.ActiveDocument.ShowDocumentKeysDialog();
         }
-
-        private void fieldAddButton_Click(object sender, RibbonControlEventArgs e)
-        {
-            //WordHiddenPowersPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as WordHiddenPowersPane;
-            //WordHiddenPowers.Utils.WordUtil.AddField(pane.Document, Globals.ThisAddIn.Application.Selection , 1);
-        }
-
-        private void fieldsUpdateButton_Click(object sender, RibbonControlEventArgs e)
-        {
-            //WordHiddenPowersPane pane = Globals.ThisAddIn.Panes.ActivePane.Control as WordHiddenPowersPane;
-            //WordHiddenPowers.Utils.WordUtil.UpdateField(pane.Document, Globals.ThisAddIn.Application.Selection, 1);
-        }
-
+       
         private void analizerImportButton_Click(object sender, RibbonControlEventArgs e)
         {
             Globals.ThisAddIn.Documents.ActiveDocument.ImportDataFromWordDocuments();
@@ -105,7 +93,6 @@ namespace WordHiddenPowers
         {
             Globals.ThisAddIn.Documents.ActiveDocument.ShowAnalizerDialog();
         }
-
 
         private enum NoteType
         {

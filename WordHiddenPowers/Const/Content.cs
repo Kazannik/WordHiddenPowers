@@ -25,7 +25,7 @@
         /// <summary>
         /// Многострочный текст подсказки, отображаемый при перемещении курсора по элементу управления.
         /// </summary>
-        public const string TEXT_NOTE_SUPER_TIP = "Текстовая заметка позволяет сохранить текстовые сведения в массив дополнительных данных для их дальнейшего анализа";
+        public const string TEXT_NOTE_SUPER_TIP = "Текстовая заметка позволяет сохранить текстовые сведения в массив дополнительных данных для их дальнейшего анализа.";
 
         /// <summary>
         /// Имя (idMso) встроенного изобразения, отображаемого в качестве значка элемента управления
@@ -61,7 +61,7 @@
         /// <summary>
         /// Многострочный текст подсказки, отображаемый при перемещении курсора по элементу управления.
         /// </summary>
-        public const string DECIMAL_NOTE_SUPER_TIP = "Числовая заметка позволяет суммировать значения в массиве дополнительных данных для их дальнейшего анализа";
+        public const string DECIMAL_NOTE_SUPER_TIP = "Числовая заметка позволяет суммировать значения в массиве дополнительных данных для их дальнейшего анализа.";
 
         /// <summary>
         /// Имя (idMso) встроенного изобразения, отображаемого в качестве значка элемента управления
@@ -72,24 +72,7 @@
         /// Числовое значение FaceId встроенного изобразения, отображаемого в качестве значка контекстного меню
         /// </summary>
         public const int DECIMAL_NOTE_FACE_ID = 12820;
-
-
-        //newDataButton
-        //deleteDataButton
-        //openDataButton
-        //saveDataButton
-
-        //editCategoriesButton
-        //createTableButton
-        //editDocumentKeysButton
-
-        //analizerImportButton
-        //analizerTableViewerButton
-        //analizerDialogButton
-
-        //editTableButton
-        //paneVisibleButton
-
+                
         public const string NEW_DATA_LABEL = "Макет данных";
         public const string NEW_DATA_DESCRIPTION = "Создание макета данных";
         public const string NEW_DATA_SCREEN_TIP = "Создать макет данных";
@@ -111,7 +94,7 @@
         public const string SAVE_DATA_LABEL = "Сохранить макет данных";
         public const string SAVE_DATA_DESCRIPTION = "Сохранение макета данных";
         public const string SAVE_DATA_SCREEN_TIP = "Сохранить макет данных";
-        public const string SAVE_DATA_SUPER_TIP = "Сохраненный макет данных, состоящий их макета таблицы, списка категорий заметок, их подкатегорий, а также списка заголовков документов, может быть сохранен в отдельный файл и применен к другим анализирумым документам";
+        public const string SAVE_DATA_SUPER_TIP = "Сохраненный макет данных, состоящий их макета таблицы, списка категорий заметок, их подкатегорий, а также списка заголовков документов, может быть сохранен в отдельный файл и применен к другим анализирумым документам.";
         public const string SAVE_DATA_OFFICE_IMAGE_ID = "FileSaveAs";
 
         public const string EDIT_CATEGORIES_LABEL = "Категория заметок";
@@ -123,37 +106,37 @@
         public const string CREATE_TABLE_LABEL = "Таблица данных";
         public const string CREATE_TABLE_DESCRIPTION = "Создание числовой заметки";
         public const string CREATE_TABLE_SCREEN_TIP = "Создать числовую заметку";
-        public const string CREATE_TABLE_SUPER_TIP = "Числовая заметка позволяет суммировать значения в массиве дополнительных данных для их дальнейшего анализа";
+        public const string CREATE_TABLE_SUPER_TIP = "Числовая заметка позволяет суммировать значения в массиве дополнительных данных для их дальнейшего анализа.";
         public const string CREATE_TABLE_OFFICE_IMAGE_ID = "GroupCreateTableSql";
 
         public const string EDIT_DOCUMENT_KEYS_LABEL = "Заголовки документов";
         public const string EDIT_DOCUMENT_KEYS_DESCRIPTION = "Создание списка заголовков документов";
         public const string EDIT_DOCUMENT_KEYS_SCREEN_TIP = "Создать список заголовков документов";
-        public const string EDIT_DOCUMENT_KEYS_SUPER_TIP = "Числовая заметка позволяет суммировать значения в массиве дополнительных данных для их дальнейшего анализа";
+        public const string EDIT_DOCUMENT_KEYS_SUPER_TIP = "Числовая заметка позволяет суммировать значения в массиве дополнительных данных для их дальнейшего анализа.";
         public const string EDIT_DOCUMENT_KEYS_OFFICE_IMAGE_ID = "ControlPropertyListControlEditChoices";
 
         public const string ANALAIZER_IMPORT_LABEL = "Импорт данных";
-        public const string ANALAIZER_IMPORT_DESCRIPTION = "Создание числовой заметки";
-        public const string ANALAIZER_IMPORT_SCREEN_TIP = "Создать числовую заметку";
-        public const string ANALAIZER_IMPORT_SUPER_TIP = "Числовая заметка позволяет суммировать значения в массиве дополнительных данных для их дальнейшего анализа";
-        public const string ANALAIZER_IMPORT_OFFICE_IMAGE_ID = "FunctionsMathTrigInsertGallery";
+        public const string ANALAIZER_IMPORT_DESCRIPTION = "Импортирование данных из документов Word";
+        public const string ANALAIZER_IMPORT_SCREEN_TIP = "Импортировать данные из документов Word";
+        public const string ANALAIZER_IMPORT_SUPER_TIP = "Для анализа данных, содержащихся в документах Word, необходимо указать директорию хранения этих документов.";
+        public const string ANALAIZER_IMPORT_OFFICE_IMAGE_ID = "ExportWord";
 
         public const string ANALAIZER_TABLE_LABEL = "Сводные табличные данные";
-        public const string ANALAIZER_TABLE_DESCRIPTION = "Создание числовой заметки";
-        public const string ANALAIZER_TABLE_SCREEN_TIP = "Создать числовую заметку";
-        public const string ANALAIZER_TABLE_SUPER_TIP = "Числовая заметка позволяет суммировать значения в массиве дополнительных данных для их дальнейшего анализа";
-        public const string ANALAIZER_TABLE_OFFICE_IMAGE_ID = "FunctionsMathTrigInsertGallery";
+        public const string ANALAIZER_TABLE_DESCRIPTION = "Сводные табличные данные";
+        public const string ANALAIZER_TABLE_SCREEN_TIP = "Сводные табличные данные";
+        public const string ANALAIZER_TABLE_SUPER_TIP = "Сводные табличные данные объединяют и суммируют все табличные данные, импортированные из документов Word.";
+        public const string ANALAIZER_TABLE_OFFICE_IMAGE_ID = "TableFind";
 
         public const string ANALAIZER_DIALOG_LABEL = "Анализ данных";
-        public const string ANALAIZER_DIALOG_DESCRIPTION = "Создание числовой заметки";
-        public const string ANALAIZER_DIALOG_SCREEN_TIP = "Создать числовую заметку";
-        public const string ANALAIZER_DIALOG_SUPER_TIP = "Числовая заметка позволяет суммировать значения в массиве дополнительных данных для их дальнейшего анализа";
-        public const string ANALAIZER_DIALOG_OFFICE_IMAGE_ID = "FunctionsMathTrigInsertGallery";
+        public const string ANALAIZER_DIALOG_DESCRIPTION = "Анализ данных";
+        public const string ANALAIZER_DIALOG_SCREEN_TIP = "Анализ данных";
+        public const string ANALAIZER_DIALOG_SUPER_TIP = "Диалоговое окно, позволяющее настроить фильтрацию массива дополнительных данных для их дальнейшего включения в сводный документ Word.";
+        public const string ANALAIZER_DIALOG_OFFICE_IMAGE_ID = "FormulaMoreFunctionsMenu";
 
         public const string EDIT_TABLE_LABEL = "Табличные данные";
         public const string EDIT_TABLE_DESCRIPTION = "Создание и редактирование табличных данных";
         public const string EDIT_TABLE_SCREEN_TIP = "Создать или редактировать табличные данные";
-        public const string EDIT_TABLE_SUPER_TIP = "Табличные данные позволяют накапливать анализируемые показатели, сформировав их в таблицу";
+        public const string EDIT_TABLE_SUPER_TIP = "Табличные данные позволяют накапливать анализируемые показатели, сформировав их в таблицу.";
         public const string EDIT_TABLE_OFFICE_IMAGE_ID = "TableStyleModify";
 
         public const string PANE_VISIBLE_LABEL = "Панель заметок";
