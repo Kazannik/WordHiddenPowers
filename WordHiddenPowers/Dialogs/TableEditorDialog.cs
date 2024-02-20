@@ -86,6 +86,7 @@ namespace WordHiddenPowers.Dialogs
                         {
                             document.Doc.Variables.Add(Const.Globals.TABLE_VARIABLE_NAME, tableEditBox.Table.ToString());
                         }
+                        document.Doc.Saved = false;
                     }
                     else if (result == DialogResult.Cancel)
                     {

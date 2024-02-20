@@ -44,12 +44,26 @@ namespace WordHiddenPowers.Documents
 
         private void NotesPane_PropertiesChanged(object sender, EventArgs e)
         {
-            if (Caption != Pane.Caption) Caption = Pane.Caption;
-            if (Date != Pane.Date) Date = Pane.Date;
-            if (Description != Pane.Description) Description = Pane.Description;
+            if (Caption != Pane.Caption)
+            {
+                Caption = Pane.Caption;
+                Doc.Saved = false;
+            }
+            if (Date != Pane.Date)
+            {
+                Date = Pane.Date;
+                Doc.Saved = false;
+            }
+            if (Description != Pane.Description)
+            {
+                Description = Pane.Description;
+                Doc.Saved = false;
+            }
+
             if (DataSet.HasChanges())
             {
                 HiddenPowerDocument.CommitVariable(array: Doc.Variables, variableName: Const.Globals.XML_VARIABLE_NAME, dataSet: DataSet);
+                Doc.Saved = false;
             }
         }
 
@@ -60,8 +74,6 @@ namespace WordHiddenPowers.Documents
                 return CustomPane.Control as NotesPane;
             }           
         }
-
-        public bool HasChanges { get; }
 
         public string FileName { get; }
 
