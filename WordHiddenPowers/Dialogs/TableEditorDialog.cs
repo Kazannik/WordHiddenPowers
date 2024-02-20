@@ -33,7 +33,22 @@ namespace WordHiddenPowers.Dialogs
                 tableEditBox.Table = new Data.Table(tableEditBox.DataSet.RowsHeaders.Count, tableEditBox.DataSet.ColumnsHeaders.Count);
             }
         }
-                
+
+        private void SaveValues()
+        {
+            tableEditBox.CommitValue();
+            Word.Variable variable = GetVariable(document.Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+            if (variable != null)
+            {
+                variable.Value = tableEditBox.Table.ToString();
+            }
+            else
+            {
+                document.Doc.Variables.Add(Const.Globals.TABLE_VARIABLE_NAME, tableEditBox.Table.ToString());
+            }
+            document.Doc.Saved = false;
+        }
+
         private Word.Variable GetVariable(Word.Variables array, string variableName)
         {
             for (int i = 1; i <= array.Count; i++)
@@ -63,7 +78,7 @@ namespace WordHiddenPowers.Dialogs
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            tableEditBox.CommitValue();
+            SaveValues();
         }
 
         private void TableEditorDialog_FormClosing(object sender, FormClosingEventArgs e)
@@ -75,18 +90,7 @@ namespace WordHiddenPowers.Dialogs
                     DialogResult result = MessageBox.Show("Зафиксировать табличные данные?", "Табличные данные", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                     if (result == DialogResult.Yes)
                     {
-                        tableEditBox.CommitValue();
-
-                        Word.Variable variable = GetVariable(document.Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
-                        if (variable != null)
-                        {
-                            variable.Value = tableEditBox.Table.ToString();
-                        }
-                        else
-                        {
-                            document.Doc.Variables.Add(Const.Globals.TABLE_VARIABLE_NAME, tableEditBox.Table.ToString());
-                        }
-                        document.Doc.Saved = false;
+                        SaveValues();
                     }
                     else if (result == DialogResult.Cancel)
                     {
@@ -94,6 +98,6 @@ namespace WordHiddenPowers.Dialogs
                     }
                 }                
             }
-        }
+        }        
     }
 }
