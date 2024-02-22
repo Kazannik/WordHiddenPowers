@@ -1,25 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using WordHiddenPowers.Repositoryes;
 
-namespace WordHiddenPowers.Categories
+namespace WordHiddenPowers.Repositoryes.Categories
 {
     public class Category: IComparable<Category>, Controls.ComboControl<Category>.IComboBoxItem
     {
         public static Category Create(DataRow dataRow)
         {
             return new Category(id: (int)dataRow["id"],
-                caption: dataRow["Caption"] as string,
-                description: dataRow["Description"] as string,
+                caption: dataRow.IsNull("Caption") ? string.Empty : dataRow["Caption"] as string,
+                description: dataRow.IsNull("Description") ? string.Empty : dataRow["Description"] as string,
                 isObligatory: (bool)dataRow["IsObligatory"]);
         }
 
         public static Category Create(RepositoryDataSet.CategoriesRow dataRow)
         {
             return new Category(id: dataRow.id,
-                caption: dataRow.Caption,
-                description: dataRow.Description,
+                caption: dataRow.IsCaptionNull() ? string.Empty : dataRow.Caption,
+                description: dataRow.IsDescriptionNull() ? string.Empty : dataRow.Description,
                 isObligatory: dataRow.IsObligatory);
         }
 
@@ -104,7 +103,7 @@ namespace WordHiddenPowers.Categories
             {
                 try
                 {
-                    return Decimal.Compare(x.Id, y.Id);
+                    return x.Id.CompareTo(y.Id);
                 }
                 catch (Exception)
                 { return 0; }

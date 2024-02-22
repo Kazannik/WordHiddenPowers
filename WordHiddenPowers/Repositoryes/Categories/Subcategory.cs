@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using WordHiddenPowers.Repositoryes;
 
-namespace WordHiddenPowers.Categories
+namespace WordHiddenPowers.Repositoryes.Categories
 {
     public class Subcategory : IComparable<Subcategory>, Controls.ComboControl<Subcategory>.IComboBoxItem
     {
@@ -11,8 +10,8 @@ namespace WordHiddenPowers.Categories
         {
             return new Subcategory(category: category,
                 id: (int)dataRow["id"],
-                caption: dataRow["Caption"] as string,
-                description: dataRow["Description"] as string,
+                caption: dataRow.IsNull("Caption") ? string.Empty : dataRow["Caption"] as string,
+                description: dataRow.IsNull("Description") ? string.Empty : dataRow["Description"] as string,
                 isDecimal: (bool)dataRow["IsDecimal"],
                 isText: (bool)dataRow["IsText"], 
                 isObligatory: (bool)dataRow["IsObligatory"]);
@@ -22,8 +21,8 @@ namespace WordHiddenPowers.Categories
         {
             return new Subcategory(category: category,
                 id: dataRow.id,
-                caption: dataRow.Caption,
-                description: dataRow.Description,
+                caption: dataRow.IsCaptionNull() ? string.Empty : dataRow.Caption,
+                description: dataRow.IsDescriptionNull() ? string.Empty : dataRow.Description,
                 isDecimal: dataRow.IsDecimal,
                 isText: dataRow.IsText,
                 isObligatory: dataRow.IsObligatory);
@@ -128,8 +127,8 @@ namespace WordHiddenPowers.Categories
             {
                 try
                 {
-                    return Decimal.Compare(x.Category.Id, y.Category.Id) == 0 ?  
-                        Decimal.Compare(x.Id, y.Id): 0;
+                    return x.Category.CompareTo(y.Category) == 0 ?  
+                        x.Id.CompareTo(y.Id): 0;
                 }
                 catch (Exception)
                 { return 0; }

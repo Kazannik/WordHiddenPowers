@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using WordHiddenPowers.Categories;
 using WordHiddenPowers.Repositoryes;
+using WordHiddenPowers.Repositoryes.Categories;
 
 namespace WordHiddenPowers.Utils
 {

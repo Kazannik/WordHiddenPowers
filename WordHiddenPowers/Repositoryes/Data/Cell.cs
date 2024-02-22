@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WordHiddenPowers.Data
+namespace WordHiddenPowers.Repositoryes.Data
 {
     public class Cell: IComparable<Cell>, IComparable<int>
     {
@@ -11,16 +11,15 @@ namespace WordHiddenPowers.Data
             this.Value = 0;
         }
 
-       public int Index { get { return Row.IndexOf(this); } }
+        public int Index { get { return Row.IndexOf(this); } }
 
         public Row Row { get; internal set; }
 
         public int Value { get; set; }
-        
-               
+                       
         public int ToInt()
         {
-            return this.Value;
+            return Value;
         }
         
         public static explicit operator int(Cell cell)
@@ -56,15 +55,15 @@ namespace WordHiddenPowers.Data
             return a;
         }
 
-        public static Cell operator +(Cell cell, int i)
+        public static Cell operator +(Cell cell, int value)
         {
-            cell.Value += i;
+            cell.Value += value;
             return cell;
         }
 
-        public static Cell operator -(Cell cell, int i)
+        public static Cell operator -(Cell cell, int value)
         {
-            cell.Value -= i;            
+            cell.Value -= value;            
             return cell;
         }
 
@@ -96,32 +95,32 @@ namespace WordHiddenPowers.Data
             return Compare(x, y) <= 0;
         }
 
-        public static bool operator ==(Cell x, int y)
+        public static bool operator ==(Cell cell, int value)
         {
-            return Compare(x, y) == 0;
+            return Compare(cell, value) == 0;
         }
 
-        public static bool operator !=(Cell x, int y)
+        public static bool operator !=(Cell cell, int value)
         {
-            return Compare(x, y) != 0;
+            return Compare(cell, value) != 0;
         }
 
-        public static bool operator >(Cell x, int y)
+        public static bool operator >(Cell cell, int value)
         {
-            return Compare(x, y) > 0;
+            return Compare(cell, value) > 0;
         }
-        public static bool operator <(Cell x, int y)
+        public static bool operator <(Cell cell, int value)
         {
-            return Compare(x, y) < 0;
+            return Compare(cell, value) < 0;
         }
 
-        public static bool operator >=(Cell x, int y)
+        public static bool operator >=(Cell cell, int value)
         {
-            return Compare(x, y) >= 0;
+            return Compare(cell, value) >= 0;
         }
-        public static bool operator <=(Cell x, int y)
+        public static bool operator <=(Cell cell, int value)
         {
-            return Compare(x, y) <= 0;
+            return Compare(cell, value) <= 0;
         }
 
         public int CompareTo(Cell value)
@@ -148,20 +147,20 @@ namespace WordHiddenPowers.Data
             throw new ArgumentException();
         }
 
-        public static int Compare(Cell x, int y)
+        public static int Compare(Cell cell, int value)
         {
-            if (!Equals(x, null) & !Equals(y, null))
+            if (!Equals(cell, null) & !Equals(value, null))
             {
                 try
                 {
-                    return Decimal.Compare(x.Value, y);
+                    return Decimal.Compare(cell.Value, value);
                 }
                 catch (Exception)
                 { return 0; }
             }
-            else if (!Equals(x, null) & Equals(y, null))
+            else if (!Equals(cell, null) & Equals(value, null))
             { return 1; }
-            else if (Equals(x, null) & !Equals(y, null))
+            else if (Equals(cell, null) & !Equals(value, null))
             { return -1; }
             else { return 0; }
         }

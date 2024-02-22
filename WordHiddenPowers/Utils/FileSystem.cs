@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
-using WordHiddenPowers.Data;
 using WordHiddenPowers.Repositoryes;
+using WordHiddenPowers.Repositoryes.Data;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Utils

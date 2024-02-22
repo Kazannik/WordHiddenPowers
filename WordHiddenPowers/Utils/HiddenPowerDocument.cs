@@ -2,8 +2,8 @@
 using System.Data;
 using System.IO;
 using System.Text;
-using WordHiddenPowers.Data;
 using WordHiddenPowers.Repositoryes;
+using WordHiddenPowers.Repositoryes.Data;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Utils
@@ -20,6 +20,12 @@ namespace WordHiddenPowers.Utils
             return null;
         }
 
+
+        public static bool ExistsVariable(Word.Variables array, string variableName)
+        {
+            return GetVariable(array: array, variableName: variableName) != null;            
+        }
+
         public static string GetVariableValue(Word.Variables array, string variableName)
         {
             Word.Variable variable = GetVariable(array: array, variableName: variableName);
@@ -31,6 +37,12 @@ namespace WordHiddenPowers.Utils
 
         public static void CommitVariable(Word.Variables array, string variableName, string value)
         {
+            if (!string.IsNullOrEmpty(value) && value.Length > 65280)
+            {
+                ShowDialogUtil.ShowErrorDialog("Длина значения сохраняемой переменной не может превышать 65280 знаков!");
+                return;
+            }
+
             Word.Variable variable = GetVariable(array: array, variableName: variableName);
             if (variable == null && !string.IsNullOrWhiteSpace(value))
                 array.Add(variableName, value);
@@ -44,7 +56,24 @@ namespace WordHiddenPowers.Utils
             StringWriter writer = new StringWriter(builder);
             dataSet.WriteXml(writer, XmlWriteMode.WriteSchema);
             writer.Close();
-            CommitVariable(array: array, variableName: variableName, value: builder.ToString());
+
+            string xml = builder.ToString();
+            if (xml.Length <= 65280)
+            {
+                CommitVariable(array: array, variableName: variableName, value: xml);
+            }
+            else
+            {
+                int i = 0;
+                do
+                {
+                    CommitVariable(array: array, variableName: variableName + "_" + i.ToString(), value: xml.Substring(0, 65280));
+                    i += 1;
+                    xml = xml.Substring(65280);
+                } while (xml.Length > 65280);
+
+                CommitVariable(array: array, variableName: variableName + "_" + i.ToString(), value: xml);
+            }
         }
 
         public static void DeleteVariable(Word.Variables array, string variableName)
@@ -55,17 +84,17 @@ namespace WordHiddenPowers.Utils
                 
         public static string GetCaption(Word._Document Doc)
         {
-            return GetVariableValue(Doc.Variables, Const.Globals.CAPTION_VARIABLE_NAME);
+            return GetVariableValue(array: Doc.Variables, variableName: Const.Globals.CAPTION_VARIABLE_NAME);
         }
 
         public static string GetDescription(Word._Document Doc)
         {
-            return GetVariableValue(Doc.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME);
+            return GetVariableValue(array: Doc.Variables, variableName: Const.Globals.DESCRIPTION_VARIABLE_NAME);
         }
 
         public static DateTime GetDate(Word._Document Doc)
         {
-            string value = GetVariableValue(Doc.Variables, Const.Globals.DATE_VARIABLE_NAME);
+            string value = GetVariableValue(array: Doc.Variables, variableName: Const.Globals.DATE_VARIABLE_NAME);
             DateTime result;
             if (DateTime.TryParse(value, out result))
             {
@@ -79,15 +108,13 @@ namespace WordHiddenPowers.Utils
 
         public static Table GetTable(Word._Document Doc)
         {
-            string value = GetVariableValue(Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+            string value = GetVariableValue(array: Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME);
             return Table.Create(value);            
         }
         
         public static bool ExistsContent(Word._Document Doc)
         {
-            Word.Variable content = HiddenPowerDocument.GetVariable(Doc.Variables,
-                   Const.Globals.XML_VARIABLE_NAME);
-            return content != null;            
+            return GetVariable(array: Doc.Variables, variableName: Const.Globals.XML_VARIABLE_NAME) != null;
         }
     }
 }

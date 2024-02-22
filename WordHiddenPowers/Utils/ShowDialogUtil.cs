@@ -31,5 +31,13 @@ namespace WordHiddenPowers.Utils
             mainWindow.ReleaseHandle();
             return dialogResult;
         }
+
+        public static void Show(Form form)
+        {
+            NativeWindow mainWindow = new NativeWindow();
+            mainWindow.AssignHandle(Process.GetCurrentProcess().MainWindowHandle);
+            form.Show(mainWindow);
+            mainWindow.ReleaseHandle();
+        }
     }
 }

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace WordHiddenPowers.Data
+namespace WordHiddenPowers.Repositoryes.Data
 {
     public class Row : List<Cell>, IComparable<Row>
     {
@@ -87,6 +83,25 @@ namespace WordHiddenPowers.Data
             return a;
         }
 
+
+        public static Row operator *(Row row, int value)
+        {
+            for (int c = 0; c < row.Count; c++)
+            {
+                row[c].Value *= value;
+            }
+            return row;
+        }
+
+        public static Row operator /(Row row, int value)
+        {
+            for (int c = 0; c < row.Count; c++)
+            {
+                row[c].Value /= value;
+            }
+            return row;
+        }
+
         public static bool operator ==(Row x, Row y)
         {
             return Compare(x, y) == 0;
@@ -142,10 +157,9 @@ namespace WordHiddenPowers.Data
                 {
                     for (int c = 0; c < x.Count; c++)
                     {
-                        
+                        int compare = x.CompareTo(y);
+                        if (compare != 0) return compare;
                     }
-
-
                     return 0;
                 }
                 catch (Exception)

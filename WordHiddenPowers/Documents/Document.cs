@@ -1,17 +1,16 @@
 ﻿using Microsoft.Office.Tools;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Text;
-using WordHiddenPowers.Data;
+using System.Windows.Forms;
+using WordHiddenPowers.Dialogs;
 using WordHiddenPowers.Panes;
 using WordHiddenPowers.Repositoryes;
-using Word = Microsoft.Office.Interop.Word;
-using Office = Microsoft.Office.Core;
-using WordHiddenPowers.Dialogs;
-using System.Windows.Forms;
+using WordHiddenPowers.Repositoryes.Data;
 using WordHiddenPowers.Utils;
-using System.Collections.Generic;
+using Office = Microsoft.Office.Core;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Documents
 {
@@ -133,17 +132,21 @@ namespace WordHiddenPowers.Documents
             {
                 if (dataSet == null)
                 {
-                    dataSet = new RepositoryDataSet();
-                    Word.Variable content = HiddenPowerDocument.GetVariable(Doc.Variables, Const.Globals.XML_VARIABLE_NAME);
-                    if (content != null)
-                    {
-                        StringReader reader = new StringReader(content.Value);
-                        dataSet.ReadXml(reader, XmlReadMode.IgnoreSchema);
-                        reader.Close();                        
-                    }
-                    dataSet.AcceptChanges();
+                    dataSet = Xml.GetDataSet(Doc: Doc);                        
                 }
                 return dataSet;
+            }
+        }
+
+        public RepositoryDataSet ImportDataSet
+        {
+            get
+            {
+                if (importDataSet == null)
+                {
+                    importDataSet = Xml.GetDataSet(Doc: Doc, variableName: Const.Globals.XML_IMPORT_VARIABLE_NAME);                    
+                }
+                return importDataSet;
             }
         }
 
@@ -222,6 +225,11 @@ namespace WordHiddenPowers.Documents
             {                
                 HiddenPowerDocument.CommitVariable(Doc.Variables, Const.Globals.XML_VARIABLE_NAME, DataSet);
             }
+
+            if (ImportDataSet.HasChanges())
+            {
+                HiddenPowerDocument.CommitVariable(Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME, ImportDataSet);
+            }
         }
            
 
@@ -263,7 +271,14 @@ namespace WordHiddenPowers.Documents
                 if (content != null)
                 {
                     return true;
-                }               
+                }
+
+                Word.Variable import = HiddenPowerDocument.GetVariable(Doc.Variables,
+                    Const.Globals.XML_IMPORT_VARIABLE_NAME);
+                if (import != null)
+                {
+                    return true;
+                }
             }
             return false;
         }
@@ -282,6 +297,7 @@ namespace WordHiddenPowers.Documents
                 HiddenPowerDocument.DeleteVariable(Doc.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME);
                 HiddenPowerDocument.DeleteVariable(Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
                 HiddenPowerDocument.DeleteVariable(Doc.Variables, Const.Globals.XML_VARIABLE_NAME);
+                HiddenPowerDocument.DeleteVariable(Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME);
             }
         }
 
@@ -329,23 +345,25 @@ namespace WordHiddenPowers.Documents
             if (ShowDialogUtil.ShowDialogObj(dialog) == DialogResult.OK)
             {
                 importDataSet = FileSystem.ImportFiles(dialog.SelectedPath);
+                HiddenPowerDocument.CommitVariable(Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME, ImportDataSet);
+                Doc.Saved = false;
             }
         }
 
         public void ShowTableViewerDialog()
         {
-            TableViewerDialog dialog = new TableViewerDialog(importDataSet);
+            TableViewerDialog dialog = new TableViewerDialog(ImportDataSet);
             dialogs.Add(dialog);
             ShowDialogUtil.ShowDialog(dialog);
         }
 
         public void ShowAnalizerDialog()
         {
-
+            AnalyzerDialog dialog = new AnalyzerDialog(ImportDataSet);
+            dialogs.Add(dialog);
+            ShowDialogUtil.Show(dialog);
         }
-
-       
-
+        
         public void AddTextNote(Word.Selection selection)
         {
             TextNoteDialog dialog = new TextNoteDialog(DataSet, selection);

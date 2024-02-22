@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WordHiddenPowers.Data
+namespace WordHiddenPowers.Repositoryes.Data
 {
     public class Table
     {

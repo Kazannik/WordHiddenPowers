@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using WordHiddenPowers.Data;
 using WordHiddenPowers.Repositoryes;
+using WordHiddenPowers.Repositoryes.Data;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Dialogs
@@ -19,12 +19,12 @@ namespace WordHiddenPowers.Dialogs
 
         public TableViewerDialog(RepositoryDataSet dataSet)
         {
+            this.dataSet = dataSet;
+
             InitializeComponent();
 
             nameLabel.Text = "";
-
-            this.dataSet = dataSet;
-            
+                        
             tableEditBox.DataSet = this.dataSet;
 
             InitializeDatabase();

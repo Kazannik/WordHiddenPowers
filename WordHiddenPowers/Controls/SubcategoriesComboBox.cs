@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
-using WordHiddenPowers.Categories;
 using WordHiddenPowers.Repositoryes;
+using WordHiddenPowers.Repositoryes.Categories;
 
 namespace WordHiddenPowers.Controls
 {

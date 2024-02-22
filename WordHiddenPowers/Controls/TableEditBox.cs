@@ -1,15 +1,16 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
+using System.Drawing;
 using System.Windows.Forms;
 using WordHiddenPowers.Repositoryes;
-using System;
-using System.Drawing;
+using WordHiddenPowers.Repositoryes.Data;
 
 namespace WordHiddenPowers.Controls
 {
     public partial class TableEditBox : UserControl
     {
         private RepositoryDataSet source;
-        private Data.Table table;
+        private Table table;
 
         public TableEditBox()
         {
@@ -31,7 +32,7 @@ namespace WordHiddenPowers.Controls
             }            
         }
         
-        public Data.Table Table
+        public Table Table
         {
             get
             {

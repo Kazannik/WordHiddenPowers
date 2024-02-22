@@ -10,5 +10,11 @@
         public const string XML_VARIABLE_NAME = "XmlHiddenPower";
         public const string TABLE_VARIABLE_NAME = "TableHiddenPower";
 
+        /// <summary>
+        /// Имя переменной для хранения результатов импорта данных.
+        /// </summary>
+        public const string XML_IMPORT_VARIABLE_NAME = "78B817AB-4941-4CD9-9830-E39D15BBE28B";
+
+
     }
 }

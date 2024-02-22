@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms.Design;
-using WordHiddenPowers.Categories;
 using WordHiddenPowers.Repositoryes;
+using WordHiddenPowers.Repositoryes.Categories;
 
 namespace WordHiddenPowers.Controls
 {

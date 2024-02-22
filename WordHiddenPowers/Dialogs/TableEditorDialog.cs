@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using Word = Microsoft.Office.Interop.Word;
+using WordHiddenPowers.Repositoryes.Data;
 
 namespace WordHiddenPowers.Dialogs
 {
@@ -18,49 +18,31 @@ namespace WordHiddenPowers.Dialogs
 
             tableEditBox.DataSet = this.document.DataSet;
 
+            deleteButton.Enabled = Utils.HiddenPowerDocument.ExistsVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME);
+
             ReadValues();
         }
-
-        
+                
         private void ReadValues()
         {
-            Word.Variable variable = GetVariable(document.Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
-            if (variable != null)
+            string tableContext = Utils.HiddenPowerDocument.GetVariableValue(document.Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+            if (string.IsNullOrWhiteSpace(tableContext))
             {
-                tableEditBox.Table = Data.Table.Create(variable.Value);                
-            } else
+                tableEditBox.Table = new Table(tableEditBox.DataSet.RowsHeaders.Count, tableEditBox.DataSet.ColumnsHeaders.Count);
+            }
+            else
             {
-                tableEditBox.Table = new Data.Table(tableEditBox.DataSet.RowsHeaders.Count, tableEditBox.DataSet.ColumnsHeaders.Count);
+                tableEditBox.Table = Table.Create(tableContext);
             }
         }
 
         private void SaveValues()
         {
             tableEditBox.CommitValue();
-            Word.Variable variable = GetVariable(document.Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
-            if (variable != null)
-            {
-                variable.Value = tableEditBox.Table.ToString();
-            }
-            else
-            {
-                document.Doc.Variables.Add(Const.Globals.TABLE_VARIABLE_NAME, tableEditBox.Table.ToString());
-            }
+            Utils.HiddenPowerDocument.CommitVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME, value: tableEditBox.Table.ToString());
             document.Doc.Saved = false;
         }
-
-        private Word.Variable GetVariable(Word.Variables array, string variableName)
-        {
-            for (int i = 1; i <= array.Count; i++)
-            {
-                if (array[i].Name == variableName)
-                {
-                    return array[i];
-                }
-            }
-            return null;
-        }
-
+        
         private void tableEditBox_ValueChanged(object sender, EventArgs e)
         {
             saveButton.Enabled = tableEditBox.IsChanged;
@@ -69,6 +51,19 @@ namespace WordHiddenPowers.Dialogs
         private void clearButton_Click(object sender, EventArgs e)
         {
             tableEditBox.ClearValues();
+        }
+
+        private void deleteButton_Click(object sender, EventArgs e)
+        {
+            if (Utils.HiddenPowerDocument.ExistsVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME))
+            {
+                DialogResult result = MessageBox.Show(this, "Удалить таблицу с данными из документа?", "Табличные данные", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    Utils.HiddenPowerDocument.DeleteVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME);
+                    Close();
+                }
+            }
         }
 
         private void refreshButton_Click(object sender, EventArgs e)
@@ -87,7 +82,7 @@ namespace WordHiddenPowers.Dialogs
             {
                 if (tableEditBox.IsChanged)
                 {
-                    DialogResult result = MessageBox.Show("Зафиксировать табличные данные?", "Табличные данные", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                    DialogResult result = MessageBox.Show(this, "Зафиксировать табличные данные?", "Табличные данные", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                     if (result == DialogResult.Yes)
                     {
                         SaveValues();

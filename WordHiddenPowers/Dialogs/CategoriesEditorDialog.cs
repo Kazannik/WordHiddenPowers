@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using WordHiddenPowers.Categories;
+using WordHiddenPowers.Repositoryes.Categories;
 using WordHiddenPowers.Utils;
 
 namespace WordHiddenPowers.Dialogs

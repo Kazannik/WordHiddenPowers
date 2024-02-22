@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using WordHiddenPowers.Categories;
+using WordHiddenPowers.Repositoryes.Categories;
 
 namespace WordHiddenPowers.Repositoryes
 {

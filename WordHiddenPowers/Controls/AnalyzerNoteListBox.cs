@@ -8,7 +8,7 @@ using System;
 
 namespace WordHiddenPowers.Controls
 {
-    public class NoteListBox : ListBox
+    public class AnalyzerNoteListBox : ListBox
     {
         private RepositoryDataSet source;
 
@@ -156,10 +156,10 @@ namespace WordHiddenPowers.Controls
             return null;
         }
 
-        public NoteListBox()
+        public AnalyzerNoteListBox()
         {
             DrawMode = DrawMode.OwnerDrawFixed;
-            ItemHeight = 40;
+            ItemHeight = 200;
         }
         
         protected override void Sort()
@@ -209,13 +209,11 @@ namespace WordHiddenPowers.Controls
         
         public int Add(Note item)
         {
-            item.owner = this;
             return Items.Add(item);
         }
        
         public void Insert(int index, Note item)
         {
-            item.owner = this;
             Items.Insert(index, item);
         }
         
@@ -402,6 +400,7 @@ namespace WordHiddenPowers.Controls
             if (DesignMode || source == null) return;
 
             BeginUpdate();
+
             IDictionary<int, Category> categories = new Dictionary<int, Category>();
             if (source.Categories.Rows.Count > 0)
             {
@@ -438,7 +437,7 @@ namespace WordHiddenPowers.Controls
             if (source.TextPowers.Rows.Count > 0 ||
                 source.DecimalPowers.Rows.Count > 0)
             {
-                foreach (Note note in source.GetNotes())
+                foreach (Note note in source.GetNotesSort())
                 {
                     Add(note);
                 }

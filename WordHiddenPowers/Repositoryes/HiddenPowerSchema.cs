@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using WordHiddenPowers.Categories;
+using WordHiddenPowers.Repositoryes.Categories;
 
 namespace WordHiddenPowers.Repositoryes
 {
@@ -28,6 +28,14 @@ namespace WordHiddenPowers.Repositoryes
             return ((from row in TextPowers select Note.Create(row, GetSubcategory(row.subcategory_id)))
                 .Union(from row in DecimalPowers select Note.Create(row, GetSubcategory(row.subcategory_id))))
                 .OrderBy(n => n.WordSelectionStart);
+        }
+
+
+        public IEnumerable<Note> GetNotesSort()
+        {
+            return ((from row in TextPowers select Note.Create(row, GetSubcategory(row.subcategory_id)))
+                .Union(from row in DecimalPowers select Note.Create(row, GetSubcategory(row.subcategory_id))))
+                .OrderBy(n => n.Subcategory.Id);
         }
 
         private Subcategory GetSubcategory(int id)
@@ -94,7 +102,6 @@ namespace WordHiddenPowers.Repositoryes
 
         partial class DecimalPowersDataTable
         {
-
             public void Set(int id, int categoryId, int subcategoryId, string description, double value, int reiting, int wordSelectionStart, int wordSelectionEnd)
             {
                 DecimalPowersRow row = GetRow(id) as DecimalPowersRow;
