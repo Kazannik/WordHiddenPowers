@@ -138,7 +138,6 @@ namespace WordHiddenPowers.Documents
             {
                 documents.Add(Doc.DocID, Document.Create(this, Doc.FullName, Doc));
             }
-            paneVisibleButton.Checked = ActiveDocument.CustomPane.Visible;
         }
 
         public void Remove(Word.Document Doc)
