@@ -33,6 +33,7 @@ namespace WordHiddenPowers.Documents
                     pane = Globals.ThisAddIn.CustomTaskPanes.Add(new NotesPane(this), Const.Panes.PANE_TITLE);
                     pane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
                     pane.Width = 400;
+                    pane.Visible = false;
                     pane.VisibleChanged += new EventHandler(Pane_VisibleChanged);
                     NotesPane note = pane.Control as NotesPane;
                     note.PropertiesChanged += new EventHandler<EventArgs>(NotesPane_PropertiesChanged);
