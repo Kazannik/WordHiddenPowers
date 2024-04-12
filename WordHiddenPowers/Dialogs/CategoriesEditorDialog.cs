@@ -215,7 +215,7 @@ namespace WordHiddenPowers.Dialogs
                     DialogResult result = MessageBox.Show("Зафиксировать категории данных?", "Категории данные", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                     if (result == DialogResult.Yes)
                     {
-                        HiddenPowerDocument.CommitVariable(document.Doc.Variables, Const.Globals.XML_VARIABLE_NAME, document.DataSet);
+                        Content.CommitVariable(document.Doc.Variables, Const.Globals.XML_VARIABLE_NAME, document.DataSet);
                     }
                     else if (result == DialogResult.Cancel)
                     {

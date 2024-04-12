@@ -111,7 +111,7 @@ namespace WordHiddenPowers.Dialogs
             if (document.DataSet.RowsHeaders.Rows.Count != (dataGridView.Rows.Count - 1) ||
                     document.DataSet.ColumnsHeaders.Rows.Count != (dataGridView.Columns.Count - 1))
             {
-                Word.Variable variable = HiddenPowerDocument.GetVariable(document.Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+                Word.Variable variable = Content.GetVariable(document.Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
                 if (variable != null)
                 {
                     variable.Delete();
@@ -133,7 +133,7 @@ namespace WordHiddenPowers.Dialogs
                 document.DataSet.RowsHeaders.Rows.Add(new object[] { null, dataGridView.Rows[i].Cells["HEADER"].Value.ToString() });
             }
             
-            HiddenPowerDocument.CommitVariable(document.Doc.Variables, Const.Globals.XML_VARIABLE_NAME, document.DataSet);
+            Content.CommitVariable(document.Doc.Variables, Const.Globals.XML_VARIABLE_NAME, document.DataSet);
         }
 
         private void Delete_Click(object sender, EventArgs e)

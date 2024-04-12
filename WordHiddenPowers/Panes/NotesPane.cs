@@ -193,16 +193,16 @@ namespace WordHiddenPowers.Panes
                     captionComboBox.EndUpdate();
                 }
 
-                string caption = HiddenPowerDocument.GetVariableValue(Document.Doc.Variables, Const.Globals.CAPTION_VARIABLE_NAME);
+                string caption = Content.GetVariableValue(Document.Doc.Variables, Const.Globals.CAPTION_VARIABLE_NAME);
                 if (captionComboBox.Text != caption)
                     captionComboBox.Text = caption;
 
-                string strDate = HiddenPowerDocument.GetVariableValue(Document.Doc.Variables, Const.Globals.DATE_VARIABLE_NAME);
+                string strDate = Content.GetVariableValue(Document.Doc.Variables, Const.Globals.DATE_VARIABLE_NAME);
                 DateTime date = string.IsNullOrWhiteSpace(strDate) ? DateTime.Today: DateTime.Parse(strDate);
                 if (dateTimePicker.Value != date)
                     dateTimePicker.Value = date; 
 
-                string description = HiddenPowerDocument.GetVariableValue(Document.Doc.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME);
+                string description = Content.GetVariableValue(Document.Doc.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME);
                 if (descriptionTextBox.Text != description)
                     descriptionTextBox.Text = description;
             }
@@ -211,7 +211,7 @@ namespace WordHiddenPowers.Panes
 
         public bool DataSetRefresh()
         {
-            Word.Variable content = HiddenPowerDocument.GetVariable(Document.Doc.Variables, Const.Globals.XML_VARIABLE_NAME);
+            Word.Variable content = Content.GetVariable(Document.Doc.Variables, Const.Globals.XML_VARIABLE_NAME);
             if (content != null)
             {
                 foreach (DataTable table in Document.DataSet.Tables)

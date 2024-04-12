@@ -28,7 +28,7 @@ namespace WordHiddenPowers.Utils
                         {
                             Word._Document document = application.Documents.Open(FileName: file.FullName, ReadOnly: true, Visible: false);
 
-                            if (HiddenPowerDocument.ExistsContent(document))
+                            if (Content.ExistsContent(document))
                             {
                                 if (loadModel)
                                 {
@@ -38,10 +38,10 @@ namespace WordHiddenPowers.Utils
 
                                 RepositoryDataSet documentDataSet = Xml.GetDataSet(document);
                                 string fileName = document.FullName;
-                                string caption = HiddenPowerDocument.GetCaption(document);
-                                string description = HiddenPowerDocument.GetDescription(document);
-                                DateTime date = HiddenPowerDocument.GetDate(document);
-                                Table table = HiddenPowerDocument.GetTable(document);
+                                string caption = Content.GetCaption(document);
+                                string description = Content.GetDescription(document);
+                                DateTime date = Content.GetDate(document);
+                                Table table = Content.GetTable(document);
                                 foreach (Note note in documentDataSet.GetNotes())
                                 {
                                     dataSet.AddNote(note, fileName, caption, description, date);

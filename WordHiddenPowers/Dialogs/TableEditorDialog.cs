@@ -18,14 +18,14 @@ namespace WordHiddenPowers.Dialogs
 
             tableEditBox.DataSet = this.document.DataSet;
 
-            deleteButton.Enabled = Utils.HiddenPowerDocument.ExistsVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME);
+            deleteButton.Enabled = Utils.Content.ExistsVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME);
 
             ReadValues();
         }
                 
         private void ReadValues()
         {
-            string tableContext = Utils.HiddenPowerDocument.GetVariableValue(document.Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+            string tableContext = Utils.Content.GetVariableValue(document.Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
             if (string.IsNullOrWhiteSpace(tableContext))
             {
                 tableEditBox.Table = new Table(tableEditBox.DataSet.RowsHeaders.Count, tableEditBox.DataSet.ColumnsHeaders.Count);
@@ -39,7 +39,7 @@ namespace WordHiddenPowers.Dialogs
         private void SaveValues()
         {
             tableEditBox.CommitValue();
-            Utils.HiddenPowerDocument.CommitVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME, value: tableEditBox.Table.ToString());
+            Utils.Content.CommitVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME, value: tableEditBox.Table.ToString());
             document.Doc.Saved = false;
         }
         
@@ -55,12 +55,12 @@ namespace WordHiddenPowers.Dialogs
 
         private void deleteButton_Click(object sender, EventArgs e)
         {
-            if (Utils.HiddenPowerDocument.ExistsVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME))
+            if (Utils.Content.ExistsVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME))
             {
                 DialogResult result = MessageBox.Show(this, "Удалить таблицу с данными из документа?", "Табличные данные", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    Utils.HiddenPowerDocument.DeleteVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME);
+                    Utils.Content.DeleteVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME);
                     Close();
                 }
             }

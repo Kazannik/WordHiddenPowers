@@ -62,7 +62,7 @@ namespace WordHiddenPowers.Documents
 
             if (DataSet.HasChanges())
             {
-                HiddenPowerDocument.CommitVariable(array: Doc.Variables, variableName: Const.Globals.XML_VARIABLE_NAME, dataSet: DataSet);
+                Content.CommitVariable(array: Doc.Variables, variableName: Const.Globals.XML_VARIABLE_NAME, dataSet: DataSet);
                 Doc.Saved = false;
             }
         }
@@ -81,11 +81,11 @@ namespace WordHiddenPowers.Documents
         {
             get
             {
-                return HiddenPowerDocument.GetCaption(Doc);                
+                return Content.GetCaption(Doc);                
             } 
             set
             {
-                HiddenPowerDocument.CommitVariable(array: Doc.Variables, variableName: Const.Globals.CAPTION_VARIABLE_NAME, value: value);
+                Content.CommitVariable(array: Doc.Variables, variableName: Const.Globals.CAPTION_VARIABLE_NAME, value: value);
             }
         }
 
@@ -93,11 +93,11 @@ namespace WordHiddenPowers.Documents
         {
             get
             {
-                return HiddenPowerDocument.GetDate(Doc);        
+                return Content.GetDate(Doc);        
             }
             set
             {
-                HiddenPowerDocument.CommitVariable(array: Doc.Variables, variableName: Const.Globals.DATE_VARIABLE_NAME, value: value.ToShortDateString());
+                Content.CommitVariable(array: Doc.Variables, variableName: Const.Globals.DATE_VARIABLE_NAME, value: value.ToShortDateString());
             }
         }
 
@@ -105,11 +105,11 @@ namespace WordHiddenPowers.Documents
         {
             get
             {
-                return HiddenPowerDocument.GetDescription(Doc);                
+                return Content.GetDescription(Doc);                
             }
             set
             {
-                HiddenPowerDocument.CommitVariable(array: Doc.Variables, variableName: Const.Globals.DESCRIPTION_VARIABLE_NAME, value: value);
+                Content.CommitVariable(array: Doc.Variables, variableName: Const.Globals.DESCRIPTION_VARIABLE_NAME, value: value);
             }
         }
 
@@ -117,11 +117,11 @@ namespace WordHiddenPowers.Documents
         {
             get
             {
-                return HiddenPowerDocument.GetTable(Doc);               
+                return Content.GetTable(Doc);               
             }
             set
             {
-                HiddenPowerDocument.CommitVariable(Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME, value: value.ToString());
+                Content.CommitVariable(Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME, value: value.ToString());
             }
         }
 
@@ -217,19 +217,19 @@ namespace WordHiddenPowers.Documents
 
         public void CommitVariables()
         {
-            HiddenPowerDocument.CommitVariable(Doc.Variables, Const.Globals.CAPTION_VARIABLE_NAME, Caption);
-            HiddenPowerDocument.CommitVariable(Doc.Variables, Const.Globals.DATE_VARIABLE_NAME, Date.ToShortDateString());
-            HiddenPowerDocument.CommitVariable(Doc.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME, Description);
-            HiddenPowerDocument.CommitVariable(Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME, Table.ToString());
+            Content.CommitVariable(Doc.Variables, Const.Globals.CAPTION_VARIABLE_NAME, Caption);
+            Content.CommitVariable(Doc.Variables, Const.Globals.DATE_VARIABLE_NAME, Date.ToShortDateString());
+            Content.CommitVariable(Doc.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME, Description);
+            Content.CommitVariable(Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME, Table.ToString());
 
             if (DataSet.HasChanges())
             {                
-                HiddenPowerDocument.CommitVariable(Doc.Variables, Const.Globals.XML_VARIABLE_NAME, DataSet);
+                Content.CommitVariable(Doc.Variables, Const.Globals.XML_VARIABLE_NAME, DataSet);
             }
 
             if (ImportDataSet.HasChanges())
             {
-                HiddenPowerDocument.CommitVariable(Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME, ImportDataSet);
+                Content.CommitVariable(Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME, ImportDataSet);
             }
         }
            
@@ -239,42 +239,42 @@ namespace WordHiddenPowers.Documents
         {
             if (Doc.Variables.Count > 0)
             {
-                Word.Variable caption = HiddenPowerDocument.GetVariable(Doc.Variables,
+                Word.Variable caption = Content.GetVariable(Doc.Variables,
                     Const.Globals.CAPTION_VARIABLE_NAME);
                 if (caption != null)
                 {
                     return true;
                 }
 
-                Word.Variable date = HiddenPowerDocument.GetVariable(Doc.Variables,
+                Word.Variable date = Content.GetVariable(Doc.Variables,
                     Const.Globals.DATE_VARIABLE_NAME);
                 if (date != null)
                 {
                     return true;
                 }
 
-                Word.Variable description = HiddenPowerDocument.GetVariable(Doc.Variables,
+                Word.Variable description = Content.GetVariable(Doc.Variables,
                     Const.Globals.DESCRIPTION_VARIABLE_NAME);
                 if (description != null)
                 {
                     return true;
                 }
 
-                Word.Variable table = HiddenPowerDocument.GetVariable(Doc.Variables,
+                Word.Variable table = Content.GetVariable(Doc.Variables,
                     Const.Globals.TABLE_VARIABLE_NAME);
                 if (table != null)
                 {
                     return true;
                 }
 
-                Word.Variable content = HiddenPowerDocument.GetVariable(Doc.Variables,
+                Word.Variable content = Content.GetVariable(Doc.Variables,
                     Const.Globals.XML_VARIABLE_NAME);
                 if (content != null)
                 {
                     return true;
                 }
 
-                Word.Variable import = HiddenPowerDocument.GetVariable(Doc.Variables,
+                Word.Variable import = Content.GetVariable(Doc.Variables,
                     Const.Globals.XML_IMPORT_VARIABLE_NAME);
                 if (import != null)
                 {
@@ -293,12 +293,12 @@ namespace WordHiddenPowers.Documents
 
             if (Doc.Variables.Count > 0)
             {
-                HiddenPowerDocument.DeleteVariable(Doc.Variables, Const.Globals.CAPTION_VARIABLE_NAME);
-                HiddenPowerDocument.DeleteVariable(Doc.Variables, Const.Globals.DATE_VARIABLE_NAME);
-                HiddenPowerDocument.DeleteVariable(Doc.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME);
-                HiddenPowerDocument.DeleteVariable(Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
-                HiddenPowerDocument.DeleteVariable(Doc.Variables, Const.Globals.XML_VARIABLE_NAME);
-                HiddenPowerDocument.DeleteVariable(Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME);
+                Content.DeleteVariable(Doc.Variables, Const.Globals.CAPTION_VARIABLE_NAME);
+                Content.DeleteVariable(Doc.Variables, Const.Globals.DATE_VARIABLE_NAME);
+                Content.DeleteVariable(Doc.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME);
+                Content.DeleteVariable(Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+                Content.DeleteVariable(Doc.Variables, Const.Globals.XML_VARIABLE_NAME);
+                Content.DeleteVariable(Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME);
             }
         }
 
@@ -346,7 +346,7 @@ namespace WordHiddenPowers.Documents
             if (ShowDialogUtil.ShowDialogObj(dialog) == DialogResult.OK)
             {
                 importDataSet = FileSystem.ImportFiles(dialog.SelectedPath);
-                HiddenPowerDocument.CommitVariable(Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME, ImportDataSet);
+                Content.CommitVariable(Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME, ImportDataSet);
                 Doc.Saved = false;
             }
         }

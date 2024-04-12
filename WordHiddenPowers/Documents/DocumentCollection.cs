@@ -155,6 +155,18 @@ namespace WordHiddenPowers.Documents
             {
                 documents.Add(Doc.DocID, Document.Create(this, Doc.FullName, Doc));
             }
+            List<int> closeDocs = new List<int>();
+            foreach (Word.Document document in application.Documents)
+            {
+                if (!documents.ContainsKey(document.DocID))
+                    closeDocs.Add(document.DocID);                
+            }
+
+            foreach (int id in closeDocs)
+            {
+                documents.Remove(id);
+            }
+
             return documents[Doc.DocID];
         }
 

@@ -8,7 +8,7 @@ using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Utils
 {
-    public static class HiddenPowerDocument
+    public static class Content
     {
         public static Word.Variable GetVariable(Word.Variables array, string variableName)
         {

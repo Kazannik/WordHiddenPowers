@@ -17,7 +17,7 @@ namespace WordHiddenPowers.Utils
         public static RepositoryDataSet GetDataSet(Word._Document Doc, string variableName)
         {
             RepositoryDataSet dataSet = new RepositoryDataSet();
-            Word.Variable content = HiddenPowerDocument.GetVariable(array: Doc.Variables, variableName: variableName);
+            Word.Variable content = Content.GetVariable(array: Doc.Variables, variableName: variableName);
             if (content != null)
             {
                 SetXml(dataSet, content.Value);               
@@ -26,9 +26,9 @@ namespace WordHiddenPowers.Utils
             {
                 int i = 0;
                 string xml = string.Empty;
-                while (HiddenPowerDocument.ExistsVariable(array: Doc.Variables, variableName: variableName + "_" + i.ToString()))
+                while (Content.ExistsVariable(array: Doc.Variables, variableName: variableName + "_" + i.ToString()))
                 {
-                    content = HiddenPowerDocument.GetVariable(array: Doc.Variables, variableName: variableName + "_" + i.ToString());
+                    content = Content.GetVariable(array: Doc.Variables, variableName: variableName + "_" + i.ToString());
                     xml += content.Value;
                     i += 1;
                 }
