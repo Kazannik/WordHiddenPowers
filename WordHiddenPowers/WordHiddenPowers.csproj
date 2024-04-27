@@ -374,6 +374,7 @@
     <Compile Include="ThisAddIn.cs">
       <SubType>Code</SubType>
     </Compile>
+    <None Include="README.md" />
     <None Include="Repositoryes\HiddenPowerSchema.xsc">
       <DependentUpon>HiddenPowerSchema.xsd</DependentUpon>
     </None>
