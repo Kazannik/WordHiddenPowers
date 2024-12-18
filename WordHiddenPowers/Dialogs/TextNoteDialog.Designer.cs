@@ -37,21 +37,20 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.valueTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.valueTextBox.Location = new System.Drawing.Point(5, 69);
-            this.valueTextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.valueTextBox.Location = new System.Drawing.Point(6, 83);
+            this.valueTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.valueTextBox.Multiline = true;
             this.valueTextBox.Name = "valueTextBox";
             this.valueTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.valueTextBox.Size = new System.Drawing.Size(859, 235);
+            this.valueTextBox.Size = new System.Drawing.Size(685, 281);
             this.valueTextBox.TabIndex = 29;
             // 
             // TextNoteDialog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.ClientSize = new System.Drawing.Size(868, 422);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
+            this.ClientSize = new System.Drawing.Size(698, 506);
             this.Controls.Add(this.valueTextBox);
-            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "TextNoteDialog";
             this.Controls.SetChildIndex(this.valueTextBox, 0);
             this.ResumeLayout(false);

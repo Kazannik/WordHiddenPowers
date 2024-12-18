@@ -73,8 +73,6 @@ namespace WordHiddenPowers.Utils
             destinationDataSet.TextPowers.Clear();
             destinationDataSet.DocumentKeys.Clear();
             destinationDataSet.AcceptChanges();
-        }
-
-        
+        }        
     }
 }

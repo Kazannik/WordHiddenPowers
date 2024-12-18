@@ -5,16 +5,16 @@ namespace WordHiddenPowers.Utils
 {
     public static class ShowDialogUtil
     {
-        public static DialogResult ShowDialog(Form dialog)
+        public static DialogResult ShowDialog(Form form)
         {
             NativeWindow mainWindow = new NativeWindow();
             mainWindow.AssignHandle(Process.GetCurrentProcess().MainWindowHandle);
-            DialogResult dialogResult = dialog.ShowDialog(mainWindow);
+            DialogResult dialogResult = form.ShowDialog(mainWindow);
             mainWindow.ReleaseHandle();
             return dialogResult;
         }
 
-        public static DialogResult ShowDialogObj(dynamic dialog)
+        public static DialogResult ShowDialogO(CommonDialog dialog)
         {
             NativeWindow mainWindow = new NativeWindow();
             mainWindow.AssignHandle(Process.GetCurrentProcess().MainWindowHandle);

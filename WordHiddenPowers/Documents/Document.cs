@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Windows.Forms;
 using WordHiddenPowers.Dialogs;
 using WordHiddenPowers.Panes;
@@ -14,7 +13,7 @@ using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Documents
 {
-    public class Document: IDisposable
+    public class Document : IDisposable
     {
         private DocumentCollection parent;
 
@@ -70,9 +69,9 @@ namespace WordHiddenPowers.Documents
         public NotesPane Pane
         {
             get
-            {                
+            {
                 return CustomPane.Control as NotesPane;
-            }           
+            }
         }
 
         public string FileName { get; }
@@ -81,8 +80,8 @@ namespace WordHiddenPowers.Documents
         {
             get
             {
-                return Content.GetCaption(Doc);                
-            } 
+                return Content.GetCaption(Doc);
+            }
             set
             {
                 Content.CommitVariable(array: Doc.Variables, variableName: Const.Globals.CAPTION_VARIABLE_NAME, value: value);
@@ -93,7 +92,7 @@ namespace WordHiddenPowers.Documents
         {
             get
             {
-                return Content.GetDate(Doc);        
+                return Content.GetDate(Doc);
             }
             set
             {
@@ -105,7 +104,7 @@ namespace WordHiddenPowers.Documents
         {
             get
             {
-                return Content.GetDescription(Doc);                
+                return Content.GetDescription(Doc);
             }
             set
             {
@@ -117,7 +116,7 @@ namespace WordHiddenPowers.Documents
         {
             get
             {
-                return Content.GetTable(Doc);               
+                return Content.GetTable(Doc);
             }
             set
             {
@@ -133,7 +132,7 @@ namespace WordHiddenPowers.Documents
             {
                 if (dataSet == null)
                 {
-                    dataSet = Xml.GetDataSet(Doc: Doc);                        
+                    dataSet = Xml.GetDataSet(Doc: Doc);
                 }
                 return dataSet;
             }
@@ -145,14 +144,14 @@ namespace WordHiddenPowers.Documents
             {
                 if (importDataSet == null)
                 {
-                    importDataSet = Xml.GetDataSet(Doc: Doc, variableName: Const.Globals.XML_IMPORT_VARIABLE_NAME);                    
+                    importDataSet = Xml.GetDataSet(Doc: Doc, variableName: Const.Globals.XML_IMPORT_VARIABLE_NAME);
                 }
                 return importDataSet;
             }
         }
 
         public Word._Document Doc { get; }
-                
+
         private Document(DocumentCollection parent, string fileName, Word._Document doc)
         {
             this.parent = parent;
@@ -165,7 +164,7 @@ namespace WordHiddenPowers.Documents
         void Pane_VisibleChanged(object sender, EventArgs e)
         {
             CustomTaskPane pane = (CustomTaskPane)sender;
-            parent.paneVisibleButton.Checked = pane.Visible;           
+            parent.paneVisibleButton.Checked = pane.Visible;
         }
 
         public static Document Create(DocumentCollection parent, string fileName, Word._Document Doc)
@@ -173,7 +172,7 @@ namespace WordHiddenPowers.Documents
             Document document = new Document(parent: parent, fileName: fileName, doc: Doc);
             return document;
         }
-               
+
         public void NewData()
         {
             DataSet.RowsHeaders.Clear();
@@ -211,9 +210,9 @@ namespace WordHiddenPowers.Documents
 
         public void SaveData(string fileName)
         {
-            Xml.SaveData(Globals.ThisAddIn.Documents.ActiveDocument.DataSet, fileName);           
+            Xml.SaveData(Globals.ThisAddIn.Documents.ActiveDocument.DataSet, fileName);
         }
-               
+
 
         public void CommitVariables()
         {
@@ -223,7 +222,7 @@ namespace WordHiddenPowers.Documents
             Content.CommitVariable(Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME, Table.ToString());
 
             if (DataSet.HasChanges())
-            {                
+            {
                 Content.CommitVariable(Doc.Variables, Const.Globals.XML_VARIABLE_NAME, DataSet);
             }
 
@@ -232,9 +231,7 @@ namespace WordHiddenPowers.Documents
                 Content.CommitVariable(Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME, ImportDataSet);
             }
         }
-           
 
-                
         public bool VariablesExists()
         {
             if (Doc.Variables.Count > 0)
@@ -302,7 +299,7 @@ namespace WordHiddenPowers.Documents
             }
         }
 
-       
+
         protected IList<Form> dialogs = null;
 
         public void ShowDocumentKeysDialog()
@@ -343,7 +340,7 @@ namespace WordHiddenPowers.Documents
         public void ImportDataFromWordDocuments()
         {
             FolderBrowserDialog dialog = new FolderBrowserDialog();
-            if (ShowDialogUtil.ShowDialogObj(dialog) == DialogResult.OK)
+            if (ShowDialogUtil.ShowDialogO(dialog) == DialogResult.OK)
             {
                 importDataSet = FileSystem.ImportFiles(dialog.SelectedPath);
                 Content.CommitVariable(Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME, ImportDataSet);
@@ -364,14 +361,16 @@ namespace WordHiddenPowers.Documents
             dialogs.Add(dialog);
             ShowDialogUtil.Show(dialog);
         }
-        
+
         public void AddTextNote(Word.Selection selection)
         {
             TextNoteDialog dialog = new TextNoteDialog(DataSet, selection);
             if (dialog.ShowDialog() == DialogResult.OK)
             {
+                int fileId = GetFile(FileName);
+
                 DataSet.TextPowers.Rows.Add(new object[]
-                { null, dialog.Category.Id, dialog.Subcategory.Id, dialog.Description, dialog.Value, dialog.Reiting, dialog.SelectionStart, dialog.SelectionEnd });
+                { null, dialog.Category.Id, dialog.Subcategory.Id, dialog.Description, dialog.Value, dialog.Reiting, dialog.SelectionStart, dialog.SelectionEnd, fileId });
 
                 CommitVariables();
             }
@@ -382,10 +381,25 @@ namespace WordHiddenPowers.Documents
             DecimalNoteDialog dialog = new DecimalNoteDialog(DataSet, selection);
             if (dialog.ShowDialog() == DialogResult.OK)
             {
+                int fileId = GetFile(FileName);
+
                 DataSet.DecimalPowers.Rows.Add(new object[]
-                { null, dialog.Category.Id, dialog.Subcategory.Id, dialog.Description, dialog.Value, dialog.Reiting, dialog.SelectionStart, dialog.SelectionEnd });
+                { null, dialog.Category.Id, dialog.Subcategory.Id, dialog.Description, dialog.Value, dialog.Reiting, dialog.SelectionStart, dialog.SelectionEnd, fileId });
 
                 CommitVariables();
+            }
+        }
+
+
+        private int GetFile(string fileName)
+        {
+            if (DataSet.WordFiles.Exists(fileName: fileName))
+            {
+                return DataSet.WordFiles.Get(fileName: fileName).Id;
+            }
+            else
+            {
+                return DataSet.WordFiles.Add(fileName: fileName, caption: string.Empty, description: string.Empty, date: DateTime.Now).Id;
             }
         }
 
@@ -402,6 +416,11 @@ namespace WordHiddenPowers.Documents
                     }
                 }
                 dialogs.Clear();
+            }
+            if (pane != null)
+            {
+                pane.Dispose();
+                pane = null;
             }
         }
     }

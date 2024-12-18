@@ -293,6 +293,7 @@
     <Compile Include="Repositoryes\Categories\Category.cs" />
     <Compile Include="Repositoryes\Note.cs" />
     <Compile Include="Repositoryes\Categories\Subcategory.cs" />
+    <Compile Include="Repositoryes\WordFiles\WordFile.cs" />
     <Compile Include="Utils\Categories.cs" />
     <Compile Include="Utils\FileSystem.cs" />
     <Compile Include="Utils\Content.cs" />
@@ -366,7 +367,7 @@
     <Compile Include="Repositoryes\HiddenPowerSchema.cs">
       <DependentUpon>HiddenPowerSchema.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Repositoryes\HiddenPowerSchema1.Designer.cs">
+    <Compile Include="Repositoryes\HiddenPowerSchema.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>HiddenPowerSchema.xsd</DependentUpon>
@@ -381,7 +382,7 @@
     <None Include="Repositoryes\HiddenPowerSchema.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>HiddenPowerSchema1.Designer.cs</LastGenOutput>
+      <LastGenOutput>HiddenPowerSchema.Designer.cs</LastGenOutput>
     </None>
     <None Include="Repositoryes\HiddenPowerSchema.xss">
       <DependentUpon>HiddenPowerSchema.xsd</DependentUpon>

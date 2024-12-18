@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using WordHiddenPowers.Repositoryes;
 using WordHiddenPowers.Repositoryes.Categories;
 using System;
+using static WordHiddenPowers.Repositoryes.RepositoryDataSet;
 
 namespace WordHiddenPowers.Controls
 {
@@ -13,7 +14,9 @@ namespace WordHiddenPowers.Controls
         private RepositoryDataSet source;
 
         private IDictionary<int, Subcategory> subcategories;
-        
+
+        private IDictionary<int, WordFilesRow> files;
+
         public RepositoryDataSet DataSet
         {
             get
@@ -35,6 +38,10 @@ namespace WordHiddenPowers.Controls
                     source.Subcategories.SubcategoriesRowChanged -= Subcategories_RowChanged;
                     source.Subcategories.SubcategoriesRowDeleted -= Subcategories_RowChanged;
                     source.Subcategories.TableCleared -= Subcategories_TableCleared;
+
+                    source.WordFiles.WordFilesRowChanged -= WordFiles_RowChanged;
+                    source.WordFiles.WordFilesRowDeleted -= WordFiles_RowChanged;
+                    source.WordFiles.TableCleared -= WordFiles_TableCleared;
                 }
                 source = value;
 
@@ -54,8 +61,22 @@ namespace WordHiddenPowers.Controls
                     source.Subcategories.SubcategoriesRowChanged += new RepositoryDataSet.SubcategoriesRowChangeEventHandler(Subcategories_RowChanged);
                     source.Subcategories.SubcategoriesRowDeleted += new RepositoryDataSet.SubcategoriesRowChangeEventHandler(Subcategories_RowChanged);
                     source.Subcategories.TableCleared += new DataTableClearEventHandler(Subcategories_TableCleared);
+
+                    source.WordFiles.WordFilesRowChanged += new RepositoryDataSet.WordFilesRowChangeEventHandler(WordFiles_RowChanged);
+                    source.WordFiles.WordFilesRowDeleted += new RepositoryDataSet.WordFilesRowChangeEventHandler(WordFiles_RowChanged);
+                    source.WordFiles.TableCleared += new DataTableClearEventHandler(WordFiles_TableCleared);
                 }
             }
+        }
+
+        private void WordFiles_TableCleared(object sender, DataTableClearEventArgs e)
+        {
+            ReadData();
+        }
+
+        private void WordFiles_RowChanged(object sender, RepositoryDataSet.WordFilesRowChangeEvent e)
+        {
+            ReadData();
         }
 
         private void Subcategories_TableCleared(object sender, DataTableClearEventArgs e)
@@ -72,7 +93,7 @@ namespace WordHiddenPowers.Controls
         {
             if (e.Action == DataRowAction.Add)
             {
-                Items.Add(Note.Create(e.Row, subcategories[e.Row.subcategory_id]));               
+                Items.Add(Note.Create(e.Row, files[e.Row.file_id], subcategories[e.Row.subcategory_id]));               
             }
             else if (e.Action == DataRowAction.Delete)
             {
@@ -96,7 +117,7 @@ namespace WordHiddenPowers.Controls
         {
             if (e.Action == DataRowAction.Add)
             {
-                Items.Add(Note.Create(e.Row, subcategories[e.Row.subcategory_id]));
+                Items.Add(Note.Create(e.Row, files[e.Row.file_id], subcategories[e.Row.subcategory_id]));
                 
             }
             else if (e.Action == DataRowAction.Delete)
@@ -432,6 +453,15 @@ namespace WordHiddenPowers.Controls
                 {
                     Subcategory subcategory = Subcategory.Default(category: category);
                     subcategories.Add(subcategory.Id, subcategory);
+                }
+            }
+            
+            files = new Dictionary<int, WordFilesRow>();
+            if (source.WordFiles.Rows.Count > 0)
+            {
+                foreach (WordFilesRow row in source.WordFiles.Rows)
+                {
+                    files.Add(row.id, row);
                 }
             }
 

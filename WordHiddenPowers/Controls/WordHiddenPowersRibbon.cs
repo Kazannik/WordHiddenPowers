@@ -1,97 +1,116 @@
 ﻿using Microsoft.Office.Tools.Ribbon;
 using System.Windows.Forms;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers
 {
     public partial class WordHiddenPowersRibbon
     {
-        const string dialogFilters = "XML Schema File (.xsd)|*.xsd";
+        private const string DIALOG_FILTER = "XML Schema File (.xsd)|*.xsd";
 
-        
-        private void newPowersButton_Click(object sender, RibbonControlEventArgs e)
+        private Documents.Document ActiveDocument
         {
-            if (Globals.ThisAddIn.Documents.ActiveDocument !=null)
-            {
-                Globals.ThisAddIn.Documents.ActiveDocument.NewData();            }
+            get { return Globals.ThisAddIn.Documents.ActiveDocument; }
         }
 
-        private void openPowersButton_Click(object sender, RibbonControlEventArgs e)
+        private Word.Selection Selection
         {
-            if (Globals.ThisAddIn.Documents.ActiveDocument != null)
+            get { return Globals.ThisAddIn.Application.ActiveWindow.Selection; }
+        }
+
+        private void NewPowers_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (ActiveDocument != null)
+            {
+                ActiveDocument.NewData();
+            }
+        }
+
+        private void OpenPowers_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (ActiveDocument != null)
             {
                 OpenFileDialog dialog = new OpenFileDialog();
                 dialog.Multiselect = false;
-                dialog.Filter = dialogFilters;
-                if (Utils.ShowDialogUtil.ShowDialogObj(dialog) == DialogResult.OK)
+                dialog.Filter = DIALOG_FILTER;
+                if (Utils.ShowDialogUtil.ShowDialogO(dialog) == DialogResult.OK)
                 {
-                    Globals.ThisAddIn.Documents.ActiveDocument.LoadData(dialog.FileName);                    
+                    ActiveDocument.LoadData(dialog.FileName);
                 }
             }
         }
 
-        private void savePowersButton_Click(object sender, RibbonControlEventArgs e)
+        private void SavePowers_Click(object sender, RibbonControlEventArgs e)
         {
             SaveFileDialog dialog = new SaveFileDialog();
-            dialog.Filter = dialogFilters;
-            if (Utils.ShowDialogUtil.ShowDialogObj(dialog) == DialogResult.OK)
+            dialog.Filter = DIALOG_FILTER;
+            if (Utils.ShowDialogUtil.ShowDialogO(dialog) == DialogResult.OK)
             {
-                Globals.ThisAddIn.Documents.ActiveDocument.CommitVariables();
-                Globals.ThisAddIn.Documents.ActiveDocument.SaveData(dialog.FileName);               
+                ActiveDocument.CommitVariables();
+                ActiveDocument.SaveData(dialog.FileName);
             }
         }
-                
 
-        private void deletePowersButton_Click(object sender, RibbonControlEventArgs e)
+
+        private void DeletePowers_Click(object sender, RibbonControlEventArgs e)
         {
-            if (Globals.ThisAddIn.Documents.ActiveDocument != null)
+            if (ActiveDocument != null)
             {
-                if (Globals.ThisAddIn.Documents.ActiveDocument.VariablesExists())
+                if (ActiveDocument.VariablesExists())
                 {
-                    if ( MessageBox.Show("Удалить дополнительные данные из документа?", "Удаление скрытых данных", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)== DialogResult.Yes)
+                    if (MessageBox.Show("Удалить дополнительные данные из документа?",
+                        "Удаление скрытых данных",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question,
+                        MessageBoxDefaultButton.Button2) == DialogResult.Yes)
                     {
-                        Globals.ThisAddIn.Documents.ActiveDocument.DeleteVariables();
+                        ActiveDocument.DeleteVariables();
                     }
-                } else
+                }
+                else
                 {
-                    MessageBox.Show("Дополнительные данные отсуствуют!", "Удаление скрытых данных", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Дополнительные данные отсуствуют!",
+                        "Удаление скрытых данных",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
                 }
             }
         }
 
-        
-        private void createTableButton_Click(object sender, RibbonControlEventArgs e)
+
+        private void CreateTable_Click(object sender, RibbonControlEventArgs e)
         {
-            Globals.ThisAddIn.Documents.ActiveDocument.ShowCreateTableDialog();                           
+            ActiveDocument.ShowCreateTableDialog();
         }
 
-        private void editTableButton_Click(object sender, RibbonControlEventArgs e)
+        private void EditTable_Click(object sender, RibbonControlEventArgs e)
         {
-            Globals.ThisAddIn.Documents.ActiveDocument.ShowEditTableDialog();
+            ActiveDocument.ShowEditTableDialog();
         }
 
-        private void editCategoriesButton_Click(object sender, RibbonControlEventArgs e)
+        private void EditCategories_Click(object sender, RibbonControlEventArgs e)
         {
-            Globals.ThisAddIn.Documents.ActiveDocument.ShowEditCategoriesDialog();
+            ActiveDocument.ShowEditCategoriesDialog();
         }
 
-        private void editDocumentKeysButton_Click(object sender, RibbonControlEventArgs e)
+        private void EditDocumentKeys_Click(object sender, RibbonControlEventArgs e)
         {
-            Globals.ThisAddIn.Documents.ActiveDocument.ShowDocumentKeysDialog();
-        }
-       
-        private void analizerImportButton_Click(object sender, RibbonControlEventArgs e)
-        {
-            Globals.ThisAddIn.Documents.ActiveDocument.ImportDataFromWordDocuments();
+            ActiveDocument.ShowDocumentKeysDialog();
         }
 
-        private void analizerTableViewerButton_Click(object sender, RibbonControlEventArgs e)
+        private void AnalizerImport_Click(object sender, RibbonControlEventArgs e)
         {
-            Globals.ThisAddIn.Documents.ActiveDocument.ShowTableViewerDialog();
+            ActiveDocument.ImportDataFromWordDocuments();
         }
 
-        private void analizerDialogButton_Click(object sender, RibbonControlEventArgs e)
+        private void AnalizerTableViewer_Click(object sender, RibbonControlEventArgs e)
         {
-            Globals.ThisAddIn.Documents.ActiveDocument.ShowAnalizerDialog();
+            ActiveDocument.ShowTableViewerDialog();
+        }
+
+        private void AnalizerDialog_Click(object sender, RibbonControlEventArgs e)
+        {
+            ActiveDocument.ShowAnalizerDialog();
         }
 
         private enum NoteType
@@ -102,9 +121,9 @@ namespace WordHiddenPowers
 
         private NoteType lastNoteType = NoteType.Text;
 
-        private void AddTextNoteButton_Click(object sender, RibbonControlEventArgs e)
+        private void AddTextNote_Click(object sender, RibbonControlEventArgs e)
         {
-            Globals.ThisAddIn.Documents.ActiveDocument.AddTextNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
+            ActiveDocument.AddTextNote(Selection);
 
             lastNoteType = NoteType.Text;
             addLastNoteTypeButton.Description = Const.Content.TEXT_NOTE_DESCRIPTION;
@@ -114,9 +133,9 @@ namespace WordHiddenPowers
             addLastNoteTypeButton.SuperTip = Const.Content.TEXT_NOTE_SUPER_TIP;
         }
 
-        private void AddDecimalNoteButton_Click(object sender, RibbonControlEventArgs e)
+        private void AddDecimalNote_Click(object sender, RibbonControlEventArgs e)
         {
-            Globals.ThisAddIn.Documents.ActiveDocument.AddDecimalNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
+            ActiveDocument.AddDecimalNote(Selection);
 
             lastNoteType = NoteType.Decimal;
             addLastNoteTypeButton.Description = Const.Content.DECIMAL_NOTE_DESCRIPTION;
@@ -126,12 +145,12 @@ namespace WordHiddenPowers
             addLastNoteTypeButton.SuperTip = Const.Content.DECIMAL_NOTE_SUPER_TIP;
         }
 
-        private void AddLastNoteTypeButton_Click(object sender, RibbonControlEventArgs e)
+        private void AddLastNoteType_Click(object sender, RibbonControlEventArgs e)
         {
             if (lastNoteType == NoteType.Text)
-                Globals.ThisAddIn.Documents.ActiveDocument.AddTextNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
+                ActiveDocument.AddTextNote(Selection);
             else
-                Globals.ThisAddIn.Documents.ActiveDocument.AddDecimalNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
-        }        
+                ActiveDocument.AddDecimalNote(Selection);
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using WordHiddenPowers.Repositoryes.Categories;
+using WordHiddenPowers.Repositoryes.WordFiles;
 
 namespace WordHiddenPowers.Repositoryes
 {
@@ -13,28 +14,38 @@ namespace WordHiddenPowers.Repositoryes
 
         public void AddNote(Note note, string fileName, string caption, string description, DateTime date)
         {
-            if (note.IsText)
+            int fileId;
+            if (WordFiles.Exists(fileName))
             {
-                TextPowers.AddTextPowersRow(note.Category.Id, note.Subcategory.Id, note.Description, note.Value.ToString(), note.Reiting, note.WordSelectionStart, note.WordSelectionEnd, fileName, caption, description, date, false);
+                fileId = WordFiles.Get(fileName).Id;
             }
             else
             {
-                DecimalPowers.AddDecimalPowersRow(note.Category.Id, note.Subcategory.Id, note.Description, (double) note.Value, note.Reiting, note.WordSelectionStart, note.WordSelectionEnd, fileName, caption, description, date);
+                fileId = WordFiles.Add(fileName, caption, description, date).Id;
+            }
+
+            if (note.IsText)
+            {                
+                TextPowers.AddTextPowersRow(note.Category.Id, note.Subcategory.Id, note.Description, note.Value.ToString(), note.Reiting, note.WordSelectionStart, note.WordSelectionEnd, fileId);
+            }
+            else
+            {
+                DecimalPowers.AddDecimalPowersRow(note.Category.Id, note.Subcategory.Id, note.Description, (double)note.Value, note.Reiting, note.WordSelectionStart, note.WordSelectionEnd, fileId);
             }
         }
 
         public IEnumerable<Note> GetNotes()
         {
-            return ((from row in TextPowers select Note.Create(row, GetSubcategory(row.subcategory_id)))
-                .Union(from row in DecimalPowers select Note.Create(row, GetSubcategory(row.subcategory_id))))
+            return ((from row in TextPowers select Note.Create(row, WordFiles.GetRow(row.file_id), GetSubcategory(row.subcategory_id)))
+                .Union(from row in DecimalPowers select Note.Create(row, WordFiles.GetRow(row.file_id), GetSubcategory(row.subcategory_id))))
                 .OrderBy(n => n.WordSelectionStart);
         }
 
 
         public IEnumerable<Note> GetNotesSort()
         {
-            return ((from row in TextPowers select Note.Create(row, GetSubcategory(row.subcategory_id)))
-                .Union(from row in DecimalPowers select Note.Create(row, GetSubcategory(row.subcategory_id))))
+            return ((from row in TextPowers select Note.Create(row, WordFiles.GetRow(row.file_id), GetSubcategory(row.subcategory_id)))
+                .Union(from row in DecimalPowers select Note.Create(row, WordFiles.GetRow(row.file_id), GetSubcategory(row.subcategory_id))))
                 .OrderBy(n => n.Subcategory.Id);
         }
 
@@ -52,12 +63,7 @@ namespace WordHiddenPowers.Repositoryes
                     select category)
                     .GroupBy(x => x.id).Select(y => y.First());
         }
-
-        partial class RowsHeadersDataTable
-        {
-
-        }
-
+        
         partial class TextPowersDataTable
         {
             public void Set(int id, int categoryId, int subcategoryId, string description, string value, int reiting, int wordSelectionStart, int wordSelectionEnd)
@@ -224,6 +230,92 @@ namespace WordHiddenPowers.Repositoryes
                         return row;
                 }
                 return null;
+            }
+        }
+
+        partial class WordFilesDataTable
+        {
+            public WordFile Add(string fileName, string caption, string description, DateTime date)
+            {
+                WordFilesRow row = (WordFilesRow)Rows.Add(new object[] { null, fileName, caption, description, date });
+                return WordFile.Create(row);
+            }
+
+            public WordFile Add(WordFile file)
+            {
+                WordFilesRow row = (WordFilesRow)Rows.Add(file.ToObjectsArray());
+                return WordFile.Create(row);
+            }
+
+            public WordFile Get(int id)
+            {
+                WordFilesRow row = _GetRow(id) as WordFilesRow;
+                return WordFile.Create(row);
+            }
+
+            public WordFile Get(string fileName)
+            {
+                WordFilesRow row = _GetRow(fileName) as WordFilesRow;
+                return WordFile.Create(row);
+            }
+
+            public void Write(WordFile file)
+            {
+                WordFilesRow row = GetRow(file.Id) as WordFilesRow;
+                if (row != null)
+                {
+                    row.BeginEdit();
+                    row.FileName = file.Filename;
+                    row.Caption = file.Caption;
+                    row.Description = file.Description;
+                    row.Date = file.Date;
+                    row.EndEdit();
+                }
+            }
+
+            public WordFilesRow GetRow(int id)
+            {
+                return _GetRow(id) as WordFilesRow;
+            }
+
+            private DataRow _GetRow(int id)
+            {
+                foreach (DataRow row in Rows)
+                {
+                    if ((int)row["id"] == id)
+                        return row;
+                }
+                return null;
+            }
+
+            private DataRow _GetRow(string fileName)
+            {
+                foreach (DataRow row in Rows)
+                {
+                    if ((string)row["FileName"] == fileName)
+                        return row;
+                }
+                return null;
+            }
+
+            public bool Exists(int id)
+            {
+                foreach (DataRow row in Rows)
+                {
+                    if ((int)row["id"] == id)
+                        return true;
+                }
+                return false;
+            }
+
+            public bool Exists(string fileName)
+            {
+                foreach (DataRow row in Rows)
+                {
+                    if ((string)row["FileName"] == fileName)
+                        return true;
+                }
+                return false;
             }
 
         }

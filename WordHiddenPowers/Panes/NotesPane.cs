@@ -16,7 +16,7 @@ namespace WordHiddenPowers.Panes
     public class NotesPane : WordHiddenPowersPane
     {
         private IContainer components;
-        private SplitContainer splitContainer1;
+        private SplitContainer notesSplitContainer;
         private Label titleLabel;
         private TextBox descriptionTextBox;
         private Label descriptionLabel;
@@ -161,21 +161,34 @@ namespace WordHiddenPowers.Panes
         {
             get { return descriptionTextBox.Text; }
         }
-
-
-        private void Panel1_Resize(object sender, EventArgs e)
+        
+        private void NotesPane_Resize(object sender, EventArgs e)
         {
-            SplitterPanel panel = (SplitterPanel)sender;
+            notesSplitContainer.Location = new Point(0, 0);
+            notesSplitContainer.Size = this.Size;
 
+            PanelResize();
+        }
+                
+        private void PanelResize()
+        {
             titleLabel.Location = new Point(0, 0);
+
             captionComboBox.Location = new Point(0, titleLabel.Height);
-            captionComboBox.Width = panel.Width;
+            captionComboBox.Width = notesSplitContainer.Panel1.Width;
+
             dateLabel.Location = new Point(0, captionComboBox.Top + captionComboBox.Height + 4);
             dateTimePicker.Location = new Point(dateLabel.Width + 8, captionComboBox.Top + captionComboBox.Height + 4);
+
             descriptionLabel.Location = new Point(0, dateLabel.Top + dateLabel.Height + 4);
+
             descriptionTextBox.Location = new Point(0, descriptionLabel.Top + descriptionLabel.Height);
-            descriptionTextBox.Width = panel.Width;
-            descriptionTextBox.Height = splitContainer1.SplitterDistance - descriptionTextBox.Top;
+            descriptionTextBox.Width = notesSplitContainer.Panel1.Width;
+            descriptionTextBox.Height = notesSplitContainer.SplitterDistance - descriptionTextBox.Top;
+
+            noteListBox.Location = new Point(0, 0);
+            noteListBox.Width = notesSplitContainer.Panel2.Width;
+            noteListBox.Height = notesSplitContainer.Panel2.Height;
         }
 
         public void InitializeVariables()
@@ -238,7 +251,7 @@ namespace WordHiddenPowers.Panes
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.notesSplitContainer = new System.Windows.Forms.SplitContainer();
             this.captionComboBox = new System.Windows.Forms.ComboBox();
             this.descriptionTextBox = new System.Windows.Forms.TextBox();
             this.descriptionLabel = new System.Windows.Forms.Label();
@@ -251,38 +264,39 @@ namespace WordHiddenPowers.Panes
             this.mnuNoteEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuNoteRemove = new System.Windows.Forms.ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.notesSplitContainer)).BeginInit();
+            this.notesSplitContainer.Panel1.SuspendLayout();
+            this.notesSplitContainer.Panel2.SuspendLayout();
+            this.notesSplitContainer.SuspendLayout();
             this.noteContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
-            // splitContainer1
+            // notesSplitContainer
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.notesSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.notesSplitContainer.Location = new System.Drawing.Point(0, 0);
+            this.notesSplitContainer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.notesSplitContainer.Name = "notesSplitContainer";
+            this.notesSplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // splitContainer1.Panel1
+            // notesSplitContainer.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.captionComboBox);
-            this.splitContainer1.Panel1.Controls.Add(this.descriptionTextBox);
-            this.splitContainer1.Panel1.Controls.Add(this.descriptionLabel);
-            this.splitContainer1.Panel1.Controls.Add(this.dateTimePicker);
-            this.splitContainer1.Panel1.Controls.Add(this.dateLabel);
-            this.splitContainer1.Panel1.Controls.Add(this.titleLabel);
-            this.splitContainer1.Panel1.Resize += new System.EventHandler(this.Panel1_Resize);
-            this.splitContainer1.Panel1MinSize = 140;
+            this.notesSplitContainer.Panel1.Controls.Add(this.captionComboBox);
+            this.notesSplitContainer.Panel1.Controls.Add(this.descriptionTextBox);
+            this.notesSplitContainer.Panel1.Controls.Add(this.descriptionLabel);
+            this.notesSplitContainer.Panel1.Controls.Add(this.dateTimePicker);
+            this.notesSplitContainer.Panel1.Controls.Add(this.dateLabel);
+            this.notesSplitContainer.Panel1.Controls.Add(this.titleLabel);
+            this.notesSplitContainer.Panel1.Resize += new System.EventHandler(this.NotesPane_Resize);
+            this.notesSplitContainer.Panel1MinSize = 140;
             // 
-            // splitContainer1.Panel2
+            // notesSplitContainer.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.noteListBox);
-            this.splitContainer1.Size = new System.Drawing.Size(366, 362);
-            this.splitContainer1.SplitterDistance = 193;
-            this.splitContainer1.TabIndex = 2;
+            this.notesSplitContainer.Panel2.Controls.Add(this.noteListBox);
+            this.notesSplitContainer.Panel2.Resize += new System.EventHandler(this.NotesPane_Resize);
+            this.notesSplitContainer.Size = new System.Drawing.Size(366, 362);
+            this.notesSplitContainer.SplitterDistance = 193;
+            this.notesSplitContainer.TabIndex = 2;
             // 
             // captionComboBox
             // 
@@ -399,16 +413,17 @@ namespace WordHiddenPowers.Panes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.notesSplitContainer);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.Name = "NotesPane";
             this.Size = new System.Drawing.Size(366, 362);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
+            this.Resize += new System.EventHandler(this.NotesPane_Resize);
+            this.notesSplitContainer.Panel1.ResumeLayout(false);
+            this.notesSplitContainer.Panel1.PerformLayout();
+            this.notesSplitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.notesSplitContainer)).EndInit();
+            this.notesSplitContainer.ResumeLayout(false);
             this.noteContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -429,6 +444,6 @@ namespace WordHiddenPowers.Panes
             base.Dispose(disposing);
         }
 
-        
+      
     }
 }

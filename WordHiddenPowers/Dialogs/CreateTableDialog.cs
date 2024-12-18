@@ -102,8 +102,7 @@ namespace WordHiddenPowers.Dialogs
                 }
             }            
         }
-
-
+        
         private void SaveTableStructure()
         {
             dataGridView.EndEdit();
@@ -154,7 +153,7 @@ namespace WordHiddenPowers.Dialogs
                 buttonBold.Enabled = true;
                 if (e.RowIndex == 0)
                 {
-                    buttonBold.Checked = clickedCell.Style.Font.Bold;
+                    buttonBold.Checked = clickedCell.Style.Font !=null ? clickedCell.Style.Font.Bold : false;
                 }
             }
 
@@ -238,22 +237,44 @@ namespace WordHiddenPowers.Dialogs
             }
         }
 
-        private void mnuDeleteTable_ButtonClick(object sender, EventArgs e)
-        {
-            mnuDeleteTable.ShowDropDown();
-        }
+        
 
         private void Bold_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void mnuFileOpen_Click(object sender, EventArgs e)
+        private void FileOpen_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void mnuFileSaveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void FileSaveAs_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void InserRowAbove_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void InsertColumnRight_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DeleteTable_ButtonClick(object sender, EventArgs e)
+        {
+            mnuDeleteTable.ShowDropDown();
+        }
+
+        private void TableDeleteColumns_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TableDeleteRows_Click(object sender, EventArgs e)
         {
 
         }
