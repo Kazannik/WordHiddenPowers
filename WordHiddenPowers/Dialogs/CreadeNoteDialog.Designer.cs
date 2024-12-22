@@ -109,7 +109,7 @@
             this.subcategoriesComboBox.Name = "subcategoriesComboBox";
             this.subcategoriesComboBox.Size = new System.Drawing.Size(670, 28);
             this.subcategoriesComboBox.TabIndex = 34;
-            this.subcategoriesComboBox.SelectedIndexChanged += new System.EventHandler(this.subcategoriesComboBox_SelectedIndexChanged);
+            this.subcategoriesComboBox.SelectedIndexChanged += new System.EventHandler(this.SubcategoriesComboBox_SelectedIndexChanged);
             // 
             // raitingBox
             // 
@@ -135,7 +135,7 @@
             this.categoriesComboBox.Name = "categoriesComboBox";
             this.categoriesComboBox.Size = new System.Drawing.Size(670, 28);
             this.categoriesComboBox.TabIndex = 33;
-            this.categoriesComboBox.SelectedIndexChanged += new System.EventHandler(this.categoriesComboBox_SelectedIndexChanged);
+            this.categoriesComboBox.SelectedIndexChanged += new System.EventHandler(this.CategoriesComboBox_SelectedIndexChanged);
             // 
             // CreateNoteDialog
             // 

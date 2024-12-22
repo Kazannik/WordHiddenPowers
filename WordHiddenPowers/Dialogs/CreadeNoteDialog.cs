@@ -1,105 +1,106 @@
 ﻿using System.Windows.Forms;
 using WordHiddenPowers.Repositoryes;
 using WordHiddenPowers.Repositoryes.Categories;
+using WordHiddenPowers.Repositoryes.Notes;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Dialogs
 {
-    public partial class CreateNoteDialog : Form
-    {
-        private RepositoryDataSet dataSet;
+	public partial class CreateNoteDialog : Form
+	{
+		private readonly RepositoryDataSet dataSet;
 
-        public string SelectionText { get; }
+		public string SelectionText { get; }
 
-        public int SelectionStart { get; }
+		public int SelectionStart { get; }
 
-        public int SelectionEnd { get; }
+		public int SelectionEnd { get; }
 
-        public int Reiting
-        {
-            get
-            {
-                return raitingBox.Value;
-            }
-        }
-        
-        public Category Category
-        {
-            get
-            {
-                return categoriesComboBox.SelectedContent;
-            }
-        }
-        
-        public Subcategory Subcategory
-        {
-            get
-            {
-                return subcategoriesComboBox.SelectedContent;
-            }
-        }
+		public int Reiting
+		{
+			get
+			{
+				return raitingBox.Value;
+			}
+		}
 
-        public string Description
-        {
-            get
-            {
-                return descriptionTextBox.Text;
-            }
-        }
+		public Category Category
+		{
+			get
+			{
+				return categoriesComboBox.SelectedContent;
+			}
+		}
 
-        public bool IsText { get; }
+		public Subcategory Subcategory
+		{
+			get
+			{
+				return subcategoriesComboBox.SelectedContent;
+			}
+		}
 
-        public CreateNoteDialog()
-        {
-            InitializeComponent();
-            okButton.Enabled = false;
-        }
+		public string Description
+		{
+			get
+			{
+				return descriptionTextBox.Text;
+			}
+		}
 
-        public CreateNoteDialog(RepositoryDataSet dataSet, Word.Selection selection, bool isText)
-        {
-            this.dataSet = dataSet;
+		public bool IsText { get; }
 
-            InitializeComponent();
+		public CreateNoteDialog()
+		{
+			InitializeComponent();
+			okButton.Enabled = false;
+		}
 
-            IsText = isText;
+		public CreateNoteDialog(RepositoryDataSet dataSet, Word.Selection selection, bool isText)
+		{
+			this.dataSet = dataSet;
 
-            SelectionText = selection.Text;
-            SelectionStart = selection.Start;
-            SelectionEnd = selection.End;
+			InitializeComponent();
 
-            categoriesComboBox.InitializeSource(this.dataSet, isText);
-            okButton.Enabled = false;
-        }
+			IsText = isText;
 
-        public CreateNoteDialog(RepositoryDataSet dataSet, Note note, bool isText)
-        {
-            this.dataSet = dataSet;
+			SelectionText = selection.Text;
+			SelectionStart = selection.Start;
+			SelectionEnd = selection.End;
 
-            InitializeComponent();
-            
-            IsText = isText;
+			categoriesComboBox.InitializeSource(this.dataSet, isText);
+			okButton.Enabled = false;
+		}
 
-            SelectionText = string.Empty;
-            SelectionStart = note.WordSelectionStart;
-            SelectionEnd = note.WordSelectionEnd;
+		public CreateNoteDialog(RepositoryDataSet dataSet, Note note, bool isText)
+		{
+			this.dataSet = dataSet;
 
-            raitingBox.Value = note.Reiting;
-            descriptionTextBox.Text = note.Description;
+			InitializeComponent();
 
-            categoriesComboBox.InitializeSource(this.dataSet, isText);
-            categoriesComboBox.SelectedItem = categoriesComboBox.GetItem(note.Category.Id);
-            subcategoriesComboBox.SelectedItem = subcategoriesComboBox.GetItem(note.Subcategory.Id);
-        }
+			IsText = isText;
 
-        private void categoriesComboBox_SelectedIndexChanged(object sender, System.EventArgs e)
-        {
-            subcategoriesComboBox.InitializeSource(dataSet, (Category) categoriesComboBox.SelectedItem, IsText);
-            okButton.Enabled = categoriesComboBox.SelectedIndex >= 0 && subcategoriesComboBox.SelectedIndex >= 0;
-        }
+			SelectionText = string.Empty;
+			SelectionStart = note.WordSelectionStart;
+			SelectionEnd = note.WordSelectionEnd;
 
-        private void subcategoriesComboBox_SelectedIndexChanged(object sender, System.EventArgs e)
-        {
-            okButton.Enabled = categoriesComboBox.SelectedIndex >= 0 && subcategoriesComboBox.SelectedIndex >= 0;
-        }
-    }
+			raitingBox.Value = note.Reiting;
+			descriptionTextBox.Text = note.Description;
+
+			categoriesComboBox.InitializeSource(this.dataSet, isText);
+			categoriesComboBox.SelectedItem = categoriesComboBox.GetItem(note.Category.Id);
+			subcategoriesComboBox.SelectedItem = subcategoriesComboBox.GetItem(note.Subcategory.Id);
+		}
+
+		private void CategoriesComboBox_SelectedIndexChanged(object sender, System.EventArgs e)
+		{
+			subcategoriesComboBox.InitializeSource(dataSet, (Category)categoriesComboBox.SelectedItem, IsText);
+			okButton.Enabled = categoriesComboBox.SelectedIndex >= 0 && subcategoriesComboBox.SelectedIndex >= 0;
+		}
+
+		private void SubcategoriesComboBox_SelectedIndexChanged(object sender, System.EventArgs e)
+		{
+			okButton.Enabled = categoriesComboBox.SelectedIndex >= 0 && subcategoriesComboBox.SelectedIndex >= 0;
+		}
+	}
 }

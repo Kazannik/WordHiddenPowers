@@ -7,276 +7,273 @@ using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Dialogs
 {
-    public partial class CreateTableDialog : Form
-    {
+	public partial class CreateTableDialog : Form
+	{
 
-        private Documents.Document document;
+		private readonly Documents.Document document;
 
-        public CreateTableDialog(Documents.Document document)
-        {
-            this.document = document;
+		public CreateTableDialog(Documents.Document document)
+		{
+			this.document = document;
 
-            InitializeComponent();
-                        
-            ReadTableStructure();
-        }
+			InitializeComponent();
 
-        private void FileNew_Click(object sender, EventArgs e)
-        {
-            TableSettingDialog dialog = new TableSettingDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                CreateTable(dialog.ColumnsCount, dialog.RowsCount);
-            }            
-        }
+			ReadTableStructure();
+		}
 
-        private void FileSave_Click(object sender, EventArgs e)
-        {
-            SaveTableStructure();
-        }
+		private void FileNew_Click(object sender, EventArgs e)
+		{
+			TableSettingDialog dialog = new TableSettingDialog();
+			if (dialog.ShowDialog() == DialogResult.OK)
+			{
+				CreateTable(dialog.ColumnsCount, dialog.RowsCount);
+			}
+		}
 
-
-        private void CreateTable(int columnsCount, int rowsCount)
-        {
-            dataGridView.Rows.Clear();
-            dataGridView.Columns.Clear();
-
-            dataGridView.Columns.Add("HEADER", "");
-            object[] array = new object[columnsCount + 1];
-            array[0] = string.Empty;
-
-            for (int c = 1; c <= columnsCount; c++)
-            {
-                int columnIndex = dataGridView.Columns.Add("HEADER " + c.ToString(), "");
-                dataGridView.Columns[columnIndex].SortMode = DataGridViewColumnSortMode.NotSortable;
-                array[c] = "Графа " + c.ToString(); 
-            }
-            
-            int rowIndex = dataGridView.Rows.Add(array);
-            dataGridView.Rows[rowIndex].Cells["HEADER"].ReadOnly = true;
-            dataGridView.Rows[rowIndex].Cells["HEADER"].Style.BackColor = dataGridView.BackgroundColor;
-
-            for (int r = 0; r < rowsCount; r++)
-            {
-                dataGridView.Rows.Add("Строка " + (r + 1).ToString());
-            }
-                       
-            for (int r = 1; r < dataGridView.Rows.Count; r++)
-            {
-                for (int c = 1; c < dataGridView.Columns.Count; c++)
-                {
-                    dataGridView.Rows[r].Cells[c].ReadOnly = true;
-                    dataGridView.Rows[r].Cells[c].Style.BackColor = System.Drawing.SystemColors.Control;
-                }
-            }
-        }
-
-        private void ReadTableStructure()
-        {
-            dataGridView.Rows.Clear();
-            dataGridView.Columns.Clear();
-            if (document.DataSet.ColumnsHeaders.Rows.Count>0)
-            {
-                dataGridView.Columns.Add("HEADER", "");
-                int rowIndex = dataGridView.Rows.Add();
-                dataGridView.Rows[rowIndex].Cells["HEADER"].ReadOnly = true;
-                dataGridView.Rows[rowIndex].Cells["HEADER"].Style.BackColor = dataGridView.BackgroundColor;
-
-                for (int i = 0; i < document.DataSet.ColumnsHeaders.Rows.Count; i++)
-                {
-                    string text = document.DataSet.ColumnsHeaders.Rows[i]["Header"].ToString();
-                    int columnIndex = dataGridView.Columns.Add(text,  "");
-                    dataGridView.Columns[columnIndex].SortMode = DataGridViewColumnSortMode.NotSortable;
-                    dataGridView.Rows[rowIndex].Cells[i + 1].Value = text;
-                }                
-
-                foreach (DataRow item in document.DataSet.RowsHeaders.Rows)
-                {
-                    rowIndex = dataGridView.Rows.Add(item["Header"].ToString());
-
-                    for (int i = 0; i < document.DataSet.ColumnsHeaders.Rows.Count; i++)
-                    {
-                        dataGridView.Rows[rowIndex].Cells[i + 1].ReadOnly = true;
-                        dataGridView.Rows[rowIndex].Cells[i + 1].Style.BackColor = System.Drawing.SystemColors.Control;
-                    }
-                }
-            }            
-        }
-        
-        private void SaveTableStructure()
-        {
-            dataGridView.EndEdit();
-
-            if (document.DataSet.RowsHeaders.Rows.Count != (dataGridView.Rows.Count - 1) ||
-                    document.DataSet.ColumnsHeaders.Rows.Count != (dataGridView.Columns.Count - 1))
-            {
-                Word.Variable variable = Content.GetVariable(document.Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
-                if (variable != null)
-                {
-                    variable.Delete();
-                }
-            }
-
-            document.DataSet.ColumnsHeaders.Clear();
-
-            for (int i = 1; i < dataGridView.Columns.Count; i++)
-            {
-                string text = dataGridView.Rows[0].Cells[i].Value.ToString();
-                document.DataSet.ColumnsHeaders.Rows.Add(new object[] { null, text });
-            }
-
-            document.DataSet.RowsHeaders.Clear();
-
-            for (int i = 1; i < dataGridView.Rows.Count; i++)
-            {
-                document.DataSet.RowsHeaders.Rows.Add(new object[] { null, dataGridView.Rows[i].Cells["HEADER"].Value.ToString() });
-            }
-            
-            Content.CommitVariable(document.Doc.Variables, Const.Globals.XML_VARIABLE_NAME, document.DataSet);
-        }
-
-        private void Delete_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGridView_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            DataGridViewCell clickedCell = (sender as DataGridView).Rows[e.RowIndex].Cells[e.ColumnIndex];
-
-            if (e.RowIndex != 0 && e.ColumnIndex != 0)
-            {
-                buttonBold.Enabled = false;
-            }
-            else 
-            {
-                buttonBold.Enabled = true;
-                if (e.RowIndex == 0)
-                {
-                    buttonBold.Checked = clickedCell.Style.Font !=null ? clickedCell.Style.Font.Bold : false;
-                }
-            }
+		private void FileSave_Click(object sender, EventArgs e)
+		{
+			SaveTableStructure();
+		}
 
 
-            if (e.Button == MouseButtons.Right)
-            {
-                if (clickedCell.RowIndex <= 0 && clickedCell.ColumnIndex <= 0 )
-                {
-                    toolStripMenuItem2.Visible = false;
-                    mnuTableDelete.Visible = false;
-                    toolStripMenuItem3.Visible = false;
-                    cmnuTableDelete.Visible = false;
-                    
-                }
-                
+		private void CreateTable(int columnsCount, int rowsCount)
+		{
+			dataGridView.Rows.Clear();
+			dataGridView.Columns.Clear();
 
-                // Here you can do whatever you want with the cell
-                dataGridView.CurrentCell = clickedCell;  // Select the clicked cell, for instance
+			dataGridView.Columns.Add("HEADER", "");
+			object[] array = new object[columnsCount + 1];
+			array[0] = string.Empty;
 
-                // Get mouse position relative to the vehicles grid
-                var relativeMousePosition = dataGridView.PointToClient(Cursor.Position);
+			for (int c = 1; c <= columnsCount; c++)
+			{
+				int columnIndex = dataGridView.Columns.Add("HEADER " + c.ToString(), "");
+				dataGridView.Columns[columnIndex].SortMode = DataGridViewColumnSortMode.NotSortable;
+				array[c] = "Графа " + c.ToString();
+			}
 
-                // Show the context menu
-                this.contextMenuStrip1.Show(dataGridView, relativeMousePosition);
-            }
-        }
+			int rowIndex = dataGridView.Rows.Add(array);
+			dataGridView.Rows[rowIndex].Cells["HEADER"].ReadOnly = true;
+			dataGridView.Rows[rowIndex].Cells["HEADER"].Style.BackColor = dataGridView.BackgroundColor;
 
-        private void Dialog_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (e.CloseReason == CloseReason.UserClosing)
-            {
-                if (dataGridView.Rows.Count == 0 && dataGridView.Columns.Count ==0)
-                {
-                    e.Cancel = false;
-                    return;
-                }
-                
-                bool edited = false;
-                if (document.DataSet.RowsHeaders.Rows.Count != (dataGridView.Rows.Count - 1) ||
-                    document.DataSet.ColumnsHeaders.Rows.Count != (dataGridView.Columns.Count - 1))
-                {
-                    edited = true;
-                }
-                else
-                {
-                    for (int i = 1; i < dataGridView.Columns.Count; i++)
-                    {
-                        string gridText = dataGridView.Rows[0].Cells[i].Value.ToString();
-                        string dataText = document.DataSet.ColumnsHeaders.Rows[i - 1]["Header"].ToString();
-                        if (!gridText.Equals(dataText))
-                        {
-                            edited = true;
-                            break;
-                        }
-                    }
-                    for (int i = 1; i < dataGridView.Rows.Count; i++)
-                    {
-                        string gridText = dataGridView.Rows[i].Cells["HEADER"].Value.ToString();
-                        string dataText = document.DataSet.RowsHeaders.Rows[i - 1]["Header"].ToString();
-                        if (!gridText.Equals(dataText))
-                        {
-                            edited = true;
-                            break;
-                        }
-                    }
-                }
+			for (int r = 0; r < rowsCount; r++)
+			{
+				dataGridView.Rows.Add("Строка " + (r + 1).ToString());
+			}
 
-                if (edited)
-                {
-                    DialogResult result = MessageBox.Show("Сохранить макет таблицы?", "Макет таблицы", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+			for (int r = 1; r < dataGridView.Rows.Count; r++)
+			{
+				for (int c = 1; c < dataGridView.Columns.Count; c++)
+				{
+					dataGridView.Rows[r].Cells[c].ReadOnly = true;
+					dataGridView.Rows[r].Cells[c].Style.BackColor = System.Drawing.SystemColors.Control;
+				}
+			}
+		}
 
-                    if (result == DialogResult.Yes)
-                    {
-                        SaveTableStructure();
-                    }
-                    else if (result == DialogResult.Cancel)
-                    {
-                        e.Cancel = true;
-                    }
-                }
-            }
-        }
+		private void ReadTableStructure()
+		{
+			dataGridView.Rows.Clear();
+			dataGridView.Columns.Clear();
+			if (document.DataSet.ColumnsHeaders.Rows.Count > 0)
+			{
+				dataGridView.Columns.Add("HEADER", "");
+				int rowIndex = dataGridView.Rows.Add();
+				dataGridView.Rows[rowIndex].Cells["HEADER"].ReadOnly = true;
+				dataGridView.Rows[rowIndex].Cells["HEADER"].Style.BackColor = dataGridView.BackgroundColor;
 
-        
+				for (int i = 0; i < document.DataSet.ColumnsHeaders.Rows.Count; i++)
+				{
+					string text = document.DataSet.ColumnsHeaders.Rows[i]["Header"].ToString();
+					int columnIndex = dataGridView.Columns.Add(text, "");
+					dataGridView.Columns[columnIndex].SortMode = DataGridViewColumnSortMode.NotSortable;
+					dataGridView.Rows[rowIndex].Cells[i + 1].Value = text;
+				}
 
-        private void Bold_Click(object sender, EventArgs e)
-        {
+				foreach (DataRow item in document.DataSet.RowsHeaders.Rows)
+				{
+					rowIndex = dataGridView.Rows.Add(item["Header"].ToString());
 
-        }
+					for (int i = 0; i < document.DataSet.ColumnsHeaders.Rows.Count; i++)
+					{
+						dataGridView.Rows[rowIndex].Cells[i + 1].ReadOnly = true;
+						dataGridView.Rows[rowIndex].Cells[i + 1].Style.BackColor = System.Drawing.SystemColors.Control;
+					}
+				}
+			}
+		}
 
-        private void FileOpen_Click(object sender, EventArgs e)
-        {
+		private void SaveTableStructure()
+		{
+			dataGridView.EndEdit();
 
-        }
+			if (document.DataSet.RowsHeaders.Rows.Count != (dataGridView.Rows.Count - 1) ||
+					document.DataSet.ColumnsHeaders.Rows.Count != (dataGridView.Columns.Count - 1))
+			{
+				Word.Variable variable = Content.GetVariable(document.Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+				variable?.Delete();
+			}
 
-        private void FileSaveAs_Click(object sender, EventArgs e)
-        {
+			document.DataSet.ColumnsHeaders.Clear();
 
-        }
+			for (int i = 1; i < dataGridView.Columns.Count; i++)
+			{
+				string text = dataGridView.Rows[0].Cells[i].Value.ToString();
+				document.DataSet.ColumnsHeaders.Rows.Add(new object[] { null, text });
+			}
 
-        private void InserRowAbove_Click(object sender, EventArgs e)
-        {
+			document.DataSet.RowsHeaders.Clear();
 
-        }
+			for (int i = 1; i < dataGridView.Rows.Count; i++)
+			{
+				document.DataSet.RowsHeaders.Rows.Add(new object[] { null, dataGridView.Rows[i].Cells["HEADER"].Value.ToString() });
+			}
 
-        private void InsertColumnRight_Click(object sender, EventArgs e)
-        {
+			Content.CommitVariable(document.Doc.Variables, Const.Globals.XML_VARIABLE_NAME, document.DataSet);
+		}
 
-        }
+		private void Delete_Click(object sender, EventArgs e)
+		{
 
-        private void DeleteTable_ButtonClick(object sender, EventArgs e)
-        {
-            mnuDeleteTable.ShowDropDown();
-        }
+		}
 
-        private void TableDeleteColumns_Click(object sender, EventArgs e)
-        {
+		private void DataGridView_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			DataGridViewCell clickedCell = (sender as DataGridView).Rows[e.RowIndex].Cells[e.ColumnIndex];
 
-        }
+			if (e.RowIndex != 0 && e.ColumnIndex != 0)
+			{
+				buttonBold.Enabled = false;
+			}
+			else
+			{
+				buttonBold.Enabled = true;
+				if (e.RowIndex == 0)
+				{
+					buttonBold.Checked = clickedCell.Style.Font != null && clickedCell.Style.Font.Bold;
+				}
+			}
 
-        private void TableDeleteRows_Click(object sender, EventArgs e)
-        {
 
-        }
-    }
+			if (e.Button == MouseButtons.Right)
+			{
+				if (clickedCell.RowIndex <= 0 && clickedCell.ColumnIndex <= 0)
+				{
+					toolStripMenuItem2.Visible = false;
+					mnuTableDelete.Visible = false;
+					toolStripMenuItem3.Visible = false;
+					cmnuTableDelete.Visible = false;
+
+				}
+
+
+				// Here you can do whatever you want with the cell
+				dataGridView.CurrentCell = clickedCell;  // Select the clicked cell, for instance
+
+				// Get mouse position relative to the vehicles grid
+				var relativeMousePosition = dataGridView.PointToClient(Cursor.Position);
+
+				// Show the context menu
+				this.contextMenuStrip1.Show(dataGridView, relativeMousePosition);
+			}
+		}
+
+		private void Dialog_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (e.CloseReason == CloseReason.UserClosing)
+			{
+				if (dataGridView.Rows.Count == 0 && dataGridView.Columns.Count == 0)
+				{
+					e.Cancel = false;
+					return;
+				}
+
+				bool edited = false;
+				if (document.DataSet.RowsHeaders.Rows.Count != (dataGridView.Rows.Count - 1) ||
+					document.DataSet.ColumnsHeaders.Rows.Count != (dataGridView.Columns.Count - 1))
+				{
+					edited = true;
+				}
+				else
+				{
+					for (int i = 1; i < dataGridView.Columns.Count; i++)
+					{
+						string gridText = dataGridView.Rows[0].Cells[i].Value.ToString();
+						string dataText = document.DataSet.ColumnsHeaders.Rows[i - 1]["Header"].ToString();
+						if (!gridText.Equals(dataText))
+						{
+							edited = true;
+							break;
+						}
+					}
+					for (int i = 1; i < dataGridView.Rows.Count; i++)
+					{
+						string gridText = dataGridView.Rows[i].Cells["HEADER"].Value.ToString();
+						string dataText = document.DataSet.RowsHeaders.Rows[i - 1]["Header"].ToString();
+						if (!gridText.Equals(dataText))
+						{
+							edited = true;
+							break;
+						}
+					}
+				}
+
+				if (edited)
+				{
+					DialogResult result = MessageBox.Show("Сохранить макет таблицы?", "Макет таблицы", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+					if (result == DialogResult.Yes)
+					{
+						SaveTableStructure();
+					}
+					else if (result == DialogResult.Cancel)
+					{
+						e.Cancel = true;
+					}
+				}
+			}
+		}
+
+
+
+		private void Bold_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void FileOpen_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void FileSaveAs_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void InserRowAbove_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void InsertColumnRight_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void DeleteTable_ButtonClick(object sender, EventArgs e)
+		{
+			mnuDeleteTable.ShowDropDown();
+		}
+
+		private void TableDeleteColumns_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void TableDeleteRows_Click(object sender, EventArgs e)
+		{
+
+		}
+	}
 }

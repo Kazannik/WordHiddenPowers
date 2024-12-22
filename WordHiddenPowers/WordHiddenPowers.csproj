@@ -27,9 +27,10 @@
     <NoStandardLibraries>false</NoStandardLibraries>
     <RootNamespace>WordHiddenPowers</RootNamespace>
     <AssemblyName>WordHiddenPowers</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <DefineConstants>VSTO40</DefineConstants>
     <IsWebBootstrapper>False</IsWebBootstrapper>
+    <TargetFrameworkProfile />
     <BootstrapperEnabled>false</BootstrapperEnabled>
     <BootstrapperComponentsLocation>Relative</BootstrapperComponentsLocation>
     <PublishUrl>publish\</PublishUrl>
@@ -53,6 +54,11 @@
       <ProductName>Microsoft .NET Framework 4.5.2 %28x86 и x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 и x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1</ProductName>
@@ -60,7 +66,7 @@
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.VSTORuntime.4.0">
       <Visible>False</Visible>
-      <ProductName>Среда выполнения Microsoft Visual Studio 2010 Tools for Office %28x86 и x64%29</ProductName>
+      <ProductName>Microsoft Visual Studio 2010 Tools for Office Runtime %28x86 and x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
@@ -130,8 +136,45 @@
   -->
   <ItemGroup>
     <Reference Include="Accessibility" />
-    <Reference Include="Microsoft.Office.Tools.Word.v4.0.Utilities, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.VisualStudio.Tools.Applications.ServerDocument, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools.Common, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools.Common.v4.0.Utilities, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools.v4.0.Framework, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools.Word, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools.Word.v4.0.Utilities, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Tools.Applications.Runtime, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Tools.Applications.ServerDocument, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Office, Version=15.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -141,31 +184,6 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.Office.Tools.v4.0.Framework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.VisualStudio.Tools.Applications.Runtime, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Office.Tools, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Office.Tools.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Office.Tools.Word, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.Office.Tools.Common.v4.0.Utilities, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <Private>True</Private>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Office, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
-      <Private>False</Private>
-      <EmbedInteropTypes>true</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
-      <Private>False</Private>
-      <EmbedInteropTypes>true</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <!--
     This section defines the user source files that are part of the project.
@@ -188,6 +206,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\NoteListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\NoteListBox1.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\NumericTextBox.cs">
@@ -214,6 +235,12 @@
     </Compile>
     <Compile Include="Controls\WordHiddenPowersRibbon.Designer.cs">
       <DependentUpon>WordHiddenPowersRibbon.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\AnalyzerDialog.cs">
       <SubType>Form</SubType>
@@ -291,7 +318,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Repositoryes\Categories\Category.cs" />
-    <Compile Include="Repositoryes\Note.cs" />
+    <Compile Include="Repositoryes\Notes\Note.cs" />
     <Compile Include="Repositoryes\Categories\Subcategory.cs" />
     <Compile Include="Repositoryes\WordFiles\WordFile.cs" />
     <Compile Include="Utils\Categories.cs" />
@@ -301,6 +328,15 @@
     <Compile Include="Utils\ShowDialogUtil.cs" />
     <Compile Include="Utils\WordUtil.cs" />
     <Compile Include="Utils\Xml.cs" />
+    <EmbeddedResource Include="Controls\AnalyzerNoteListBox.resx">
+      <DependentUpon>AnalyzerNoteListBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\NoteListBox.resx">
+      <DependentUpon>NoteListBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\NoteListBox1.resx">
+      <DependentUpon>NoteListBox1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\NumericTextBox.resx">
       <DependentUpon>NumericTextBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -312,6 +348,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\WordHiddenPowersRibbon.resx">
       <DependentUpon>WordHiddenPowersRibbon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\AnalyzerDialog.resx">
       <DependentUpon>AnalyzerDialog.cs</DependentUpon>
@@ -363,6 +402,7 @@
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Repositoryes\HiddenPowerSchema.cs">
       <DependentUpon>HiddenPowerSchema.xsd</DependentUpon>

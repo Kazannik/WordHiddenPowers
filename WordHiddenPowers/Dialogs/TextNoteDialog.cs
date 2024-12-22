@@ -1,31 +1,32 @@
 ﻿using WordHiddenPowers.Repositoryes;
+using WordHiddenPowers.Repositoryes.Notes;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Dialogs
 {
-    public partial class TextNoteDialog : CreateNoteDialog
-    {
-        
-        public string Value
-        {
-            get
-            {
-                return valueTextBox.Text;
-            }
-        }
-        
-        public TextNoteDialog(RepositoryDataSet dataSet, Word.Selection selection) : base(dataSet, selection, true)
-        {
-            InitializeComponent();
+	public partial class TextNoteDialog : CreateNoteDialog
+	{
 
-            valueTextBox.Text = selection.Text;
-        }
+		public string Value
+		{
+			get
+			{
+				return valueTextBox.Text;
+			}
+		}
 
-        public TextNoteDialog(RepositoryDataSet dataSet, Note note): base(dataSet, note, true)
-        {
-            InitializeComponent();
+		public TextNoteDialog(RepositoryDataSet dataSet, Word.Selection selection) : base(dataSet, selection, true)
+		{
+			InitializeComponent();
 
-            valueTextBox.Text = note.Value as string;
-        }
-    }
+			valueTextBox.Text = selection.Text;
+		}
+
+		public TextNoteDialog(RepositoryDataSet dataSet, Note note) : base(dataSet, note, true)
+		{
+			InitializeComponent();
+
+			valueTextBox.Text = note.Value as string;
+		}
+	}
 }

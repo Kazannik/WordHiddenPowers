@@ -100,7 +100,7 @@
             this.clearButton.Name = "clearButton";
             this.clearButton.Size = new System.Drawing.Size(28, 28);
             this.clearButton.Text = "Очистить таблицу";
-            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
+            this.clearButton.Click += new System.EventHandler(this.ClearButton_Click);
             // 
             // toolStripSeparator1
             // 
@@ -115,7 +115,7 @@
             this.refreshButton.Name = "refreshButton";
             this.refreshButton.Size = new System.Drawing.Size(28, 28);
             this.refreshButton.Text = "Обновить данные";
-            this.refreshButton.Click += new System.EventHandler(this.refreshButton_Click);
+            this.refreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
             // 
             // toolStripSeparator2
             // 
@@ -131,7 +131,7 @@
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(28, 28);
             this.saveButton.Text = "Сохранить данные";
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            this.saveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
             // tableEditBox
             // 
@@ -144,7 +144,7 @@
             this.tableEditBox.Size = new System.Drawing.Size(636, 432);
             this.tableEditBox.TabIndex = 4;
             this.tableEditBox.Table = null;
-            this.tableEditBox.ValueChanged += new System.EventHandler(this.tableEditBox_ValueChanged);
+            this.tableEditBox.ValueChanged += new System.EventHandler(this.TableEditBox_ValueChanged);
             // 
             // deleteButton
             // 
@@ -154,7 +154,7 @@
             this.deleteButton.Name = "deleteButton";
             this.deleteButton.Size = new System.Drawing.Size(28, 28);
             this.deleteButton.Text = "Удалить таблицу";
-            this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
+            this.deleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
             // 
             // TableEditorDialog
             // 

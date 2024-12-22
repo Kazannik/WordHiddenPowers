@@ -1,47 +1,43 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WordHiddenPowers.Controls
 {
-    public partial class ReitingBox : UserControl
-    {
-        public ReitingBox()
-        {
-            InitializeComponent();
+	public partial class ReitingBox : UserControl
+	{
+		protected const int CONTROL_HEIGHT = 42;
 
-            ratingLabel.Text = reitingTrackBar.Value.ToString();
-        }
+		public ReitingBox()
+		{
+			InitializeComponent();
 
-        private void ReitingBox_Resize(object sender, EventArgs e)
-        {
-            if (this.Height != 42)
-                this.Height = 42;
-            reitingTrackBar.Location = new Point(42, 0);
-            reitingTrackBar.Width = this.Width - 42;
-        }
-       
-        private void trackBar1_ValueChanged(object sender, EventArgs e)
-        {
-            ratingLabel.Text = reitingTrackBar.Value.ToString();
-        }
+			ratingLabel.Text = reitingTrackBar.Value.ToString();
+		}
 
-        public int Value
-        {
-            get
-            {
-                return reitingTrackBar.Value;
-            }
-            set
-            {
-                reitingTrackBar.Value = value;
-            }
-        }
-    }
+		private void ReitingBox_Resize(object sender, EventArgs e)
+		{
+			if (Height != CONTROL_HEIGHT)
+				Height = CONTROL_HEIGHT;
+			reitingTrackBar.Location = new Point(CONTROL_HEIGHT, 0);
+			reitingTrackBar.Width = Width - CONTROL_HEIGHT;
+		}
+
+		private void TrackBar_ValueChanged(object sender, EventArgs e)
+		{
+			ratingLabel.Text = reitingTrackBar.Value.ToString();
+		}
+
+		public int Value
+		{
+			get
+			{
+				return reitingTrackBar.Value;
+			}
+			set
+			{
+				reitingTrackBar.Value = value;
+			}
+		}
+	}
 }

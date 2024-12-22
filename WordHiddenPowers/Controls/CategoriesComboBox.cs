@@ -6,28 +6,28 @@ using WordHiddenPowers.Repositoryes.Categories;
 
 namespace WordHiddenPowers.Controls
 {
-    [ToolStripItemDesignerAvailability(ToolStripItemDesignerAvailability.All)]
-    public class CategoriesComboBox : ComboControl<Category>
-    {
-        #region Initialize
+	[ToolStripItemDesignerAvailability(ToolStripItemDesignerAvailability.All)]
+	public class CategoriesComboBox : ComboControl<Category>
+	{
+		#region Initialize
 
-        public CategoriesComboBox() : base() { }
+		public CategoriesComboBox() : base() { }
 
-        [DebuggerNonUserCode()]
-        public CategoriesComboBox(IContainer container):base(container: container) { }
-        
+		[DebuggerNonUserCode()]
+		public CategoriesComboBox(IContainer container) : base(container: container) { }
 
-        public void InitializeSource(RepositoryDataSet dataSet, bool isText)
-        {
-            Items.Clear();
 
-            foreach (RepositoryDataSet.CategoriesRow dataRow in dataSet.GetCategories(isText))
-            {
-                Category category = Category.Create(dataRow);
-                Add(category);
-            }
-        }      
+		public void InitializeSource(RepositoryDataSet dataSet, bool isText)
+		{
+			Items.Clear();
 
-        #endregion       
-    }
+			foreach (RepositoryDataSet.CategoriesRow dataRow in dataSet.GetCategories(isText))
+			{
+				Category category = Category.Create(dataRow);
+				Add(category);
+			}
+		}
+
+		#endregion
+	}
 }

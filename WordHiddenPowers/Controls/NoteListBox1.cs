@@ -1,17 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WordHiddenPowers.Repositoryes;
 using WordHiddenPowers.Repositoryes.Categories;
 using WordHiddenPowers.Repositoryes.Notes;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Header;
 using static WordHiddenPowers.Repositoryes.RepositoryDataSet;
 
 namespace WordHiddenPowers.Controls
 {
-	public class AnalyzerNoteListBox : ListBox
+	[DefaultBindingProperty("SelectedValue")]
+	public class NoteListBox1 : ListBox
 	{
+		private const int CB_SETITEMHEIGHT = 0x0153;
+		[DllImport("user32.dll", CharSet = CharSet.Auto)]
+		static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, int wParam, int lParam);
+ //   ...
+ //   При этом высота будет установлена на 100 для элемента с индексом 2  
+
+	//SendMessage(comboBox1.Handle, CB_SETITEMHEIGHT, 2, 100);
+
+
 		private RepositoryDataSet source;
 
 		private IDictionary<int, Subcategory> subcategories;
@@ -24,7 +38,6 @@ namespace WordHiddenPowers.Controls
 			{
 				return source;
 			}
-
 			set
 			{
 				if (source != null)
@@ -52,19 +65,19 @@ namespace WordHiddenPowers.Controls
 
 				if (source != null)
 				{
-					source.DecimalPowers.DecimalPowersRowChanged += new RepositoryDataSet.DecimalPowersRowChangeEventHandler(DecimalPowers_RowChanged);
-					source.TextPowers.TextPowersRowChanged += new RepositoryDataSet.TextPowersRowChangeEventHandler(TextPowers_RowChanged);
-					source.DecimalPowers.DecimalPowersRowDeleted += new RepositoryDataSet.DecimalPowersRowChangeEventHandler(DecimalPowers_RowChanged);
-					source.TextPowers.TextPowersRowDeleted += new RepositoryDataSet.TextPowersRowChangeEventHandler(TextPowers_RowChanged);
+					source.DecimalPowers.DecimalPowersRowChanged += new DecimalPowersRowChangeEventHandler(DecimalPowers_RowChanged);
+					source.TextPowers.TextPowersRowChanged += new TextPowersRowChangeEventHandler(TextPowers_RowChanged);
+					source.DecimalPowers.DecimalPowersRowDeleted += new DecimalPowersRowChangeEventHandler(DecimalPowers_RowChanged);
+					source.TextPowers.TextPowersRowDeleted += new TextPowersRowChangeEventHandler(TextPowers_RowChanged);
 					source.DecimalPowers.TableCleared += new DataTableClearEventHandler(TablesPowers_TableCleared);
 					source.TextPowers.TableCleared += new DataTableClearEventHandler(TablesPowers_TableCleared);
 
-					source.Subcategories.SubcategoriesRowChanged += new RepositoryDataSet.SubcategoriesRowChangeEventHandler(Subcategories_RowChanged);
-					source.Subcategories.SubcategoriesRowDeleted += new RepositoryDataSet.SubcategoriesRowChangeEventHandler(Subcategories_RowChanged);
+					source.Subcategories.SubcategoriesRowChanged += new SubcategoriesRowChangeEventHandler(Subcategories_RowChanged);
+					source.Subcategories.SubcategoriesRowDeleted += new SubcategoriesRowChangeEventHandler(Subcategories_RowChanged);
 					source.Subcategories.TableCleared += new DataTableClearEventHandler(Subcategories_TableCleared);
 
-					source.WordFiles.WordFilesRowChanged += new RepositoryDataSet.WordFilesRowChangeEventHandler(WordFiles_RowChanged);
-					source.WordFiles.WordFilesRowDeleted += new RepositoryDataSet.WordFilesRowChangeEventHandler(WordFiles_RowChanged);
+					source.WordFiles.WordFilesRowChanged += new WordFilesRowChangeEventHandler(WordFiles_RowChanged);
+					source.WordFiles.WordFilesRowDeleted += new WordFilesRowChangeEventHandler(WordFiles_RowChanged);
 					source.WordFiles.TableCleared += new DataTableClearEventHandler(WordFiles_TableCleared);
 				}
 			}
@@ -75,7 +88,7 @@ namespace WordHiddenPowers.Controls
 			ReadData();
 		}
 
-		private void WordFiles_RowChanged(object sender, RepositoryDataSet.WordFilesRowChangeEvent e)
+		private void WordFiles_RowChanged(object sender, WordFilesRowChangeEvent e)
 		{
 			ReadData();
 		}
@@ -85,12 +98,12 @@ namespace WordHiddenPowers.Controls
 			ReadData();
 		}
 
-		private void Subcategories_RowChanged(object sender, RepositoryDataSet.SubcategoriesRowChangeEvent e)
+		private void Subcategories_RowChanged(object sender, SubcategoriesRowChangeEvent e)
 		{
 			ReadData();
 		}
 
-		private void DecimalPowers_RowChanged(object sender, RepositoryDataSet.DecimalPowersRowChangeEvent e)
+		private void DecimalPowers_RowChanged(object sender, DecimalPowersRowChangeEvent e)
 		{
 			if (e.Action == DataRowAction.Add)
 			{
@@ -114,12 +127,11 @@ namespace WordHiddenPowers.Controls
 			}
 		}
 
-		private void TextPowers_RowChanged(object sender, RepositoryDataSet.TextPowersRowChangeEvent e)
+		private void TextPowers_RowChanged(object sender, TextPowersRowChangeEvent e)
 		{
 			if (e.Action == DataRowAction.Add)
 			{
 				Items.Add(Note.Create(e.Row, files[e.Row.file_id], subcategories[e.Row.subcategory_id]));
-
 			}
 			else if (e.Action == DataRowAction.Delete)
 			{
@@ -144,14 +156,9 @@ namespace WordHiddenPowers.Controls
 
 		private Note GetNote(DataRow dataRow)
 		{
-			foreach (Note item in Items)
-			{
-				if (item.DataRow.Equals(dataRow))
-				{
-					return item;
-				}
-			}
-			return null;
+			return (from Note item in Items
+					where item.DataRow.Equals(dataRow)
+					select item).First();
 		}
 
 		private Note GetNote(int id, bool isText)
@@ -178,10 +185,32 @@ namespace WordHiddenPowers.Controls
 			return null;
 		}
 
-		public AnalyzerNoteListBox()
+		public NoteListBox1()
 		{
-			DrawMode = DrawMode.OwnerDrawFixed;
-			ItemHeight = 200;
+			base.DrawMode = DrawMode.OwnerDrawVariable;
+			base.ItemHeight = 100;
+			InitializeComponent();
+		}
+		
+		public NoteListBox1(IContainer container)
+		{
+			container.Add(this);
+			base.DrawMode = DrawMode.OwnerDrawVariable;
+			base.ItemHeight = 100;
+
+			InitializeComponent();
+		}
+
+		[Browsable(false), ReadOnly(true)]
+		public new DrawMode DrawMode
+		{
+			get { return base.DrawMode; }
+		}
+
+		[Browsable(false), ReadOnly(true)]
+		public new int ItemHeight
+		{
+			get { return base.ItemHeight; }
 		}
 
 		protected override void Sort()
@@ -198,9 +227,7 @@ namespace WordHiddenPowers.Controls
 					{
 						if (Note.Compare((Note)Items[counter], (Note)Items[counter - 1]) != -1)
 						{
-							object temp = Items[counter];
-							Items[counter] = Items[counter - 1];
-							Items[counter - 1] = temp;
+							(Items[counter - 1], Items[counter]) = (Items[counter], Items[counter - 1]);
 							swapped = true;
 						}
 						counter -= 1;
@@ -209,7 +236,6 @@ namespace WordHiddenPowers.Controls
 				while (swapped);
 			}
 		}
-
 
 		private Note HoveringNote;
 
@@ -229,14 +255,30 @@ namespace WordHiddenPowers.Controls
 			}
 		}
 
+		public Note this[int index]
+		{
+			get
+			{
+				return Items[index] as Note;				
+			}
+		}
+
 		public int Add(Note item)
 		{
+			item.owner = this;
 			return Items.Add(item);
 		}
 
 		public void Insert(int index, Note item)
 		{
+			item.owner = this;
 			Items.Insert(index, item);
+		}
+
+		protected override void OnResize(EventArgs e)
+		{
+			//base.RefreshItems();
+			base.OnResize(e);
 		}
 
 		protected override void OnMouseMove(MouseEventArgs e)
@@ -259,7 +301,7 @@ namespace WordHiddenPowers.Controls
 					HoveringNote = null;
 					Invalidate(rectangle);
 				}
-				this.Cursor = Cursors.Default;
+				Cursor = Cursors.Default;
 			}
 			base.OnMouseMove(e);
 		}
@@ -331,48 +373,31 @@ namespace WordHiddenPowers.Controls
 				else
 				{
 					Note note = Items[e.Index] as Note;
+					note.DrawItem(e);
 
-					//DrawRemoveButton(note, e);
-					//DrawReiting(note, e);
+					//if (e.Bounds.Height > 1)
+					//{
+					//	SendMessage(Handle, CB_SETITEMHEIGHT, e.Index, note.Size.Height);
+					//}
 
-					if (note.IsText)
-						DrawTextItem(note, e);
-					else
-						DrawDecimalItem(note, e);
+
 				}
 				e.DrawFocusRectangle();
 			}
 		}
 
-		private void DrawDecimalItem(Note note, DrawItemEventArgs e)
+		protected override void OnMeasureItem(MeasureItemEventArgs e)
 		{
-			const TextFormatFlags flags = TextFormatFlags.Left | TextFormatFlags.Top;
-
-			Rectangle captionRectangle = new Rectangle(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, 20);
-			TextRenderer.DrawText(e.Graphics, note.Category.Caption as string, e.Font, captionRectangle, Color.RosyBrown, flags);
-
-			Rectangle subcategoryRectangle = new Rectangle(e.Bounds.X, e.Bounds.Y + 20, e.Bounds.Width, 20);
-			TextRenderer.DrawText(e.Graphics, note.Subcategory.Caption as string, e.Font, subcategoryRectangle, Color.YellowGreen, flags);
-
-			Rectangle textRectangle = new Rectangle(e.Bounds.X, e.Bounds.Y + 40, e.Bounds.Width, e.Bounds.Height - 40);
-			TextRenderer.DrawText(e.Graphics, note.Value.ToString() as string, e.Font, textRectangle, e.ForeColor, flags | TextFormatFlags.WordBreak);
+			if (e.Index < Items.Count)
+			{
+				Note note = this[e.Index];
+				Size size = note.GetSizeItem(e.Graphics, Font, ClientSize);				
+				e.ItemWidth = size.Width;
+				e.ItemHeight = size.Height;
+			}
+			base.OnMeasureItem(e);
 		}
 
-		private void DrawTextItem(Note note, DrawItemEventArgs e)
-		{
-
-			const TextFormatFlags flags = TextFormatFlags.Left | TextFormatFlags.Top;
-
-			Rectangle captionRectangle = new Rectangle(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, 20);
-			TextRenderer.DrawText(e.Graphics, note.Category.Caption as string, e.Font, captionRectangle, Color.Red, flags);
-
-			Rectangle subcategoryRectangle = new Rectangle(e.Bounds.X, e.Bounds.Y + 20, e.Bounds.Width, 20);
-			TextRenderer.DrawText(e.Graphics, note.Subcategory.Caption as string, e.Font, subcategoryRectangle, Color.Green, flags);
-
-			Rectangle textRectangle = new Rectangle(e.Bounds.X, e.Bounds.Y + 40, e.Bounds.Width, e.Bounds.Height - 40);
-			TextRenderer.DrawText(e.Graphics, note.Value as string, e.Font, textRectangle, e.ForeColor, flags | TextFormatFlags.WordBreak);
-
-		}
 
 		private void DrawReiting(Note note, DrawItemEventArgs e)
 		{
@@ -421,7 +446,6 @@ namespace WordHiddenPowers.Controls
 			if (DesignMode || source == null) return;
 
 			BeginUpdate();
-
 			IDictionary<int, Category> categories = new Dictionary<int, Category>();
 			if (source.Categories.Rows.Count > 0)
 			{
@@ -464,11 +488,10 @@ namespace WordHiddenPowers.Controls
 				}
 			}
 
-
 			if (source.TextPowers.Rows.Count > 0 ||
 				source.DecimalPowers.Rows.Count > 0)
 			{
-				foreach (Note note in source.GetNotesSort())
+				foreach (Note note in source.GetNotes())
 				{
 					Add(note);
 				}
@@ -517,6 +540,40 @@ namespace WordHiddenPowers.Controls
 			}
 
 			public Note Note { get; }
+		}
+
+		/// <summary>
+		/// Обязательная переменная конструктора.
+		/// </summary>
+		private IContainer components = null;
+
+		/// <summary> 
+		/// Освободить все используемые ресурсы.
+		/// </summary>
+		/// <param name="disposing">истинно, если управляемый ресурс должен быть удален; иначе ложно.</param>
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && (components != null))
+			{
+				components.Dispose();
+			}
+			base.Dispose(disposing);
+		}
+
+		private void InitializeComponent()
+		{
+			this.SuspendLayout();
+			// 
+			// NoteListBox
+			// 
+			this.ClientSizeChanged += new System.EventHandler(this.NoteListBox_ClientSizeChanged);
+			this.ResumeLayout(false);
+
+		}
+
+		private void NoteListBox_ClientSizeChanged(object sender, EventArgs e)
+		{
+			base.RefreshItems();
 		}
 	}
 }

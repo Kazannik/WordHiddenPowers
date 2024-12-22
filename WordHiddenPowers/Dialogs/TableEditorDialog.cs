@@ -4,95 +4,95 @@ using WordHiddenPowers.Repositoryes.Data;
 
 namespace WordHiddenPowers.Dialogs
 {
-    public partial class TableEditorDialog : Form
-    {
-        private Documents.Document document;
+	public partial class TableEditorDialog : Form
+	{
+		private readonly Documents.Document document;
 
-        public TableEditorDialog(Documents.Document document)
-        {
-            this.document = document;
+		public TableEditorDialog(Documents.Document document)
+		{
+			this.document = document;
 
-            InitializeComponent();
+			InitializeComponent();
 
-            nameLabel.Text = this.document.Doc.Name;
+			nameLabel.Text = this.document.Doc.Name;
 
-            tableEditBox.DataSet = this.document.DataSet;
+			tableEditBox.DataSet = this.document.DataSet;
 
-            deleteButton.Enabled = Utils.Content.ExistsVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME);
+			deleteButton.Enabled = Utils.Content.ExistsVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME);
 
-            ReadValues();
-        }
-                
-        private void ReadValues()
-        {
-            string tableContext = Utils.Content.GetVariableValue(document.Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
-            if (string.IsNullOrWhiteSpace(tableContext))
-            {
-                tableEditBox.Table = new Table(tableEditBox.DataSet.RowsHeaders.Count, tableEditBox.DataSet.ColumnsHeaders.Count);
-            }
-            else
-            {
-                tableEditBox.Table = Table.Create(tableContext);
-            }
-        }
+			ReadValues();
+		}
 
-        private void SaveValues()
-        {
-            tableEditBox.CommitValue();
-            Utils.Content.CommitVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME, value: tableEditBox.Table.ToString());
-            document.Doc.Saved = false;
-        }
-        
-        private void tableEditBox_ValueChanged(object sender, EventArgs e)
-        {
-            saveButton.Enabled = tableEditBox.IsChanged;
-        }
+		private void ReadValues()
+		{
+			string tableContext = Utils.Content.GetVariableValue(document.Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+			if (string.IsNullOrWhiteSpace(tableContext))
+			{
+				tableEditBox.Table = new Table(tableEditBox.DataSet.RowsHeaders.Count, tableEditBox.DataSet.ColumnsHeaders.Count);
+			}
+			else
+			{
+				tableEditBox.Table = Table.Create(tableContext);
+			}
+		}
 
-        private void clearButton_Click(object sender, EventArgs e)
-        {
-            tableEditBox.ClearValues();
-        }
+		private void SaveValues()
+		{
+			tableEditBox.CommitValue();
+			Utils.Content.CommitVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME, value: tableEditBox.Table.ToString());
+			document.Doc.Saved = false;
+		}
 
-        private void deleteButton_Click(object sender, EventArgs e)
-        {
-            if (Utils.Content.ExistsVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME))
-            {
-                DialogResult result = MessageBox.Show(this, "Удалить таблицу с данными из документа?", "Табличные данные", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
-                {
-                    Utils.Content.DeleteVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME);
-                    Close();
-                }
-            }
-        }
+		private void TableEditBox_ValueChanged(object sender, EventArgs e)
+		{
+			saveButton.Enabled = tableEditBox.IsChanged;
+		}
 
-        private void refreshButton_Click(object sender, EventArgs e)
-        {
-            tableEditBox.RefreshValues();
-        }
+		private void ClearButton_Click(object sender, EventArgs e)
+		{
+			tableEditBox.ClearValues();
+		}
 
-        private void saveButton_Click(object sender, EventArgs e)
-        {
-            SaveValues();
-        }
+		private void DeleteButton_Click(object sender, EventArgs e)
+		{
+			if (Utils.Content.ExistsVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME))
+			{
+				DialogResult result = MessageBox.Show(this, "Удалить таблицу с данными из документа?", "Табличные данные", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+				if (result == DialogResult.Yes)
+				{
+					Utils.Content.DeleteVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME);
+					Close();
+				}
+			}
+		}
 
-        private void TableEditorDialog_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (e.CloseReason == CloseReason.UserClosing)
-            {
-                if (tableEditBox.IsChanged)
-                {
-                    DialogResult result = MessageBox.Show(this, "Зафиксировать табличные данные?", "Табличные данные", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                    if (result == DialogResult.Yes)
-                    {
-                        SaveValues();
-                    }
-                    else if (result == DialogResult.Cancel)
-                    {
-                        e.Cancel = true;
-                    }
-                }                
-            }
-        }        
-    }
+		private void RefreshButton_Click(object sender, EventArgs e)
+		{
+			tableEditBox.RefreshValues();
+		}
+
+		private void SaveButton_Click(object sender, EventArgs e)
+		{
+			SaveValues();
+		}
+
+		private void TableEditorDialog_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (e.CloseReason == CloseReason.UserClosing)
+			{
+				if (tableEditBox.IsChanged)
+				{
+					DialogResult result = MessageBox.Show(this, "Зафиксировать табличные данные?", "Табличные данные", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+					if (result == DialogResult.Yes)
+					{
+						SaveValues();
+					}
+					else if (result == DialogResult.Cancel)
+					{
+						e.Cancel = true;
+					}
+				}
+			}
+		}
+	}
 }

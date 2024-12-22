@@ -229,7 +229,7 @@
             this.addCategoryButton.Name = "addCategoryButton";
             this.addCategoryButton.Size = new System.Drawing.Size(28, 28);
             this.addCategoryButton.Text = "Добавить категорию";
-            this.addCategoryButton.Click += new System.EventHandler(this.addCategoryButton_Click);
+            this.addCategoryButton.Click += new System.EventHandler(this.AddCategory_Click);
             // 
             // addSubcategoryButton
             // 
@@ -281,7 +281,7 @@
             this.categoriesTreeView.Name = "categoriesTreeView";
             this.categoriesTreeView.Size = new System.Drawing.Size(332, 341);
             this.categoriesTreeView.TabIndex = 0;
-            this.categoriesTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.categoriesTreeView_AfterSelect);
+            this.categoriesTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.CategoriesTreeView_AfterSelect);
             // 
             // tableLayoutPanel1
             // 

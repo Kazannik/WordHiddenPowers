@@ -1,0 +1,3 @@
+[submodule "ControlLibrary"]
+	path = ControlLibrary
+	url = https://github.com/Kazannik/ControlLibrary.git

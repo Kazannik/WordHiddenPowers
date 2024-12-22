@@ -84,7 +84,7 @@
             this.insertToDocumentButton.Name = "insertToDocumentButton";
             this.insertToDocumentButton.Size = new System.Drawing.Size(24, 24);
             this.insertToDocumentButton.Text = "Вставить в открытый документ";
-            this.insertToDocumentButton.Click += new System.EventHandler(this.insertToDocumentButton_Click);
+            this.insertToDocumentButton.Click += new System.EventHandler(this.InsertToDocumentButton_Click);
             // 
             // statusStrip1
             // 
@@ -121,7 +121,7 @@
             this.mnuFileInsertToWord.Name = "mnuFileInsertToWord";
             this.mnuFileInsertToWord.Size = new System.Drawing.Size(298, 26);
             this.mnuFileInsertToWord.Text = "Вставить в открытый документ";
-            this.mnuFileInsertToWord.Click += new System.EventHandler(this.insertToDocumentButton_Click);
+            this.mnuFileInsertToWord.Click += new System.EventHandler(this.InsertToDocumentButton_Click);
             // 
             // analyzerNoteListBox1
             // 

@@ -5,25 +5,25 @@ using WordHiddenPowers.Repositoryes.Categories;
 
 namespace WordHiddenPowers.Controls
 {
-    public class SubcategoriesComboBox : ComboControl<Subcategory>
-    {
-        #region Initialize
+	public class SubcategoriesComboBox : ComboControl<Subcategory>
+	{
+		#region Initialize
 
-        public SubcategoriesComboBox() : base() { }
+		public SubcategoriesComboBox() : base() { }
 
-        [DebuggerNonUserCode()]
-        public SubcategoriesComboBox(IContainer container) : base(container: container) { }
-                
-        #endregion
+		[DebuggerNonUserCode()]
+		public SubcategoriesComboBox(IContainer container) : base(container: container) { }
 
-        public void InitializeSource(RepositoryDataSet dataSet, Category category, bool isText)
-        {
-            Items.Clear();
-            foreach (RepositoryDataSet.SubcategoriesRow dataRow in dataSet.Subcategories.Get(category.Id, isText))
-            {
-                Subcategory subcategory = Subcategory.Create( category, dataRow);
-                Add(subcategory);
-            }
-        }        
-    }
+		#endregion
+
+		public void InitializeSource(RepositoryDataSet dataSet, Category category, bool isText)
+		{
+			Items.Clear();
+			foreach (RepositoryDataSet.SubcategoriesRow dataRow in dataSet.Subcategories.Get(category.Id, isText))
+			{
+				Subcategory subcategory = Subcategory.Create(category, dataRow);
+				Add(subcategory);
+			}
+		}
+	}
 }

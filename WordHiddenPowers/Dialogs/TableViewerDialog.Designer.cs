@@ -106,7 +106,7 @@
             this.tableEditBox.Size = new System.Drawing.Size(529, 463);
             this.tableEditBox.TabIndex = 4;
             this.tableEditBox.Table = null;
-            this.tableEditBox.SelectedCell += new System.EventHandler<WordHiddenPowers.Controls.TableEditBox.TableEventArgs>(this.tableEditBox_SelectedCell);
+            this.tableEditBox.SelectedCell += new System.EventHandler<WordHiddenPowers.Controls.TableEditBox.TableEventArgs>(this.TableEditBox_SelectedCell);
             // 
             // listView1
             // 
@@ -124,8 +124,8 @@
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
-            this.listView1.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listView1_ColumnClick);
-            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            this.listView1.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ListView1_ColumnClick);
+            this.listView1.SelectedIndexChanged += new System.EventHandler(this.ListView1_SelectedIndexChanged);
             // 
             // nameColumn
             // 
