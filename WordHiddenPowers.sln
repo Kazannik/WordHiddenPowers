@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35521.163 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordHiddenPowers", "WordHiddenPowers\WordHiddenPowers.csproj", "{DDA3E4D4-908C-46EF-BA4C-FF5C54AE7C2A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordSuite", "WordSuite\WordSuite.csproj", "{D49E2787-6AB9-4886-B21E-C1630D294755}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlLibrary", "..\ControlLibrary\ControlLibrary\ControlLibrary.csproj", "{0C5678EE-DE96-4F24-B5FF-9A0C7DD53EDF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +22,10 @@ Global
 		{D49E2787-6AB9-4886-B21E-C1630D294755}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D49E2787-6AB9-4886-B21E-C1630D294755}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D49E2787-6AB9-4886-B21E-C1630D294755}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C5678EE-DE96-4F24-B5FF-9A0C7DD53EDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C5678EE-DE96-4F24-B5FF-9A0C7DD53EDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C5678EE-DE96-4F24-B5FF-9A0C7DD53EDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C5678EE-DE96-4F24-B5FF-9A0C7DD53EDF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

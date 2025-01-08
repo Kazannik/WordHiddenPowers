@@ -28,7 +28,7 @@ namespace WordHiddenPowers.Dialogs
 		{
 			get
 			{
-				return categoriesComboBox.SelectedContent;
+				return categoriesComboBox.SelectedItem;
 			}
 		}
 
@@ -36,7 +36,7 @@ namespace WordHiddenPowers.Dialogs
 		{
 			get
 			{
-				return subcategoriesComboBox.SelectedContent;
+				return subcategoriesComboBox.SelectedItem;
 			}
 		}
 

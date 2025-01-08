@@ -109,8 +109,8 @@ namespace WordHiddenPowers.Controls
 				note.Value = e.Row.Value;
 				Category category = source.Categories.Get(e.Row.category_id);
 				note.Subcategory = source.Subcategories.Get(category, e.Row.subcategory_id);
-				if (note.Rectangle != null)
-					Invalidate(note.Rectangle);
+				//if (note.Rectangle != null)
+				//	Invalidate(note.Rectangle);
 			}
 		}
 
@@ -132,8 +132,8 @@ namespace WordHiddenPowers.Controls
 				note.Description = e.Row.Description;
 				note.Reiting = e.Row.Reiting;
 				note.Value = e.Row.Value;
-				if (note.Rectangle != null)
-					Invalidate(note.Rectangle);
+				//if (note.Rectangle != null)
+				//	Invalidate(note.Rectangle);
 			}
 		}
 
@@ -170,10 +170,10 @@ namespace WordHiddenPowers.Controls
 		{
 			foreach (Note item in Items)
 			{
-				if (item.removeButton != null && item.removeButton.Contains(x, y))
-				{
-					return item;
-				}
+				//if (item.removeButton != null && item.removeButton.Contains(x, y))
+				//{
+				//	return item;
+				//}
 			}
 			return null;
 		}
@@ -219,11 +219,11 @@ namespace WordHiddenPowers.Controls
 			{
 				foreach (Note item in Items)
 				{
-					if (item.Rectangle != null &&
-						item.Rectangle.Contains(new Point(x, y)))
-					{
-						return item;
-					}
+					//if (item.Rectangle != null &&
+					//	item.Rectangle.Contains(new Point(x, y)))
+					//{
+					//	return item;
+					//}
 				}
 				return null;
 			}
@@ -248,16 +248,16 @@ namespace WordHiddenPowers.Controls
 				if (HoveringNote != focusNote)
 				{
 					HoveringNote = focusNote;
-					Invalidate(HoveringNote.Rectangle);
+					//Invalidate(HoveringNote.Rectangle);
 				}
 			}
 			else
 			{
 				if (HoveringNote != null)
 				{
-					Rectangle rectangle = HoveringNote.Rectangle;
+					//Rectangle rectangle = HoveringNote.Rectangle;
 					HoveringNote = null;
-					Invalidate(rectangle);
+					//Invalidate(rectangle);
 				}
 				this.Cursor = Cursors.Default;
 			}
@@ -311,9 +311,9 @@ namespace WordHiddenPowers.Controls
 		{
 			if (HoveringNote != null)
 			{
-				Rectangle rectangle = HoveringNote.Rectangle;
+				//Rectangle rectangle = HoveringNote.Rectangle;
 				HoveringNote = null;
-				Invalidate(rectangle);
+				//Invalidate(rectangle);
 			}
 			base.OnMouseLeave(e);
 		}
@@ -386,10 +386,10 @@ namespace WordHiddenPowers.Controls
 
 		private void DrawRemoveButton(Note note, DrawItemEventArgs e)
 		{
-			note.removeButton = e.Bounds;
-			note.removeButton.X = e.Bounds.Width - 15;
-			note.removeButton.Width = 14;
-			note.removeButton.Height = 14;
+			//note.removeButton = e.Bounds;
+			//note.removeButton.X = e.Bounds.Width - 15;
+			//note.removeButton.Width = 14;
+			//note.removeButton.Height = 14;
 
 			//if (note.Equals(noteHoverRemoveButton))
 			//{
@@ -412,7 +412,7 @@ namespace WordHiddenPowers.Controls
 		{
 			foreach (Note item in Items)
 			{
-				Invalidate(item.removeButton);
+				//Invalidate(item.removeButton);
 			}
 		}
 

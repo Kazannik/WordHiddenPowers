@@ -36,15 +36,19 @@ namespace WordHiddenPowers.Repositoryes
 		public IEnumerable<Note> GetNotes()
 		{
 			return (from row in TextPowers select Note.Create(row, WordFiles.GetRow(row.file_id), GetSubcategory(row.subcategory_id)))
-				.Union(from row in DecimalPowers select Note.Create(row, WordFiles.GetRow(row.file_id), GetSubcategory(row.subcategory_id)))
+				.Union(from row in DecimalPowers where row.RowState != DataRowState.Deleted select Note.Create(row, WordFiles.GetRow(row.file_id), GetSubcategory(row.subcategory_id)))
 				.OrderBy(n => n.WordSelectionStart);
 		}
 
 
 		public IEnumerable<Note> GetNotesSort()
 		{
-			return ((from row in TextPowers select Note.Create(row, WordFiles.GetRow(row.file_id), GetSubcategory(row.subcategory_id)))
-				.Union(from row in DecimalPowers select Note.Create(row, WordFiles.GetRow(row.file_id), GetSubcategory(row.subcategory_id))))
+			return ((from row in TextPowers
+					 .Where(r => r.RowState != DataRowState.Deleted)
+					 select Note.Create(row, WordFiles.GetRow(row.file_id), GetSubcategory(row.subcategory_id)))
+				.Union(from row in DecimalPowers
+					   .Where(r => r.RowState != DataRowState.Deleted) 
+					   select Note.Create(row, WordFiles.GetRow(row.file_id), GetSubcategory(row.subcategory_id))))
 				.OrderBy(n => n.Subcategory.Id);
 		}
 
@@ -57,8 +61,11 @@ namespace WordHiddenPowers.Repositoryes
 
 		public IEnumerable<CategoriesRow> GetCategories(bool isText)
 		{
-			return (from subcategory in Subcategories.Where(s => s.IsText == isText)
-					join category in Categories on subcategory.category_id equals category.id
+			return (from subcategory in Subcategories
+					.Where(s => s.RowState != DataRowState.Deleted && s.IsText == isText)
+					join category in Categories
+					.Where(c => c.RowState != DataRowState.Deleted)
+					on subcategory.category_id equals category.id
 					select category)
 					.GroupBy(x => x.id).Select(y => y.First());
 		}
@@ -84,8 +91,7 @@ namespace WordHiddenPowers.Repositoryes
 			public void Remove(Note note)
 			{
 				DataRow row = GetRow(note);
-				if (row != null)
-					Rows.Remove(row);
+				row?.Delete();
 			}
 
 			private DataRow GetRow(Note note)
@@ -96,7 +102,8 @@ namespace WordHiddenPowers.Repositoryes
 			private DataRow GetRow(int id)
 			{
 				return (from DataRow row in Rows
-						where row["id"].Equals(id)
+						where row.RowState != DataRowState.Deleted
+						&& row["id"].Equals(id)
 						select row).First();
 			}
 		}
@@ -122,8 +129,7 @@ namespace WordHiddenPowers.Repositoryes
 			public void Remove(Note note)
 			{
 				DataRow row = GetRow(note);
-				if (row != null)
-					Rows.Remove(row);
+				row?.Delete();
 			}
 
 			private DataRow GetRow(Note note)
@@ -134,7 +140,8 @@ namespace WordHiddenPowers.Repositoryes
 			private DataRow GetRow(int id)
 			{
 				return (from DataRow row in Rows
-						where row["id"].Equals(id)
+						where row.RowState != DataRowState.Deleted
+						&& row["id"].Equals(id)
 						select row).First();
 			}
 		}
@@ -150,7 +157,9 @@ namespace WordHiddenPowers.Repositoryes
 			public IEnumerable<SubcategoriesRow> Get(int categoryId, bool isText)
 			{
 				return this.AsEnumerable()
-					.Where(x => x.category_id == categoryId && x.IsText == isText);
+					.Where(x => x.RowState != DataRowState.Deleted 
+					&& x.category_id == categoryId 
+					&& x.IsText == isText);
 			}
 
 			public Subcategory Add(Category category, Subcategory subcategory)
@@ -177,7 +186,8 @@ namespace WordHiddenPowers.Repositoryes
 			internal DataRow GetRow(int id)
 			{
 				return (from DataRow row in Rows
-						where row["id"].Equals(id)
+						where row.RowState != DataRowState.Deleted
+						&& row["id"].Equals(id)
 						select row).First();
 			}
 		}
@@ -211,7 +221,8 @@ namespace WordHiddenPowers.Repositoryes
 			private DataRow GetRow(int id)
 			{
 				return (from DataRow row in Rows
-						where row["id"].Equals(id)
+						where row.RowState != DataRowState.Deleted
+						&& row["id"].Equals(id)
 						select row).First();
 			}
 		}
@@ -268,7 +279,8 @@ namespace WordHiddenPowers.Repositoryes
 			private DataRow getRow(int id)
 			{
 				return (from DataRow row in Rows
-						where row["id"].Equals(id)
+						where row.RowState != DataRowState.Deleted
+						&& row["id"].Equals(id)
 						select row).First();
 
 			}
@@ -276,21 +288,24 @@ namespace WordHiddenPowers.Repositoryes
 			private DataRow getRow(string fileName)
 			{
 				return (from DataRow row in Rows
-						where row["FileName"].Equals(fileName)
+						where row.RowState != DataRowState.Deleted
+						&& row["FileName"].Equals(fileName)
 						select row).First();
 			}
 
 			public bool Exists(int id)
 			{
 				return (from DataRow row in Rows
-						where row["id"].Equals(id)
+						where row.RowState != DataRowState.Deleted
+						&& row["id"].Equals(id)
 						select row).Any();
 			}
 
 			public bool Exists(string fileName)
 			{
 				return (from DataRow row in Rows
-						where row["FileName"].Equals(fileName)
+						where row.RowState != DataRowState.Deleted
+						&& row["FileName"].Equals(fileName)
 						select row).Any();
 			}
 		}

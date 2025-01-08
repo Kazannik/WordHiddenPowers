@@ -201,22 +201,10 @@
     <Compile Include="Const\Panes.cs" />
     <Compile Include="Controls\CategoriesComboBox.cs" />
     <Compile Include="Controls\CategoriesPicker.cs" />
-    <Compile Include="Controls\ComboControl.cs" />
     <Compile Include="Controls\AnalyzerNoteListBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\NoteListBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\NoteListBox1.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\NumericTextBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\NumericTextBox.Designer.cs">
-      <DependentUpon>NumericTextBox.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Controls\NoteListBox.cs" />
     <Compile Include="Controls\ReitingBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -331,15 +319,6 @@
     <EmbeddedResource Include="Controls\AnalyzerNoteListBox.resx">
       <DependentUpon>AnalyzerNoteListBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\NoteListBox.resx">
-      <DependentUpon>NoteListBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\NoteListBox1.resx">
-      <DependentUpon>NoteListBox1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\NumericTextBox.resx">
-      <DependentUpon>NumericTextBox.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ReitingBox.resx">
       <DependentUpon>ReitingBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -395,6 +374,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -631,6 +611,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Service\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ControlLibrary\ControlLibrary\ControlLibrary.csproj">
+      <Project>{0c5678ee-de96-4f24-b5ff-9a0c7dd53edf}</Project>
+      <Name>ControlLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

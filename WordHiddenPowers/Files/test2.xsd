@@ -1,0 +1,1330 @@
+<?xml version="1.0" standalone="yes"?>
+<RepositoryDataSet xmlns="http://tempuri.org/DictionaryXMLSchema.xsd">
+  <xs:schema id="RepositoryDataSet" targetNamespace="http://tempuri.org/DictionaryXMLSchema.xsd" xmlns:mstns="http://tempuri.org/DictionaryXMLSchema.xsd" xmlns="http://tempuri.org/DictionaryXMLSchema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" attributeFormDefault="qualified" elementFormDefault="qualified">
+    <xs:element name="RepositoryDataSet" msdata:IsDataSet="true" msdata:Locale="ru">
+      <xs:complexType>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="TextPowers">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="id" msdata:AutoIncrement="true" type="xs:int" />
+                <xs:element name="category_id" type="xs:int" default="0" />
+                <xs:element name="subcategory_id" type="xs:int" default="0" />
+                <xs:element name="Description" type="xs:string" minOccurs="0" />
+                <xs:element name="Value" type="xs:string" />
+                <xs:element name="Reiting" type="xs:int" default="0" />
+                <xs:element name="WordSelectionStart" type="xs:int" default="0" />
+                <xs:element name="WordSelectionEnd" type="xs:int" default="0" />
+                <xs:element name="file_id" type="xs:int" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="Categories">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="id" msdata:AutoIncrement="true" type="xs:int" />
+                <xs:element name="Caption" type="xs:string" minOccurs="0" />
+                <xs:element name="Description" type="xs:string" minOccurs="0" />
+                <xs:element name="IsObligatory" type="xs:boolean" default="false" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="Subcategories">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="id" msdata:AutoIncrement="true" type="xs:int" />
+                <xs:element name="category_id" type="xs:int" default="0" />
+                <xs:element name="Caption" type="xs:string" minOccurs="0" />
+                <xs:element name="Description" type="xs:string" minOccurs="0" />
+                <xs:element name="IsDecimal" type="xs:boolean" default="true" />
+                <xs:element name="IsText" type="xs:boolean" default="true" />
+                <xs:element name="IsObligatory" type="xs:boolean" default="false" />
+                <xs:element name="Keywords" type="xs:string" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="DecimalPowers">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="id" msdata:AutoIncrement="true" type="xs:int" />
+                <xs:element name="category_id" type="xs:int" default="0" />
+                <xs:element name="subcategory_id" type="xs:int" default="0" />
+                <xs:element name="Description" type="xs:string" minOccurs="0" />
+                <xs:element name="Value" type="xs:double" default="0" />
+                <xs:element name="Reiting" type="xs:int" default="0" />
+                <xs:element name="WordSelectionStart" type="xs:int" default="0" />
+                <xs:element name="WordSelectionEnd" type="xs:int" default="0" />
+                <xs:element name="file_id" type="xs:int" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="ColumnsHeaders">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="id" msdata:AutoIncrement="true" type="xs:int" />
+                <xs:element name="Header" type="xs:string" />
+                <xs:element name="Bold" type="xs:boolean" default="false" />
+                <xs:element name="BackColor" type="xs:int" default="-1" />
+                <xs:element name="Color" type="xs:int" default="-16777216" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="RowsHeaders">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="id" msdata:AutoIncrement="true" type="xs:int" />
+                <xs:element name="Header" type="xs:string" />
+                <xs:element name="Bold" type="xs:boolean" default="false" />
+                <xs:element name="BackColor" type="xs:int" default="-1" />
+                <xs:element name="Color" type="xs:int" default="-16777216" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="DocumentKeys">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="id" msdata:AutoIncrement="true" type="xs:int" />
+                <xs:element name="Caption" type="xs:string" />
+                <xs:element name="Description1" type="xs:string" minOccurs="0" />
+                <xs:element name="Description2" type="xs:string" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="WordFiles">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="id" msdata:AutoIncrement="true" type="xs:int" />
+                <xs:element name="FileName" type="xs:string" />
+                <xs:element name="Caption" type="xs:string" />
+                <xs:element name="Description" type="xs:string" minOccurs="0" />
+                <xs:element name="Date" type="xs:dateTime" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+      <xs:unique name="StringPowersTableKey" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//mstns:TextPowers" />
+        <xs:field xpath="mstns:id" />
+      </xs:unique>
+      <xs:unique name="CategoriesTableKey" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//mstns:Categories" />
+        <xs:field xpath="mstns:id" />
+      </xs:unique>
+      <xs:unique name="SubcategoriesTableKey" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//mstns:Subcategories" />
+        <xs:field xpath="mstns:id" />
+      </xs:unique>
+      <xs:unique name="DesimalPowersTableKey" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//mstns:DecimalPowers" />
+        <xs:field xpath="mstns:id" />
+      </xs:unique>
+      <xs:unique name="ColumnsHeadersTableKey" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//mstns:ColumnsHeaders" />
+        <xs:field xpath="mstns:id" />
+      </xs:unique>
+      <xs:unique name="RowsHeadersTableKey" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//mstns:RowsHeaders" />
+        <xs:field xpath="mstns:id" />
+      </xs:unique>
+      <xs:unique name="Constraint1">
+        <xs:selector xpath=".//mstns:DocumentKeys" />
+        <xs:field xpath="mstns:id" />
+      </xs:unique>
+      <xs:unique name="WordFiles_Constraint1" msdata:ConstraintName="Constraint1">
+        <xs:selector xpath=".//mstns:WordFiles" />
+        <xs:field xpath="mstns:id" />
+      </xs:unique>
+      <xs:unique name="Constraint2">
+        <xs:selector xpath=".//mstns:WordFiles" />
+        <xs:field xpath="mstns:FileName" />
+      </xs:unique>
+    </xs:element>
+    <xs:annotation>
+      <xs:appinfo>
+        <msdata:Relationship name="Subcategories_Categories" msdata:parent="Subcategories" msdata:child="Categories" msdata:parentkey="category_id" msdata:childkey="id" />
+        <msdata:Relationship name="DecimalPowers_Categories" msdata:parent="DecimalPowers" msdata:child="Categories" msdata:parentkey="category_id" msdata:childkey="id" />
+        <msdata:Relationship name="DecimalPowers_Subcategories" msdata:parent="DecimalPowers" msdata:child="Subcategories" msdata:parentkey="subcategory_id" msdata:childkey="id" />
+        <msdata:Relationship name="DecimalPowers_WordFiles" msdata:parent="DecimalPowers" msdata:child="WordFiles" msdata:parentkey="file_id" msdata:childkey="id" />
+        <msdata:Relationship name="TextPowers_Categories" msdata:parent="TextPowers" msdata:child="Categories" msdata:parentkey="category_id" msdata:childkey="id" />
+        <msdata:Relationship name="TextPowers_Subcategories" msdata:parent="TextPowers" msdata:child="Subcategories" msdata:parentkey="subcategory_id" msdata:childkey="id" />
+        <msdata:Relationship name="TextPowers_WordFiles" msdata:parent="TextPowers" msdata:child="WordFiles" msdata:parentkey="file_id" msdata:childkey="id" />
+      </xs:appinfo>
+    </xs:annotation>
+  </xs:schema>
+  <Categories>
+    <id>0</id>
+    <Caption> Организация работы</Caption>
+    <Description>Издание приказов, распоряжений, указаний, подготовка писем</Description>
+    <IsObligatory>true</IsObligatory>
+  </Categories>
+  <Categories>
+    <id>1</id>
+    <Caption> 3. Стандартизация СВТ и программного обеспечения ИСОП (что выполняется)</Caption>
+    <Description />
+    <IsObligatory>false</IsObligatory>
+  </Categories>
+  <Categories>
+    <id>2</id>
+    <Caption> 4. Регистрация пользователей средств вычислительной техники, наделение их полномочиями доступа к информационным системам и информационным ресурсам</Caption>
+    <Description />
+    <IsObligatory>false</IsObligatory>
+  </Categories>
+  <Categories>
+    <id>3</id>
+    <Caption> 5. Организация парольной защиты, порядок передачи и хранения паролей</Caption>
+    <Description />
+    <IsObligatory>false</IsObligatory>
+  </Categories>
+  <Categories>
+    <id>4</id>
+    <Caption> 6. Порядок организации антивирусной защиты</Caption>
+    <Description />
+    <IsObligatory>false</IsObligatory>
+  </Categories>
+  <Categories>
+    <id>5</id>
+    <Caption> 7. Организация работы со средствами электронной подписи</Caption>
+    <Description />
+    <IsObligatory>false</IsObligatory>
+  </Categories>
+  <Categories>
+    <id>6</id>
+    <Caption> 8. Организация работы с электронной почтой</Caption>
+    <Description>8.2. Электронная почта предназначена для обмена служебной информацией в электронном виде. Передача информации ограниченного распространения посредством электронной почты не допускается.</Description>
+    <IsObligatory>false</IsObligatory>
+  </Categories>
+  <Categories>
+    <id>7</id>
+    <Caption> 9. Организация работы с видео-конференц-связью</Caption>
+    <Description>9.8. Во избежание случаев проведения одновременно нескольких мероприятий в режиме ВКС подразделением, ответственным за техническое сопровождение ВКС, составляется и ведется график проведения мероприятий в режиме ВКС. Указанный график, инструкция по работе с ПО Avaya, видеозаписи (при необходимости и допустимости) проведенных мероприятий в режиме ВКС и другие материалы должны размещаться на общедоступном ресурсе в закрытом сегменте ЕЗСПД</Description>
+    <IsObligatory>false</IsObligatory>
+  </Categories>
+  <Categories>
+    <id>8</id>
+    <Caption> 10. Оказание технической поддержки. Обслуживание средств вычислительной, организационной техники (обновление, ремонт, передача, списание) и программного обеспечения</Caption>
+    <Description>10.19. Выдача и учет расходных материалов (офисная бумага, картриджи, тонеры и так далее) для копировально-множительной и печатающей оргтехники в органах прокуратуры Российской Федерации осуществляются подразделением, ответственным за материально-техническое обеспечение. Не допускается возложение обязанностей по выдаче и учету расходных материалов для копировально-множительной и печатающей оргтехники на подразделения, осуществляющие сопровождение ИС в органах прокуратуры Российской Федерации.</Description>
+    <IsObligatory>false</IsObligatory>
+  </Categories>
+  <Categories>
+    <id>9</id>
+    <Caption> 11. Предоставление доступа и осуществления работы в сети "Интернет"</Caption>
+    <Description />
+    <IsObligatory>false</IsObligatory>
+  </Categories>
+  <Categories>
+    <id>10</id>
+    <Caption> 12.1. Пользователь СВТ обязан:</Caption>
+    <Description />
+    <IsObligatory>false</IsObligatory>
+  </Categories>
+  <Categories>
+    <id>11</id>
+    <Caption> 12.2. Пользователю СВТ запрещается (нарушения):</Caption>
+    <Description />
+    <IsObligatory>false</IsObligatory>
+  </Categories>
+  <Categories>
+    <id>12</id>
+    <Caption> Нарушение приказа</Caption>
+    <Description />
+    <IsObligatory>false</IsObligatory>
+  </Categories>
+  <Categories>
+    <id>13</id>
+    <Caption> Привлечение к ответвенности</Caption>
+    <Description />
+    <IsObligatory>false</IsObligatory>
+  </Categories>
+  <Categories>
+    <id>14</id>
+    <Caption> Дополнительно</Caption>
+    <Description />
+    <IsObligatory>false</IsObligatory>
+  </Categories>
+  <Subcategories>
+    <id>0</id>
+    <category_id>0</category_id>
+    <Caption> Издано организационно-распорядительных документов</Caption>
+    <Description>Примеры приказов и т.д.</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>true</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>1</id>
+    <category_id>0</category_id>
+    <Caption> Количество орг.документов</Caption>
+    <Description />
+    <IsDecimal>true</IsDecimal>
+    <IsText>false</IsText>
+    <IsObligatory>true</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>2</id>
+    <category_id>0</category_id>
+    <Caption> Проверочные мероприятия подчиненных прокуратурур</Caption>
+    <Description>примеры организации проверок</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>true</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>3</id>
+    <category_id>0</category_id>
+    <Caption> Рассмотрение вопросов IT на коллегиях и оперативных совещаниях</Caption>
+    <Description>Примеры рассмотрения вопросов на коллегиях и оперативных совещаниях</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>true</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>4</id>
+    <category_id>0</category_id>
+    <Caption> Количество коллегий, на которых рассмотрены вопросы IT</Caption>
+    <Description />
+    <IsDecimal>true</IsDecimal>
+    <IsText>false</IsText>
+    <IsObligatory>true</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>5</id>
+    <category_id>0</category_id>
+    <Caption> Количество совещаний, на которых рассмотрены вопросы IT</Caption>
+    <Description />
+    <IsDecimal>true</IsDecimal>
+    <IsText>false</IsText>
+    <IsObligatory>true</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>6</id>
+    <category_id>0</category_id>
+    <Caption> Подготовка методических документов</Caption>
+    <Description>Примеры методических документов.</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>true</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>7</id>
+    <category_id>0</category_id>
+    <Caption> Учебно-методические мероприятия</Caption>
+    <Description>Примеры учебно-методических мероприятий (семинары, учебы, круглые столы)</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>true</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>8</id>
+    <category_id>0</category_id>
+    <Caption> Количество учебно-методических мероприятий</Caption>
+    <Description />
+    <IsDecimal>true</IsDecimal>
+    <IsText>false</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>9</id>
+    <category_id>1</category_id>
+    <Caption> Установка только разрешенного программного обеспечения.</Caption>
+    <Description>3.1. На всех служебных персональных и портативных компьютерах, а также на серверах, подключенных к ИСОП, используется лицензионное либо свободно распространяемое ПО, включая операционные системы (далее - ОС), обеспечивающие функционирование актуальных средств защиты информации, средств электронной подписи и необходимого прикладного ПО.</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>10</id>
+    <category_id>1</category_id>
+    <Caption> Подключение к сети только служебных ЭВМ</Caption>
+    <Description>3.3. Средства вычислительной техники, подключаемые к ИСОП, должны находиться на балансе (в том числе на забалансовых счетах) органа прокуратуры Российской Федерации. Подключение личных СВТ к ИСОП не допускается.</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>11</id>
+    <category_id>1</category_id>
+    <Caption> Подключение только служебных периферийных устройств.</Caption>
+    <Description>3.6. Использование на СВТ в ИСОП устройств для организации беспроводных каналов связи запрещено, за исключением централизованно поставляемого Генеральной прокуратурой Российской Федерации оборудования, реализующего удаленный доступ с соблюдением требований информационной безопасности. Не допускается использование беспроводных кликеров, компьютерных мышек, клавиатур.</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>12</id>
+    <category_id>2</category_id>
+    <Caption> Использование только своих учетных записей.</Caption>
+    <Description>4.1. Использование несколькими работниками одного и того же имени пользователя (группового имени) при работе в ИСОП запрещается.</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>13</id>
+    <category_id>2</category_id>
+    <Caption> Создание учетных записей, только с согласования руководителя.</Caption>
+    <Description>4.5. В исключительных случаях по распоряжению руководителя органа прокуратуры Российской Федерации допускается самостоятельное создание учетных записей уполномоченным подразделением органа прокуратуры Российской Федерации согласно штатному расписанию.</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>14</id>
+    <category_id>2</category_id>
+    <Caption> Своевременность блокировки учетных записей.</Caption>
+    <Description>4.6. Основаниями для блокировки (удаления) учетной записи пользователя СВТ … является … отсутствие более 6 месяцев по причине командировки или болезни. Блокировка осуществляется уполномоченным подразделением (работником) по мотивированной заявке.</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>15</id>
+    <category_id>2</category_id>
+    <Caption> Использование только зарегистрированных носителей информации.</Caption>
+    <Description>4.9. Не допускается использование в ИС и СВТ незарегистрированных съемных МНИ. Сведения о зарегистрированных съемных МНИ вносятся в Журнал учета зарегистрированных в информационной системе съемных машинных носителей информации, ведение которого допускается в электронном виде.</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>16</id>
+    <category_id>3</category_id>
+    <Caption> Примеры, связанные с порядка обращения с паролями.</Caption>
+    <Description />
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>17</id>
+    <category_id>4</category_id>
+    <Caption> Установленный порядок антивирусной защиты.</Caption>
+    <Description>6.10. Работники органов прокуратуры Российской Федерации обязаны не реже одного раза в месяц самостоятельно осуществлять полную антивирусную проверку своих служебных СВТ, Контроль за выполнением данных требований возлагается на руководителей подразделений органов прокуратуры Российской Федерации.</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>18</id>
+    <category_id>4</category_id>
+    <Caption> Примеры, связанные с антивирусной защитой.</Caption>
+    <Description />
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>19</id>
+    <category_id>5</category_id>
+    <Caption> Примеры, связанные с ЭП.</Caption>
+    <Description />
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>20</id>
+    <category_id>6</category_id>
+    <Caption> Примеры, связанные с работой эл.почты.</Caption>
+    <Description />
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>21</id>
+    <category_id>7</category_id>
+    <Caption> Примеры организации работы ВКС</Caption>
+    <Description />
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>22</id>
+    <category_id>8</category_id>
+    <Caption> Примеры организации обеспечения и техподдержки</Caption>
+    <Description />
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>23</id>
+    <category_id>9</category_id>
+    <Caption> Примеры, связанные с порядком доступа к сети Интернет</Caption>
+    <Description />
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>24</id>
+    <category_id>10</category_id>
+    <Caption> Ознакомление с инстукцией</Caption>
+    <Description>ознакомиться с настоящей Инструкцией и неукоснительно соблюдать ее требования;</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>25</id>
+    <category_id>10</category_id>
+    <Caption> Пользоваться для переноса информации съемные МНИ, не предназначенные для хранения и обработки сведений, составляющих государственную и иную охраняемую законом тайну;</Caption>
+    <Description />
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>26</id>
+    <category_id>10</category_id>
+    <Caption> Пользоваться данными своей учетной записи для входа в служебный ПК и для доступа к ИС, ИР ИСОП и сети "Интернет";</Caption>
+    <Description />
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>27</id>
+    <category_id>10</category_id>
+    <Caption> Исключить возможность неконтролируемого доступа других лиц к служебному ПК, на котором произведена авторизация пользователя;</Caption>
+    <Description />
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>28</id>
+    <category_id>10</category_id>
+    <Caption> Хранить свои идентификационные данные и ключевые носители (имена учетных записей, пароли, токены) в местах, исключающих доступ к ним и ознакомление с ними других лиц;</Caption>
+    <Description />
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>29</id>
+    <category_id>10</category_id>
+    <Caption> Использовать СВТ, ведомственные и иные ИС при работе в ИСОП исключительно для служебной деятельности, предусмотренной должностными инструкциями;</Caption>
+    <Description />
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>30</id>
+    <category_id>10</category_id>
+    <Caption> Не допускать хранения на ПК посторонних программных средств и неслужебной информации;</Caption>
+    <Description />
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>31</id>
+    <category_id>10</category_id>
+    <Caption> Выполнять требования по обеспечению информационной безопасности, определенные нормативными правовыми актами Российской Федерации, организационно-распорядительными документами Генеральной прокуратуры Российской Федерации и прокуратуры субъекта Российской Федерации, а также рекомендациями и предписаниями уполномоченного подразделения;</Caption>
+    <Description />
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>32</id>
+    <category_id>10</category_id>
+    <Caption> Не допускать обработку служебной информации ограниченного распространения в условиях, позволяющих просматривать ее лицам, не имеющим к ней допуска, а также нарушающих требования по эксплуатации СВТ;</Caption>
+    <Description />
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>33</id>
+    <category_id>11</category_id>
+    <Caption> Хранение документов ограниченного доступа</Caption>
+    <Description>создавать и хранить на служебном ПК, не предназначенном для обработки сведений, составляющих государственную тайну, документы с грифом "секретно", "совершенно секретно" и "особой важности";</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>34</id>
+    <category_id>11</category_id>
+    <Caption> Количество нарушений хранения документов</Caption>
+    <Description />
+    <IsDecimal>true</IsDecimal>
+    <IsText>false</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>35</id>
+    <category_id>11</category_id>
+    <Caption> Использование неучтенных НИ для работы с документами ограниченного доступа.</Caption>
+    <Description>записывать и хранить служебную информацию ограниченного распространения на не учтенных в установленном порядке МНИ;</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>36</id>
+    <category_id>11</category_id>
+    <Caption> Количество нарушений, связанных с использованием неучтенных НИ для работы с документами ограниченного доступа.</Caption>
+    <Description />
+    <IsDecimal>true</IsDecimal>
+    <IsText>false</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>37</id>
+    <category_id>11</category_id>
+    <Caption> Хранение посторонней информации на НИ предназначенных для работы с документами ограниченного доступа</Caption>
+    <Description>использовать для переноса информации съемные МНИ, предназначенные для хранения и обработки служебной информации ограниченного распространения;</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>38</id>
+    <category_id>11</category_id>
+    <Caption> Количество нарушений, связанных с хранением посторонней информации на НИ предназначенных для работы с документами ограниченного доступа</Caption>
+    <Description />
+    <IsDecimal>true</IsDecimal>
+    <IsText>false</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>39</id>
+    <category_id>11</category_id>
+    <Caption> Передача по открытым каналам связи документов ограниченного доступа</Caption>
+    <Description>передавать посредством сети "Интернет", в том числе посредством мобильных и иных устройств, документы, содержащие служебную информацию, персональные данные и иные сведения конфиденциального характера (за исключением случаев, когда это прямо предусмотрено федеральным законодательством и организационно-распорядительными документами Генеральной прокуратуры Российской Федерации);</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>40</id>
+    <category_id>11</category_id>
+    <Caption> Количество нарушений, связанных с передачей по открытым каналам связи документов ограниченного доступа</Caption>
+    <Description />
+    <IsDecimal>true</IsDecimal>
+    <IsText>false</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>41</id>
+    <category_id>11</category_id>
+    <Caption> Использование информационных систем в личных целях</Caption>
+    <Description>запрашивать посредством эксплуатируемых в органах и организациях прокуратуры Российской Федерации в рамках надзорной и иной деятельности информационных систем информацию, сведения, документы, выписки и так далее в целях, не связанных с исполнением служебных обязанностей;</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>42</id>
+    <category_id>11</category_id>
+    <Caption> Количество нарушений, связанных с использованием информационных систем в личных целях.</Caption>
+    <Description />
+    <IsDecimal>true</IsDecimal>
+    <IsText>false</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>43</id>
+    <category_id>11</category_id>
+    <Caption> Хранение в сети «Интернет» информации ограниченного доступа.</Caption>
+    <Description>хранить и обрабатывать в сети "Интернет" сведения, содержащие служебную информацию ограниченного распространения;</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>44</id>
+    <category_id>11</category_id>
+    <Caption> Повышенная нагрузка на канали связи «Интернет»</Caption>
+    <Description>использовать на "АРМ - Интернет" в режиме онлайн радио, телевидение, кинотеатры, за исключением случаев, когда этого требует исполнение служебных обязанностей;</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>45</id>
+    <category_id>11</category_id>
+    <Caption> Количество нарушений, связанных в каналами Интернет.</Caption>
+    <Description />
+    <IsDecimal>true</IsDecimal>
+    <IsText>false</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>46</id>
+    <category_id>11</category_id>
+    <Caption> Загружать из сети «Интернет» данные, не относящиеся к служебной деятельности.</Caption>
+    <Description>загружать на "АРМ - Интернет" любое ПО, аудио- и видеофайлы, не имеющие отношения к исполнению служебных обязанностей;</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>47</id>
+    <category_id>11</category_id>
+    <Caption> Количество нарушений, связанных с загрузкой файлов и ПО, не относящегося к служебной деятельности.</Caption>
+    <Description />
+    <IsDecimal>true</IsDecimal>
+    <IsText>false</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>48</id>
+    <category_id>11</category_id>
+    <Caption> Использование эл.почты в служебных целях.</Caption>
+    <Description>использовать служебную электронную почту в личных целях;</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>49</id>
+    <category_id>11</category_id>
+    <Caption> Количество нарушений, связанных с использованием эл.почты в личных целях.</Caption>
+    <Description />
+    <IsDecimal>true</IsDecimal>
+    <IsText>false</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>50</id>
+    <category_id>11</category_id>
+    <Caption> Вмешивание в работу системного ПО</Caption>
+    <Description>устанавливать, переустанавливать, удалять, изменять настройки основных параметров ОС и прикладного ПО, а также настройки средств защиты информации;</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>51</id>
+    <category_id>11</category_id>
+    <Caption> Количество нарушений, связанных с вмешиванием в работу системного ПО</Caption>
+    <Description />
+    <IsDecimal>true</IsDecimal>
+    <IsText>false</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>52</id>
+    <category_id>11</category_id>
+    <Caption> Самостоятельно устанавливать или запускать на служебном ПК любое ПО с внешних МНИ или загруженное из сети "Интернет";</Caption>
+    <Description />
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>53</id>
+    <category_id>11</category_id>
+    <Caption> Количество нарушений, связанных с установкой постороннего ПО, полученного из Интернет</Caption>
+    <Description />
+    <IsDecimal>true</IsDecimal>
+    <IsText>false</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>54</id>
+    <category_id>11</category_id>
+    <Caption> Самостоятельно подключать к СВТ и ИС какие-либо устройства, дополнительное оборудование, имеющие и обеспечивающие доступ к сети "Интернет";</Caption>
+    <Description />
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>55</id>
+    <category_id>11</category_id>
+    <Caption> Количество нарушений, связанных с подключением переферийных устройств.</Caption>
+    <Description />
+    <IsDecimal>true</IsDecimal>
+    <IsText>false</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>56</id>
+    <category_id>11</category_id>
+    <Caption> Самовольно подключать СВТ к открытому сегменту ЕЗСПД, а также изменять сетевые настройки;</Caption>
+    <Description />
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>57</id>
+    <category_id>11</category_id>
+    <Caption> Количество нарушений, связанных с подключением личных СВТ к ЕЗСПД</Caption>
+    <Description />
+    <IsDecimal>true</IsDecimal>
+    <IsText>false</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>58</id>
+    <category_id>11</category_id>
+    <Caption> Подключать к структурированным кабельным системам органов прокуратуры Российской Федерации не предназначенные для этого технические средства, в том числе любые личные технические средства;</Caption>
+    <Description />
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>59</id>
+    <category_id>11</category_id>
+    <Caption> Количество нарушений, связанных с подключением к сети постороннего оборудования.</Caption>
+    <Description />
+    <IsDecimal>true</IsDecimal>
+    <IsText>false</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>60</id>
+    <category_id>12</category_id>
+    <Caption> Размещение в сети интернет документов, доступ к которым ограничен.</Caption>
+    <Description>2. Запретить размещение в открытом доступе в информационно-телекоммуникационной сети "Интернет" документов, содержащих служебную информацию, персональные данные и иные сведения конфиденциального характера (за исключением случаев, когда это прямо предусмотрено федеральным законодательством и организационно-распорядительными документами Генеральной прокуратуры Российской Федерации).</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>61</id>
+    <category_id>12</category_id>
+    <Caption> Использование информационных систем в личных целях.</Caption>
+    <Description>3. Запретить использование функциональных возможностей эксплуатируемых в органах и организациях прокуратуры Российской Федерации в рамках надзорной и иной деятельности информационных систем в целях, не связанных с исполнением с служебных обязанностей</Description>
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>62</id>
+    <category_id>13</category_id>
+    <Caption> Пример привлечения к дисциплинарной ответвенности</Caption>
+    <Description />
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>63</id>
+    <category_id>13</category_id>
+    <Caption> Количество лиц, привлеченных к дисциплинарной ответсвенности</Caption>
+    <Description />
+    <IsDecimal>true</IsDecimal>
+    <IsText>false</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>64</id>
+    <category_id>13</category_id>
+    <Caption> Пример воздействия мерами материального характера</Caption>
+    <Description />
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>65</id>
+    <category_id>13</category_id>
+    <Caption> Количество депремированных лиц</Caption>
+    <Description />
+    <IsDecimal>true</IsDecimal>
+    <IsText>false</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <Subcategories>
+    <id>66</id>
+    <category_id>14</category_id>
+    <Caption> Иные, дополнительные примеры</Caption>
+    <Description />
+    <IsDecimal>false</IsDecimal>
+    <IsText>true</IsText>
+    <IsObligatory>false</IsObligatory>
+  </Subcategories>
+  <ColumnsHeaders>
+    <id>0</id>
+    <Header>Графа 1</Header>
+    <Bold>false</Bold>
+    <BackColor>-1</BackColor>
+    <Color>-16777216</Color>
+  </ColumnsHeaders>
+  <ColumnsHeaders>
+    <id>1</id>
+    <Header>Графа 2</Header>
+    <Bold>false</Bold>
+    <BackColor>-1</BackColor>
+    <Color>-16777216</Color>
+  </ColumnsHeaders>
+  <ColumnsHeaders>
+    <id>2</id>
+    <Header>Графа 3</Header>
+    <Bold>false</Bold>
+    <BackColor>-1</BackColor>
+    <Color>-16777216</Color>
+  </ColumnsHeaders>
+  <RowsHeaders>
+    <id>0</id>
+    <Header>Строка 1</Header>
+    <Bold>false</Bold>
+    <BackColor>-1</BackColor>
+    <Color>-16777216</Color>
+  </RowsHeaders>
+  <RowsHeaders>
+    <id>1</id>
+    <Header>Строка 2</Header>
+    <Bold>false</Bold>
+    <BackColor>-1</BackColor>
+    <Color>-16777216</Color>
+  </RowsHeaders>
+  <RowsHeaders>
+    <id>2</id>
+    <Header>Строка 3</Header>
+    <Bold>false</Bold>
+    <BackColor>-1</BackColor>
+    <Color>-16777216</Color>
+  </RowsHeaders>
+  <RowsHeaders>
+    <id>3</id>
+    <Header>Строка 4</Header>
+    <Bold>false</Bold>
+    <BackColor>-1</BackColor>
+    <Color>-16777216</Color>
+  </RowsHeaders>
+  <RowsHeaders>
+    <id>4</id>
+    <Header>Строка 5</Header>
+    <Bold>false</Bold>
+    <BackColor>-1</BackColor>
+    <Color>-16777216</Color>
+  </RowsHeaders>
+  <DocumentKeys>
+    <id>206</id>
+    <Caption>Респ. Адыгея</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>207</id>
+    <Caption>Респ. Алтай</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>208</id>
+    <Caption>Алтайский край</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>209</id>
+    <Caption>Амурская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>210</id>
+    <Caption>Архангельская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>211</id>
+    <Caption>Астраханская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>212</id>
+    <Caption>Респ. Башкортостан</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>213</id>
+    <Caption>Белгородская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>214</id>
+    <Caption>Брянская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>215</id>
+    <Caption>Респ. Бурятия</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>216</id>
+    <Caption>Владимирская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>217</id>
+    <Caption>Волгоградская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>218</id>
+    <Caption>Вологодская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>219</id>
+    <Caption>Воронежская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>220</id>
+    <Caption>Республика Дагестан</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>221</id>
+    <Caption>Донецкая Народная Респ.</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>222</id>
+    <Caption>Еврейская а.о.</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>223</id>
+    <Caption>Забайкальский край</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>224</id>
+    <Caption>Запорожская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>225</id>
+    <Caption>Ивановская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>226</id>
+    <Caption>Респ. Ингушетия</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>227</id>
+    <Caption>Иркутская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>228</id>
+    <Caption>Респ. Крым</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>229</id>
+    <Caption>Кабардино-Балк. респ.</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>230</id>
+    <Caption>Калининградская обл.</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>231</id>
+    <Caption>Республика Калмыкия</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>232</id>
+    <Caption>Калужская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>233</id>
+    <Caption>Камчатский край</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>234</id>
+    <Caption>Карачаево-Черк. респ.</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>235</id>
+    <Caption>Республика Карелия</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>236</id>
+    <Caption>Кемеровская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>237</id>
+    <Caption>Кировская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>238</id>
+    <Caption>Респ. Коми</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>239</id>
+    <Caption>Костромская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>240</id>
+    <Caption>Краснодарский край</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>241</id>
+    <Caption>Красноярский край</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>242</id>
+    <Caption>Курганская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>243</id>
+    <Caption>Курская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>244</id>
+    <Caption>Ленинградская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>245</id>
+    <Caption>Липецкая область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>246</id>
+    <Caption>Луганская Народная Респ.</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>247</id>
+    <Caption>Магаданская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>248</id>
+    <Caption>Респ. Марий Эл</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>249</id>
+    <Caption>Респ. Мордовия</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>250</id>
+    <Caption>Москва</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>251</id>
+    <Caption>Московская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>252</id>
+    <Caption>Мурманская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>253</id>
+    <Caption>Ненецкий а.о.</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>254</id>
+    <Caption>Нижегородская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>255</id>
+    <Caption>Новгородская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>256</id>
+    <Caption>Новосибирская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>257</id>
+    <Caption>Омская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>258</id>
+    <Caption>Оренбургская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>259</id>
+    <Caption>Орловская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>260</id>
+    <Caption>Пензенская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>261</id>
+    <Caption>Пермский край</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>262</id>
+    <Caption>Приморский край</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>263</id>
+    <Caption>Псковская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>264</id>
+    <Caption>Ростовская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>265</id>
+    <Caption>Рязанская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>266</id>
+    <Caption>Самарская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>267</id>
+    <Caption>Санкт-Петербург</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>268</id>
+    <Caption>Саратовская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>269</id>
+    <Caption>Респ. Саха (Якутия)</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>270</id>
+    <Caption>Сахалинская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>271</id>
+    <Caption>Свердловская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>272</id>
+    <Caption>Севастополь</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>273</id>
+    <Caption>Респ. Северная Осетия</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>274</id>
+    <Caption>Смоленская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>275</id>
+    <Caption>Ставропольский край</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>276</id>
+    <Caption>Тамбовская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>277</id>
+    <Caption>Респ. Татарстан</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>278</id>
+    <Caption>Тверская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>279</id>
+    <Caption>Томская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>280</id>
+    <Caption>Тульская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>281</id>
+    <Caption>Респ. Тыва</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>282</id>
+    <Caption>Тюменская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>283</id>
+    <Caption>Удмуртская Респ.</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>284</id>
+    <Caption>Ульяновская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>285</id>
+    <Caption>Хабаровский край</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>286</id>
+    <Caption>Респ. Хакасия</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>287</id>
+    <Caption>Ханты-Мансийский а.о.</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>288</id>
+    <Caption>Херсонская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>289</id>
+    <Caption>Челябинская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>290</id>
+    <Caption>Чеченская Респ.</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>291</id>
+    <Caption>Чувашская Респ.</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>292</id>
+    <Caption>Чукотский а.о.</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>293</id>
+    <Caption>Ямало-Ненецкий а.о.</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>294</id>
+    <Caption>Ярославская область</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>295</id>
+    <Caption>Восточно-Сибирская транспортная прокуратура</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>296</id>
+    <Caption>Дальневосточная транспортная прокуратура</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>297</id>
+    <Caption>Западно-Сибирская транспортная прокуратура</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>298</id>
+    <Caption>Московская межрегиональная транспортная прокуратура</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>299</id>
+    <Caption>Приволжская транспортная прокуратура</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>300</id>
+    <Caption>Северо-Западная транспортная прокуратура</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>301</id>
+    <Caption>Уральская транспортная прокуратура</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>302</id>
+    <Caption>Южная транспортная прокуратура</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>303</id>
+    <Caption>Волжская природоохранная прокуратура</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>304</id>
+    <Caption>Амурская бассейновая природоохранная прокуратура</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>305</id>
+    <Caption>Байкальская межрегиональная природоохранная прокуратура</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>306</id>
+    <Caption>комплекс Байконур</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>307</id>
+    <Caption>Университет прокуратуры РФ</Caption>
+  </DocumentKeys>
+  <DocumentKeys>
+    <id>308</id>
+    <Caption>Главная военная прокуратура</Caption>
+  </DocumentKeys>
+  <WordFiles>
+    <id>0</id>
+    <FileName>E:\Анализ 2023 по приказу 701\Докладные\WORD\12 Главное управление.docx</FileName>
+    <Caption />
+    <Description />
+    <Date>2024-12-18T17:38:45.8122171+03:00</Date>
+  </WordFiles>
+  <WordFiles>
+    <id>2</id>
+    <FileName>D:\Kazannik.m.V6\Desktop\Анализ 2023 по приказу 701\Докладные\Новая папка\12 Главное управление.docx</FileName>
+    <Caption />
+    <Description />
+    <Date>2024-12-19T16:52:42.1322297+03:00</Date>
+  </WordFiles>
+</RepositoryDataSet>

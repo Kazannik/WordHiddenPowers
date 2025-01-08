@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using ControlLibrary.Controls.ComboControls;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms.Design;
 using WordHiddenPowers.Repositoryes;
@@ -15,7 +16,6 @@ namespace WordHiddenPowers.Controls
 
 		[DebuggerNonUserCode()]
 		public CategoriesComboBox(IContainer container) : base(container: container) { }
-
 
 		public void InitializeSource(RepositoryDataSet dataSet, bool isText)
 		{

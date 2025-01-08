@@ -1,4 +1,6 @@
-﻿namespace WordHiddenPowers.Dialogs
+﻿using ControlLibrary.Controls.TextControl;
+
+namespace WordHiddenPowers.Dialogs
 {
     partial class DecimalNoteDialog
     {
@@ -29,7 +31,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.numericTextBox1 = new WordHiddenPowers.Controls.NumericTextBox(this.components);
+            this.numericTextBox1 = new NumericTextBox(this.components);
             this.SuspendLayout();
             // 
             // numericTextBox1
@@ -66,6 +68,6 @@
         }
 
         #endregion
-        private Controls.NumericTextBox numericTextBox1;
+        private NumericTextBox numericTextBox1;
     }
 }

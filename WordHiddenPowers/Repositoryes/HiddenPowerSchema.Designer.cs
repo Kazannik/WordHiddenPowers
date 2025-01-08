@@ -965,6 +965,14 @@ namespace WordHiddenPowers.Repositoryes {
             
             private global::System.Data.DataColumn columnIsObligatory;
             
+            private global::System.Data.DataColumn columnBeforeText;
+            
+            private global::System.Data.DataColumn columnAfterText;
+            
+            private global::System.Data.DataColumn columnKeywords;
+            
+            private global::System.Data.DataColumn columnGuid;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public CategoriesDataTable() {
@@ -1032,6 +1040,38 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn BeforeTextColumn {
+                get {
+                    return this.columnBeforeText;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn AfterTextColumn {
+                get {
+                    return this.columnAfterText;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn KeywordsColumn {
+                get {
+                    return this.columnKeywords;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn GuidColumn {
+                get {
+                    return this.columnGuid;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1067,13 +1107,17 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public CategoriesRow AddCategoriesRow(string Caption, string Description, bool IsObligatory) {
+            public CategoriesRow AddCategoriesRow(string Caption, string Description, bool IsObligatory, string BeforeText, string AfterText, string Keywords, string Guid) {
                 CategoriesRow rowCategoriesRow = ((CategoriesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         Caption,
                         Description,
-                        IsObligatory};
+                        IsObligatory,
+                        BeforeText,
+                        AfterText,
+                        Keywords,
+                        Guid};
                 rowCategoriesRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowCategoriesRow);
                 return rowCategoriesRow;
@@ -1107,6 +1151,10 @@ namespace WordHiddenPowers.Repositoryes {
                 this.columnCaption = base.Columns["Caption"];
                 this.columnDescription = base.Columns["Description"];
                 this.columnIsObligatory = base.Columns["IsObligatory"];
+                this.columnBeforeText = base.Columns["BeforeText"];
+                this.columnAfterText = base.Columns["AfterText"];
+                this.columnKeywords = base.Columns["Keywords"];
+                this.columnGuid = base.Columns["Guid"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1120,9 +1168,18 @@ namespace WordHiddenPowers.Repositoryes {
                 base.Columns.Add(this.columnDescription);
                 this.columnIsObligatory = new global::System.Data.DataColumn("IsObligatory", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnIsObligatory);
+                this.columnBeforeText = new global::System.Data.DataColumn("BeforeText", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBeforeText);
+                this.columnAfterText = new global::System.Data.DataColumn("AfterText", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAfterText);
+                this.columnKeywords = new global::System.Data.DataColumn("Keywords", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnKeywords);
+                this.columnGuid = new global::System.Data.DataColumn("Guid", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnGuid);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("CategoriesTableKey", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
+                this.columnid.AutoIncrementSeed = 1;
                 this.columnid.AllowDBNull = false;
                 this.columnid.Unique = true;
                 this.columnIsObligatory.AllowDBNull = false;
@@ -1274,7 +1331,13 @@ namespace WordHiddenPowers.Repositoryes {
             
             private global::System.Data.DataColumn columnIsObligatory;
             
+            private global::System.Data.DataColumn columnBeforeText;
+            
+            private global::System.Data.DataColumn columnAfterText;
+            
             private global::System.Data.DataColumn columnKeywords;
+            
+            private global::System.Data.DataColumn columnGuid;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
@@ -1367,9 +1430,33 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn BeforeTextColumn {
+                get {
+                    return this.columnBeforeText;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn AfterTextColumn {
+                get {
+                    return this.columnAfterText;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public global::System.Data.DataColumn KeywordsColumn {
                 get {
                     return this.columnKeywords;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn GuidColumn {
+                get {
+                    return this.columnGuid;
                 }
             }
             
@@ -1410,7 +1497,7 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public SubcategoriesRow AddSubcategoriesRow(int category_id, string Caption, string Description, bool IsDecimal, bool IsText, bool IsObligatory, string Keywords) {
+            public SubcategoriesRow AddSubcategoriesRow(int category_id, string Caption, string Description, bool IsDecimal, bool IsText, bool IsObligatory, string BeforeText, string AfterText, string Keywords, string Guid) {
                 SubcategoriesRow rowSubcategoriesRow = ((SubcategoriesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -1420,7 +1507,10 @@ namespace WordHiddenPowers.Repositoryes {
                         IsDecimal,
                         IsText,
                         IsObligatory,
-                        Keywords};
+                        BeforeText,
+                        AfterText,
+                        Keywords,
+                        Guid};
                 rowSubcategoriesRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowSubcategoriesRow);
                 return rowSubcategoriesRow;
@@ -1457,7 +1547,10 @@ namespace WordHiddenPowers.Repositoryes {
                 this.columnIsDecimal = base.Columns["IsDecimal"];
                 this.columnIsText = base.Columns["IsText"];
                 this.columnIsObligatory = base.Columns["IsObligatory"];
+                this.columnBeforeText = base.Columns["BeforeText"];
+                this.columnAfterText = base.Columns["AfterText"];
                 this.columnKeywords = base.Columns["Keywords"];
+                this.columnGuid = base.Columns["Guid"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1477,11 +1570,18 @@ namespace WordHiddenPowers.Repositoryes {
                 base.Columns.Add(this.columnIsText);
                 this.columnIsObligatory = new global::System.Data.DataColumn("IsObligatory", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnIsObligatory);
+                this.columnBeforeText = new global::System.Data.DataColumn("BeforeText", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBeforeText);
+                this.columnAfterText = new global::System.Data.DataColumn("AfterText", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAfterText);
                 this.columnKeywords = new global::System.Data.DataColumn("Keywords", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnKeywords);
+                this.columnGuid = new global::System.Data.DataColumn("Guid", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnGuid);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("SubcategoriesTableKey", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
+                this.columnid.AutoIncrementSeed = 1;
                 this.columnid.AllowDBNull = false;
                 this.columnid.Unique = true;
                 this.columncategory_id.AllowDBNull = false;
@@ -3489,6 +3589,70 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string BeforeText {
+                get {
+                    try {
+                        return ((string)(this[this.tableCategories.BeforeTextColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'BeforeText\' в таблице \'Categories\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCategories.BeforeTextColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string AfterText {
+                get {
+                    try {
+                        return ((string)(this[this.tableCategories.AfterTextColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'AfterText\' в таблице \'Categories\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCategories.AfterTextColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string Keywords {
+                get {
+                    try {
+                        return ((string)(this[this.tableCategories.KeywordsColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Keywords\' в таблице \'Categories\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCategories.KeywordsColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string Guid {
+                get {
+                    try {
+                        return ((string)(this[this.tableCategories.GuidColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Guid\' в таблице \'Categories\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCategories.GuidColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public SubcategoriesRow SubcategoriesRow {
                 get {
                     return ((SubcategoriesRow)(this.GetParentRow(this.Table.ParentRelations["Subcategories_Categories"])));
@@ -3542,6 +3706,54 @@ namespace WordHiddenPowers.Repositoryes {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetDescriptionNull() {
                 this[this.tableCategories.DescriptionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsBeforeTextNull() {
+                return this.IsNull(this.tableCategories.BeforeTextColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetBeforeTextNull() {
+                this[this.tableCategories.BeforeTextColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsAfterTextNull() {
+                return this.IsNull(this.tableCategories.AfterTextColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetAfterTextNull() {
+                this[this.tableCategories.AfterTextColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsKeywordsNull() {
+                return this.IsNull(this.tableCategories.KeywordsColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetKeywordsNull() {
+                this[this.tableCategories.KeywordsColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsGuidNull() {
+                return this.IsNull(this.tableCategories.GuidColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetGuidNull() {
+                this[this.tableCategories.GuidColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -3648,6 +3860,38 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string BeforeText {
+                get {
+                    try {
+                        return ((string)(this[this.tableSubcategories.BeforeTextColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'BeforeText\' в таблице \'Subcategories\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSubcategories.BeforeTextColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string AfterText {
+                get {
+                    try {
+                        return ((string)(this[this.tableSubcategories.AfterTextColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'AfterText\' в таблице \'Subcategories\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSubcategories.AfterTextColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public string Keywords {
                 get {
                     try {
@@ -3659,6 +3903,22 @@ namespace WordHiddenPowers.Repositoryes {
                 }
                 set {
                     this[this.tableSubcategories.KeywordsColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string Guid {
+                get {
+                    try {
+                        return ((string)(this[this.tableSubcategories.GuidColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Guid\' в таблице \'Subcategories\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSubcategories.GuidColumn] = value;
                 }
             }
             
@@ -3710,6 +3970,30 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsBeforeTextNull() {
+                return this.IsNull(this.tableSubcategories.BeforeTextColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetBeforeTextNull() {
+                this[this.tableSubcategories.BeforeTextColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsAfterTextNull() {
+                return this.IsNull(this.tableSubcategories.AfterTextColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetAfterTextNull() {
+                this[this.tableSubcategories.AfterTextColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsKeywordsNull() {
                 return this.IsNull(this.tableSubcategories.KeywordsColumn);
             }
@@ -3718,6 +4002,18 @@ namespace WordHiddenPowers.Repositoryes {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetKeywordsNull() {
                 this[this.tableSubcategories.KeywordsColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsGuidNull() {
+                return this.IsNull(this.tableSubcategories.GuidColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetGuidNull() {
+                this[this.tableSubcategories.GuidColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

@@ -1,541 +1,274 @@
-﻿using Microsoft.Office.Interop.Word;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing.Drawing2D;
-using System.Drawing;
-using System.Globalization;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Rectangle = System.Drawing.Rectangle;
-using Point = System.Drawing.Point;
+using WordHiddenPowers.Repositoryes;
+using WordHiddenPowers.Repositoryes.Categories;
 using WordHiddenPowers.Repositoryes.Notes;
-using static WordHiddenPowers.Repositoryes.Notes.Note;
+using static WordHiddenPowers.Repositoryes.RepositoryDataSet;
+using Category = WordHiddenPowers.Repositoryes.Categories.Category;
+using Version = ControlLibrary.Structures.Version;
 
 namespace WordHiddenPowers.Controls
 {
-	internal class NoteListBox : Control
+	public class NoteListBox : ControlLibrary.Controls.ListControls.ListControl<NoteListItem>
 	{
-		//private ColorThemeList theme;
-		private Rectangle periodRectagle;
-		private Rectangle todateRectagle;
-		private Rectangle todateTextRectagle;
+		private RepositoryDataSet source;
 
-		private readonly DateTimeFormatInfo FormatInfo = CultureInfo.CurrentCulture.DateTimeFormat;
-		private readonly StringFormat sf = new StringFormat() { Alignment = StringAlignment.Center };
-		private int month_label_width = 0;
-		private int month_label_height = 0;
-		private const int month_label_border = 2;
+		internal IDictionary<int, Subcategory> subcategories;
 
-		private NoteCollection notes;
-		private Note HoveringNote;
-		private Note LeftClickedNote;
-		private Note RightClickedNote;
-		private Note selectedNote;
+		private IDictionary<int, WordFilesRow> files;
 
-		#region Constructor
-
-		public NoteListBox() : base()
-		{
-			InitializeComponent();
-			InitializeNotes();
-		}
-
-		public NoteListBox(string text) : base(text: text)
-		{
-			InitializeComponent();
-			InitializeNotes();
-		}
-
-		public NoteListBox(Control parent, string text) : base(parent: parent, text: text)
-		{
-			InitializeComponent();
-			InitializeNotes();
-		}
-
-		public NoteListBox(string text, int left, int top, int width, int height) : base(text: text, left: left, top: top, width: width, height: height)
-		{
-			InitializeComponent();
-			InitializeNotes();
-		}
-
-		public NoteListBox(Control parent, string text, int left, int top, int width, int height) : base(parent: parent, text: text, left: left, top: top, width: width, height: height)
-		{
-			InitializeComponent();
-			InitializeNotes();
-		}
-
-		private void InitializeNotes()
-		{
-			BackColor = SystemColors.Window;
-			ForeColor = SystemColors.WindowText;
-
-			notes = new NoteCollection(this);
-			Graphics graphics = CreateGraphics();
-			for (int i = 1; i <= 12; i++)
-			{
-				string monthname = FormatInfo.GetMonthName(i);
-				SizeF labelsize = graphics.MeasureString(monthname, Font);
-				if (month_label_height < labelsize.Height) month_label_height = (int)labelsize.Height;
-				if (month_label_width < labelsize.Width) month_label_width = (int)labelsize.Width;
-				notes.Add(new PeriodBoxButton(i, monthname));
-			}
-			month_label_height += month_label_border * 2;
-			month_label_width += month_label_border * 2;
-
-			if (month_label_width > 0)
-			{
-				Width = month_label_border + (month_label_width + month_label_border) * 3;
-				Height = month_label_border + (month_label_height + month_label_border) * 6;
-			}
-
-			periodRectagle = new Rectangle(month_label_height + month_label_border, month_label_border, Width - month_label_height * 2 - month_label_border * 4, month_label_height);
-			todateRectagle = new Rectangle(month_label_height + month_label_border, Height - month_label_height - month_label_border, (int)(month_label_height * 1.5), month_label_height);
-
-			notes.Add(new PeriodBoxButton(0, ""));
-			notes.Add(new PeriodBoxButton(0, ""));
-		}
-
-		#region Код, автоматически созданный конструктором компонентов
-
-		/// <summary>
-		/// Требуемый метод для поддержки конструктора — не изменяйте 
-		/// содержимое этого метода с помощью редактора кода.
-		/// </summary>
-		private void InitializeComponent()
-		{
-			this.SuspendLayout();
-			// 
-			// NoteListBox
-			// 
-			this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NoteListBox_MouseClick);
-			this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.NoteListBox_MouseDoubleClick);
-			this.MouseLeave += new System.EventHandler(this.NoteListBox_MouseLeave);
-			this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.NoteListBox_MouseMove);
-			this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.NoteListBox_MouseUp);
-			this.Resize += new System.EventHandler(this.NoteListBox_Resize);
-			this.ResumeLayout(false);
-
-		}
-
-		#endregion
-
-		#endregion
-
-		private void NoteListBox_Resize(object sender, EventArgs e)
-		{
-			if (month_label_width > 0)
-			{
-				Width = month_label_border + (month_label_width + month_label_border) * 3;
-				Height = month_label_border + (month_label_height + month_label_border) * 6;
-			}
-		}
-
-		protected override void OnPaint(PaintEventArgs e)
-		{
-			base.OnPaint(e);
-			Graphics graphics = e.Graphics;
-
-			int startY = month_label_height + month_label_border * 2;
-			int startX = month_label_border;
-			int i = 0;
-			for (int y = 0; y <= 3; y++)
-			{
-				for (int x = 0; x <= 2; x++)
-				{
-					Rectangle rec = new Rectangle(startX + (month_label_border + month_label_width) * x, startY + (month_label_border + month_label_height) * y, month_label_width, month_label_height);
-					notes[i].Rectangle = rec;
-					PaintNote(notes[i], graphics);
-					i++;
-				}
-			}
-
-			graphics.DrawString(period.ToShortDateString(), Font, new SolidBrush(ForeColor), periodRectagle, sf);
-
-			Color BorderColor = GetBorderColor(NoteState.Selected);
-			Pen BorderColorPen = new Pen(BorderColor, 1);
-			graphics.DrawRectangle(BorderColorPen, todateRectagle);
-			BorderColorPen.Dispose();
-		}
-
-		private void PaintNote(Note note, Graphics graphics)
-		{
-			Color ForeColor;
-			if (note.Equals(HoveringNote))
-			{
-				if (LeftClickedNote == null)
-				{
-					if (note.Equals(SelectedItem))
-					{
-						FillNote(note, graphics, NoteState.Selected | NoteState.Hovering);
-						ForeColor = GetForeColor(NoteState.Selected | NoteState.Hovering);
-					}
-					else
-					{
-						FillNote(note, graphics, NoteState.Hovering);
-						ForeColor = GetForeColor(NoteState.Hovering);
-					}
-				}
-				else
-				{
-					FillNote(note, graphics, NoteState.Selected | NoteState.Hovering);
-					ForeColor = GetForeColor(NoteState.Selected | NoteState.Hovering);
-				}
-			}
-			else
-			{
-				if (note.Equals(SelectedItem))
-				{
-					FillNote(note, graphics, NoteState.Selected);
-					ForeColor = GetForeColor(NoteState.Selected);
-				}
-				else
-				{
-					FillNote(note, graphics, NoteState.Passive);
-					ForeColor = GetForeColor(NoteState.Passive);
-				}
-			}
-
-			if (note.ForeColor != ForeColor)
-			{
-				note.ForeColor = ForeColor;
-				Brush ForeColorBrush = new SolidBrush(ForeColor);
-				graphics.DrawString(note.Text, Font, ForeColorBrush, note.Rectangle, sf);
-				ForeColorBrush.Dispose();
-			}
-		}
-
-		private void FillNote(Note note, Graphics graphics, NoteState buttonState)
-		{
-			Color BackColor = GetNoteColor(buttonState, 0);
-			if (note.BackColor != BackColor)
-			{
-				note.BackColor = BackColor;
-				Brush BackColorBrush = new LinearGradientBrush(note.Rectangle, BackColor, GetNoteColor(buttonState, 1), LinearGradientMode.Vertical);
-				graphics.FillRectangle(BackColorBrush, note.Rectangle);
-				BackColorBrush.Dispose();
-			}
-
-			if (buttonState == NoteState.Passive) return;
-
-			Color BorderColor = GetBorderColor(buttonState);
-			if (note.BorderColor != BorderColor)
-			{
-				note.BorderColor = BorderColor;
-				Pen BorderColorPen = new Pen(BorderColor, 1);
-				graphics.DrawRectangle(BorderColorPen, note.Rectangle);
-				BorderColorPen.Dispose();
-			}
-		}
-
-		private Color GetNoteColor(NoteState buttonState, int colorIndex)
-		{
-			switch (buttonState)
-			{
-				case NoteState.Hovering | NoteState.Selected:
-					if (colorIndex == 0) return Color.FromArgb(235, 244, 253);
-					if (colorIndex == 1) return Color.FromArgb(194, 220, 253);
-					break;
-				case NoteState.Hovering:
-					if (colorIndex == 0) return Color.FromArgb(253, 254, 255);
-					if (colorIndex == 1) return Color.FromArgb(243, 248, 255);
-					break;
-				case NoteState.Selected:
-					if (colorIndex == 0) return Color.FromArgb(249, 249, 249);
-					if (colorIndex == 1) return Color.FromArgb(241, 241, 241);
-					break;
-				case NoteState.Passive:
-					if (colorIndex == 0) return BackColor;
-					if (colorIndex == 1) return BackColor;
-					break;
-				default:
-					if (colorIndex == 0) return BackColor;
-					if (colorIndex == 1) return BackColor;
-					break;
-			}
-			return BackColor;
-		}
-
-		private Color GetBorderColor(NoteState buttonState)
-		{
-			switch (buttonState)
-			{
-				case NoteState.Hovering | NoteState.Selected:
-					return Color.FromArgb(0, 102, 204);
-				case NoteState.Hovering:
-					return Color.FromArgb(185, 215, 252);
-				case NoteState.Selected:
-					return Color.FromArgb(0, 102, 204);
-				case NoteState.Passive:
-					return BackColor;
-				default:
-					return BackColor;
-			}
-		}
-
-		private Color GetForeColor(NoteState buttonState)
-		{
-			switch (buttonState)
-			{
-				case NoteState.Hovering | NoteState.Selected:
-					return Color.FromArgb(0, 102, 204);
-				case NoteState.Hovering:
-					return Color.FromArgb(0, 102, 204);
-				case NoteState.Selected:
-					return Color.FromArgb(0, 102, 204);
-				case NoteState.Passive:
-					return ForeColor;
-				default:
-					return ForeColor;
-			}
-		}
-
-		private void NoteListBox_MouseClick(object sender, MouseEventArgs e)
-		{
-			RightClickedNote = null;
-			Note note = notes[e.X, e.Y];
-			if (note != null)
-			{
-				switch (e.Button)
-				{
-					case MouseButtons.Left:
-						notes.SelectedItem = note;
-						Invalidate();
-						break;
-					case MouseButtons.Right:
-						RightClickedNote = note;
-						Invalidate();
-						break;
-				}
-				OnNoteMouseClick(new NoteMouseEventArgs(note, e));
-			}
-		}
-
-		private void NoteListBox_MouseDoubleClick(object sender, MouseEventArgs e)
-		{
-			RightClickedNote = null;
-			Note note = notes[e.X, e.Y];
-			if (note != null)
-			{
-				switch (e.Button)
-				{
-					case MouseButtons.Left:
-						notes.SelectedItem = note;
-						Invalidate();
-						break;
-					case MouseButtons.Right:
-						RightClickedNote = note;
-						Invalidate();
-						break;
-				}
-				OnNoteMouseDoubleClick(new NoteMouseEventArgs(note, e));
-			}			
-		}
-
-		private void NoteListBox_MouseLeave(object sender, EventArgs e)
-		{
-			if (RightClickedNote == null)
-			{
-				if (HoveringNote != null)
-				{
-					Rectangle rec = HoveringNote.Rectangle;
-					HoveringNote = null;
-					Invalidate(rec);
-				}
-			}
-		}
-
-		private void NoteListBox_MouseMove(object sender, MouseEventArgs e)
-		{
-			Note focusNote = notes[e.X, e.Y];
-			if (focusNote != null)
-			{
-				Cursor = Cursors.Hand;
-				if (HoveringNote != focusNote)
-				{
-					HoveringNote = focusNote;
-					Invalidate(HoveringNote.Rectangle);
-				}
-			}
-			else
-			{
-				if (HoveringNote != null)
-				{
-					Rectangle rec = HoveringNote.Rectangle;
-					HoveringNote = null;
-					Invalidate(rec);
-				}
-				this.Cursor = Cursors.Default;
-			}
-		}
-
-		private void NoteListBox_MouseUp(object sender, MouseEventArgs e)
-		{
-			LeftClickedNote = null;
-		}
-
-		#region SelectedNote
-
-		public Note SelectedItem
+		public RepositoryDataSet DataSet
 		{
 			get
 			{
-				return notes.SelectedItem;
+				return source;
 			}
 			set
 			{
-				if (!Equals(notes.SelectedItem, value))
+				if (source != null)
 				{
-					notes.SelectedItem = value;
-					DoSelectedItemChanged();
+					source.DecimalPowers.DecimalPowersRowChanged -= DecimalPowers_RowChanged;
+					source.TextPowers.TextPowersRowChanged -= TextPowers_RowChanged;
+					source.DecimalPowers.DecimalPowersRowDeleted -= DecimalPowers_RowChanged;
+					source.TextPowers.TextPowersRowDeleted -= TextPowers_RowChanged;
+					source.DecimalPowers.TableCleared -= TablesPowers_TableCleared;
+					source.TextPowers.TableCleared -= TablesPowers_TableCleared;
+
+					source.Subcategories.SubcategoriesRowChanged -= Subcategories_RowChanged;
+					source.Subcategories.SubcategoriesRowDeleted -= Subcategories_RowChanged;
+					source.Subcategories.TableCleared -= Subcategories_TableCleared;
+
+					source.WordFiles.WordFilesRowChanged -= WordFiles_RowChanged;
+					source.WordFiles.WordFilesRowDeleted -= WordFiles_RowChanged;
+					source.WordFiles.TableCleared -= WordFiles_TableCleared;
+				}
+				source = value;
+
+				Items.Clear();
+
+				ReadData();
+
+				if (source != null)
+				{
+					source.DecimalPowers.DecimalPowersRowChanged += new DecimalPowersRowChangeEventHandler(DecimalPowers_RowChanged);
+					source.TextPowers.TextPowersRowChanged += new TextPowersRowChangeEventHandler(TextPowers_RowChanged);
+					source.DecimalPowers.DecimalPowersRowDeleted += new DecimalPowersRowChangeEventHandler(DecimalPowers_RowChanged);
+					source.TextPowers.TextPowersRowDeleted += new TextPowersRowChangeEventHandler(TextPowers_RowChanged);
+					source.DecimalPowers.TableCleared += new DataTableClearEventHandler(TablesPowers_TableCleared);
+					source.TextPowers.TableCleared += new DataTableClearEventHandler(TablesPowers_TableCleared);
+
+					source.Subcategories.SubcategoriesRowChanged += new SubcategoriesRowChangeEventHandler(Subcategories_RowChanged);
+					source.Subcategories.SubcategoriesRowDeleted += new SubcategoriesRowChangeEventHandler(Subcategories_RowChanged);
+					source.Subcategories.TableCleared += new DataTableClearEventHandler(Subcategories_TableCleared);
+
+					source.WordFiles.WordFilesRowChanged += new WordFilesRowChangeEventHandler(WordFiles_RowChanged);
+					source.WordFiles.WordFilesRowDeleted += new WordFilesRowChangeEventHandler(WordFiles_RowChanged);
+					source.WordFiles.TableCleared += new DataTableClearEventHandler(WordFiles_TableCleared);
 				}
 			}
 		}
 
-		public event EventHandler<NoteEventArgs> SelectedItemChanged;
-
-		private void DoSelectedItemChanged()
+		private void WordFiles_TableCleared(object sender, DataTableClearEventArgs e)
 		{
-			Invalidate();
-			OnSelectedItemChanged(new NoteEventArgs(SelectedItem));
+			ReadData();
 		}
 
-		protected virtual void OnSelectedItemChanged(NoteEventArgs e)
+		private void WordFiles_RowChanged(object sender, WordFilesRowChangeEvent e)
 		{
-			SelectedItemChanged?.Invoke(this, e);
+			ReadData();
 		}
 
-		#endregion
-
-		#region Click
-				
-		public event EventHandler<NoteMouseEventArgs> NoteMouseClick;
-		public event EventHandler<NoteMouseEventArgs> NoteMouseDoubleClick;
-		public event EventHandler<NoteMouseEventArgs> NoteMouseDown;
-		public event EventHandler<NoteMouseEventArgs> NoteMouseUp;
-
-		protected virtual void OnNoteMouseClick(NoteMouseEventArgs e)
+		private void Subcategories_TableCleared(object sender, DataTableClearEventArgs e)
 		{
-			NoteMouseClick?.Invoke(this, e);
+			ReadData();
 		}
 
-		protected virtual void OnNoteMouseDoubleClick(NoteMouseEventArgs e)
+		private void Subcategories_RowChanged(object sender, SubcategoriesRowChangeEvent e)
 		{
-			NoteMouseDoubleClick?.Invoke(this, e);
+			ReadData();
 		}
 
-		protected virtual void OnNoteMouseDown(NoteMouseEventArgs e)
+		private void DecimalPowers_RowChanged(object sender, DecimalPowersRowChangeEvent e)
 		{
-			NoteMouseDown?.Invoke(this, e);
-		}
-
-		protected virtual void OnNoteMouseUp(NoteMouseEventArgs e)
-		{
-			NoteMouseUp?.Invoke(this, e);
-		}
-
-
-		#endregion
-
-		internal class NoteCollection : CollectionBase
-		{
-			private readonly NoteListBox owner;
-
-			public NoteCollection(NoteListBox owner) : base()
+			if (e.Action == DataRowAction.Add)
 			{
-				this.owner = owner;
+				AddNote(Note.Create(e.Row, files[e.Row.file_id], subcategories[e.Row.subcategory_id]));
 			}
-
-			public Note this[int index]
+			else if (e.Action == DataRowAction.Delete)
 			{
-				get { return (Note)List[index]; }
+				Note note = GetNote(e.Row);
+				if (note != null) RemoveNote(note);
 			}
-						
-			public Note this[int x, int y]
+			else if (e.Action == DataRowAction.Change)
 			{
-				get
+				Note note = GetNote(e.Row);
+				note.Description = e.Row.Description;
+				note.Reiting = e.Row.Reiting;
+				note.Value = e.Row.Value;
+				Category category = source.Categories.Get(e.Row.category_id);
+				note.Subcategory = source.Subcategories.Get(category, e.Row.subcategory_id);
+				//if (note.Rectangle != null)
+				//	Invalidate(note.Rectangle);
+			}
+		}
+
+		private void TextPowers_RowChanged(object sender, TextPowersRowChangeEvent e)
+		{
+			if (e.Action == DataRowAction.Add)
+			{
+				AddNote(Note.Create(e.Row, files[e.Row.file_id], subcategories[e.Row.subcategory_id]));
+			}
+			else if (e.Action == DataRowAction.Delete)
+			{
+				Note note = GetNote(e.Row);
+				if (note != null) RemoveNote(note);
+			}
+			else if (e.Action == DataRowAction.Change)
+			{
+				Note note = GetNote(e.Row);
+				note.Description = e.Row.Description;
+				note.Reiting = e.Row.Reiting;
+				note.Value = e.Row.Value;
+				//if (note.Rectangle != null)
+				//	Invalidate(note.Rectangle);
+			}
+		}
+
+		private void TablesPowers_TableCleared(object sender, DataTableClearEventArgs e)
+		{
+			Items.Clear();
+		}
+
+		public void ReadData()
+		{
+			if (DesignMode || source == null) return;
+
+			BeginUpdate();
+			IDictionary<int, Category> categories = new Dictionary<int, Category>();
+			if (source.Categories.Rows.Count > 0)
+			{
+				foreach (DataRow row in source.Categories.Rows)
 				{
-					foreach (Note item in List)
-					{
-						if (item.Rectangle != null)
-						{
-							if (item.Rectangle.Contains(new Point(x, y)))
-							{
-								return item;
-							}
-						}
-					}
-					return null;
+					Category category = Category.Create(row);
+					categories.Add(category.Id, category);
+				}
+			}
+			else
+			{
+				Category category = Category.Default();
+				categories.Add(category.Id, category);
+			}
+
+			subcategories = new Dictionary<int, Subcategory>();
+			if (source.Subcategories.Rows.Count > 0)
+			{
+				foreach (DataRow row in source.Subcategories.Rows)
+				{
+					Subcategory subcategory = Subcategory.Create(categories[(int)row["category_id"]], row);
+					subcategories.Add(subcategory.Id, subcategory);
+				}
+			}
+			else
+			{
+				foreach (Category category in categories.Values)
+				{
+					Subcategory subcategory = Subcategory.Default(category: category);
+					subcategories.Add(subcategory.Id, subcategory);
 				}
 			}
 
-			public Note SelectedItem
+			files = new Dictionary<int, WordFilesRow>();
+			if (source.WordFiles.Rows.Count > 0)
 			{
-				get
+				foreach (WordFilesRow row in source.WordFiles.Rows)
 				{
-					return (from Note note in List where note.Selected select note).FirstOrDefault();
-				}
-				set
-				{
-					foreach (Note item in List)
-					{
-						item.Selected = item.Equals(value);						
-					}				
-				}
-			}
-			public int Add(Note item)
-			{
-				item.owner = owner;
-				return List.Add(item);
-			}
-
-			[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design",
-				"CA1062:ValidateArgumentsOfPublicMethods")]
-			public void AddRange(NoteCollection items)
-			{
-				foreach (Note item in items)
-				{
-					Add(item);
+					files.Add(row.id, row);
 				}
 			}
 
-			public int IndexOf(Note item)
+			if (source.TextPowers.Rows.Count > 0 ||
+				source.DecimalPowers.Rows.Count > 0)
 			{
-				return List.IndexOf(item);
-			}
-
-			public void Insert(int index, Note value)
-			{
-				List.Insert(index, value);
-			}
-
-			public void Remove(Note value)
-			{
-				List.Remove(value);
-			}
-
-			public bool Contains(Note value)
-			{
-				return List.Contains(value);
-			}
-
-			protected override void OnValidate(object value)
-			{
-				if (!typeof(Note).IsAssignableFrom(value.GetType()))
+				foreach (Note note in source.GetNotes())
 				{
-					throw new ArgumentException("value не является типом Note.", "value");
+					AddNote(note);	 
 				}
 			}
+			EndUpdate();
 		}
 
-		internal enum NoteState : int
+		private void AddNote(Note note)
 		{
-			Passive = 0,
-			Hovering = 1,
-			Selected = 2
+			Items.Add(new NoteListItem(note));
 		}
-				
+
+		private void RemoveNote(Note note)
+		{
+			Items.Remove(GetNoteListItem(note.DataRow as DataRow));			
+		}
+
+		private Note GetNote(DataRow dataRow)
+		{
+			return (from NoteListItem item in Items
+					where item.Note.DataRow.Equals(dataRow)
+					select item.Note).First();
+		}
+
+		private NoteListItem GetNoteListItem(DataRow dataRow)
+		{
+			return (from NoteListItem item in Items
+					where item.Note.DataRow.Equals(dataRow)
+					select item).First();
+		}		
+
+		public NoteListBox(): base() { }			
+	}
+
+	public class NoteListItem : ControlLibrary.Controls.ListControls.ListItem
+	{
+		public NoteListItem() : base() 
+		{
+			Note = default;
+		}
+
+		public NoteListItem(Note note) : base()
+		{
+			Note = note;
+		}	
+
+		public Note Note { get; }
+
+		public override Version Version
+		{
+			get
+			{
+				return Version.Create(Note.Category.Id, Note.Subcategory.Id);
+			}
+		}
+
+		public override string Caption
+		{
+			get
+			{
+				return Note.Subcategory.Caption.Trim();
+			}			
+		}
+
+		public override string Text
+		{
+			get
+			{
+				return Note.Value.ToString().Trim();
+			}			
+		}
+
+		public override string Description
+		{
+			get
+			{
+				return Note.Description.Trim();
+			}
+		}
 	}
 }

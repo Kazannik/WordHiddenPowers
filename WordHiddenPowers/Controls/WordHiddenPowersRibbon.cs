@@ -152,6 +152,6 @@ namespace WordHiddenPowers
 				ActiveDocument.AddTextNote(Selection);
 			else
 				ActiveDocument.AddDecimalNote(Selection);
-		}
+		}		
 	}
 }

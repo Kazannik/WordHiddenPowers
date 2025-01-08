@@ -120,12 +120,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WordHiddenPowers\WordHiddenPowers.csproj">
-      <Project>{dda3e4d4-908c-46ef-ba4c-ff5c54ae7c2a}</Project>
-      <Name>WordHiddenPowers</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\TableClear_24.png" />
   </ItemGroup>
   <ItemGroup>

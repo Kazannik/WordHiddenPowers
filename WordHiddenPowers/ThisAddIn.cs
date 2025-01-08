@@ -9,6 +9,8 @@ namespace WordHiddenPowers
 
 		private void ThisAddIn_Startup(object sender, EventArgs e)
 		{
+			Properties.Settings.Default.Reload();
+
 			Documents = new Documents.DocumentCollection(Globals.Ribbons.WordHiddenPowersRibbon.paneVisibleButton);
 
 			if (Application.Documents.Count > 0)
@@ -19,6 +21,7 @@ namespace WordHiddenPowers
 
 		private void ThisAddIn_Shutdown(object sender, EventArgs e)
 		{
+			Properties.Settings.Default.Save();
 			Documents.Dispose();
 		}
 

@@ -22,5 +22,17 @@ namespace WordHiddenPowers.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("140")]
+        public int NotesPaneSplitterDistance {
+            get {
+                return ((int)(this["NotesPaneSplitterDistance"]));
+            }
+            set {
+                this["NotesPaneSplitterDistance"] = value;
+            }
+        }
     }
 }

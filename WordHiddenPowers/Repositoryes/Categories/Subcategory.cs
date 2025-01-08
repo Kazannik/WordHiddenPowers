@@ -1,10 +1,11 @@
-﻿using System;
+﻿using ControlLibrary.Controls.ComboControls;
+using System;
 using System.Collections.Generic;
 using System.Data;
 
 namespace WordHiddenPowers.Repositoryes.Categories
 {
-	public class Subcategory : IComparable<Subcategory>, Controls.ComboControl<Subcategory>.IComboBoxItem
+	public class Subcategory : IComparable<Subcategory>, ComboControl<Subcategory>.IComboControlItem
 	{
 		public static Subcategory Create(Category category, DataRow dataRow)
 		{
@@ -80,23 +81,15 @@ namespace WordHiddenPowers.Repositoryes.Categories
 
 		public bool IsObligatory { get; set; }
 
-		public int Code
-		{
-			get
-			{
-				return Id;
-			}
-		}
+		public string Code => Id.ToString();
 
-		public string Text
-		{
-			get
-			{
-				return Caption;
-			}
-		}
+		public string Text => Caption;
 
 		public string Keywords { get; set; }
+
+		long ComboControl<Subcategory>.IComboControlItem.Id => Id;
+
+		string ComboControl<Subcategory>.IComboControlItem.Code => Code;
 
 		public object[] ToObjectsArray()
 		{

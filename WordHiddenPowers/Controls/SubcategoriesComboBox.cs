@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using ControlLibrary.Controls.ComboControls;
+using System.ComponentModel;
 using System.Diagnostics;
 using WordHiddenPowers.Repositoryes;
 using WordHiddenPowers.Repositoryes.Categories;
