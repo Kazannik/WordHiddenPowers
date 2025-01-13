@@ -54,7 +54,7 @@ namespace WordHiddenPowers.Utils
 					regexCategory.IsMatch(line))
 				{
 					Match match = regexCategory.Match(line);
-					addingCategory = Category.Create(line.Substring(match.Index + match.Value.IndexOf("#") + 1), string.Empty, false);
+					//addingCategory = Category.Create(line.Substring(match.Index + match.Value.IndexOf("#") + 1), string.Empty, false);
 					addingCategory = dataSet.Categories.Add(addingCategory);
 					addingSubcategory = null;
 				}
@@ -62,7 +62,7 @@ namespace WordHiddenPowers.Utils
 					regexObligatoryCategory.IsMatch(line))
 				{
 					Match match = regexObligatoryCategory.Match(line);
-					addingCategory = Category.Create(line.Substring(match.Index + match.Value.IndexOf("#") + 1), string.Empty, true);
+					//addingCategory = Category.Create(line.Substring(match.Index + match.Value.IndexOf("#") + 1), string.Empty, true);
 					addingCategory = dataSet.Categories.Add(addingCategory);
 					addingSubcategory = null;
 				}
@@ -73,7 +73,7 @@ namespace WordHiddenPowers.Utils
 					string caption = line.Substring(match.Index + match.Value.IndexOf("##") + 2);
 					string attr = line.Substring(0, match.Value.IndexOf("##"));
 
-					addingSubcategory = Subcategory.Create(addingCategory, caption, string.Empty, attr.Contains("D"), attr.Contains("S"), attr.Contains("!"), keywords);
+					//addingSubcategory = Subcategory.Create(addingCategory, caption, string.Empty, attr.Contains("D"), attr.Contains("S"), attr.Contains("!"), keywords);
 					addingSubcategory = dataSet.Subcategories.Add(addingCategory, addingSubcategory);
 					keywords = string.Empty;
 				}

@@ -33,9 +33,9 @@
 			this.okButton = new System.Windows.Forms.Button();
 			this.descriptionTextBox = new System.Windows.Forms.TextBox();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.subcategoriesComboBox = new WordHiddenPowers.Controls.SubcategoriesComboBox(this.components);
+			this.subcategoriesComboBox = new WordHiddenPowers.Controls.ComboControls.SubcategoriesComboBox(this.components);
 			this.raitingBox = new WordHiddenPowers.Controls.ReitingBox();
-			this.categoriesComboBox = new WordHiddenPowers.Controls.CategoriesComboBox(this.components);
+			this.categoriesComboBox = new WordHiddenPowers.Controls.ComboControls.CategoriesComboBox(this.components);
 			this.tableLayoutPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -120,7 +120,7 @@
 			this.raitingBox.Location = new System.Drawing.Point(2, 378);
 			this.raitingBox.Margin = new System.Windows.Forms.Padding(2);
 			this.raitingBox.Name = "raitingBox";
-			this.raitingBox.Size = new System.Drawing.Size(1008, 42);
+			this.raitingBox.Size = new System.Drawing.Size(672, 42);
 			this.raitingBox.TabIndex = 32;
 			this.raitingBox.Value = 0;
 			// 
@@ -167,8 +167,8 @@
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.TextBox descriptionTextBox;
         private Controls.ReitingBox raitingBox;
-        private Controls.CategoriesComboBox categoriesComboBox;
-        private Controls.SubcategoriesComboBox subcategoriesComboBox;
+        private Controls.ComboControls.CategoriesComboBox categoriesComboBox;
+        private Controls.ComboControls.SubcategoriesComboBox subcategoriesComboBox;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }

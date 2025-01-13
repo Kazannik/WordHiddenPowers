@@ -160,6 +160,7 @@
     <Reference Include="Microsoft.Office.Tools.Word.v4.0.Utilities, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.Interop, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="Microsoft.VisualStudio.Tools.Applications.Runtime, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -199,19 +200,20 @@
     <Compile Include="Const\Content.cs" />
     <Compile Include="Const\Globals.cs" />
     <Compile Include="Const\Panes.cs" />
-    <Compile Include="Controls\CategoriesComboBox.cs" />
+    <Compile Include="Controls\ComboControls\CategoriesComboBox.cs" />
+    <Compile Include="Controls\ListControls\CategoriesListBox.cs" />
     <Compile Include="Controls\CategoriesPicker.cs" />
     <Compile Include="Controls\AnalyzerNoteListBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\NoteListBox.cs" />
+    <Compile Include="Controls\ListControls\NotesListBox.cs" />
     <Compile Include="Controls\ReitingBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\ReitingBox.Designer.cs">
       <DependentUpon>ReitingBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\SubcategoriesComboBox.cs" />
+    <Compile Include="Controls\ComboControls\SubcategoriesComboBox.cs" />
     <Compile Include="Controls\TableEditBox.cs">
       <SubType>UserControl</SubType>
     </Compile>

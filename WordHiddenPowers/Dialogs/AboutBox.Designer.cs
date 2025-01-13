@@ -36,6 +36,7 @@
 			this.labelCompanyName = new System.Windows.Forms.Label();
 			this.textBoxDescription = new System.Windows.Forms.TextBox();
 			this.okButton = new System.Windows.Forms.Button();
+			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
 			this.tableLayoutPanel.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
 			this.SuspendLayout();
@@ -152,6 +153,10 @@
 			this.okButton.TabIndex = 24;
 			this.okButton.Text = "&ОК";
 			// 
+			// backgroundWorker1
+			// 
+			this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+			// 
 			// AboutBox
 			// 
 			this.AcceptButton = this.okButton;
@@ -186,5 +191,6 @@
 		private System.Windows.Forms.Label labelCompanyName;
 		private System.Windows.Forms.TextBox textBoxDescription;
 		private System.Windows.Forms.Button okButton;
+		private System.ComponentModel.BackgroundWorker backgroundWorker1;
 	}
 }

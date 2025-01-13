@@ -40,19 +40,19 @@ namespace WordHiddenPowers.Repositoryes {
         
         private WordFilesDataTable tableWordFiles;
         
-        private global::System.Data.DataRelation relationSubcategories_Categories;
-        
         private global::System.Data.DataRelation relationDecimalPowers_Categories;
         
-        private global::System.Data.DataRelation relationDecimalPowers_Subcategories;
-        
         private global::System.Data.DataRelation relationDecimalPowers_WordFiles;
+        
+        private global::System.Data.DataRelation relationTextPowers_WordFiles;
         
         private global::System.Data.DataRelation relationTextPowers_Categories;
         
         private global::System.Data.DataRelation relationTextPowers_Subcategories;
         
-        private global::System.Data.DataRelation relationTextPowers_WordFiles;
+        private global::System.Data.DataRelation relationDecimalPowers_Subcategories;
+        
+        private global::System.Data.DataRelation relationSubcategories_Categories;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -376,13 +376,13 @@ namespace WordHiddenPowers.Repositoryes {
                     this.tableWordFiles.InitVars();
                 }
             }
-            this.relationSubcategories_Categories = this.Relations["Subcategories_Categories"];
             this.relationDecimalPowers_Categories = this.Relations["DecimalPowers_Categories"];
-            this.relationDecimalPowers_Subcategories = this.Relations["DecimalPowers_Subcategories"];
             this.relationDecimalPowers_WordFiles = this.Relations["DecimalPowers_WordFiles"];
+            this.relationTextPowers_WordFiles = this.Relations["TextPowers_WordFiles"];
             this.relationTextPowers_Categories = this.Relations["TextPowers_Categories"];
             this.relationTextPowers_Subcategories = this.Relations["TextPowers_Subcategories"];
-            this.relationTextPowers_WordFiles = this.Relations["TextPowers_WordFiles"];
+            this.relationDecimalPowers_Subcategories = this.Relations["DecimalPowers_Subcategories"];
+            this.relationSubcategories_Categories = this.Relations["Subcategories_Categories"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -410,22 +410,18 @@ namespace WordHiddenPowers.Repositoryes {
             base.Tables.Add(this.tableDocumentKeys);
             this.tableWordFiles = new WordFilesDataTable();
             base.Tables.Add(this.tableWordFiles);
-            this.relationSubcategories_Categories = new global::System.Data.DataRelation("Subcategories_Categories", new global::System.Data.DataColumn[] {
-                        this.tableSubcategories.category_idColumn}, new global::System.Data.DataColumn[] {
-                        this.tableCategories.idColumn}, false);
-            this.Relations.Add(this.relationSubcategories_Categories);
             this.relationDecimalPowers_Categories = new global::System.Data.DataRelation("DecimalPowers_Categories", new global::System.Data.DataColumn[] {
                         this.tableDecimalPowers.category_idColumn}, new global::System.Data.DataColumn[] {
                         this.tableCategories.idColumn}, false);
             this.Relations.Add(this.relationDecimalPowers_Categories);
-            this.relationDecimalPowers_Subcategories = new global::System.Data.DataRelation("DecimalPowers_Subcategories", new global::System.Data.DataColumn[] {
-                        this.tableDecimalPowers.subcategory_idColumn}, new global::System.Data.DataColumn[] {
-                        this.tableSubcategories.idColumn}, false);
-            this.Relations.Add(this.relationDecimalPowers_Subcategories);
             this.relationDecimalPowers_WordFiles = new global::System.Data.DataRelation("DecimalPowers_WordFiles", new global::System.Data.DataColumn[] {
                         this.tableDecimalPowers.file_idColumn}, new global::System.Data.DataColumn[] {
                         this.tableWordFiles.idColumn}, false);
             this.Relations.Add(this.relationDecimalPowers_WordFiles);
+            this.relationTextPowers_WordFiles = new global::System.Data.DataRelation("TextPowers_WordFiles", new global::System.Data.DataColumn[] {
+                        this.tableTextPowers.file_idColumn}, new global::System.Data.DataColumn[] {
+                        this.tableWordFiles.idColumn}, false);
+            this.Relations.Add(this.relationTextPowers_WordFiles);
             this.relationTextPowers_Categories = new global::System.Data.DataRelation("TextPowers_Categories", new global::System.Data.DataColumn[] {
                         this.tableTextPowers.category_idColumn}, new global::System.Data.DataColumn[] {
                         this.tableCategories.idColumn}, false);
@@ -434,10 +430,14 @@ namespace WordHiddenPowers.Repositoryes {
                         this.tableTextPowers.subcategory_idColumn}, new global::System.Data.DataColumn[] {
                         this.tableSubcategories.idColumn}, false);
             this.Relations.Add(this.relationTextPowers_Subcategories);
-            this.relationTextPowers_WordFiles = new global::System.Data.DataRelation("TextPowers_WordFiles", new global::System.Data.DataColumn[] {
-                        this.tableTextPowers.file_idColumn}, new global::System.Data.DataColumn[] {
-                        this.tableWordFiles.idColumn}, false);
-            this.Relations.Add(this.relationTextPowers_WordFiles);
+            this.relationDecimalPowers_Subcategories = new global::System.Data.DataRelation("DecimalPowers_Subcategories", new global::System.Data.DataColumn[] {
+                        this.tableDecimalPowers.subcategory_idColumn}, new global::System.Data.DataColumn[] {
+                        this.tableSubcategories.idColumn}, false);
+            this.Relations.Add(this.relationDecimalPowers_Subcategories);
+            this.relationSubcategories_Categories = new global::System.Data.DataRelation("Subcategories_Categories", new global::System.Data.DataColumn[] {
+                        this.tableSubcategories.category_idColumn}, new global::System.Data.DataColumn[] {
+                        this.tableCategories.idColumn}, false);
+            this.Relations.Add(this.relationSubcategories_Categories);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -969,10 +969,6 @@ namespace WordHiddenPowers.Repositoryes {
             
             private global::System.Data.DataColumn columnAfterText;
             
-            private global::System.Data.DataColumn columnKeywords;
-            
-            private global::System.Data.DataColumn columnGuid;
-            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public CategoriesDataTable() {
@@ -1056,22 +1052,6 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn KeywordsColumn {
-                get {
-                    return this.columnKeywords;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn GuidColumn {
-                get {
-                    return this.columnGuid;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1107,7 +1087,7 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public CategoriesRow AddCategoriesRow(string Caption, string Description, bool IsObligatory, string BeforeText, string AfterText, string Keywords, string Guid) {
+            public CategoriesRow AddCategoriesRow(string Caption, string Description, bool IsObligatory, string BeforeText, string AfterText) {
                 CategoriesRow rowCategoriesRow = ((CategoriesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -1115,9 +1095,7 @@ namespace WordHiddenPowers.Repositoryes {
                         Description,
                         IsObligatory,
                         BeforeText,
-                        AfterText,
-                        Keywords,
-                        Guid};
+                        AfterText};
                 rowCategoriesRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowCategoriesRow);
                 return rowCategoriesRow;
@@ -1153,8 +1131,6 @@ namespace WordHiddenPowers.Repositoryes {
                 this.columnIsObligatory = base.Columns["IsObligatory"];
                 this.columnBeforeText = base.Columns["BeforeText"];
                 this.columnAfterText = base.Columns["AfterText"];
-                this.columnKeywords = base.Columns["Keywords"];
-                this.columnGuid = base.Columns["Guid"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1172,10 +1148,6 @@ namespace WordHiddenPowers.Repositoryes {
                 base.Columns.Add(this.columnBeforeText);
                 this.columnAfterText = new global::System.Data.DataColumn("AfterText", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnAfterText);
-                this.columnKeywords = new global::System.Data.DataColumn("Keywords", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnKeywords);
-                this.columnGuid = new global::System.Data.DataColumn("Guid", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnGuid);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("CategoriesTableKey", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -3487,6 +3459,17 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public WordFilesRow[] GetWordFilesRows() {
+                if ((this.Table.ChildRelations["TextPowers_WordFiles"] == null)) {
+                    return new WordFilesRow[0];
+                }
+                else {
+                    return ((WordFilesRow[])(base.GetChildRows(this.Table.ChildRelations["TextPowers_WordFiles"])));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public CategoriesRow[] GetCategoriesRows() {
                 if ((this.Table.ChildRelations["TextPowers_Categories"] == null)) {
                     return new CategoriesRow[0];
@@ -3504,17 +3487,6 @@ namespace WordHiddenPowers.Repositoryes {
                 }
                 else {
                     return ((SubcategoriesRow[])(base.GetChildRows(this.Table.ChildRelations["TextPowers_Subcategories"])));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public WordFilesRow[] GetWordFilesRows() {
-                if ((this.Table.ChildRelations["TextPowers_WordFiles"] == null)) {
-                    return new WordFilesRow[0];
-                }
-                else {
-                    return ((WordFilesRow[])(base.GetChildRows(this.Table.ChildRelations["TextPowers_WordFiles"])));
                 }
             }
         }
@@ -3621,49 +3593,6 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string Keywords {
-                get {
-                    try {
-                        return ((string)(this[this.tableCategories.KeywordsColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Keywords\' в таблице \'Categories\' равно DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCategories.KeywordsColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string Guid {
-                get {
-                    try {
-                        return ((string)(this[this.tableCategories.GuidColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Guid\' в таблице \'Categories\' равно DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCategories.GuidColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public SubcategoriesRow SubcategoriesRow {
-                get {
-                    return ((SubcategoriesRow)(this.GetParentRow(this.Table.ParentRelations["Subcategories_Categories"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["Subcategories_Categories"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public DecimalPowersRow DecimalPowersRow {
                 get {
                     return ((DecimalPowersRow)(this.GetParentRow(this.Table.ParentRelations["DecimalPowers_Categories"])));
@@ -3681,6 +3610,17 @@ namespace WordHiddenPowers.Repositoryes {
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["TextPowers_Categories"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public SubcategoriesRow SubcategoriesRow {
+                get {
+                    return ((SubcategoriesRow)(this.GetParentRow(this.Table.ParentRelations["Subcategories_Categories"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["Subcategories_Categories"]);
                 }
             }
             
@@ -3730,30 +3670,6 @@ namespace WordHiddenPowers.Repositoryes {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetAfterTextNull() {
                 this[this.tableCategories.AfterTextColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public bool IsKeywordsNull() {
-                return this.IsNull(this.tableCategories.KeywordsColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void SetKeywordsNull() {
-                this[this.tableCategories.KeywordsColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public bool IsGuidNull() {
-                return this.IsNull(this.tableCategories.GuidColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void SetGuidNull() {
-                this[this.tableCategories.GuidColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -3924,23 +3840,23 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public DecimalPowersRow DecimalPowersRow {
-                get {
-                    return ((DecimalPowersRow)(this.GetParentRow(this.Table.ParentRelations["DecimalPowers_Subcategories"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["DecimalPowers_Subcategories"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public TextPowersRow TextPowersRow {
                 get {
                     return ((TextPowersRow)(this.GetParentRow(this.Table.ParentRelations["TextPowers_Subcategories"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["TextPowers_Subcategories"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public DecimalPowersRow DecimalPowersRow {
+                get {
+                    return ((DecimalPowersRow)(this.GetParentRow(this.Table.ParentRelations["DecimalPowers_Subcategories"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["DecimalPowers_Subcategories"]);
                 }
             }
             
@@ -4171,23 +4087,23 @@ namespace WordHiddenPowers.Repositoryes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public SubcategoriesRow[] GetSubcategoriesRows() {
-                if ((this.Table.ChildRelations["DecimalPowers_Subcategories"] == null)) {
-                    return new SubcategoriesRow[0];
-                }
-                else {
-                    return ((SubcategoriesRow[])(base.GetChildRows(this.Table.ChildRelations["DecimalPowers_Subcategories"])));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public WordFilesRow[] GetWordFilesRows() {
                 if ((this.Table.ChildRelations["DecimalPowers_WordFiles"] == null)) {
                     return new WordFilesRow[0];
                 }
                 else {
                     return ((WordFilesRow[])(base.GetChildRows(this.Table.ChildRelations["DecimalPowers_WordFiles"])));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public SubcategoriesRow[] GetSubcategoriesRows() {
+                if ((this.Table.ChildRelations["DecimalPowers_Subcategories"] == null)) {
+                    return new SubcategoriesRow[0];
+                }
+                else {
+                    return ((SubcategoriesRow[])(base.GetChildRows(this.Table.ChildRelations["DecimalPowers_Subcategories"])));
                 }
             }
         }

@@ -5,7 +5,7 @@ using System.Windows.Forms.Design;
 using WordHiddenPowers.Repositoryes;
 using WordHiddenPowers.Repositoryes.Categories;
 
-namespace WordHiddenPowers.Controls
+namespace WordHiddenPowers.Controls.ComboControls
 {
 	[ToolStripItemDesignerAvailability(ToolStripItemDesignerAvailability.All)]
 	public class CategoriesComboBox : ComboControl<Category>

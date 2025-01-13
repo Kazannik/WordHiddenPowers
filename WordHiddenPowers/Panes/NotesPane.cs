@@ -1,10 +1,11 @@
-﻿using System;
+﻿using ControlLibrary.Controls.ListControls;
+using System;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using WordHiddenPowers.Controls;
+using WordHiddenPowers.Controls.ListControls;
 using WordHiddenPowers.Dialogs;
 using WordHiddenPowers.Documents;
 using WordHiddenPowers.Repositoryes;
@@ -23,7 +24,7 @@ namespace WordHiddenPowers.Panes
 		private Label descriptionLabel;
 		private DateTimePicker dateTimePicker;
 		private Label dateLabel;
-		private NoteListBox noteListBox;
+		private NotesListBox noteListBox;
 		private ContextMenuStrip noteContextMenu;
 		private ToolStripMenuItem mnuNoteEdit;
 		private ToolStripSeparator toolStripMenuItem1;
@@ -55,20 +56,20 @@ namespace WordHiddenPowers.Panes
 
 		private void NoteOpen_Click(object sender, EventArgs e)
 		{
-			NoteOpen(noteContextMenu.Tag as NoteListItem);
+			NoteOpen(noteContextMenu.Tag as NotesListItem);
 		}
 
 		private void NoteOpen()
 		{
-			if (noteListBox.SelectedItem is NoteListItem)
+			if (noteListBox.SelectedItem is NotesListItem)
 			{
-				NoteListItem item = noteListBox.SelectedItem as NoteListItem;
+				NotesListItem item = noteListBox.SelectedItem as NotesListItem;
 				NoteOpen(item);
 			}
 		}
 
 
-		private void NoteOpen(NoteListItem item)
+		private void NoteOpen(NotesListItem item)
 		{			
 				Word.Range range = Document.Doc.Range(item.Note.WordSelectionStart, item.Note.WordSelectionEnd);
 				range.Select();
@@ -76,9 +77,9 @@ namespace WordHiddenPowers.Panes
 
 		private void NoteEdit_Click(object sender, EventArgs e)
 		{
-			if (noteContextMenu.Tag is NoteListItem)
+			if (noteContextMenu.Tag is NotesListItem)
 			{
-				NoteListItem item = noteContextMenu.Tag as NoteListItem;
+				NotesListItem item = noteContextMenu.Tag as NotesListItem;
 				if (item.Note.IsText)
 				{
 					TextNoteDialog dialog = new TextNoteDialog(Document.DataSet, item.Note);
@@ -116,9 +117,9 @@ namespace WordHiddenPowers.Panes
 
 		private void NoteRemove_Click(object sender, EventArgs e)
 		{
-			if (noteContextMenu.Tag is NoteListItem)
+			if (noteContextMenu.Tag is NotesListItem)
 			{
-				NoteListItem item = noteContextMenu.Tag as NoteListItem;
+				NotesListItem item = noteContextMenu.Tag as NotesListItem;
 				if (item.Note.IsText)
 					Document.DataSet.TextPowers.Remove(item.Note);
 				else
@@ -127,13 +128,12 @@ namespace WordHiddenPowers.Panes
 			}
 		}
 
-		private void NoteListBox_ApplyButtonNoteClick(object sender, NoteListBox.ItemMouseEventArgs e)
+		private void NoteListBox_ApplyButtonNoteClick(object sender, ItemMouseEventArgs<NotesListItem, BottomBarNote> e)
 		{
-			e.Item.IsAppled = true;
-			Document.CommitVariables();
+			e.SubItem.IsAppled = true;
 		}
 
-		private void NoteListBox_CancelButtonNoteClick(object sender, NoteListBox.ItemMouseEventArgs e)
+		private void NoteListBox_CancelButtonNoteClick(object sender, ItemMouseEventArgs<NotesListItem, BottomBarNote> e)
 		{
 			if (e.Item.Note.IsText)
 				Document.DataSet.TextPowers.Remove(e.Item.Note);
@@ -142,7 +142,7 @@ namespace WordHiddenPowers.Panes
 			Document.CommitVariables();
 		}
 
-		private void NoteListBox_NoteClick(object sender, NoteListBox.ItemMouseEventArgs e)
+		private void NoteListBox_NoteClick(object sender, ItemMouseEventArgs<NotesListItem, NotesListItemNote> e)
 		{
 			if (e.Button == MouseButtons.Right)
 			{
@@ -150,7 +150,7 @@ namespace WordHiddenPowers.Panes
 			}
 		}
 
-		private void NoteListBox_ItemMouseDown(object sender, NoteListBox.ItemMouseEventArgs e)
+		private void NoteListBox_ItemMouseDown(object sender, ItemMouseEventArgs<NotesListItem, NotesListItemNote> e)
 		{
 			if (e.Button == MouseButtons.Right)
 			{
@@ -159,7 +159,7 @@ namespace WordHiddenPowers.Panes
 			}
 		}
 
-		private void NoteListBox_NoteDoubleClick(object sender, NoteListBox.ItemMouseEventArgs e)
+		private void NoteListBox_NoteDoubleClick(object sender, ItemMouseEventArgs<NotesListItem, NotesListItemNote> e)
 		{
 			if (e.Button == MouseButtons.Left)
 			{
@@ -281,21 +281,21 @@ namespace WordHiddenPowers.Panes
 
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
-			this.notesSplitContainer = new System.Windows.Forms.SplitContainer();
-			this.captionComboBox = new System.Windows.Forms.ComboBox();
-			this.descriptionTextBox = new System.Windows.Forms.TextBox();
-			this.descriptionLabel = new System.Windows.Forms.Label();
-			this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
-			this.dateLabel = new System.Windows.Forms.Label();
-			this.titleLabel = new System.Windows.Forms.Label();
-			this.noteListBox = new WordHiddenPowers.Controls.NoteListBox();
-			this.noteContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.mnuNoteOpen = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuNoteEdit = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-			this.mnuNoteRemove = new System.Windows.Forms.ToolStripMenuItem();
-			((System.ComponentModel.ISupportInitialize)(this.notesSplitContainer)).BeginInit();
+			this.components = new Container();
+			this.notesSplitContainer = new SplitContainer();
+			this.captionComboBox = new ComboBox();
+			this.descriptionTextBox = new TextBox();
+			this.descriptionLabel = new Label();
+			this.dateTimePicker = new DateTimePicker();
+			this.dateLabel = new Label();
+			this.titleLabel = new Label();
+			this.noteListBox = new NotesListBox();
+			this.noteContextMenu = new ContextMenuStrip(this.components);
+			this.mnuNoteOpen = new ToolStripMenuItem();
+			this.mnuNoteEdit = new ToolStripMenuItem();
+			this.toolStripMenuItem1 = new ToolStripSeparator();
+			this.mnuNoteRemove = new ToolStripMenuItem();
+			((ISupportInitialize)(this.notesSplitContainer)).BeginInit();
 			this.notesSplitContainer.Panel1.SuspendLayout();
 			this.notesSplitContainer.Panel2.SuspendLayout();
 			this.notesSplitContainer.SuspendLayout();
@@ -304,12 +304,12 @@ namespace WordHiddenPowers.Panes
 			// 
 			// notesSplitContainer
 			// 
-			this.notesSplitContainer.DataBindings.Add(new System.Windows.Forms.Binding("SplitterDistance", global::WordHiddenPowers.Properties.Settings.Default, "NotesPaneSplitterDistance", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-			this.notesSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.notesSplitContainer.Location = new System.Drawing.Point(0, 0);
-			this.notesSplitContainer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.notesSplitContainer.DataBindings.Add(new Binding("SplitterDistance", Properties.Settings.Default, "NotesPaneSplitterDistance", true, DataSourceUpdateMode.OnPropertyChanged));
+			this.notesSplitContainer.Dock = DockStyle.Fill;
+			this.notesSplitContainer.Location = new Point(0, 0);
+			this.notesSplitContainer.Margin = new Padding(3, 2, 3, 2);
 			this.notesSplitContainer.Name = "notesSplitContainer";
-			this.notesSplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			this.notesSplitContainer.Orientation = Orientation.Horizontal;
 			// 
 			// notesSplitContainer.Panel1
 			// 
@@ -319,91 +319,91 @@ namespace WordHiddenPowers.Panes
 			this.notesSplitContainer.Panel1.Controls.Add(this.dateTimePicker);
 			this.notesSplitContainer.Panel1.Controls.Add(this.dateLabel);
 			this.notesSplitContainer.Panel1.Controls.Add(this.titleLabel);
-			this.notesSplitContainer.Panel1.Resize += new System.EventHandler(this.NotesPane_Resize);
+			this.notesSplitContainer.Panel1.Resize += new EventHandler(this.NotesPane_Resize);
 			this.notesSplitContainer.Panel1MinSize = 140;
 			// 
 			// notesSplitContainer.Panel2
 			// 
 			this.notesSplitContainer.Panel2.Controls.Add(this.noteListBox);
-			this.notesSplitContainer.Panel2.Resize += new System.EventHandler(this.NotesPane_Resize);
-			this.notesSplitContainer.Size = new System.Drawing.Size(366, 362);
-			this.notesSplitContainer.SplitterDistance = global::WordHiddenPowers.Properties.Settings.Default.NotesPaneSplitterDistance;
+			this.notesSplitContainer.Panel2.Resize += new EventHandler(this.NotesPane_Resize);
+			this.notesSplitContainer.Size = new Size(366, 362);
+			this.notesSplitContainer.SplitterDistance = Properties.Settings.Default.NotesPaneSplitterDistance;
 			this.notesSplitContainer.TabIndex = 2;
 			// 
 			// captionComboBox
 			// 
 			this.captionComboBox.FormattingEnabled = true;
-			this.captionComboBox.Location = new System.Drawing.Point(120, 6);
-			this.captionComboBox.Margin = new System.Windows.Forms.Padding(4);
+			this.captionComboBox.Location = new Point(120, 6);
+			this.captionComboBox.Margin = new Padding(4);
 			this.captionComboBox.Name = "captionComboBox";
-			this.captionComboBox.Size = new System.Drawing.Size(185, 30);
+			this.captionComboBox.Size = new Size(185, 30);
 			this.captionComboBox.TabIndex = 1;
-			this.captionComboBox.SelectedIndexChanged += new System.EventHandler(this.NotesPane_PropertiesChanged);
-			this.captionComboBox.TextChanged += new System.EventHandler(this.NotesPane_PropertiesChanged);
+			this.captionComboBox.SelectedIndexChanged += new EventHandler(this.NotesPane_PropertiesChanged);
+			this.captionComboBox.TextChanged += new EventHandler(this.NotesPane_PropertiesChanged);
 			// 
 			// descriptionTextBox
 			// 
-			this.descriptionTextBox.Location = new System.Drawing.Point(0, 90);
-			this.descriptionTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.descriptionTextBox.Location = new Point(0, 90);
+			this.descriptionTextBox.Margin = new Padding(3, 2, 3, 2);
 			this.descriptionTextBox.Multiline = true;
 			this.descriptionTextBox.Name = "descriptionTextBox";
-			this.descriptionTextBox.Size = new System.Drawing.Size(365, 67);
+			this.descriptionTextBox.Size = new Size(365, 67);
 			this.descriptionTextBox.TabIndex = 5;
-			this.descriptionTextBox.TextChanged += new System.EventHandler(this.NotesPane_PropertiesChanged);
+			this.descriptionTextBox.TextChanged += new EventHandler(this.NotesPane_PropertiesChanged);
 			// 
 			// descriptionLabel
 			// 
 			this.descriptionLabel.AutoSize = true;
-			this.descriptionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.descriptionLabel.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-			this.descriptionLabel.Location = new System.Drawing.Point(9, 90);
+			this.descriptionLabel.Font = new Font("Microsoft Sans Serif", 7.8F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(204)));
+			this.descriptionLabel.ForeColor = SystemColors.MenuHighlight;
+			this.descriptionLabel.Location = new Point(9, 90);
 			this.descriptionLabel.Name = "descriptionLabel";
-			this.descriptionLabel.Size = new System.Drawing.Size(149, 20);
+			this.descriptionLabel.Size = new Size(149, 20);
 			this.descriptionLabel.TabIndex = 4;
 			this.descriptionLabel.Text = "Дополнительно:";
 			// 
 			// dateTimePicker
 			// 
-			this.dateTimePicker.Location = new System.Drawing.Point(135, 49);
-			this.dateTimePicker.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.dateTimePicker.Location = new Point(135, 49);
+			this.dateTimePicker.Margin = new Padding(3, 2, 3, 2);
 			this.dateTimePicker.Name = "dateTimePicker";
-			this.dateTimePicker.Size = new System.Drawing.Size(170, 28);
+			this.dateTimePicker.Size = new Size(170, 28);
 			this.dateTimePicker.TabIndex = 3;
 			// 
 			// dateLabel
 			// 
 			this.dateLabel.AutoSize = true;
-			this.dateLabel.Location = new System.Drawing.Point(9, 54);
+			this.dateLabel.Location = new Point(9, 54);
 			this.dateLabel.Name = "dateLabel";
-			this.dateLabel.Size = new System.Drawing.Size(57, 22);
+			this.dateLabel.Size = new Size(57, 22);
 			this.dateLabel.TabIndex = 2;
 			this.dateLabel.Text = "Дата:";
 			// 
 			// titleLabel
 			// 
 			this.titleLabel.AutoSize = true;
-			this.titleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.titleLabel.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-			this.titleLabel.Location = new System.Drawing.Point(9, 11);
+			this.titleLabel.Font = new Font("Microsoft Sans Serif", 7.8F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(204)));
+			this.titleLabel.ForeColor = SystemColors.MenuHighlight;
+			this.titleLabel.Location = new Point(9, 11);
 			this.titleLabel.Name = "titleLabel";
-			this.titleLabel.Size = new System.Drawing.Size(104, 20);
+			this.titleLabel.Size = new Size(104, 20);
 			this.titleLabel.TabIndex = 0;
 			this.titleLabel.Text = "Заголовок:";
 			// 
 			// noteListBox
 			// 
 			this.noteListBox.DataSet = null;
-			this.noteListBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.noteListBox.Location = new System.Drawing.Point(0, 0);
-			this.noteListBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.noteListBox.Dock = DockStyle.Fill;
+			this.noteListBox.Location = new Point(0, 0);
+			this.noteListBox.Margin = new Padding(3, 2, 3, 2);
 			this.noteListBox.Name = "noteListBox";
-			this.noteListBox.Size = new System.Drawing.Size(366, 218);
+			this.noteListBox.Size = new Size(366, 218);
 			this.noteListBox.TabIndex = 6;
-			this.noteListBox.ItemMouseDown += new System.EventHandler<ControlLibrary.Controls.ListControls.ListControl<WordHiddenPowers.Controls.NoteListItem>.ItemMouseEventArgs>(this.NoteListBox_ItemMouseDown);
-			this.noteListBox.ItemMouseClick += new System.EventHandler<ControlLibrary.Controls.ListControls.ListControl<WordHiddenPowers.Controls.NoteListItem>.ItemMouseEventArgs>(this.NoteListBox_NoteClick);
-			this.noteListBox.ItemMouseDoubleClick += new System.EventHandler<ControlLibrary.Controls.ListControls.ListControl<WordHiddenPowers.Controls.NoteListItem>.ItemMouseEventArgs>(this.NoteListBox_NoteDoubleClick);
-			this.noteListBox.ItemApplyClick += new System.EventHandler<ControlLibrary.Controls.ListControls.ListControl<WordHiddenPowers.Controls.NoteListItem>.ItemMouseEventArgs>(this.NoteListBox_ApplyButtonNoteClick);
-			this.noteListBox.ItemCancelClick += new System.EventHandler<ControlLibrary.Controls.ListControls.ListControl<WordHiddenPowers.Controls.NoteListItem>.ItemMouseEventArgs>(this.NoteListBox_CancelButtonNoteClick);
+			this.noteListBox.ItemMouseDown += new EventHandler<ItemMouseEventArgs<NotesListItem, NotesListItemNote>>(NoteListBox_ItemMouseDown);
+			this.noteListBox.ItemMouseClick += new EventHandler<ItemMouseEventArgs<NotesListItem, NotesListItemNote>>(NoteListBox_NoteClick);
+			this.noteListBox.ItemMouseDoubleClick += new EventHandler<ItemMouseEventArgs<NotesListItem, NotesListItemNote>>(NoteListBox_NoteDoubleClick);
+			this.noteListBox.ItemApplyClick += new EventHandler<ItemMouseEventArgs<NotesListItem, BottomBarNote>>(NoteListBox_ApplyButtonNoteClick);
+			this.noteListBox.ItemCancelClick += new EventHandler<ItemMouseEventArgs<NotesListItem, BottomBarNote>>(NoteListBox_CancelButtonNoteClick);
 			// 
 			// noteContextMenu
 			// 
@@ -462,7 +462,7 @@ namespace WordHiddenPowers.Panes
 			this.ResumeLayout(false);
 
 		}
-				
+		
 		private void NotesPane_PropertiesChanged(object sender, EventArgs e)
 		{
 			base.OnPropertiesChanged(new EventArgs());

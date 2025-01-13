@@ -33,8 +33,6 @@ namespace WordHiddenPowers.Documents
 
 			buttonSelectTextCategory = AddButtons(application.CommandBars["Text"], Const.Content.TEXT_NOTE_MENU_CAPTION, Const.Content.TEXT_NOTE_FACE_ID, Const.Panes.BUTTON_STRING_TAG, true, AddTextNoteClick);
 			buttonSelectDecimalCategory = AddButtons(application.CommandBars["Text"], Const.Content.DECIMAL_NOTE_MENU_CAPTION, Const.Content.DECIMAL_NOTE_FACE_ID, Const.Panes.BUTTON_DECIMAL_TAG, false, AddDecimalNoteClick);
-
-
 		}
 
 		public Document ActiveDocument
@@ -53,7 +51,7 @@ namespace WordHiddenPowers.Documents
 
 		private void Document_WindowSelectionChange(Word.Selection Sel)
 		{
-			Word.Application application = Globals.ThisAddIn.Application as Word.Application;
+			Word.Application application = Globals.ThisAddIn.Application;
 			Office.CommandBarButton button = GetButton(application.CommandBars["Text"], Const.Panes.BUTTON_STRING_TAG);
 			if (button != null)
 			{
@@ -81,13 +79,27 @@ namespace WordHiddenPowers.Documents
 
 		private Office.CommandBarButton AddButtons(Office.CommandBar popupCommandBar, string caption, int faceId, string tag, bool beginGroup, Office._CommandBarButtonEvents_ClickEventHandler clickFunctionDelegate)
 		{
-			var commandBarButton = GetButton(popupCommandBar, tag);
+			Office.CommandBarButton commandBarButton = GetButton(popupCommandBar, tag);
 			if (commandBarButton == null)
 			{
-				commandBarButton = (Office.CommandBarButton)popupCommandBar.Controls.Add
-					(Office.MsoControlType.msoControlButton);
+				commandBarButton = (Office.CommandBarButton)popupCommandBar.Controls.Add(Office.MsoControlType.msoControlButton);
 				commandBarButton.Caption = caption;
 				commandBarButton.FaceId = faceId;
+				commandBarButton.Tag = tag;
+				commandBarButton.BeginGroup = beginGroup;
+				commandBarButton.Click += new Office._CommandBarButtonEvents_ClickEventHandler(clickFunctionDelegate);
+			}
+			return commandBarButton;
+		}
+
+		private Office.CommandBarButton AddButtons(Office.CommandBar popupCommandBar, string caption, string idMso, string tag, bool beginGroup, Office._CommandBarButtonEvents_ClickEventHandler clickFunctionDelegate)
+		{
+			Office.CommandBarButton commandBarButton = GetButton(popupCommandBar, tag);
+			if (commandBarButton == null)
+			{
+				commandBarButton = (Office.CommandBarButton)popupCommandBar.Controls.Add(Office.MsoControlType.msoControlButton);
+				commandBarButton.Caption = caption;
+				commandBarButton.Picture = Globals.ThisAddIn.Application.CommandBars.GetImageMso(idMso, 16, 16);
 				commandBarButton.Tag = tag;
 				commandBarButton.BeginGroup = beginGroup;
 				commandBarButton.Click += new Office._CommandBarButtonEvents_ClickEventHandler(clickFunctionDelegate);
@@ -135,7 +147,6 @@ namespace WordHiddenPowers.Documents
 			}
 		}
 
-
 		private Document GetDocument(Word.Document Doc)
 		{
 			if (!documents.ContainsKey(Doc.DocID))
@@ -177,7 +188,7 @@ namespace WordHiddenPowers.Documents
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{
-			return documents.Values.GetEnumerator();
+			return GetEnumerator();
 		}
 	}
 }

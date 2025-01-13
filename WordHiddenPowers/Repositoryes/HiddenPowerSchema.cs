@@ -10,7 +10,6 @@ namespace WordHiddenPowers.Repositoryes
 {
 	partial class RepositoryDataSet
 	{
-
 		public void AddNote(Note note, string fileName, string caption, string description, DateTime date)
 		{
 			int fileId;
@@ -40,14 +39,13 @@ namespace WordHiddenPowers.Repositoryes
 				.OrderBy(n => n.WordSelectionStart);
 		}
 
-
 		public IEnumerable<Note> GetNotesSort()
 		{
 			return ((from row in TextPowers
 					 .Where(r => r.RowState != DataRowState.Deleted)
 					 select Note.Create(row, WordFiles.GetRow(row.file_id), GetSubcategory(row.subcategory_id)))
 				.Union(from row in DecimalPowers
-					   .Where(r => r.RowState != DataRowState.Deleted) 
+					   .Where(r => r.RowState != DataRowState.Deleted)
 					   select Note.Create(row, WordFiles.GetRow(row.file_id), GetSubcategory(row.subcategory_id))))
 				.OrderBy(n => n.Subcategory.Id);
 		}
@@ -57,6 +55,17 @@ namespace WordHiddenPowers.Repositoryes
 			int categoryId = (int)Subcategories.GetRow(id)["category_id"];
 			Category category = Categories.Get(categoryId);
 			return Subcategories.Get(category, id);
+		}
+
+		public IEnumerable<CategoriesRow> GetCategories()
+		{
+			return (from subcategory in Subcategories
+					.Where(s => s.RowState != DataRowState.Deleted)
+					join category in Categories
+					.Where(c => c.RowState != DataRowState.Deleted)
+					on subcategory.category_id equals category.id
+					select category)
+					.GroupBy(x => x.id).Select(y => y.First());
 		}
 
 		public IEnumerable<CategoriesRow> GetCategories(bool isText)
@@ -148,8 +157,19 @@ namespace WordHiddenPowers.Repositoryes
 
 		partial class SubcategoriesDataTable
 		{
-			public Subcategory Get(Category category, int subcategoryId)
+			private CategoriesDataTable Categories
 			{
+				get { return Globals.ThisAddIn.Documents.ActiveDocument.DataSet.Categories; }
+			}
+
+			public Subcategory Get(int categoryId, int subcategoryId)
+			{
+				Category category = Categories.Get(categoryId);
+				return Get(category: category, subcategoryId: subcategoryId);
+			}
+
+			public Subcategory Get(Category category, int subcategoryId)
+			{				
 				SubcategoriesRow row = (SubcategoriesRow)GetRow(subcategoryId);
 				return Subcategory.Create(category, row);
 			}
@@ -157,8 +177,8 @@ namespace WordHiddenPowers.Repositoryes
 			public IEnumerable<SubcategoriesRow> Get(int categoryId, bool isText)
 			{
 				return this.AsEnumerable()
-					.Where(x => x.RowState != DataRowState.Deleted 
-					&& x.category_id == categoryId 
+					.Where(x => x.RowState != DataRowState.Deleted
+					&& x.category_id == categoryId
 					&& x.IsText == isText);
 			}
 
@@ -179,6 +199,10 @@ namespace WordHiddenPowers.Repositoryes
 					row.IsDecimal = subcategory.IsDecimal;
 					row.IsObligatory = subcategory.IsObligatory;
 					row.IsText = subcategory.IsText;
+					row.BeforeText = subcategory.BeforeText;
+					row.AfterText = subcategory.AfterText;
+					row.Keywords = subcategory.Keywords;
+					row.Guid = subcategory.Guid;
 					row.EndEdit();
 				}
 			}
@@ -189,6 +213,14 @@ namespace WordHiddenPowers.Repositoryes
 						where row.RowState != DataRowState.Deleted
 						&& row["id"].Equals(id)
 						select row).First();
+			}
+
+			public bool Exists(int id)
+			{
+				return (from DataRow row in Rows
+						where row.RowState != DataRowState.Deleted
+						&& row["id"].Equals(id)
+						select row).Any();
 			}
 		}
 
@@ -214,6 +246,8 @@ namespace WordHiddenPowers.Repositoryes
 					row.Caption = category.Caption;
 					row.Description = category.Description;
 					row.IsObligatory = category.IsObligatory;
+					row.BeforeText = category.BeforeText;
+					row.AfterText = category.AfterText;
 					row.EndEdit();
 				}
 			}
@@ -224,6 +258,14 @@ namespace WordHiddenPowers.Repositoryes
 						where row.RowState != DataRowState.Deleted
 						&& row["id"].Equals(id)
 						select row).First();
+			}
+
+			public bool Exists(int id)
+			{
+				return (from DataRow row in Rows
+						where row.RowState != DataRowState.Deleted
+						&& row["id"].Equals(id)
+						select row).Any();
 			}
 		}
 

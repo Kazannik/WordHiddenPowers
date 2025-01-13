@@ -33,10 +33,6 @@ namespace WordHiddenPowers.Panes
 		}
 
 
-
-
-
-
 		public void WindowDeactivate(Word.Document Doc)
 		{
 			if (ContainsKey(Doc.DocID))
@@ -69,11 +65,6 @@ namespace WordHiddenPowers.Panes
 			}
 			buttonVisible.Checked = pane.Visible;
 		}
-
-
-
-
-
 
 
 

@@ -101,5 +101,10 @@ namespace WordHiddenPowers.Dialogs
 			}
 		}
 		#endregion
+
+		private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+		{
+
+		}
 	}
 }

@@ -9,29 +9,37 @@ namespace WordHiddenPowers.Repositoryes.Categories
 	{
 		public static Subcategory Create(Category category, DataRow dataRow)
 		{
-			return new Subcategory(category: category,
+			return new Subcategory(
+				category: category,
 				id: (int)dataRow["id"],
 				caption: dataRow.IsNull("Caption") ? string.Empty : dataRow["Caption"] as string,
 				description: dataRow.IsNull("Description") ? string.Empty : dataRow["Description"] as string,
 				isDecimal: (bool)dataRow["IsDecimal"],
 				isText: (bool)dataRow["IsText"],
 				isObligatory: (bool)dataRow["IsObligatory"],
-				keywords: dataRow.IsNull("Keywords") ? string.Empty : dataRow["Keywords"] as string);
+				beforeText: dataRow.IsNull("BeforeText") ? string.Empty : dataRow["BeforeText"] as string,
+				afterText: dataRow.IsNull("AfterText") ? string.Empty : dataRow["AfterText"] as string,
+				keywords: dataRow.IsNull("Keywords") ? string.Empty : dataRow["Keywords"] as string,
+				guid: dataRow.IsNull("Guid") ? string.Empty : dataRow["Guid"] as string);
 		}
 
 		public static Subcategory Create(Category category, RepositoryDataSet.SubcategoriesRow dataRow)
 		{
-			return new Subcategory(category: category,
+			return new Subcategory(
+				category: category,
 				id: dataRow.id,
 				caption: dataRow.IsCaptionNull() ? string.Empty : dataRow.Caption,
 				description: dataRow.IsDescriptionNull() ? string.Empty : dataRow.Description,
 				isDecimal: dataRow.IsDecimal,
 				isText: dataRow.IsText,
 				isObligatory: dataRow.IsObligatory,
-				keywords: dataRow.IsKeywordsNull() ? string.Empty : dataRow.Keywords);
+				beforeText: dataRow.IsBeforeTextNull() ? string.Empty : dataRow.BeforeText,
+				afterText: dataRow.IsAfterTextNull() ? string.Empty : dataRow.AfterText,
+				keywords: dataRow.IsKeywordsNull() ? string.Empty : dataRow.Keywords,
+				guid: dataRow.IsGuidNull() ? string.Empty : dataRow.Guid);
 		}
 
-		public static Subcategory Create(Category category, string caption, string description, bool isDecimal, bool isText, bool isObligatory, string keywords)
+		public static Subcategory Create(Category category, string caption, string description, bool isDecimal, bool isText, bool isObligatory, string beforeText, string afterText, string keywords)
 		{
 			return new Subcategory(category: category,
 				id: -1,
@@ -40,7 +48,10 @@ namespace WordHiddenPowers.Repositoryes.Categories
 				isDecimal: isDecimal,
 				isText: isText,
 				isObligatory: isObligatory,
-				keywords: keywords);
+				beforeText: beforeText,
+				afterText: afterText,
+				keywords: keywords,
+				guid: System.Guid.NewGuid().ToString());
 		}
 
 		public static Subcategory Default(Category category)
@@ -52,10 +63,13 @@ namespace WordHiddenPowers.Repositoryes.Categories
 				isDecimal: true,
 				isText: true,
 				isObligatory: false,
-				string.Empty);
+				string.Empty,
+				string.Empty,
+				string.Empty,
+				System.Guid.NewGuid().ToString());
 		}
 
-		private Subcategory(Category category, int id, string caption, string description, bool isDecimal, bool isText, bool isObligatory, string keywords)
+		private Subcategory(Category category, int id, string caption, string description, bool isDecimal, bool isText, bool isObligatory, string beforeText, string afterText, string keywords, string guid)
 		{
 			Category = category;
 			Id = id;
@@ -64,7 +78,10 @@ namespace WordHiddenPowers.Repositoryes.Categories
 			IsDecimal = isDecimal;
 			IsText = isText;
 			IsObligatory = isObligatory;
+			BeforeText = beforeText;
+			AfterText = afterText;
 			Keywords = keywords;
+			Guid = guid;
 		}
 
 		public Category Category { get; }
@@ -85,7 +102,13 @@ namespace WordHiddenPowers.Repositoryes.Categories
 
 		public string Text => Caption;
 
+		public string BeforeText { get; set; }
+
+		public string AfterText { get; set; }
+
 		public string Keywords { get; set; }
+
+		public string Guid { get; set; }
 
 		long ComboControl<Subcategory>.IComboControlItem.Id => Id;
 
@@ -93,14 +116,14 @@ namespace WordHiddenPowers.Repositoryes.Categories
 
 		public object[] ToObjectsArray()
 		{
-			return (new object[]{ Id < 0 ? null: (object) Id,
+			return new object[]{ Id < 0 ? null: (object) Id,
 				Category.Id,
 				Caption,
 				Description,
 				IsDecimal,
 				IsText,
 				IsObligatory,
-				Keywords});
+				Keywords};
 		}
 
 		public int CompareTo(Subcategory value)

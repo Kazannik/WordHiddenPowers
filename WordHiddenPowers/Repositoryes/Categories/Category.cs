@@ -12,7 +12,9 @@ namespace WordHiddenPowers.Repositoryes.Categories
 			return new Category(id: (int)dataRow["id"],
 				caption: dataRow.IsNull("Caption") ? string.Empty : dataRow["Caption"] as string,
 				description: dataRow.IsNull("Description") ? string.Empty : dataRow["Description"] as string,
-				isObligatory: (bool)dataRow["IsObligatory"]);
+				isObligatory: (bool)dataRow["IsObligatory"],
+				beforeText: dataRow.IsNull("BeforeText") ? string.Empty : dataRow["BeforeText"] as string,
+				afterText: dataRow.IsNull("AfterText") ? string.Empty : dataRow["AfterText"] as string);
 		}
 
 		public static Category Create(RepositoryDataSet.CategoriesRow dataRow)
@@ -20,15 +22,19 @@ namespace WordHiddenPowers.Repositoryes.Categories
 			return new Category(id: dataRow.id,
 				caption: dataRow.IsCaptionNull() ? string.Empty : dataRow.Caption,
 				description: dataRow.IsDescriptionNull() ? string.Empty : dataRow.Description,
-				isObligatory: dataRow.IsObligatory);
+				isObligatory: dataRow.IsObligatory,
+				beforeText: dataRow.IsBeforeTextNull() ? string.Empty : dataRow.BeforeText,
+				afterText: dataRow.IsAfterTextNull() ? string.Empty : dataRow.AfterText);
 		}
 
-		public static Category Create(string caption, string description, bool isObligatory)
+		public static Category Create(string caption, string description, bool isObligatory, string beforeText, string afterText)
 		{
 			return new Category(id: -1,
 				caption: caption,
 				description: description,
-				isObligatory: isObligatory);
+				isObligatory: isObligatory,
+				beforeText: beforeText,
+				afterText: afterText);
 		}
 
 		public static Category Default()
@@ -36,15 +42,19 @@ namespace WordHiddenPowers.Repositoryes.Categories
 			return new Category(id: 0,
 				caption: "Не определено",
 				description: "Значение категории не определено",
-				isObligatory: false);
+				isObligatory: false,
+				beforeText: string.Empty,
+				afterText: string.Empty);
 		}
 
-		private Category(int id, string caption, string description, bool isObligatory)
+		private Category(int id, string caption, string description, bool isObligatory, string beforeText, string afterText)
 		{
 			Id = id;
 			Caption = caption;
 			Description = description;
 			IsObligatory = isObligatory;
+			BeforeText = beforeText;
+			AfterText = afterText;
 		}
 
 		public int Id { get; }
@@ -59,16 +69,23 @@ namespace WordHiddenPowers.Repositoryes.Categories
 
 		public string Text => Caption;
 
+		public string BeforeText { get; set; }
+
+		public string AfterText { get; set; }
+				
 		long ComboControl<Category>.IComboControlItem.Id => Id;
 
 		string ComboControl<Category>.IComboControlItem.Code => Code;
 
 		public object[] ToObjectsArray()
 		{
-			return (new object[] { Id < 0 ? null: (object) Id,
+			return new object[] {
+				Id < 0 ? null: (object) Id,
 				Caption,
 				Description,
-				IsObligatory });
+				IsObligatory,
+				BeforeText,
+				AfterText};
 		}
 
 		public int CompareTo(Category value)

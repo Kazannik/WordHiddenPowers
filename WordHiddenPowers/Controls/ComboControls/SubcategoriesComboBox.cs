@@ -4,7 +4,7 @@ using System.Diagnostics;
 using WordHiddenPowers.Repositoryes;
 using WordHiddenPowers.Repositoryes.Categories;
 
-namespace WordHiddenPowers.Controls
+namespace WordHiddenPowers.Controls.ComboControls
 {
 	public class SubcategoriesComboBox : ComboControl<Subcategory>
 	{

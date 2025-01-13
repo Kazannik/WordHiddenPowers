@@ -17,20 +17,22 @@ namespace WordHiddenPowers.Dialogs
 
 			InitializeComponent();
 
+			listBox1.DataSet = this.document.DataSet;
+
 			AddCategoryFunctionEnabled();
 			SelectCategoryType();
 		}
 
 		private void AddCategory_Click(object sender, EventArgs e)
 		{
-			Category newCategory = Category.Create(caption: captionTextBox.Text, description: descriptionTextBox.Text, isObligatory: isObligatoryCheckBox.Checked);
-			TreeNode node = new TreeNode(captionTextBox.Text)
-			{
-				Tag = newCategory
-			};
-			categoriesTreeView.Nodes.Add(node);
-			categoriesTreeView.SelectedNode = node;
-			AddCategoryFunctionEnabled();
+			//Category newCategory = Category.Create(caption: captionTextBox.Text, description: descriptionTextBox.Text, isObligatory: isObligatoryCheckBox.Checked);
+			//TreeNode node = new TreeNode(captionTextBox.Text)
+			//{
+			//	Tag = newCategory
+			//};
+			//categoriesTreeView.Nodes.Add(node);
+			//categoriesTreeView.SelectedNode = node;
+			//AddCategoryFunctionEnabled();
 		}
 
 
@@ -38,10 +40,10 @@ namespace WordHiddenPowers.Dialogs
 		{
 			document.DataSet.Categories.Clear();
 
-			foreach (TreeNode node in categoriesTreeView.Nodes)
-			{
-				//pane.PowersDataSet.Categories.Rows.Add(new object[] { null, node.Category.Caption, node.Category.Description });
-			}
+			//foreach (TreeNode node in categoriesTreeView.Nodes)
+			//{
+			//	//pane.PowersDataSet.Categories.Rows.Add(new object[] { null, node.Category.Caption, node.Category.Description });
+			//}
 
 
 		}
@@ -71,22 +73,22 @@ namespace WordHiddenPowers.Dialogs
 
 		private void SelectCategoryType()
 		{
-			if (categoriesTreeView.SelectedNode == null)
-			{
-				typeLabel.Text = "Редактрование категории";
-				isDecimalCheckBox.Visible = false;
-				isTextCheckBox.Visible = false;
-				captionTextBox.Text = string.Empty;
-				descriptionTextBox.Text = string.Empty;
-				isObligatoryCheckBox.Checked = false;
-			}
-			else
-			{
-				if (categoriesTreeView.SelectedNode.Tag is Category category)
-					ReadProperties(category);
-				else if (categoriesTreeView.SelectedNode.Tag is Subcategory subcategory)
-					ReadProperties(subcategory);
-			}
+			//if (categoriesTreeView.SelectedNode == null)
+			//{
+			//	typeLabel.Text = "Редактрование категории";
+			//	isDecimalCheckBox.Visible = false;
+			//	isTextCheckBox.Visible = false;
+			//	captionTextBox.Text = string.Empty;
+			//	descriptionTextBox.Text = string.Empty;
+			//	isObligatoryCheckBox.Checked = false;
+			//}
+			//else
+			//{
+			//	if (categoriesTreeView.SelectedNode.Tag is Category category)
+			//		ReadProperties(category);
+			//	else if (categoriesTreeView.SelectedNode.Tag is Subcategory subcategory)
+			//		ReadProperties(subcategory);
+			//}
 		}
 		private void ReadProperties(Category category)
 		{
@@ -135,56 +137,56 @@ namespace WordHiddenPowers.Dialogs
 
 		private void AddCategoryFunctionEnabled()
 		{
-			bool enabled = !string.IsNullOrWhiteSpace(captionTextBox.Text);
-			if (enabled)
-			{
-				enabled = !categoriesTreeView.Nodes.ContainsKey(captionTextBox.Text);
-			}
-			addCategoryButton.Enabled = enabled;
-			mnuCategoriesAddCategory.Enabled = enabled;
+			//bool enabled = !string.IsNullOrWhiteSpace(captionTextBox.Text);
+			//if (enabled)
+			//{
+			//	enabled = !categoriesTreeView.Nodes.ContainsKey(captionTextBox.Text);
+			//}
+			//addCategoryButton.Enabled = enabled;
+			//mnuCategoriesAddCategory.Enabled = enabled;
 		}
 
 		private void Controls_ValueChanged(object sender, EventArgs e)
 		{
-			if (categoriesTreeView.SelectedNode != null)
-			{
-				if (categoriesTreeView.SelectedNode.Tag is Category)
-				{
-					Category category = categoriesTreeView.SelectedNode.Tag as Category;
-					if (!Contains(categoriesTreeView.SelectedNode, captionTextBox.Text))
-					{
-						categoriesTreeView.SelectedNode.Text = captionTextBox.Text;
-						categoriesTreeView.SelectedNode.Name = captionTextBox.Text;
-						category.Caption = captionTextBox.Text;
-						category.Description = descriptionTextBox.Text;
-						category.IsObligatory = isObligatoryCheckBox.Checked;
-					}
-				}
-				else if (categoriesTreeView.SelectedNode.Tag is Subcategory subcategory)
-				{
-					WriteProperies(subcategory);
-				}
-			}
-			else
-			{
-				AddCategoryFunctionEnabled();
-			}
+			//if (categoriesTreeView.SelectedNode != null)
+			//{
+			//	if (categoriesTreeView.SelectedNode.Tag is Category)
+			//	{
+			//		Category category = categoriesTreeView.SelectedNode.Tag as Category;
+			//		if (!Contains(categoriesTreeView.SelectedNode, captionTextBox.Text))
+			//		{
+			//			categoriesTreeView.SelectedNode.Text = captionTextBox.Text;
+			//			categoriesTreeView.SelectedNode.Name = captionTextBox.Text;
+			//			category.Caption = captionTextBox.Text;
+			//			category.Description = descriptionTextBox.Text;
+			//			category.IsObligatory = isObligatoryCheckBox.Checked;
+			//		}
+			//	}
+			//	else if (categoriesTreeView.SelectedNode.Tag is Subcategory subcategory)
+			//	{
+			//		WriteProperies(subcategory);
+			//	}
+			//}
+			//else
+			//{
+			//	AddCategoryFunctionEnabled();
+			//}
 		}
 
 		private bool Contains(TreeNode selectedNode, string caption)
 		{
-			TreeNodeCollection nodes = selectedNode.Parent == null ? categoriesTreeView.Nodes : selectedNode.Parent.Nodes;
+			//TreeNodeCollection nodes = selectedNode.Parent == null ? categoriesTreeView.Nodes : selectedNode.Parent.Nodes;
 
-			foreach (TreeNode node in nodes)
-			{
-				if (node != selectedNode)
-				{
-					if (node.Tag is Category && (node.Tag as Category).Caption == caption)
-						return true;
-					else if (node.Tag is Subcategory && (node.Tag as Subcategory).Caption == caption)
-						return true;
-				}
-			}
+			//foreach (TreeNode node in nodes)
+			//{
+			//	if (node != selectedNode)
+			//	{
+			//		if (node.Tag is Category && (node.Tag as Category).Caption == caption)
+			//			return true;
+			//		else if (node.Tag is Subcategory && (node.Tag as Subcategory).Caption == caption)
+			//			return true;
+			//	}
+			//}
 			return false;
 		}
 
