@@ -98,7 +98,6 @@
             this.mnuTable});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Padding = new System.Windows.Forms.Padding(6, 2, 0, 2);
 			this.menuStrip1.Size = new System.Drawing.Size(505, 36);
 			this.menuStrip1.TabIndex = 0;
 			this.menuStrip1.Text = "menuStrip1";
@@ -114,7 +113,7 @@
             this.toolStripMenuItem4,
             this.mnuFileExit});
 			this.mnuFile.Name = "mnuFile";
-			this.mnuFile.Size = new System.Drawing.Size(69, 32);
+			this.mnuFile.Size = new System.Drawing.Size(69, 30);
 			this.mnuFile.Text = "Файл";
 			// 
 			// mnuFileNew
@@ -172,7 +171,7 @@
             this.toolStripMenuItem2,
             this.mnuTableDelete});
 			this.mnuTable.Name = "mnuTable";
-			this.mnuTable.Size = new System.Drawing.Size(95, 32);
+			this.mnuTable.Size = new System.Drawing.Size(95, 30);
 			this.mnuTable.Text = "Таблица";
 			// 
 			// mnuTableAdd

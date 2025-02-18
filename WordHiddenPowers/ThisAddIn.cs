@@ -21,7 +21,6 @@ namespace WordHiddenPowers
 
 		private void ThisAddIn_Shutdown(object sender, EventArgs e)
 		{
-			Properties.Settings.Default.Save();
 			Documents.Dispose();
 		}
 

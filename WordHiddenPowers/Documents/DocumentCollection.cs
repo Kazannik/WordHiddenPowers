@@ -10,18 +10,17 @@ namespace WordHiddenPowers.Documents
 {
 	public class DocumentCollection : IEnumerable<Document>, IDisposable
 	{
-		private readonly Word.Application application;
-
 		internal RibbonToggleButton paneVisibleButton;
+
 		private readonly Office.CommandBarButton buttonSelectDecimalCategory;
 		private readonly Office.CommandBarButton buttonSelectTextCategory;
 
-		private readonly IDictionary<int, Document> documents;
+		private readonly IDictionary<string, Document> documents;
 
 		public DocumentCollection(RibbonToggleButton paneVisibleButton)
 		{
-			application = Globals.ThisAddIn.Application as Word.Application;
-			documents = new Dictionary<int, Document>();
+			Word.Application application = Globals.ThisAddIn.Application;
+			documents = new Dictionary<string, Document>();
 
 			this.paneVisibleButton = paneVisibleButton;
 			this.paneVisibleButton.Checked = false;
@@ -39,7 +38,7 @@ namespace WordHiddenPowers.Documents
 		{
 			get
 			{
-				return GetDocument(application.ActiveDocument);
+				return GetDocument(Globals.ThisAddIn.Application.ActiveDocument);
 			}
 		}
 
@@ -123,6 +122,11 @@ namespace WordHiddenPowers.Documents
 
 		public void Activate(Word.Document Doc, Word.Window Wn)
 		{
+			string guid = Utils.ContentUtil.GetGuidOrDefault(Doc);
+			if (!documents.ContainsKey(guid))
+			{
+				documents.Add(guid, Document.Create(this, Doc.FullName, Doc));
+			}
 			paneVisibleButton.Checked = ActiveDocument.CustomPane.Visible;
 		}
 
@@ -133,35 +137,36 @@ namespace WordHiddenPowers.Documents
 
 		public void Open(Word.Document Doc)
 		{
-			if (!documents.ContainsKey(Doc.DocID))
+			string guid = Utils.ContentUtil.GetGuidOrDefault(Doc);
+			if (!documents.ContainsKey(guid))
 			{
-				documents.Add(Doc.DocID, Document.Create(this, Doc.FullName, Doc));
+				documents.Add(guid, Document.Create(this, Doc.FullName, Doc));
 			}
 		}
 
 		public void Remove(Word.Document Doc)
 		{
-			if (documents.ContainsKey(Doc.DocID))
+			string guid = Utils.ContentUtil.GetGuid(Doc);
+			if (documents.ContainsKey(guid))
 			{
-				documents.Remove(Doc.DocID);
+				documents.Remove(guid);
 			}
 		}
 
 		private Document GetDocument(Word.Document Doc)
 		{
-			if (!documents.ContainsKey(Doc.DocID))
+			string guid = Utils.ContentUtil.GetGuidOrDefault(Doc);
+			if (!documents.ContainsKey(guid))
 			{
-				documents.Add(Doc.DocID, Document.Create(this, Doc.FullName, Doc));
+				documents.Add(guid, Document.Create(this, Doc.FullName, Doc));
 			}
 
-			List<int> closeDocs = new List<int>();
-			foreach (Word.Document document in application.Documents)
-			{
-				if (!documents.ContainsKey(document.DocID))
-					closeDocs.Add(document.DocID);
-			}
+			List<string> closeDocs = (from Word.Document document in Globals.ThisAddIn.Application.Documents
+									  let id = Utils.ContentUtil.GetGuidOrDefault(Doc)
+									  where !documents.ContainsKey(id)
+									  select id).ToList();
 
-			foreach (int id in closeDocs)
+			foreach (string id in closeDocs)
 			{
 				if (documents.ContainsKey(id))
 				{
@@ -170,7 +175,7 @@ namespace WordHiddenPowers.Documents
 					documents.Remove(id);
 				}
 			}
-			return documents[Doc.DocID];
+			return documents[guid];
 		}
 
 		#endregion

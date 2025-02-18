@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Reflection;
 using System.Windows.Forms;
-using WordHiddenPowers.Repositoryes;
-using WordHiddenPowers.Repositoryes.Categories;
-using WordHiddenPowers.Repositoryes.Notes;
+using WordHiddenPowers.Repositories;
+using WordHiddenPowers.Repositories.Categories;
+using WordHiddenPowers.Repositories.Notes;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Dialogs
@@ -18,7 +18,7 @@ namespace WordHiddenPowers.Dialogs
 
 			InitializeComponent();
 
-			analyzerNoteListBox1.DataSet = this.dataSet;
+			analyzerListBox.DataSet = this.dataSet;
 		}
 
 		private void InsertToDocumentButton_Click(object sender, EventArgs e)
@@ -41,9 +41,9 @@ namespace WordHiddenPowers.Dialogs
 			Category category = null;
 			Subcategory subcategory = null;
 
-			foreach (Note note in analyzerNoteListBox1.Items)
+			foreach (Note note in analyzerListBox.Items)
 			{
-				if (category == null || note.Category.Id != category.Id)
+				if (category == null || note.Category.Guid != category.Guid)
 				{
 					category = note.Category;
 
@@ -54,7 +54,7 @@ namespace WordHiddenPowers.Dialogs
 					paragraph.Range.InsertParagraphAfter();
 				}
 
-				if (subcategory == null || note.Subcategory.Id != subcategory.Id)
+				if (subcategory == null || note.Subcategory.Guid != subcategory.Guid)
 				{
 					subcategory = note.Subcategory;
 

@@ -42,6 +42,10 @@
 			this.mnuEdit = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuCategories = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuCategoriesAddCategory = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuCategoriesAddSubcategory = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuCategoriesRemoveCategory = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuCategoriesRemoveSubcategory = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuCategoriesClear = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.fileNewButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -52,23 +56,34 @@
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.typeLabel = new System.Windows.Forms.Label();
-			this.isTextCheckBox = new System.Windows.Forms.CheckBox();
-			this.captionLabel = new System.Windows.Forms.Label();
-			this.isDecimalCheckBox = new System.Windows.Forms.CheckBox();
-			this.isObligatoryCheckBox = new System.Windows.Forms.CheckBox();
-			this.captionTextBox = new System.Windows.Forms.TextBox();
-			this.descriptionLabel = new System.Windows.Forms.Label();
+			this.listBox = new WordHiddenPowers.Controls.ListControls.CategoriesListBox();
+			this.tabControl1 = new System.Windows.Forms.TabControl();
+			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.obligatoryСheckBox = new System.Windows.Forms.CheckBox();
 			this.descriptionTextBox = new System.Windows.Forms.TextBox();
-			this.listBox1 = new WordHiddenPowers.Controls.ListControls.CategoriesListBox();
+			this.descriptionLabel = new System.Windows.Forms.Label();
+			this.captionTextBox = new System.Windows.Forms.TextBox();
+			this.captionLabel = new System.Windows.Forms.Label();
+			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.keywordsTextBox = new System.Windows.Forms.TextBox();
+			this.keywordsLabel = new System.Windows.Forms.Label();
+			this.isDecimalRadioButton = new System.Windows.Forms.RadioButton();
+			this.isTextRadioButton = new System.Windows.Forms.RadioButton();
+			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.afterTextBox = new System.Windows.Forms.TextBox();
+			this.afterLabel = new System.Windows.Forms.Label();
+			this.beforeTextBox = new System.Windows.Forms.TextBox();
+			this.beforeLabel = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
-			this.tableLayoutPanel1.SuspendLayout();
+			this.tabControl1.SuspendLayout();
+			this.tabPage1.SuspendLayout();
+			this.tabPage2.SuspendLayout();
+			this.tabPage3.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// statusStrip1
@@ -92,7 +107,7 @@
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 2, 0, 2);
-			this.menuStrip1.Size = new System.Drawing.Size(917, 33);
+			this.menuStrip1.Size = new System.Drawing.Size(917, 36);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -107,7 +122,7 @@
             this.toolStripMenuItem2,
             this.mnuFileExit});
 			this.mnuFileToolStripMenuItem.Name = "mnuFileToolStripMenuItem";
-			this.mnuFileToolStripMenuItem.Size = new System.Drawing.Size(69, 29);
+			this.mnuFileToolStripMenuItem.Size = new System.Drawing.Size(69, 32);
 			this.mnuFileToolStripMenuItem.Text = "Файл";
 			// 
 			// mnuFileNew
@@ -158,22 +173,55 @@
 			// mnuEdit
 			// 
 			this.mnuEdit.Name = "mnuEdit";
-			this.mnuEdit.Size = new System.Drawing.Size(94, 29);
+			this.mnuEdit.Size = new System.Drawing.Size(94, 32);
 			this.mnuEdit.Text = "mnuEdit";
 			// 
 			// mnuCategories
 			// 
 			this.mnuCategories.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuCategoriesAddCategory});
+            this.mnuCategoriesAddCategory,
+            this.mnuCategoriesAddSubcategory,
+            this.mnuCategoriesRemoveCategory,
+            this.mnuCategoriesRemoveSubcategory,
+            this.mnuCategoriesClear});
 			this.mnuCategories.Name = "mnuCategories";
-			this.mnuCategories.Size = new System.Drawing.Size(112, 29);
+			this.mnuCategories.Size = new System.Drawing.Size(112, 32);
 			this.mnuCategories.Text = "Категории";
 			// 
 			// mnuCategoriesAddCategory
 			// 
 			this.mnuCategoriesAddCategory.Name = "mnuCategoriesAddCategory";
-			this.mnuCategoriesAddCategory.Size = new System.Drawing.Size(285, 34);
+			this.mnuCategoriesAddCategory.Size = new System.Drawing.Size(316, 34);
 			this.mnuCategoriesAddCategory.Text = "Добавить категорию";
+			this.mnuCategoriesAddCategory.Click += new System.EventHandler(this.AddCategory_Click);
+			// 
+			// mnuCategoriesAddSubcategory
+			// 
+			this.mnuCategoriesAddSubcategory.Name = "mnuCategoriesAddSubcategory";
+			this.mnuCategoriesAddSubcategory.Size = new System.Drawing.Size(316, 34);
+			this.mnuCategoriesAddSubcategory.Text = "Добавить подкатегорию";
+			this.mnuCategoriesAddSubcategory.Click += new System.EventHandler(this.AddSubcategory_Click);
+			// 
+			// mnuCategoriesRemoveCategory
+			// 
+			this.mnuCategoriesRemoveCategory.Name = "mnuCategoriesRemoveCategory";
+			this.mnuCategoriesRemoveCategory.Size = new System.Drawing.Size(316, 34);
+			this.mnuCategoriesRemoveCategory.Text = "Удалить категорию";
+			this.mnuCategoriesRemoveCategory.Click += new System.EventHandler(this.RemoveCategory_Click);
+			// 
+			// mnuCategoriesRemoveSubcategory
+			// 
+			this.mnuCategoriesRemoveSubcategory.Name = "mnuCategoriesRemoveSubcategory";
+			this.mnuCategoriesRemoveSubcategory.Size = new System.Drawing.Size(316, 34);
+			this.mnuCategoriesRemoveSubcategory.Text = "Удалить подкатегорию";
+			this.mnuCategoriesRemoveSubcategory.Click += new System.EventHandler(this.RemoveSubcategory_Click);
+			// 
+			// mnuCategoriesClear
+			// 
+			this.mnuCategoriesClear.Name = "mnuCategoriesClear";
+			this.mnuCategoriesClear.Size = new System.Drawing.Size(316, 34);
+			this.mnuCategoriesClear.Text = "Очистить";
+			this.mnuCategoriesClear.Click += new System.EventHandler(this.Clear_Click);
 			// 
 			// toolStrip1
 			// 
@@ -188,9 +236,9 @@
             this.addSubcategoryButton,
             this.toolStripSeparator3,
             this.toolStripButton5});
-			this.toolStrip1.Location = new System.Drawing.Point(0, 33);
+			this.toolStrip1.Location = new System.Drawing.Point(0, 36);
 			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(917, 33);
+			this.toolStrip1.Size = new System.Drawing.Size(917, 38);
 			this.toolStrip1.TabIndex = 2;
 			this.toolStrip1.Text = "toolStrip1";
 			// 
@@ -200,13 +248,13 @@
 			this.fileNewButton.Image = global::WordHiddenPowers.Properties.Resources.GroupContTypeNew_24;
 			this.fileNewButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.fileNewButton.Name = "fileNewButton";
-			this.fileNewButton.Size = new System.Drawing.Size(34, 28);
+			this.fileNewButton.Size = new System.Drawing.Size(34, 33);
 			this.fileNewButton.Text = "toolStripButton1";
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 33);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 38);
 			// 
 			// fileSaveButton
 			// 
@@ -214,13 +262,14 @@
 			this.fileSaveButton.Image = global::WordHiddenPowers.Properties.Resources.Save_24;
 			this.fileSaveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.fileSaveButton.Name = "fileSaveButton";
-			this.fileSaveButton.Size = new System.Drawing.Size(34, 28);
+			this.fileSaveButton.Size = new System.Drawing.Size(34, 33);
 			this.fileSaveButton.Text = "toolStripButton2";
+			this.fileSaveButton.Click += new System.EventHandler(this.FileSave_Click);
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 33);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 38);
 			// 
 			// addCategoryButton
 			// 
@@ -228,7 +277,7 @@
 			this.addCategoryButton.Image = ((System.Drawing.Image)(resources.GetObject("addCategoryButton.Image")));
 			this.addCategoryButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.addCategoryButton.Name = "addCategoryButton";
-			this.addCategoryButton.Size = new System.Drawing.Size(34, 28);
+			this.addCategoryButton.Size = new System.Drawing.Size(34, 33);
 			this.addCategoryButton.Text = "Добавить категорию";
 			this.addCategoryButton.Click += new System.EventHandler(this.AddCategory_Click);
 			// 
@@ -238,13 +287,13 @@
 			this.addSubcategoryButton.Image = ((System.Drawing.Image)(resources.GetObject("addSubcategoryButton.Image")));
 			this.addSubcategoryButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.addSubcategoryButton.Name = "addSubcategoryButton";
-			this.addSubcategoryButton.Size = new System.Drawing.Size(34, 28);
+			this.addSubcategoryButton.Size = new System.Drawing.Size(34, 33);
 			this.addSubcategoryButton.Text = "Добавить подкатегорию";
 			// 
 			// toolStripSeparator3
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 33);
+			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 38);
 			// 
 			// toolStripButton5
 			// 
@@ -252,164 +301,220 @@
 			this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
 			this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolStripButton5.Name = "toolStripButton5";
-			this.toolStripButton5.Size = new System.Drawing.Size(34, 28);
+			this.toolStripButton5.Size = new System.Drawing.Size(34, 33);
 			this.toolStripButton5.Text = "toolStripButton5";
 			// 
 			// splitContainer1
 			// 
 			this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer1.Location = new System.Drawing.Point(0, 66);
+			this.splitContainer1.Location = new System.Drawing.Point(0, 74);
 			this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
 			this.splitContainer1.Name = "splitContainer1";
 			// 
 			// splitContainer1.Panel1
 			// 
-			this.splitContainer1.Panel1.Controls.Add(this.listBox1);
+			this.splitContainer1.Panel1.Controls.Add(this.listBox);
 			// 
 			// splitContainer1.Panel2
 			// 
-			this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel1);
-			this.splitContainer1.Size = new System.Drawing.Size(917, 440);
+			this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
+			this.splitContainer1.Size = new System.Drawing.Size(917, 432);
 			this.splitContainer1.SplitterDistance = 373;
 			this.splitContainer1.SplitterWidth = 6;
 			this.splitContainer1.TabIndex = 3;
 			// 
-			// tableLayoutPanel1
+			// listBox
 			// 
-			this.tableLayoutPanel1.ColumnCount = 3;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33332F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-			this.tableLayoutPanel1.Controls.Add(this.typeLabel, 0, 0);
-			this.tableLayoutPanel1.Controls.Add(this.isTextCheckBox, 2, 5);
-			this.tableLayoutPanel1.Controls.Add(this.captionLabel, 0, 1);
-			this.tableLayoutPanel1.Controls.Add(this.isDecimalCheckBox, 1, 5);
-			this.tableLayoutPanel1.Controls.Add(this.isObligatoryCheckBox, 0, 5);
-			this.tableLayoutPanel1.Controls.Add(this.captionTextBox, 0, 2);
-			this.tableLayoutPanel1.Controls.Add(this.descriptionLabel, 0, 3);
-			this.tableLayoutPanel1.Controls.Add(this.descriptionTextBox, 0, 4);
-			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-			this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 6;
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(538, 440);
-			this.tableLayoutPanel1.TabIndex = 8;
+			this.listBox.DataSet = null;
+			this.listBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.listBox.FormattingEnabled = true;
+			this.listBox.Location = new System.Drawing.Point(0, 0);
+			this.listBox.Name = "listBox";
+			this.listBox.Size = new System.Drawing.Size(373, 432);
+			this.listBox.TabIndex = 0;
+			this.listBox.SelectedItemChanged += new System.EventHandler<ControlLibrary.Controls.ListControls.ItemEventArgs<WordHiddenPowers.Controls.ListControls.CategoriesListControl.ListItem>>(this.ListBox_SelectedItemChanged);
 			// 
-			// typeLabel
+			// tabControl1
 			// 
-			this.typeLabel.BackColor = System.Drawing.SystemColors.HotTrack;
-			this.tableLayoutPanel1.SetColumnSpan(this.typeLabel, 3);
-			this.typeLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.typeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.typeLabel.ForeColor = System.Drawing.SystemColors.HighlightText;
-			this.typeLabel.Location = new System.Drawing.Point(4, 0);
-			this.typeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.typeLabel.Name = "typeLabel";
-			this.typeLabel.Size = new System.Drawing.Size(530, 31);
-			this.typeLabel.TabIndex = 0;
-			this.typeLabel.Text = "label1";
-			this.typeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tabControl1.Controls.Add(this.tabPage1);
+			this.tabControl1.Controls.Add(this.tabPage2);
+			this.tabControl1.Controls.Add(this.tabPage3);
+			this.tabControl1.Location = new System.Drawing.Point(3, 50);
+			this.tabControl1.Name = "tabControl1";
+			this.tabControl1.SelectedIndex = 0;
+			this.tabControl1.Size = new System.Drawing.Size(509, 382);
+			this.tabControl1.TabIndex = 0;
 			// 
-			// isTextCheckBox
+			// tabPage1
 			// 
-			this.isTextCheckBox.AutoSize = true;
-			this.isTextCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.isTextCheckBox.Location = new System.Drawing.Point(362, 407);
-			this.isTextCheckBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-			this.isTextCheckBox.Name = "isTextCheckBox";
-			this.isTextCheckBox.Size = new System.Drawing.Size(172, 28);
-			this.isTextCheckBox.TabIndex = 5;
-			this.isTextCheckBox.Text = "Для текста";
-			this.isTextCheckBox.UseVisualStyleBackColor = true;
-			this.isTextCheckBox.CheckedChanged += new System.EventHandler(this.Controls_ValueChanged);
+			this.tabPage1.Controls.Add(this.obligatoryСheckBox);
+			this.tabPage1.Controls.Add(this.descriptionTextBox);
+			this.tabPage1.Controls.Add(this.descriptionLabel);
+			this.tabPage1.Controls.Add(this.captionTextBox);
+			this.tabPage1.Controls.Add(this.captionLabel);
+			this.tabPage1.Location = new System.Drawing.Point(4, 29);
+			this.tabPage1.Name = "tabPage1";
+			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage1.Size = new System.Drawing.Size(501, 349);
+			this.tabPage1.TabIndex = 0;
+			this.tabPage1.Text = "Основные параметры";
+			this.tabPage1.UseVisualStyleBackColor = true;
 			// 
-			// captionLabel
+			// obligatoryСheckBox
 			// 
-			this.tableLayoutPanel1.SetColumnSpan(this.captionLabel, 3);
-			this.captionLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.captionLabel.Location = new System.Drawing.Point(4, 31);
-			this.captionLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.captionLabel.Name = "captionLabel";
-			this.captionLabel.Size = new System.Drawing.Size(530, 25);
-			this.captionLabel.TabIndex = 0;
-			this.captionLabel.Text = "Заголовок:";
-			// 
-			// isDecimalCheckBox
-			// 
-			this.isDecimalCheckBox.AutoSize = true;
-			this.isDecimalCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.isDecimalCheckBox.Location = new System.Drawing.Point(183, 407);
-			this.isDecimalCheckBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-			this.isDecimalCheckBox.Name = "isDecimalCheckBox";
-			this.isDecimalCheckBox.Size = new System.Drawing.Size(171, 28);
-			this.isDecimalCheckBox.TabIndex = 4;
-			this.isDecimalCheckBox.Text = "Для чисел";
-			this.isDecimalCheckBox.UseVisualStyleBackColor = true;
-			this.isDecimalCheckBox.CheckedChanged += new System.EventHandler(this.Controls_ValueChanged);
-			// 
-			// isObligatoryCheckBox
-			// 
-			this.isObligatoryCheckBox.AutoSize = true;
-			this.isObligatoryCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.isObligatoryCheckBox.Location = new System.Drawing.Point(3, 404);
-			this.isObligatoryCheckBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.isObligatoryCheckBox.Name = "isObligatoryCheckBox";
-			this.isObligatoryCheckBox.Size = new System.Drawing.Size(173, 34);
-			this.isObligatoryCheckBox.TabIndex = 6;
-			this.isObligatoryCheckBox.Text = "Обязательный";
-			this.isObligatoryCheckBox.UseVisualStyleBackColor = true;
-			this.isObligatoryCheckBox.CheckedChanged += new System.EventHandler(this.Controls_ValueChanged);
-			// 
-			// captionTextBox
-			// 
-			this.tableLayoutPanel1.SetColumnSpan(this.captionTextBox, 3);
-			this.captionTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.captionTextBox.Location = new System.Drawing.Point(4, 61);
-			this.captionTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-			this.captionTextBox.Multiline = true;
-			this.captionTextBox.Name = "captionTextBox";
-			this.captionTextBox.Size = new System.Drawing.Size(530, 112);
-			this.captionTextBox.TabIndex = 1;
-			this.captionTextBox.TextChanged += new System.EventHandler(this.Controls_ValueChanged);
-			// 
-			// descriptionLabel
-			// 
-			this.tableLayoutPanel1.SetColumnSpan(this.descriptionLabel, 3);
-			this.descriptionLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.descriptionLabel.Location = new System.Drawing.Point(4, 178);
-			this.descriptionLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.descriptionLabel.Name = "descriptionLabel";
-			this.descriptionLabel.Size = new System.Drawing.Size(530, 25);
-			this.descriptionLabel.TabIndex = 2;
-			this.descriptionLabel.Text = "Дополнительно:";
+			this.obligatoryСheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.obligatoryСheckBox.AutoSize = true;
+			this.obligatoryСheckBox.Location = new System.Drawing.Point(6, 319);
+			this.obligatoryСheckBox.Name = "obligatoryСheckBox";
+			this.obligatoryСheckBox.Size = new System.Drawing.Size(194, 24);
+			this.obligatoryСheckBox.TabIndex = 4;
+			this.obligatoryСheckBox.Text = "Обязательный пункт";
+			this.obligatoryСheckBox.UseVisualStyleBackColor = true;
 			// 
 			// descriptionTextBox
 			// 
-			this.tableLayoutPanel1.SetColumnSpan(this.descriptionTextBox, 3);
-			this.descriptionTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.descriptionTextBox.Location = new System.Drawing.Point(4, 208);
-			this.descriptionTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+			this.descriptionTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.descriptionTextBox.Location = new System.Drawing.Point(3, 164);
 			this.descriptionTextBox.Multiline = true;
 			this.descriptionTextBox.Name = "descriptionTextBox";
-			this.descriptionTextBox.Size = new System.Drawing.Size(530, 189);
+			this.descriptionTextBox.Size = new System.Drawing.Size(535, 149);
 			this.descriptionTextBox.TabIndex = 3;
-			this.descriptionTextBox.TextChanged += new System.EventHandler(this.Controls_ValueChanged);
 			// 
-			// listBox1
+			// descriptionLabel
 			// 
-			this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.listBox1.FormattingEnabled = true;
-			this.listBox1.Location = new System.Drawing.Point(0, 0);
-			this.listBox1.Name = "listBox1";
-			this.listBox1.Size = new System.Drawing.Size(373, 440);
-			this.listBox1.TabIndex = 0;
+			this.descriptionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.descriptionLabel.AutoSize = true;
+			this.descriptionLabel.Location = new System.Drawing.Point(6, 141);
+			this.descriptionLabel.Name = "descriptionLabel";
+			this.descriptionLabel.Size = new System.Drawing.Size(96, 20);
+			this.descriptionLabel.TabIndex = 2;
+			this.descriptionLabel.Text = "Пояснение:";
+			// 
+			// captionTextBox
+			// 
+			this.captionTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.captionTextBox.Location = new System.Drawing.Point(6, 28);
+			this.captionTextBox.Multiline = true;
+			this.captionTextBox.Name = "captionTextBox";
+			this.captionTextBox.Size = new System.Drawing.Size(483, 110);
+			this.captionTextBox.TabIndex = 1;
+			// 
+			// captionLabel
+			// 
+			this.captionLabel.AutoSize = true;
+			this.captionLabel.Location = new System.Drawing.Point(6, 5);
+			this.captionLabel.Name = "captionLabel";
+			this.captionLabel.Size = new System.Drawing.Size(94, 20);
+			this.captionLabel.TabIndex = 0;
+			this.captionLabel.Text = "Заголовок:";
+			// 
+			// tabPage2
+			// 
+			this.tabPage2.Controls.Add(this.keywordsTextBox);
+			this.tabPage2.Controls.Add(this.keywordsLabel);
+			this.tabPage2.Controls.Add(this.isDecimalRadioButton);
+			this.tabPage2.Controls.Add(this.isTextRadioButton);
+			this.tabPage2.Location = new System.Drawing.Point(4, 29);
+			this.tabPage2.Name = "tabPage2";
+			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage2.Size = new System.Drawing.Size(501, 357);
+			this.tabPage2.TabIndex = 1;
+			this.tabPage2.Text = "Тип подраздела";
+			this.tabPage2.UseVisualStyleBackColor = true;
+			// 
+			// keywordsTextBox
+			// 
+			this.keywordsTextBox.Location = new System.Drawing.Point(6, 124);
+			this.keywordsTextBox.Multiline = true;
+			this.keywordsTextBox.Name = "keywordsTextBox";
+			this.keywordsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.keywordsTextBox.Size = new System.Drawing.Size(515, 117);
+			this.keywordsTextBox.TabIndex = 13;
+			// 
+			// keywordsLabel
+			// 
+			this.keywordsLabel.AutoSize = true;
+			this.keywordsLabel.Location = new System.Drawing.Point(16, 101);
+			this.keywordsLabel.Name = "keywordsLabel";
+			this.keywordsLabel.Size = new System.Drawing.Size(141, 20);
+			this.keywordsLabel.TabIndex = 12;
+			this.keywordsLabel.Text = "Ключевые слова:";
+			// 
+			// isDecimalRadioButton
+			// 
+			this.isDecimalRadioButton.AutoSize = true;
+			this.isDecimalRadioButton.Location = new System.Drawing.Point(20, 58);
+			this.isDecimalRadioButton.Name = "isDecimalRadioButton";
+			this.isDecimalRadioButton.Size = new System.Drawing.Size(198, 24);
+			this.isDecimalRadioButton.TabIndex = 1;
+			this.isDecimalRadioButton.TabStop = true;
+			this.isDecimalRadioButton.Text = "Числовой подраздел";
+			this.isDecimalRadioButton.UseVisualStyleBackColor = true;
+			// 
+			// isTextRadioButton
+			// 
+			this.isTextRadioButton.AutoSize = true;
+			this.isTextRadioButton.Location = new System.Drawing.Point(20, 18);
+			this.isTextRadioButton.Name = "isTextRadioButton";
+			this.isTextRadioButton.Size = new System.Drawing.Size(204, 24);
+			this.isTextRadioButton.TabIndex = 0;
+			this.isTextRadioButton.TabStop = true;
+			this.isTextRadioButton.Text = "Текстовый подраздел";
+			this.isTextRadioButton.UseVisualStyleBackColor = true;
+			// 
+			// tabPage3
+			// 
+			this.tabPage3.Controls.Add(this.afterTextBox);
+			this.tabPage3.Controls.Add(this.afterLabel);
+			this.tabPage3.Controls.Add(this.beforeTextBox);
+			this.tabPage3.Controls.Add(this.beforeLabel);
+			this.tabPage3.Location = new System.Drawing.Point(4, 29);
+			this.tabPage3.Name = "tabPage3";
+			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage3.Size = new System.Drawing.Size(501, 357);
+			this.tabPage3.TabIndex = 2;
+			this.tabPage3.Text = "Дополнительные параметры";
+			this.tabPage3.UseVisualStyleBackColor = true;
+			// 
+			// afterTextBox
+			// 
+			this.afterTextBox.Location = new System.Drawing.Point(0, 139);
+			this.afterTextBox.Multiline = true;
+			this.afterTextBox.Name = "afterTextBox";
+			this.afterTextBox.Size = new System.Drawing.Size(506, 62);
+			this.afterTextBox.TabIndex = 11;
+			// 
+			// afterLabel
+			// 
+			this.afterLabel.AutoSize = true;
+			this.afterLabel.Location = new System.Drawing.Point(6, 116);
+			this.afterLabel.Name = "afterLabel";
+			this.afterLabel.Size = new System.Drawing.Size(174, 20);
+			this.afterLabel.TabIndex = 10;
+			this.afterLabel.Text = "Текст после раздела:";
+			// 
+			// beforeTextBox
+			// 
+			this.beforeTextBox.Location = new System.Drawing.Point(0, 28);
+			this.beforeTextBox.Multiline = true;
+			this.beforeTextBox.Name = "beforeTextBox";
+			this.beforeTextBox.Size = new System.Drawing.Size(524, 85);
+			this.beforeTextBox.TabIndex = 9;
+			// 
+			// beforeLabel
+			// 
+			this.beforeLabel.AutoSize = true;
+			this.beforeLabel.Location = new System.Drawing.Point(6, 5);
+			this.beforeLabel.Name = "beforeLabel";
+			this.beforeLabel.Size = new System.Drawing.Size(187, 20);
+			this.beforeLabel.TabIndex = 8;
+			this.beforeLabel.Text = "Текст перед разделом:";
 			// 
 			// CategoriesEditorDialog
 			// 
@@ -420,13 +525,9 @@
 			this.Controls.Add(this.toolStrip1);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.menuStrip1);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
 			this.MainMenuStrip = this.menuStrip1;
 			this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-			this.MaximizeBox = false;
-			this.MinimizeBox = false;
 			this.Name = "CategoriesEditorDialog";
-			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.Text = "Редактор категорий";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CategoriesEditorDialog_FormClosing);
@@ -438,16 +539,21 @@
 			this.splitContainer1.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
-			this.tableLayoutPanel1.ResumeLayout(false);
-			this.tableLayoutPanel1.PerformLayout();
+			this.tabControl1.ResumeLayout(false);
+			this.tabPage1.ResumeLayout(false);
+			this.tabPage1.PerformLayout();
+			this.tabPage2.ResumeLayout(false);
+			this.tabPage2.PerformLayout();
+			this.tabPage3.ResumeLayout(false);
+			this.tabPage3.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
         }
+		
+		#endregion
 
-        #endregion
-
-        private System.Windows.Forms.StatusStrip statusStrip1;
+		private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem mnuFileToolStripMenuItem;
         private System.Windows.Forms.ToolStrip toolStrip1;
@@ -465,20 +571,32 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton toolStripButton5;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.TextBox descriptionTextBox;
-        private System.Windows.Forms.Label descriptionLabel;
-        private System.Windows.Forms.TextBox captionTextBox;
-        private System.Windows.Forms.Label captionLabel;
-        private System.Windows.Forms.CheckBox isTextCheckBox;
-        private System.Windows.Forms.CheckBox isDecimalCheckBox;
-        private System.Windows.Forms.CheckBox isObligatoryCheckBox;
         private System.Windows.Forms.ToolStripMenuItem mnuCategories;
         private System.Windows.Forms.ToolStripMenuItem mnuCategoriesAddCategory;
         private System.Windows.Forms.ToolStripMenuItem mnuFileOpen;
         private System.Windows.Forms.ToolStripMenuItem mnuFileSaveAs;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Label typeLabel;
-		private WordHiddenPowers.Controls.ListControls.CategoriesListBox listBox1;
+		private WordHiddenPowers.Controls.ListControls.CategoriesListBox listBox;
+		private System.Windows.Forms.TabControl tabControl1;
+		private System.Windows.Forms.TabPage tabPage1;
+		private System.Windows.Forms.TextBox captionTextBox;
+		private System.Windows.Forms.Label captionLabel;
+		private System.Windows.Forms.TabPage tabPage2;
+		private System.Windows.Forms.TextBox descriptionTextBox;
+		private System.Windows.Forms.Label descriptionLabel;
+		private System.Windows.Forms.CheckBox obligatoryСheckBox;
+		private System.Windows.Forms.RadioButton isDecimalRadioButton;
+		private System.Windows.Forms.RadioButton isTextRadioButton;
+		private System.Windows.Forms.TabPage tabPage3;
+		private System.Windows.Forms.TextBox afterTextBox;
+		private System.Windows.Forms.Label afterLabel;
+		private System.Windows.Forms.TextBox beforeTextBox;
+		private System.Windows.Forms.Label beforeLabel;
+		private System.Windows.Forms.TextBox keywordsTextBox;
+		private System.Windows.Forms.Label keywordsLabel;
+		private System.Windows.Forms.ToolStripMenuItem mnuCategoriesAddSubcategory;
+		private System.Windows.Forms.ToolStripMenuItem mnuCategoriesRemoveCategory;
+		private System.Windows.Forms.ToolStripMenuItem mnuCategoriesRemoveSubcategory;
+		private System.Windows.Forms.ToolStripMenuItem mnuCategoriesClear;
 	}
 }

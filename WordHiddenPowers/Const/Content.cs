@@ -1,4 +1,6 @@
-﻿namespace WordHiddenPowers.Const
+﻿// Ignore Spelling: ANALAIZER
+
+namespace WordHiddenPowers.Const
 {
 	public static class Content
 	{
@@ -28,12 +30,12 @@
 		public const string TEXT_NOTE_SUPER_TIP = "Текстовая заметка позволяет сохранить текстовые сведения в массив дополнительных данных для их дальнейшего анализа.";
 
 		/// <summary>
-		/// Имя (idMso) встроенного изобразения, отображаемого в качестве значка элемента управления
+		/// Имя (idMso) встроенного изображения, отображаемого в качестве значка элемента управления
 		/// </summary>
 		public const string TEXT_NOTE_OFFICE_IMAGE_ID = "FunctionsTextInsertGallery";
 
 		/// <summary>
-		/// Числовое значение FaceId встроенного изобразения, отображаемого в качестве значка контекстного меню
+		/// Числовое значение FaceId встроенного изображения, отображаемого в качестве значка контекстного меню
 		/// </summary>
 		public const int TEXT_NOTE_FACE_ID = 12821;
 
@@ -63,12 +65,12 @@
 		public const string DECIMAL_NOTE_SUPER_TIP = "Числовая заметка позволяет суммировать значения в массиве дополнительных данных для их дальнейшего анализа.";
 
 		/// <summary>
-		/// Имя (idMso) встроенного изобразения, отображаемого в качестве значка элемента управления
+		/// Имя (idMso) встроенного изображения, отображаемого в качестве значка элемента управления
 		/// </summary>
 		public const string DECIMAL_NOTE_OFFICE_IMAGE_ID = "FunctionsMathTrigInsertGallery";
 
 		/// <summary>
-		/// Числовое значение FaceId встроенного изобразения, отображаемого в качестве значка контекстного меню
+		/// Числовое значение FaceId встроенного изображения, отображаемого в качестве значка контекстного меню
 		/// </summary>
 		public const int DECIMAL_NOTE_FACE_ID = 12820;
 
@@ -114,11 +116,17 @@
 		public const string EDIT_DOCUMENT_KEYS_SUPER_TIP = "Числовая заметка позволяет суммировать значения в массиве дополнительных данных для их дальнейшего анализа.";
 		public const string EDIT_DOCUMENT_KEYS_OFFICE_IMAGE_ID = "ControlPropertyListControlEditChoices";
 
-		public const string ANALAIZER_IMPORT_LABEL = "Импорт данных";
-		public const string ANALAIZER_IMPORT_DESCRIPTION = "Импортирование данных из документов Word";
-		public const string ANALAIZER_IMPORT_SCREEN_TIP = "Импортировать данные из документов Word";
-		public const string ANALAIZER_IMPORT_SUPER_TIP = "Для анализа данных, содержащихся в документах Word, необходимо указать директорию хранения этих документов.";
-		public const string ANALAIZER_IMPORT_OFFICE_IMAGE_ID = "ExportWord";
+		public const string ANALAIZER_IMPORT_FOLDER_LABEL = "Импорт данных из папки";
+		public const string ANALAIZER_IMPORT_FOLDER_DESCRIPTION = "Импортирование данных из документов Word, размещенных в папке";
+		public const string ANALAIZER_IMPORT_FOLDER_SCREEN_TIP = "Импортировать данные из документов Word, размещенных в папке";
+		public const string ANALAIZER_IMPORT_FOLDER_SUPER_TIP = "Для анализа данных, содержащихся в документах Word, необходимо указать директорию хранения этих документов.";
+		public const string ANALAIZER_IMPORT_FOLDER_OFFICE_IMAGE_ID = "ExportWord";
+
+		public const string ANALAIZER_IMPORT_FILE_LABEL = "Импорт данных из файла";
+		public const string ANALAIZER_IMPORT_FILE_DESCRIPTION = "Импортирование данных из документа Word";
+		public const string ANALAIZER_IMPORT_FILE_SCREEN_TIP = "Импортировать данные из документа Word";
+		public const string ANALAIZER_IMPORT_FILE_SUPER_TIP = "Для анализа данных, содержащихся в документе Word, необходимо выбрать файл.";
+		public const string ANALAIZER_IMPORT_FILE_OFFICE_IMAGE_ID = "ExportWord";
 
 		public const string ANALAIZER_TABLE_LABEL = "Сводные табличные данные";
 		public const string ANALAIZER_TABLE_DESCRIPTION = "Сводные табличные данные";
@@ -143,5 +151,17 @@
 		public const string PANE_VISIBLE_SCREEN_TIP = "Панель управления заметками";
 		public const string PANE_VISIBLE_SUPER_TIP = "Панель управления заметками позволяет просматривать, редактировать или удалять ранее созданные заметки.";
 		public const string PANE_VISIBLE_OFFICE_IMAGE_ID = "MenuToDoBar";
+
+		public const string SEARCH_SERVICE_LABEL = "Разметка с помощью поиска";
+		public const string SEARCH_SERVICE_DESCRIPTION = "Разметка документа с помощью поисковых функций";
+		public const string SEARCH_SERVICE_SCREEN_TIP = "Разметить с помощью поиска";
+		public const string SEARCH_SERVICE_SUPER_TIP = "Поисковые функции позволяют разметить документ путем поиска ключевых слов и выражений.";
+		public const string SEARCH_SERVICE_OFFICE_IMAGE_ID = "GroupSearchScope";
+
+		public const string AI_SERVICE_LABEL = "Разметка с помощью нейросети";
+		public const string AI_SERVICE_DESCRIPTION = "Разметка документа с помощью нейросети";
+		public const string AI_SERVICE_SCREEN_TIP = "Разметить с помощью нейросети";
+		public const string AI_SERVICE_SUPER_TIP = "Нейросеть позволяет разметить документ путем его анализа.";
+		public const string AI_SERVICE_OFFICE_IMAGE_ID = "ChartUpDownBars";
 	}
 }

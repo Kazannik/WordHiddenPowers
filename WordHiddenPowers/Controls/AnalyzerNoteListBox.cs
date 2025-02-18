@@ -3,20 +3,16 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using WordHiddenPowers.Repositoryes;
-using WordHiddenPowers.Repositoryes.Categories;
-using WordHiddenPowers.Repositoryes.Notes;
-using static WordHiddenPowers.Repositoryes.RepositoryDataSet;
+using WordHiddenPowers.Repositories;
+using WordHiddenPowers.Repositories.Categories;
+using WordHiddenPowers.Repositories.Notes;
+using static WordHiddenPowers.Repositories.RepositoryDataSet;
 
 namespace WordHiddenPowers.Controls
 {
 	public class AnalyzerNoteListBox : ListBox
 	{
 		private RepositoryDataSet source;
-
-		private IDictionary<int, Subcategory> subcategories;
-
-		private IDictionary<int, WordFilesRow> files;
 
 		public RepositoryDataSet DataSet
 		{
@@ -94,7 +90,7 @@ namespace WordHiddenPowers.Controls
 		{
 			if (e.Action == DataRowAction.Add)
 			{
-				Items.Add(Note.Create(e.Row, files[e.Row.file_id], subcategories[e.Row.subcategory_id]));
+				//Items.Add(Note.Create(e.Row, files[e.Row.file_id], subcategories[e.Row.subcategory_id]));
 			}
 			else if (e.Action == DataRowAction.Delete)
 			{
@@ -105,10 +101,10 @@ namespace WordHiddenPowers.Controls
 			{
 				Note note = GetNote(e.Row);
 				note.Description = e.Row.Description;
-				note.Reiting = e.Row.Reiting;
+				note.Rating = e.Row.Rating;
 				note.Value = e.Row.Value;
-				Category category = source.Categories.Get(e.Row.category_id);
-				note.Subcategory = source.Subcategories.Get(category, e.Row.subcategory_id);
+				//Category category = source.Categories.Get(e.Row.category_id);
+				//note.Subcategory = source.Subcategories.Get(category, e.Row.subcategory_id);
 				//if (note.Rectangle != null)
 				//	Invalidate(note.Rectangle);
 			}
@@ -118,7 +114,7 @@ namespace WordHiddenPowers.Controls
 		{
 			if (e.Action == DataRowAction.Add)
 			{
-				Items.Add(Note.Create(e.Row, files[e.Row.file_id], subcategories[e.Row.subcategory_id]));
+				//Items.Add(Note.Create(e.Row, files[e.Row.file_id], subcategories[e.Row.subcategory_id]));
 
 			}
 			else if (e.Action == DataRowAction.Delete)
@@ -130,7 +126,7 @@ namespace WordHiddenPowers.Controls
 			{
 				Note note = GetNote(e.Row);
 				note.Description = e.Row.Description;
-				note.Reiting = e.Row.Reiting;
+				note.Rating = e.Row.Rating;
 				note.Value = e.Row.Value;
 				//if (note.Rectangle != null)
 				//	Invalidate(note.Rectangle);
@@ -333,7 +329,7 @@ namespace WordHiddenPowers.Controls
 					Note note = Items[e.Index] as Note;
 
 					//DrawRemoveButton(note, e);
-					//DrawReiting(note, e);
+					//DrawRating(note, e);
 
 					if (note.IsText)
 						DrawTextItem(note, e);
@@ -374,7 +370,7 @@ namespace WordHiddenPowers.Controls
 
 		}
 
-		private void DrawReiting(Note note, DrawItemEventArgs e)
+		private void DrawRating(Note note, DrawItemEventArgs e)
 		{
 			var rect = e.Bounds;
 			rect.Y += 20;
@@ -421,54 +417,12 @@ namespace WordHiddenPowers.Controls
 			if (DesignMode || source == null) return;
 
 			BeginUpdate();
-
-			IDictionary<int, Category> categories = new Dictionary<int, Category>();
-			if (source.Categories.Rows.Count > 0)
-			{
-				foreach (DataRow row in source.Categories.Rows)
-				{
-					Category category = Category.Create(row);
-					categories.Add(category.Id, category);
-				}
-			}
-			else
-			{
-				Category category = Category.Default();
-				categories.Add(category.Id, category);
-			}
-
-			subcategories = new Dictionary<int, Subcategory>();
-			if (source.Subcategories.Rows.Count > 0)
-			{
-				foreach (DataRow row in source.Subcategories.Rows)
-				{
-					Subcategory subcategory = Subcategory.Create(categories[(int)row["category_id"]], row);
-					subcategories.Add(subcategory.Id, subcategory);
-				}
-			}
-			else
-			{
-				foreach (Category category in categories.Values)
-				{
-					Subcategory subcategory = Subcategory.Default(category: category);
-					subcategories.Add(subcategory.Id, subcategory);
-				}
-			}
-
-			files = new Dictionary<int, WordFilesRow>();
-			if (source.WordFiles.Rows.Count > 0)
-			{
-				foreach (WordFilesRow row in source.WordFiles.Rows)
-				{
-					files.Add(row.id, row);
-				}
-			}
-
+					
 
 			if (source.TextPowers.Rows.Count > 0 ||
 				source.DecimalPowers.Rows.Count > 0)
 			{
-				foreach (Note note in source.GetNotesSort())
+				foreach (Note note in source.GetNotes(sort: SortType.Position))
 				{
 					Add(note);
 				}

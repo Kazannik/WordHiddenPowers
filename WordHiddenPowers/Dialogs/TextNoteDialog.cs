@@ -1,12 +1,11 @@
-﻿using WordHiddenPowers.Repositoryes;
-using WordHiddenPowers.Repositoryes.Notes;
+﻿using WordHiddenPowers.Repositories;
+using WordHiddenPowers.Repositories.Notes;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Dialogs
 {
 	public partial class TextNoteDialog : CreateNoteDialog
 	{
-
 		public string Value
 		{
 			get

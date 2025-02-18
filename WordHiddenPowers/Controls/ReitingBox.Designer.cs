@@ -1,6 +1,6 @@
 ﻿namespace WordHiddenPowers.Controls
 {
-    partial class ReitingBox
+    partial class RatingBox
     {
         /// <summary> 
         /// Обязательная переменная конструктора.
@@ -28,24 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-			this.reitingTrackBar = new System.Windows.Forms.TrackBar();
+			this.ratingTrackBar = new System.Windows.Forms.TrackBar();
 			this.ratingLabel = new System.Windows.Forms.Label();
-			((System.ComponentModel.ISupportInitialize)(this.reitingTrackBar)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.ratingTrackBar)).BeginInit();
 			this.SuspendLayout();
 			// 
-			// reitingTrackBar
+			// ratingTrackBar
 			// 
-			this.reitingTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.ratingTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.reitingTrackBar.LargeChange = 1;
-			this.reitingTrackBar.Location = new System.Drawing.Point(52, 2);
-			this.reitingTrackBar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.reitingTrackBar.Maximum = 5;
-			this.reitingTrackBar.Minimum = -5;
-			this.reitingTrackBar.Name = "reitingTrackBar";
-			this.reitingTrackBar.Size = new System.Drawing.Size(423, 69);
-			this.reitingTrackBar.TabIndex = 0;
-			this.reitingTrackBar.ValueChanged += new System.EventHandler(this.TrackBar_ValueChanged);
+			this.ratingTrackBar.LargeChange = 1;
+			this.ratingTrackBar.Location = new System.Drawing.Point(52, 2);
+			this.ratingTrackBar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.ratingTrackBar.Maximum = 5;
+			this.ratingTrackBar.Minimum = -5;
+			this.ratingTrackBar.Name = "ratingTrackBar";
+			this.ratingTrackBar.Size = new System.Drawing.Size(423, 69);
+			this.ratingTrackBar.TabIndex = 0;
+			this.ratingTrackBar.ValueChanged += new System.EventHandler(this.TrackBar_ValueChanged);
 			// 
 			// ratingLabel
 			// 
@@ -58,17 +58,17 @@
 			this.ratingLabel.TabIndex = 1;
 			this.ratingLabel.Text = "##";
 			// 
-			// ReitingBox
+			// RatingBox
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.ratingLabel);
-			this.Controls.Add(this.reitingTrackBar);
+			this.Controls.Add(this.ratingTrackBar);
 			this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.Name = "ReitingBox";
+			this.Name = "RatingBox";
 			this.Size = new System.Drawing.Size(478, 52);
-			this.Resize += new System.EventHandler(this.ReitingBox_Resize);
-			((System.ComponentModel.ISupportInitialize)(this.reitingTrackBar)).EndInit();
+			this.Resize += new System.EventHandler(this.RatingBox_Resize);
+			((System.ComponentModel.ISupportInitialize)(this.ratingTrackBar)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -76,7 +76,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TrackBar reitingTrackBar;
+        private System.Windows.Forms.TrackBar ratingTrackBar;
         private System.Windows.Forms.Label ratingLabel;
     }
 }

@@ -2,8 +2,8 @@
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using WordHiddenPowers.Repositoryes;
-using WordHiddenPowers.Repositoryes.Data;
+using WordHiddenPowers.Repositories;
+using WordHiddenPowers.Repositories.Data;
 
 namespace WordHiddenPowers.Controls
 {

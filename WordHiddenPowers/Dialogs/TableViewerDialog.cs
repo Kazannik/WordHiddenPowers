@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using WordHiddenPowers.Repositoryes;
-using WordHiddenPowers.Repositoryes.Data;
+using WordHiddenPowers.Repositories;
+using WordHiddenPowers.Repositories.Data;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Dialogs

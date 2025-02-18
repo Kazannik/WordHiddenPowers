@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="RepositoryDataSet" targetNamespace="http://tempuri.org/DictionaryXMLSchema.xsd" xmlns:mstns="http://tempuri.org/DictionaryXMLSchema.xsd" xmlns="http://tempuri.org/DictionaryXMLSchema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="RepositoryDataSet" msdata:IsDataSet="true" msdata:Locale="ru" msprop:Generator_UserDSName="RepositoryDataSet" msprop:Generator_DataSetName="RepositoryDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="TextPowers" msprop:Generator_RowEvHandlerName="TextPowersRowChangeEventHandler" msprop:Generator_RowDeletedName="TextPowersRowDeleted" msprop:Generator_RowDeletingName="TextPowersRowDeleting" msprop:Generator_RowEvArgName="TextPowersRowChangeEvent" msprop:Generator_TablePropName="TextPowers" msprop:Generator_RowChangedName="TextPowersRowChanged" msprop:Generator_UserTableName="TextPowers" msprop:Generator_RowChangingName="TextPowersRowChanging" msprop:Generator_RowClassName="TextPowersRow" msprop:Generator_TableClassName="TextPowersDataTable" msprop:Generator_TableVarName="tableTextPowers">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" msdata:AutoIncrement="true" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_UserColumnName="id" msprop:Generator_ColumnVarNameInTable="columnid" type="xs:int" />
+              <xs:element name="category_guid" msprop:Generator_ColumnPropNameInTable="category_guidColumn" msprop:Generator_ColumnPropNameInRow="category_guid" msprop:Generator_UserColumnName="category_guid" msprop:Generator_ColumnVarNameInTable="columncategory_guid" type="xs:string" />
+              <xs:element name="subcategory_guid" msprop:Generator_ColumnPropNameInTable="subcategory_guidColumn" msprop:Generator_ColumnPropNameInRow="subcategory_guid" msprop:Generator_UserColumnName="subcategory_guid" msprop:Generator_ColumnVarNameInTable="columnsubcategory_guid" type="xs:string" />
+              <xs:element name="Description" msprop:Generator_ColumnPropNameInTable="DescriptionColumn" msprop:Generator_ColumnPropNameInRow="Description" msprop:Generator_UserColumnName="Description" msprop:Generator_ColumnVarNameInTable="columnDescription" type="xs:string" minOccurs="0" />
+              <xs:element name="Value" msprop:Generator_ColumnPropNameInTable="ValueColumn" msprop:Generator_ColumnPropNameInRow="Value" msprop:Generator_UserColumnName="Value" msprop:Generator_ColumnVarNameInTable="columnValue" type="xs:string" />
+              <xs:element name="Rating" msprop:Generator_ColumnPropNameInTable="RatingColumn" msprop:Generator_ColumnPropNameInRow="Rating" msprop:Generator_UserColumnName="Rating" msprop:Generator_ColumnVarNameInTable="columnRating" type="xs:int" default="0" />
+              <xs:element name="WordSelectionStart" msprop:Generator_ColumnPropNameInTable="WordSelectionStartColumn" msprop:Generator_ColumnPropNameInRow="WordSelectionStart" msprop:Generator_UserColumnName="WordSelectionStart" msprop:Generator_ColumnVarNameInTable="columnWordSelectionStart" type="xs:int" default="0" />
+              <xs:element name="WordSelectionEnd" msprop:Generator_ColumnPropNameInTable="WordSelectionEndColumn" msprop:Generator_ColumnPropNameInRow="WordSelectionEnd" msprop:Generator_UserColumnName="WordSelectionEnd" msprop:Generator_ColumnVarNameInTable="columnWordSelectionEnd" type="xs:int" default="0" />
+              <xs:element name="file_id" msprop:Generator_ColumnPropNameInTable="file_idColumn" msprop:Generator_ColumnPropNameInRow="file_id" msprop:Generator_UserColumnName="file_id" msprop:Generator_ColumnVarNameInTable="columnfile_id" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Categories" msprop:Generator_RowEvHandlerName="CategoriesRowChangeEventHandler" msprop:Generator_RowDeletedName="CategoriesRowDeleted" msprop:Generator_RowDeletingName="CategoriesRowDeleting" msprop:Generator_RowEvArgName="CategoriesRowChangeEvent" msprop:Generator_TablePropName="Categories" msprop:Generator_RowChangedName="CategoriesRowChanged" msprop:Generator_UserTableName="Categories" msprop:Generator_RowChangingName="CategoriesRowChanging" msprop:Generator_RowClassName="CategoriesRow" msprop:Generator_TableClassName="CategoriesDataTable" msprop:Generator_TableVarName="tableCategories">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="key_guid" msprop:Generator_ColumnPropNameInTable="key_guidColumn" msprop:Generator_ColumnPropNameInRow="key_guid" msprop:Generator_UserColumnName="key_guid" msprop:Generator_ColumnVarNameInTable="columnkey_guid" type="xs:string" />
+              <xs:element name="position" msprop:Generator_ColumnPropNameInTable="positionColumn" msprop:Generator_ColumnPropNameInRow="position" msprop:Generator_UserColumnName="position" msprop:Generator_ColumnVarNameInTable="columnposition" type="xs:int" />
+              <xs:element name="Caption" msprop:Generator_ColumnPropNameInTable="CaptionColumn" msprop:Generator_ColumnPropNameInRow="Caption" msprop:Generator_UserColumnName="Caption" msprop:Generator_ColumnVarNameInTable="columnCaption" type="xs:string" />
+              <xs:element name="Description" msprop:Generator_ColumnPropNameInTable="DescriptionColumn" msprop:Generator_ColumnPropNameInRow="Description" msprop:Generator_UserColumnName="Description" msprop:Generator_ColumnVarNameInTable="columnDescription" type="xs:string" minOccurs="0" />
+              <xs:element name="IsObligatory" msprop:Generator_ColumnPropNameInTable="IsObligatoryColumn" msprop:Generator_ColumnPropNameInRow="IsObligatory" msprop:Generator_UserColumnName="IsObligatory" msprop:Generator_ColumnVarNameInTable="columnIsObligatory" type="xs:boolean" default="false" />
+              <xs:element name="BeforeText" msprop:Generator_ColumnPropNameInTable="BeforeTextColumn" msprop:Generator_ColumnPropNameInRow="BeforeText" msprop:Generator_UserColumnName="BeforeText" msprop:Generator_ColumnVarNameInTable="columnBeforeText" type="xs:string" minOccurs="0" />
+              <xs:element name="AfterText" msprop:Generator_ColumnPropNameInTable="AfterTextColumn" msprop:Generator_ColumnPropNameInRow="AfterText" msprop:Generator_UserColumnName="AfterText" msprop:Generator_ColumnVarNameInTable="columnAfterText" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Subcategories" msprop:Generator_RowEvHandlerName="SubcategoriesRowChangeEventHandler" msprop:Generator_RowDeletedName="SubcategoriesRowDeleted" msprop:Generator_RowDeletingName="SubcategoriesRowDeleting" msprop:Generator_RowEvArgName="SubcategoriesRowChangeEvent" msprop:Generator_TablePropName="Subcategories" msprop:Generator_RowChangedName="SubcategoriesRowChanged" msprop:Generator_UserTableName="Subcategories" msprop:Generator_RowChangingName="SubcategoriesRowChanging" msprop:Generator_RowClassName="SubcategoriesRow" msprop:Generator_TableClassName="SubcategoriesDataTable" msprop:Generator_TableVarName="tableSubcategories">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="key_guid" msprop:Generator_ColumnPropNameInTable="key_guidColumn" msprop:Generator_ColumnPropNameInRow="key_guid" msprop:Generator_UserColumnName="key_guid" msprop:Generator_ColumnVarNameInTable="columnkey_guid" type="xs:string" />
+              <xs:element name="category_guid" msprop:Generator_ColumnPropNameInTable="category_guidColumn" msprop:Generator_ColumnPropNameInRow="category_guid" msprop:Generator_UserColumnName="category_guid" msprop:Generator_ColumnVarNameInTable="columncategory_guid" type="xs:string" />
+              <xs:element name="position" msprop:Generator_ColumnPropNameInTable="positionColumn" msprop:Generator_ColumnPropNameInRow="position" msprop:Generator_UserColumnName="position" msprop:Generator_ColumnVarNameInTable="columnposition" type="xs:int" />
+              <xs:element name="Caption" msprop:Generator_ColumnPropNameInTable="CaptionColumn" msprop:Generator_ColumnPropNameInRow="Caption" msprop:Generator_UserColumnName="Caption" msprop:Generator_ColumnVarNameInTable="columnCaption" type="xs:string" />
+              <xs:element name="Description" msprop:Generator_ColumnPropNameInTable="DescriptionColumn" msprop:Generator_ColumnPropNameInRow="Description" msprop:Generator_UserColumnName="Description" msprop:Generator_ColumnVarNameInTable="columnDescription" type="xs:string" minOccurs="0" />
+              <xs:element name="IsDecimal" msprop:Generator_ColumnPropNameInTable="IsDecimalColumn" msprop:Generator_ColumnPropNameInRow="IsDecimal" msprop:Generator_UserColumnName="IsDecimal" msprop:Generator_ColumnVarNameInTable="columnIsDecimal" type="xs:boolean" default="true" />
+              <xs:element name="IsText" msprop:Generator_ColumnPropNameInTable="IsTextColumn" msprop:Generator_ColumnPropNameInRow="IsText" msprop:Generator_UserColumnName="IsText" msprop:Generator_ColumnVarNameInTable="columnIsText" type="xs:boolean" default="true" />
+              <xs:element name="IsObligatory" msprop:Generator_ColumnPropNameInTable="IsObligatoryColumn" msprop:Generator_ColumnPropNameInRow="IsObligatory" msprop:Generator_UserColumnName="IsObligatory" msprop:Generator_ColumnVarNameInTable="columnIsObligatory" type="xs:boolean" default="false" />
+              <xs:element name="BeforeText" msprop:Generator_ColumnPropNameInTable="BeforeTextColumn" msprop:Generator_ColumnPropNameInRow="BeforeText" msprop:Generator_UserColumnName="BeforeText" msprop:Generator_ColumnVarNameInTable="columnBeforeText" type="xs:string" minOccurs="0" />
+              <xs:element name="AfterText" msprop:Generator_ColumnPropNameInTable="AfterTextColumn" msprop:Generator_ColumnPropNameInRow="AfterText" msprop:Generator_UserColumnName="AfterText" msprop:Generator_ColumnVarNameInTable="columnAfterText" type="xs:string" minOccurs="0" />
+              <xs:element name="Keywords" msprop:Generator_ColumnPropNameInTable="KeywordsColumn" msprop:Generator_ColumnPropNameInRow="Keywords" msprop:Generator_UserColumnName="Keywords" msprop:Generator_ColumnVarNameInTable="columnKeywords" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DecimalPowers" msprop:Generator_RowEvHandlerName="DecimalPowersRowChangeEventHandler" msprop:Generator_RowDeletedName="DecimalPowersRowDeleted" msprop:Generator_RowDeletingName="DecimalPowersRowDeleting" msprop:Generator_RowEvArgName="DecimalPowersRowChangeEvent" msprop:Generator_TablePropName="DecimalPowers" msprop:Generator_RowChangedName="DecimalPowersRowChanged" msprop:Generator_UserTableName="DecimalPowers" msprop:Generator_RowChangingName="DecimalPowersRowChanging" msprop:Generator_RowClassName="DecimalPowersRow" msprop:Generator_TableClassName="DecimalPowersDataTable" msprop:Generator_TableVarName="tableDecimalPowers">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" msdata:AutoIncrement="true" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_UserColumnName="id" msprop:Generator_ColumnVarNameInTable="columnid" type="xs:int" />
+              <xs:element name="category_guid" msprop:Generator_ColumnPropNameInTable="category_guidColumn" msprop:Generator_ColumnPropNameInRow="category_guid" msprop:Generator_UserColumnName="category_guid" msprop:Generator_ColumnVarNameInTable="columncategory_guid" type="xs:string" />
+              <xs:element name="subcategory_guid" msprop:Generator_ColumnPropNameInTable="subcategory_guidColumn" msprop:Generator_ColumnPropNameInRow="subcategory_guid" msprop:Generator_UserColumnName="subcategory_guid" msprop:Generator_ColumnVarNameInTable="columnsubcategory_guid" type="xs:string" />
+              <xs:element name="Description" msprop:Generator_ColumnPropNameInTable="DescriptionColumn" msprop:Generator_ColumnPropNameInRow="Description" msprop:Generator_UserColumnName="Description" msprop:Generator_ColumnVarNameInTable="columnDescription" type="xs:string" minOccurs="0" />
+              <xs:element name="Value" msprop:Generator_ColumnPropNameInTable="ValueColumn" msprop:Generator_ColumnPropNameInRow="Value" msprop:Generator_UserColumnName="Value" msprop:Generator_ColumnVarNameInTable="columnValue" type="xs:double" default="0" />
+              <xs:element name="Rating" msprop:Generator_ColumnPropNameInTable="RatingColumn" msprop:Generator_ColumnPropNameInRow="Rating" msprop:Generator_UserColumnName="Rating" msprop:Generator_ColumnVarNameInTable="columnRating" type="xs:int" default="0" />
+              <xs:element name="WordSelectionStart" msprop:Generator_ColumnPropNameInTable="WordSelectionStartColumn" msprop:Generator_ColumnPropNameInRow="WordSelectionStart" msprop:Generator_UserColumnName="WordSelectionStart" msprop:Generator_ColumnVarNameInTable="columnWordSelectionStart" type="xs:int" default="0" />
+              <xs:element name="WordSelectionEnd" msprop:Generator_ColumnPropNameInTable="WordSelectionEndColumn" msprop:Generator_ColumnPropNameInRow="WordSelectionEnd" msprop:Generator_UserColumnName="WordSelectionEnd" msprop:Generator_ColumnVarNameInTable="columnWordSelectionEnd" type="xs:int" default="0" />
+              <xs:element name="file_id" msprop:Generator_ColumnPropNameInTable="file_idColumn" msprop:Generator_ColumnPropNameInRow="file_id" msprop:Generator_UserColumnName="file_id" msprop:Generator_ColumnVarNameInTable="columnfile_id" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ColumnsHeaders" msprop:Generator_RowEvHandlerName="ColumnsHeadersRowChangeEventHandler" msprop:Generator_RowDeletedName="ColumnsHeadersRowDeleted" msprop:Generator_RowDeletingName="ColumnsHeadersRowDeleting" msprop:Generator_RowEvArgName="ColumnsHeadersRowChangeEvent" msprop:Generator_TablePropName="ColumnsHeaders" msprop:Generator_RowChangedName="ColumnsHeadersRowChanged" msprop:Generator_UserTableName="ColumnsHeaders" msprop:Generator_RowChangingName="ColumnsHeadersRowChanging" msprop:Generator_RowClassName="ColumnsHeadersRow" msprop:Generator_TableClassName="ColumnsHeadersDataTable" msprop:Generator_TableVarName="tableColumnsHeaders">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" msdata:AutoIncrement="true" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_UserColumnName="id" msprop:Generator_ColumnVarNameInTable="columnid" type="xs:int" />
+              <xs:element name="Header" msprop:Generator_ColumnPropNameInTable="HeaderColumn" msprop:Generator_ColumnPropNameInRow="Header" msprop:Generator_UserColumnName="Header" msprop:Generator_ColumnVarNameInTable="columnHeader" type="xs:string" />
+              <xs:element name="Bold" msprop:Generator_ColumnPropNameInTable="BoldColumn" msprop:Generator_ColumnPropNameInRow="Bold" msprop:Generator_UserColumnName="Bold" msprop:Generator_ColumnVarNameInTable="columnBold" type="xs:boolean" default="false" />
+              <xs:element name="BackColor" msprop:Generator_ColumnPropNameInTable="BackColorColumn" msprop:Generator_ColumnPropNameInRow="BackColor" msprop:Generator_UserColumnName="BackColor" msprop:Generator_ColumnVarNameInTable="columnBackColor" type="xs:int" default="-1" />
+              <xs:element name="Color" msprop:Generator_ColumnPropNameInTable="ColorColumn" msprop:Generator_ColumnPropNameInRow="Color" msprop:Generator_UserColumnName="Color" msprop:Generator_ColumnVarNameInTable="columnColor" type="xs:int" default="-16777216" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="RowsHeaders" msprop:Generator_RowEvHandlerName="RowsHeadersRowChangeEventHandler" msprop:Generator_RowDeletedName="RowsHeadersRowDeleted" msprop:Generator_RowDeletingName="RowsHeadersRowDeleting" msprop:Generator_RowEvArgName="RowsHeadersRowChangeEvent" msprop:Generator_TablePropName="RowsHeaders" msprop:Generator_RowChangedName="RowsHeadersRowChanged" msprop:Generator_UserTableName="RowsHeaders" msprop:Generator_RowChangingName="RowsHeadersRowChanging" msprop:Generator_RowClassName="RowsHeadersRow" msprop:Generator_TableClassName="RowsHeadersDataTable" msprop:Generator_TableVarName="tableRowsHeaders">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" msdata:AutoIncrement="true" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_UserColumnName="id" msprop:Generator_ColumnVarNameInTable="columnid" type="xs:int" />
+              <xs:element name="Header" msprop:Generator_ColumnPropNameInTable="HeaderColumn" msprop:Generator_ColumnPropNameInRow="Header" msprop:Generator_UserColumnName="Header" msprop:Generator_ColumnVarNameInTable="columnHeader" type="xs:string" />
+              <xs:element name="Bold" msprop:Generator_ColumnPropNameInTable="BoldColumn" msprop:Generator_ColumnPropNameInRow="Bold" msprop:Generator_UserColumnName="Bold" msprop:Generator_ColumnVarNameInTable="columnBold" type="xs:boolean" default="false" />
+              <xs:element name="BackColor" msprop:Generator_ColumnPropNameInTable="BackColorColumn" msprop:Generator_ColumnPropNameInRow="BackColor" msprop:Generator_UserColumnName="BackColor" msprop:Generator_ColumnVarNameInTable="columnBackColor" type="xs:int" default="-1" />
+              <xs:element name="Color" msprop:Generator_ColumnPropNameInTable="ColorColumn" msprop:Generator_ColumnPropNameInRow="Color" msprop:Generator_UserColumnName="Color" msprop:Generator_ColumnVarNameInTable="columnColor" type="xs:int" default="-16777216" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DocumentKeys" msprop:Generator_RowEvHandlerName="DocumentKeysRowChangeEventHandler" msprop:Generator_RowDeletedName="DocumentKeysRowDeleted" msprop:Generator_RowDeletingName="DocumentKeysRowDeleting" msprop:Generator_RowEvArgName="DocumentKeysRowChangeEvent" msprop:Generator_TablePropName="DocumentKeys" msprop:Generator_RowChangedName="DocumentKeysRowChanged" msprop:Generator_UserTableName="DocumentKeys" msprop:Generator_RowChangingName="DocumentKeysRowChanging" msprop:Generator_RowClassName="DocumentKeysRow" msprop:Generator_TableClassName="DocumentKeysDataTable" msprop:Generator_TableVarName="tableDocumentKeys">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" msdata:AutoIncrement="true" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_UserColumnName="id" msprop:Generator_ColumnVarNameInTable="columnid" type="xs:int" />
+              <xs:element name="Caption" msprop:Generator_ColumnPropNameInTable="CaptionColumn" msprop:Generator_ColumnPropNameInRow="Caption" msprop:Generator_UserColumnName="Caption" msprop:Generator_ColumnVarNameInTable="columnCaption" type="xs:string" />
+              <xs:element name="Description1" msprop:Generator_ColumnPropNameInTable="Description1Column" msprop:Generator_ColumnPropNameInRow="Description1" msprop:Generator_UserColumnName="Description1" msprop:Generator_ColumnVarNameInTable="columnDescription1" type="xs:string" minOccurs="0" />
+              <xs:element name="Description2" msprop:Generator_ColumnPropNameInTable="Description2Column" msprop:Generator_ColumnPropNameInRow="Description2" msprop:Generator_UserColumnName="Description2" msprop:Generator_ColumnVarNameInTable="columnDescription2" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="WordFiles" msprop:Generator_RowEvHandlerName="WordFilesRowChangeEventHandler" msprop:Generator_RowDeletedName="WordFilesRowDeleted" msprop:Generator_RowDeletingName="WordFilesRowDeleting" msprop:Generator_RowEvArgName="WordFilesRowChangeEvent" msprop:Generator_TablePropName="WordFiles" msprop:Generator_RowChangedName="WordFilesRowChanged" msprop:Generator_UserTableName="WordFiles" msprop:Generator_RowChangingName="WordFilesRowChanging" msprop:Generator_RowClassName="WordFilesRow" msprop:Generator_TableClassName="WordFilesDataTable" msprop:Generator_TableVarName="tableWordFiles">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" msdata:AutoIncrement="true" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_UserColumnName="id" msprop:Generator_ColumnVarNameInTable="columnid" type="xs:int" />
+              <xs:element name="FileName" msprop:Generator_ColumnPropNameInTable="FileNameColumn" msprop:Generator_ColumnPropNameInRow="FileName" msprop:Generator_UserColumnName="FileName" msprop:Generator_ColumnVarNameInTable="columnFileName" type="xs:string" />
+              <xs:element name="Caption" msprop:Generator_ColumnPropNameInTable="CaptionColumn" msprop:Generator_ColumnPropNameInRow="Caption" msprop:Generator_UserColumnName="Caption" msprop:Generator_ColumnVarNameInTable="columnCaption" type="xs:string" />
+              <xs:element name="Description" msprop:Generator_ColumnPropNameInTable="DescriptionColumn" msprop:Generator_ColumnPropNameInRow="Description" msprop:Generator_UserColumnName="Description" msprop:Generator_ColumnVarNameInTable="columnDescription" type="xs:string" minOccurs="0" />
+              <xs:element name="Date" msprop:Generator_ColumnPropNameInTable="DateColumn" msprop:Generator_ColumnPropNameInRow="Date" msprop:Generator_UserColumnName="Date" msprop:Generator_ColumnVarNameInTable="columnDate" type="xs:dateTime" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="StringPowersTableKey" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:TextPowers" />
+      <xs:field xpath="mstns:id" />
+    </xs:unique>
+    <xs:unique name="CategoriesTableKey" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Categories" />
+      <xs:field xpath="mstns:key_guid" />
+    </xs:unique>
+    <xs:unique name="Constraint1">
+      <xs:selector xpath=".//mstns:Categories" />
+      <xs:field xpath="mstns:position" />
+    </xs:unique>
+    <xs:unique name="SubcategoriesTableKey" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Subcategories" />
+      <xs:field xpath="mstns:key_guid" />
+    </xs:unique>
+    <xs:unique name="Subcategories_Constraint1" msdata:ConstraintName="Constraint1">
+      <xs:selector xpath=".//mstns:Subcategories" />
+      <xs:field xpath="mstns:position" />
+    </xs:unique>
+    <xs:unique name="DesimalPowersTableKey" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:DecimalPowers" />
+      <xs:field xpath="mstns:id" />
+    </xs:unique>
+    <xs:unique name="ColumnsHeadersTableKey" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:ColumnsHeaders" />
+      <xs:field xpath="mstns:id" />
+    </xs:unique>
+    <xs:unique name="RowsHeadersTableKey" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:RowsHeaders" />
+      <xs:field xpath="mstns:id" />
+    </xs:unique>
+    <xs:unique name="DocumentKeys_Constraint1" msdata:ConstraintName="Constraint1">
+      <xs:selector xpath=".//mstns:DocumentKeys" />
+      <xs:field xpath="mstns:id" />
+    </xs:unique>
+    <xs:unique name="WordFiles_Constraint1" msdata:ConstraintName="Constraint1">
+      <xs:selector xpath=".//mstns:WordFiles" />
+      <xs:field xpath="mstns:id" />
+    </xs:unique>
+    <xs:unique name="Constraint2">
+      <xs:selector xpath=".//mstns:WordFiles" />
+      <xs:field xpath="mstns:FileName" />
+    </xs:unique>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="DecimalPowers_WordFiles" msdata:parent="DecimalPowers" msdata:child="WordFiles" msdata:parentkey="file_id" msdata:childkey="id" msprop:Generator_UserParentTable="DecimalPowers" msprop:Generator_UserChildTable="WordFiles" msprop:Generator_RelationVarName="relationDecimalPowers_WordFiles" msprop:Generator_ChildPropName="GetWordFilesRows" msprop:Generator_ParentPropName="DecimalPowersRow" msprop:Generator_UserRelationName="DecimalPowers_WordFiles" />
+      <msdata:Relationship name="TextPowers_WordFiles" msdata:parent="TextPowers" msdata:child="WordFiles" msdata:parentkey="file_id" msdata:childkey="id" msprop:Generator_UserParentTable="TextPowers" msprop:Generator_UserChildTable="WordFiles" msprop:Generator_RelationVarName="relationTextPowers_WordFiles" msprop:Generator_ChildPropName="GetWordFilesRows" msprop:Generator_ParentPropName="TextPowersRow" msprop:Generator_UserRelationName="TextPowers_WordFiles" />
+      <msdata:Relationship name="Subcategories_Categories" msdata:parent="Subcategories" msdata:child="Categories" msdata:parentkey="category_guid" msdata:childkey="key_guid" msprop:Generator_UserParentTable="Subcategories" msprop:Generator_UserChildTable="Categories" msprop:Generator_RelationVarName="relationSubcategories_Categories" msprop:Generator_ChildPropName="GetCategoriesRows" msprop:Generator_UserRelationName="Subcategories_Categories" msprop:Generator_ParentPropName="SubcategoriesRow" />
+      <msdata:Relationship name="TextPowers_Categories" msdata:parent="TextPowers" msdata:child="Categories" msdata:parentkey="category_guid" msdata:childkey="key_guid" msprop:Generator_UserParentTable="TextPowers" msprop:Generator_UserChildTable="Categories" msprop:Generator_RelationVarName="relationTextPowers_Categories" msprop:Generator_ChildPropName="GetCategoriesRows" msprop:Generator_UserRelationName="TextPowers_Categories" msprop:Generator_ParentPropName="TextPowersRow" />
+      <msdata:Relationship name="TextPowers_Subcategories" msdata:parent="TextPowers" msdata:child="Subcategories" msdata:parentkey="subcategory_guid" msdata:childkey="key_guid" msprop:Generator_UserParentTable="TextPowers" msprop:Generator_UserChildTable="Subcategories" msprop:Generator_RelationVarName="relationTextPowers_Subcategories" msprop:Generator_ChildPropName="GetSubcategoriesRows" msprop:Generator_UserRelationName="TextPowers_Subcategories" msprop:Generator_ParentPropName="TextPowersRow" />
+      <msdata:Relationship name="DecimalPowers_Categories" msdata:parent="DecimalPowers" msdata:child="Categories" msdata:parentkey="category_guid" msdata:childkey="key_guid" msprop:Generator_UserParentTable="DecimalPowers" msprop:Generator_UserChildTable="Categories" msprop:Generator_RelationVarName="relationDecimalPowers_Categories" msprop:Generator_ChildPropName="GetCategoriesRows" msprop:Generator_ParentPropName="DecimalPowersRow" msprop:Generator_UserRelationName="DecimalPowers_Categories" />
+      <msdata:Relationship name="DecimalPowers_Subcategories" msdata:parent="DecimalPowers" msdata:child="Subcategories" msdata:parentkey="subcategory_guid" msdata:childkey="key_guid" msprop:Generator_UserParentTable="DecimalPowers" msprop:Generator_UserChildTable="Subcategories" msprop:Generator_RelationVarName="relationDecimalPowers_Subcategories" msprop:Generator_ChildPropName="GetSubcategoriesRows" msprop:Generator_ParentPropName="DecimalPowersRow" msprop:Generator_UserRelationName="DecimalPowers_Subcategories" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

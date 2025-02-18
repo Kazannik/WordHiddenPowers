@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using WordHiddenPowers.Repositoryes;
+using WordHiddenPowers.Repositories;
 
 namespace WordHiddenPowers.Dialogs
 {

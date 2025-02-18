@@ -27,17 +27,16 @@
     <NoStandardLibraries>false</NoStandardLibraries>
     <RootNamespace>WordHiddenPowers</RootNamespace>
     <AssemblyName>WordHiddenPowers</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <DefineConstants>VSTO40</DefineConstants>
     <IsWebBootstrapper>False</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <BootstrapperEnabled>false</BootstrapperEnabled>
-    <BootstrapperComponentsLocation>Relative</BootstrapperComponentsLocation>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
     <PublishUrl>publish\</PublishUrl>
     <InstallUrl />
     <TargetCulture>ru</TargetCulture>
-    <ApplicationVersion>1.2.0.8</ApplicationVersion>
-    <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
+    <ApplicationVersion>1.2.0.10</ApplicationVersion>
+    <AutoIncrementApplicationRevision>false</AutoIncrementApplicationRevision>
     <UpdateEnabled>false</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
     <UpdateIntervalUnits>days</UpdateIntervalUnits>
@@ -104,8 +103,11 @@
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
-    <DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>
-    <WarningLevel>4</WarningLevel>
+    <DefineConstants>TRACE;DEBUG;VSTO40;UseOfficeInterop;WORD</DefineConstants>
+    <WarningLevel>0</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <!--
     This section defines properties that are set when the "Release" configuration is selected.
@@ -130,6 +132,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
     <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
+    <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
   </PropertyGroup>
   <!--
     This section specifies references for the project.
@@ -197,21 +200,26 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="..\..\ControlLibrary\ControlLibrary\Utils\Gdi32.cs">
+      <Link>Utils\Gdi32.cs</Link>
+    </Compile>
     <Compile Include="Const\Content.cs" />
     <Compile Include="Const\Globals.cs" />
     <Compile Include="Const\Panes.cs" />
-    <Compile Include="Controls\ComboControls\CategoriesComboBox.cs" />
-    <Compile Include="Controls\ListControls\CategoriesListBox.cs" />
-    <Compile Include="Controls\CategoriesPicker.cs" />
     <Compile Include="Controls\AnalyzerNoteListBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\ComboControls\CategoriesComboBox.cs" />
+    <Compile Include="Controls\ListControls\AnalyzerListBox.cs" />
+    <Compile Include="Controls\ListControls\CategoriesCheckedListBox.cs" />
+    <Compile Include="Controls\ListControls\CategoriesListBox.cs" />
+    <Compile Include="Controls\CategoriesPicker.cs" />
     <Compile Include="Controls\ListControls\NotesListBox.cs" />
-    <Compile Include="Controls\ReitingBox.cs">
+    <Compile Include="Controls\RatingBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\ReitingBox.Designer.cs">
-      <DependentUpon>ReitingBox.cs</DependentUpon>
+      <DependentUpon>RatingBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ComboControls\SubcategoriesComboBox.cs" />
     <Compile Include="Controls\TableEditBox.cs">
@@ -220,11 +228,11 @@
     <Compile Include="Controls\TableEditBox.Designer.cs">
       <DependentUpon>TableEditBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\WordHiddenPowersRibbon.cs">
+    <Compile Include="Controls\AddInMainRibbon.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\WordHiddenPowersRibbon.Designer.cs">
-      <DependentUpon>WordHiddenPowersRibbon.cs</DependentUpon>
+    <Compile Include="Controls\AddInMainRibbon.Designer.cs">
+      <DependentUpon>AddInMainRibbon.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\AboutBox.cs">
       <SubType>Form</SubType>
@@ -238,10 +246,16 @@
     <Compile Include="Dialogs\AnalyzerDialog.Designer.cs">
       <DependentUpon>AnalyzerDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Repositoryes\Data\Cell.cs" />
-    <Compile Include="Repositoryes\Data\Row.cs" />
-    <Compile Include="Repositoryes\Data\RowCollection.cs" />
-    <Compile Include="Repositoryes\Data\Table.cs" />
+    <Compile Include="Dialogs\SelectCategoriesDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\SelectCategoriesDialog.Designer.cs">
+      <DependentUpon>SelectCategoriesDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Data\Cell.cs" />
+    <Compile Include="Repositories\Data\Row.cs" />
+    <Compile Include="Repositories\Data\RowCollection.cs" />
+    <Compile Include="Repositories\Data\Table.cs" />
     <Compile Include="Dialogs\CategoriesEditorDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -307,14 +321,13 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Repositoryes\Categories\Category.cs" />
-    <Compile Include="Repositoryes\Notes\Note.cs" />
-    <Compile Include="Repositoryes\Categories\Subcategory.cs" />
-    <Compile Include="Repositoryes\WordFiles\WordFile.cs" />
-    <Compile Include="Utils\Categories.cs" />
-    <Compile Include="Utils\FileSystem.cs" />
-    <Compile Include="Utils\Content.cs" />
-    <Compile Include="Utils\MicrosoftDocuments.cs" />
+    <Compile Include="Repositories\Categories\Category.cs" />
+    <Compile Include="Repositories\Notes\Note.cs" />
+    <Compile Include="Repositories\Categories\Subcategory.cs" />
+    <Compile Include="Repositories\WordFiles\WordFile.cs" />
+    <Compile Include="Utils\CategoriesUtil.cs" />
+    <Compile Include="Utils\FileSystemUtil.cs" />
+    <Compile Include="Utils\ContentUtil.cs" />
     <Compile Include="Utils\ShowDialogUtil.cs" />
     <Compile Include="Utils\WordUtil.cs" />
     <Compile Include="Utils\Xml.cs" />
@@ -322,19 +335,21 @@
       <DependentUpon>AnalyzerNoteListBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ReitingBox.resx">
-      <DependentUpon>ReitingBox.cs</DependentUpon>
+      <DependentUpon>RatingBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TableEditBox.resx">
       <DependentUpon>TableEditBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\WordHiddenPowersRibbon.resx">
-      <DependentUpon>WordHiddenPowersRibbon.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\AddInMainRibbon.resx">
+      <DependentUpon>AddInMainRibbon.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\AnalyzerDialog.resx">
       <DependentUpon>AnalyzerDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\CategoriesEditorDialog.resx">
       <DependentUpon>CategoriesEditorDialog.cs</DependentUpon>
@@ -350,6 +365,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\CreadeNoteDialog.resx">
       <DependentUpon>CreadeNoteDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\SelectCategoriesDialog.resx">
+      <DependentUpon>SelectCategoriesDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\TableViewerDialog.resx">
       <DependentUpon>TableViewerDialog.cs</DependentUpon>
@@ -377,6 +395,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
+    <None Include="Kazannik Test Software CA.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -386,10 +405,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Repositoryes\HiddenPowerSchema.cs">
+    <Compile Include="Repositories\HiddenPowerSchema.cs">
       <DependentUpon>HiddenPowerSchema.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Repositoryes\HiddenPowerSchema.Designer.cs">
+    <Compile Include="Repositories\HiddenPowerSchema.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>HiddenPowerSchema.xsd</DependentUpon>
@@ -398,15 +417,15 @@
       <SubType>Code</SubType>
     </Compile>
     <None Include="README.md" />
-    <None Include="Repositoryes\HiddenPowerSchema.xsc">
+    <None Include="Repositories\HiddenPowerSchema.xsc">
       <DependentUpon>HiddenPowerSchema.xsd</DependentUpon>
     </None>
-    <None Include="Repositoryes\HiddenPowerSchema.xsd">
+    <None Include="Repositories\HiddenPowerSchema.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>HiddenPowerSchema.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Repositoryes\HiddenPowerSchema.xss">
+    <None Include="Repositories\HiddenPowerSchema.xss">
       <DependentUpon>HiddenPowerSchema.xsd</DependentUpon>
     </None>
     <None Include="ThisAddIn.Designer.xml">
@@ -416,7 +435,6 @@
       <DependentUpon>ThisAddIn.Designer.xml</DependentUpon>
     </Compile>
     <AppDesigner Include="Properties\" />
-    <None Include="WordHiddenPowers_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TableEdit.ico" />
@@ -610,6 +628,7 @@
   <ItemGroup>
     <Content Include="Files\Example.txt" />
     <Content Include="Files\ListDocs.txt" />
+    <None Include="Resources\App.ico" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Service\" />
@@ -632,7 +651,16 @@
     </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>FD028A23E7ACF29F17916A866E38339B0721C3F9</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>621E2114C5104C6CC726BABCAA86872D99B651DB</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\App.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Kazannik Test Software CA.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -644,7 +672,7 @@
       <FlavorProperties GUID="{BAA0C2D2-18E2-41B9-852F-F413020CAA33}">
         <ProjectProperties HostName="Word" HostPackage="{29A7B9D7-A7F1-4328-8EF0-6B2D1A56B2C1}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="Word" Language="cs" TemplatesPath="" DebugInfoExeName="#Software\Microsoft\Office\16.0\Word\InstallRoot\Path#WINWORD.EXE" DebugInfoCommandLine="/x" AddItemTemplatesGuid="{51063C3A-E220-4D12-8922-BDA915ACD783}" />
         <Host Name="Word" GeneratedCodeNamespace="WordHiddenPowers" PublishedHash="69C324AB27932AA2FBF2B7EA72250886FF164DE6" IconIndex="0">
-          <HostItem Name="ThisAddIn" Code="ThisAddIn.cs" CanonicalName="AddIn" PublishedHash="6ABD65EE4C535CF37B1A03835208C04D17D88BAB" CanActivate="false" IconIndex="1" Blueprint="ThisAddIn.Designer.xml" GeneratedCode="ThisAddIn.Designer.cs" />
+          <HostItem Name="ThisAddIn" Code="ThisAddIn.cs" CanonicalName="AddIn" PublishedHash="7D74800DCFC1C4FAE455F9D84E41AD070388413C" CanActivate="false" IconIndex="1" Blueprint="ThisAddIn.Designer.xml" GeneratedCode="ThisAddIn.Designer.cs" />
         </Host>
       </FlavorProperties>
     </VisualStudio>

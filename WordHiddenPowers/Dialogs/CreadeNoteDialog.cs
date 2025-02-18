@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
-using WordHiddenPowers.Repositoryes;
-using WordHiddenPowers.Repositoryes.Categories;
-using WordHiddenPowers.Repositoryes.Notes;
+using WordHiddenPowers.Repositories;
+using WordHiddenPowers.Repositories.Categories;
+using WordHiddenPowers.Repositories.Notes;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Dialogs
@@ -16,11 +16,11 @@ namespace WordHiddenPowers.Dialogs
 
 		public int SelectionEnd { get; }
 
-		public int Reiting
+		public int Rating
 		{
 			get
 			{
-				return raitingBox.Value;
+				return ratingBox.Value;
 			}
 		}
 
@@ -84,12 +84,14 @@ namespace WordHiddenPowers.Dialogs
 			SelectionStart = note.WordSelectionStart;
 			SelectionEnd = note.WordSelectionEnd;
 
-			raitingBox.Value = note.Reiting;
+			ratingBox.Value = note.Rating;
 			descriptionTextBox.Text = note.Description;
 
 			categoriesComboBox.InitializeSource(this.dataSet, isText);
-			categoriesComboBox.SelectedItem = categoriesComboBox.GetItem(note.Category.Id);
-			subcategoriesComboBox.SelectedItem = subcategoriesComboBox.GetItem(note.Subcategory.Id);
+			okButton.Enabled = false;
+
+			categoriesComboBox.SelectedItem = categoriesComboBox.GetItem(note.Category.Guid);
+			subcategoriesComboBox.SelectedItem = subcategoriesComboBox.GetItem(note.Subcategory.Position);
 		}
 
 		private void CategoriesComboBox_SelectedIndexChanged(object sender, System.EventArgs e)

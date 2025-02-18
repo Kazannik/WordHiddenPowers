@@ -1,3 +1,6 @@
 [submodule "ControlLibrary"]
 	path = ControlLibrary
 	url = https://github.com/Kazannik/ControlLibrary.git
+[submodule "NeuronetLibrary"]
+	path = NeuronetLibrary
+	url = https://github.com/Kazannik/NeuronetLibrary.git

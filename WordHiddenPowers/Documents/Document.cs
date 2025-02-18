@@ -1,14 +1,20 @@
-﻿using Microsoft.Office.Tools;
+﻿using Microsoft.Office.Interop.Word;
+using Microsoft.Office.Tools;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using WordHiddenPowers.Dialogs;
 using WordHiddenPowers.Panes;
-using WordHiddenPowers.Repositoryes;
-using WordHiddenPowers.Repositoryes.Data;
+using WordHiddenPowers.Repositories;
+using WordHiddenPowers.Repositories.Categories;
+using WordHiddenPowers.Repositories.Data;
 using WordHiddenPowers.Utils;
+using static WordHiddenPowers.Repositories.RepositoryDataSet;
+using DataTable = System.Data.DataTable;
 using Office = Microsoft.Office.Core;
+using Table = WordHiddenPowers.Repositories.Data.Table;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Documents
@@ -19,28 +25,10 @@ namespace WordHiddenPowers.Documents
 
 		private RepositoryDataSet dataSet;
 
-		private CustomTaskPane pane;
-
 		private RepositoryDataSet importDataSet;
 
-		public CustomTaskPane CustomPane
-		{
-			get
-			{
-				if (pane == null)
-				{
-					pane = Globals.ThisAddIn.CustomTaskPanes.Add(new NotesPane(this), Const.Panes.PANE_TITLE);
-					pane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
-					pane.Width = 400;
-					pane.Visible = false;
-					pane.VisibleChanged += new EventHandler(Pane_VisibleChanged);
-					NotesPane note = pane.Control as NotesPane;
-					note.PropertiesChanged += new EventHandler<EventArgs>(NotesPane_PropertiesChanged);
-				}
-				return pane;
-			}
-		}
-
+		public CustomTaskPane CustomPane { get; }
+		
 		private void NotesPane_PropertiesChanged(object sender, EventArgs e)
 		{
 			if (Caption != Pane.Caption)
@@ -61,7 +49,7 @@ namespace WordHiddenPowers.Documents
 
 			if (DataSet.HasChanges())
 			{
-				Content.CommitVariable(
+				ContentUtil.CommitVariable(
 					array: Doc.Variables, 
 					variableName: Const.Globals.XML_VARIABLE_NAME, 
 					dataSet: DataSet);
@@ -83,11 +71,11 @@ namespace WordHiddenPowers.Documents
 		{
 			get
 			{
-				return Content.GetCaption(Doc);
+				return ContentUtil.GetCaption(Doc);
 			}
 			set
 			{
-				Content.CommitVariable(
+				ContentUtil.CommitVariable(
 					array: Doc.Variables, 
 					variableName: Const.Globals.CAPTION_VARIABLE_NAME, 
 					value: value);
@@ -98,11 +86,11 @@ namespace WordHiddenPowers.Documents
 		{
 			get
 			{
-				return Content.GetDate(Doc);
+				return ContentUtil.GetDate(Doc);
 			}
 			set
 			{
-				Content.CommitVariable(
+				ContentUtil.CommitVariable(
 					array: Doc.Variables, 
 					variableName: Const.Globals.DATE_VARIABLE_NAME, 
 					value: value.ToShortDateString());
@@ -113,11 +101,11 @@ namespace WordHiddenPowers.Documents
 		{
 			get
 			{
-				return Content.GetDescription(Doc);
+				return ContentUtil.GetDescription(Doc);
 			}
 			set
 			{
-				Content.CommitVariable(
+				ContentUtil.CommitVariable(
 					array: Doc.Variables, 
 					variableName: Const.Globals.DESCRIPTION_VARIABLE_NAME,
 					value: value);
@@ -128,11 +116,11 @@ namespace WordHiddenPowers.Documents
 		{
 			get
 			{
-				return Content.GetTable(Doc);
+				return ContentUtil.GetTable(Doc);
 			}
 			set
 			{
-				Content.CommitVariable(
+				ContentUtil.CommitVariable(
 					array: Doc.Variables, 
 					variableName: Const.Globals.TABLE_VARIABLE_NAME,
 					value: value.ToString());
@@ -147,7 +135,12 @@ namespace WordHiddenPowers.Documents
 			{
 				if (dataSet == null)
 				{
-					dataSet = Xml.GetDataSet(Doc: Doc);
+					bool isCorrect;
+					dataSet = Xml.GetDataSet(Doc: Doc, out isCorrect);
+					if (!isCorrect)
+					{
+						dataSet = new RepositoryDataSet();
+					}
 				}
 				return dataSet;
 			}
@@ -159,9 +152,10 @@ namespace WordHiddenPowers.Documents
 			{
 				if (importDataSet == null)
 				{
+					bool isCorrect;
 					importDataSet = Xml.GetDataSet(
 						Doc: Doc, 
-						variableName: Const.Globals.XML_IMPORT_VARIABLE_NAME);
+						variableName: Const.Globals.XML_IMPORT_VARIABLE_NAME, out isCorrect);
 				}
 				return importDataSet;
 			}
@@ -172,10 +166,24 @@ namespace WordHiddenPowers.Documents
 		private Document(DocumentCollection parent, string fileName, Word._Document doc)
 		{
 			this.parent = parent;
+
 			dialogs = new List<Form>();
 			FileName = fileName;
 			ContentHide = false;
 			Doc = doc;
+
+			bool oldState = this.parent.paneVisibleButton.Checked;
+			this.parent.paneVisibleButton.Checked = false;
+
+			CustomPane = Globals.ThisAddIn.CustomTaskPanes.Add(new NotesPane(this), Const.Panes.PANE_TITLE, Doc.ActiveWindow);
+			CustomPane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
+			CustomPane.Width = 400;
+			
+			CustomPane.VisibleChanged += new EventHandler(Pane_VisibleChanged);
+			Pane.PropertiesChanged += new EventHandler<EventArgs>(NotesPane_PropertiesChanged);
+			
+			CustomPane.Visible = oldState;
+			this.parent.paneVisibleButton.Checked = oldState;
 		}
 
 		void Pane_VisibleChanged(object sender, EventArgs e)
@@ -197,11 +205,13 @@ namespace WordHiddenPowers.Documents
 		{
 			DataSet.RowsHeaders.Clear();
 			DataSet.ColumnsHeaders.Clear();
-			DataSet.Categories.Clear();
 			DataSet.Subcategories.Clear();
+			DataSet.Categories.Clear();
 			DataSet.DecimalPowers.Clear();
 			DataSet.TextPowers.Clear();
 			DataSet.WordFiles.Clear();
+
+			DataSet.AcceptChanges();
 
 			CommitVariables();
 		}
@@ -212,15 +222,19 @@ namespace WordHiddenPowers.Documents
 			{
 				DataSet.RowsHeaders.Clear();
 				DataSet.ColumnsHeaders.Clear();
-				DataSet.Categories.Clear();
+
 				DataSet.Subcategories.Clear();
+				DataSet.Categories.Clear();
+				
 				DataSet.DocumentKeys.Clear();
-
-				DataSet.ReadXml(fileName, XmlReadMode.IgnoreSchema);
-
+				
 				DataSet.DecimalPowers.Clear();
 				DataSet.TextPowers.Clear();
 
+				DataSet.ReadXml(fileName, XmlReadMode.IgnoreSchema);
+
+				DataSet.AcceptChanges();
+				
 				CommitVariables();
 			}
 			catch (Exception ex)
@@ -236,19 +250,19 @@ namespace WordHiddenPowers.Documents
 
 		public void CommitVariables()
 		{
-			Content.CommitVariable(Doc.Variables, Const.Globals.CAPTION_VARIABLE_NAME, Caption);
-			Content.CommitVariable(Doc.Variables, Const.Globals.DATE_VARIABLE_NAME, Date.ToShortDateString());
-			Content.CommitVariable(Doc.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME, Description);
-			Content.CommitVariable(Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME, Table.ToString());
+			ContentUtil.CommitVariable(Doc.Variables, Const.Globals.CAPTION_VARIABLE_NAME, Caption);
+			ContentUtil.CommitVariable(Doc.Variables, Const.Globals.DATE_VARIABLE_NAME, Date.ToShortDateString());
+			ContentUtil.CommitVariable(Doc.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME, Description);
+			ContentUtil.CommitVariable(Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME, Table.ToString());
 
 			if (DataSet.HasChanges())
 			{
-				Content.CommitVariable(Doc.Variables, Const.Globals.XML_VARIABLE_NAME, DataSet);
+				ContentUtil.CommitVariable(Doc.Variables, Const.Globals.XML_VARIABLE_NAME, DataSet);
 			}
 
 			if (ImportDataSet.HasChanges())
 			{
-				Content.CommitVariable(Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME, ImportDataSet);
+				ContentUtil.CommitVariable(Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME, ImportDataSet);
 			}
 		}
 
@@ -256,42 +270,42 @@ namespace WordHiddenPowers.Documents
 		{
 			if (Doc.Variables.Count > 0)
 			{
-				Word.Variable caption = Content.GetVariable(Doc.Variables,
+				Word.Variable caption = ContentUtil.GetVariable(Doc.Variables,
 					Const.Globals.CAPTION_VARIABLE_NAME);
 				if (caption != null)
 				{
 					return true;
 				}
 
-				Word.Variable date = Content.GetVariable(Doc.Variables,
+				Word.Variable date = ContentUtil.GetVariable(Doc.Variables,
 					Const.Globals.DATE_VARIABLE_NAME);
 				if (date != null)
 				{
 					return true;
 				}
 
-				Word.Variable description = Content.GetVariable(Doc.Variables,
+				Word.Variable description = ContentUtil.GetVariable(Doc.Variables,
 					Const.Globals.DESCRIPTION_VARIABLE_NAME);
 				if (description != null)
 				{
 					return true;
 				}
 
-				Word.Variable table = Content.GetVariable(Doc.Variables,
+				Word.Variable table = ContentUtil.GetVariable(Doc.Variables,
 					Const.Globals.TABLE_VARIABLE_NAME);
 				if (table != null)
 				{
 					return true;
 				}
 
-				Word.Variable content = Content.GetVariable(Doc.Variables,
+				Word.Variable content = ContentUtil.GetVariable(Doc.Variables,
 					Const.Globals.XML_VARIABLE_NAME);
 				if (content != null)
 				{
 					return true;
 				}
 
-				Word.Variable import = Content.GetVariable(Doc.Variables,
+				Word.Variable import = ContentUtil.GetVariable(Doc.Variables,
 					Const.Globals.XML_IMPORT_VARIABLE_NAME);
 				if (import != null)
 				{
@@ -310,15 +324,14 @@ namespace WordHiddenPowers.Documents
 
 			if (Doc.Variables.Count > 0)
 			{
-				Content.DeleteVariable(Doc.Variables, Const.Globals.CAPTION_VARIABLE_NAME);
-				Content.DeleteVariable(Doc.Variables, Const.Globals.DATE_VARIABLE_NAME);
-				Content.DeleteVariable(Doc.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME);
-				Content.DeleteVariable(Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
-				Content.DeleteVariable(Doc.Variables, Const.Globals.XML_VARIABLE_NAME);
-				Content.DeleteVariable(Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME);
+				ContentUtil.DeleteVariable(Doc.Variables, Const.Globals.CAPTION_VARIABLE_NAME);
+				ContentUtil.DeleteVariable(Doc.Variables, Const.Globals.DATE_VARIABLE_NAME);
+				ContentUtil.DeleteVariable(Doc.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME);
+				ContentUtil.DeleteVariable(Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+				ContentUtil.DeleteVariable(Doc.Variables, Const.Globals.XML_VARIABLE_NAME);
+				ContentUtil.DeleteVariable(Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME);
 			}
 		}
-
 
 		protected IList<Form> dialogs = null;
 
@@ -326,8 +339,10 @@ namespace WordHiddenPowers.Documents
 		{
 			Form dialog = new DocumentKeysDialog(DataSet);
 			dialogs.Add(dialog);
-			ShowDialogUtil.ShowDialog(dialog);
-			//OnPropertiesChanged(new EventArgs());
+			if (ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
+			{
+				CommitVariables();
+			}
 		}
 
 		public void ShowEditCategoriesDialog()
@@ -336,7 +351,7 @@ namespace WordHiddenPowers.Documents
 			dialogs.Add(dialog);
 			if (ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
 			{
-				Pane.DataSetRefresh();
+				//Pane.DataSetRefresh();
 			}
 		}
 
@@ -356,14 +371,24 @@ namespace WordHiddenPowers.Documents
 			//OnPropertiesChanged(new EventArgs());
 		}
 
-
 		public void ImportDataFromWordDocuments()
 		{
 			FolderBrowserDialog dialog = new FolderBrowserDialog();
 			if (ShowDialogUtil.ShowDialogO(dialog) == DialogResult.OK)
 			{
-				importDataSet = FileSystem.ImportFiles(dialog.SelectedPath);
-				Content.CommitVariable(Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME, ImportDataSet);
+				importDataSet = FileSystemUtil.ImportFiles(dialog.SelectedPath);
+				ContentUtil.CommitVariable(Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME, ImportDataSet);
+				Doc.Saved = false;
+			}
+		}
+
+		public void ImportDataFromWordDocument()
+		{
+			FolderBrowserDialog dialog = new FolderBrowserDialog();
+			if (ShowDialogUtil.ShowDialogO(dialog) == DialogResult.OK)
+			{
+				importDataSet = FileSystemUtil.ImportFiles(dialog.SelectedPath);
+				ContentUtil.CommitVariable(Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME, ImportDataSet);
 				Doc.Saved = false;
 			}
 		}
@@ -375,41 +400,250 @@ namespace WordHiddenPowers.Documents
 			ShowDialogUtil.ShowDialog(dialog);
 		}
 
-		public void ShowAnalizerDialog()
+		public void ShowAnalyzerDialog()
 		{
 			AnalyzerDialog dialog = new AnalyzerDialog(ImportDataSet);
 			dialogs.Add(dialog);
 			ShowDialogUtil.Show(dialog);
 		}
 
-		public void AddTextNote(Word.Selection selection)
+		public void AddTextNote(Selection selection)
 		{
 			TextNoteDialog dialog = new TextNoteDialog(DataSet, selection);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
-				int fileId = GetFile(FileName);
-
-				DataSet.TextPowers.Rows.Add(new object[]
-				{ null, dialog.Category.Id, dialog.Subcategory.Id, dialog.Description, dialog.Value, dialog.Reiting, dialog.SelectionStart, dialog.SelectionEnd, fileId });
-
-				CommitVariables();
+				AddTextNote(
+					categoryGuid: dialog.Category.Guid,
+					subcategoryGuid: dialog.Subcategory.Guid,
+					description: dialog.Description,
+					value: dialog.Value,
+					rating: dialog.Rating,
+					selectionStart: dialog.SelectionStart,
+					selectionEnd: dialog.SelectionEnd
+					);
 			}
 		}
 
-		public void AddDecimalNote(Word.Selection selection)
+		public void AddDecimalNote(Selection selection)
 		{
 			DecimalNoteDialog dialog = new DecimalNoteDialog(DataSet, selection);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
-				int fileId = GetFile(FileName);
-
-				DataSet.DecimalPowers.Rows.Add(new object[]
-				{ null, dialog.Category.Id, dialog.Subcategory.Id, dialog.Description, dialog.Value, dialog.Reiting, dialog.SelectionStart, dialog.SelectionEnd, fileId });
-
-				CommitVariables();
+				AddDecimalNote(
+					categoryGuid: dialog.Category.Guid,
+					subcategoryGuid: dialog.Subcategory.Guid,
+					description: dialog.Description,
+					value: dialog.Value,
+					rating: dialog.Rating,
+					selectionStart: dialog.SelectionStart,
+					selectionEnd: dialog.SelectionEnd
+					);
 			}
 		}
 
+		private void AddTextNote(string categoryGuid, string subcategoryGuid, string description, string value, int rating, int selectionStart, int selectionEnd)
+		{
+			int fileId = GetFile(FileName);
+			DataSet.TextPowers.Rows.Add(new object[]
+			{
+				null,
+				categoryGuid,
+				subcategoryGuid,
+				description,
+				value,
+				rating,
+				selectionStart,
+				selectionEnd,
+				fileId 
+			});
+			CommitVariables();
+		}
+
+		private void AddDecimalNote(string categoryGuid, string subcategoryGuid, string description, double value, int rating, int selectionStart, int selectionEnd)
+		{
+			int fileId = GetFile(FileName);
+			DataSet.DecimalPowers.Rows.Add(new object[]
+			{
+				null,
+				categoryGuid,
+				subcategoryGuid,
+				description,
+				value,
+				rating,
+				selectionStart,
+				selectionEnd,
+				fileId
+			});
+			CommitVariables();
+		}
+
+
+		public void ShowSearchServiceDialog()
+		{
+			Form dialog = new SelectCategoriesDialog(this);
+			dialogs.Add(dialog);
+			if (ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
+			{
+				SearchService(((SelectCategoriesDialog)dialog).CheckedSubcategories);
+				MessageBox.Show("Разметка документа с помощью поисковых функций выполнена!",
+							"Разметка документа",
+							MessageBoxButtons.OK,
+							MessageBoxIcon.Information);
+			}
+		}
+
+		public void SearchService(IEnumerable<Subcategory> items)
+		{
+			foreach (Subcategory item in items)
+			{
+				if (!string.IsNullOrEmpty(item.Keywords))
+				{
+					string[] keywords = item.Keywords.Split(separator: new string[] { Environment.NewLine }, options: StringSplitOptions.RemoveEmptyEntries);
+					foreach (string keyword in keywords)
+					{
+						SearchParagraphs( categoryGuid: item.Category.Guid, subcategoryGuid: item.Guid, keyword: keyword, isText: item.IsText);
+					}
+				}
+			}
+		}
+
+		private void SearchParagraphs(string categoryGuid, string subcategoryGuid, string keyword, bool isText)
+		{
+			Pane.ShowButtons = true;
+			string[] patterns = GetPatters(keyword);			
+			
+			if (patterns.Length > 0)
+			{
+				foreach (Paragraph paragraph in Doc.Content.Paragraphs)
+				{
+					if (IsCompliance(paragraph: paragraph, pattern: patterns[0]))
+					{
+						if (isText)
+						{
+							if (patterns.Length == 1)
+							{
+								AddTextNote(
+									categoryGuid: categoryGuid,
+									subcategoryGuid: subcategoryGuid,
+									description: null,
+									value: paragraph.Range.Text,
+									rating: 0,
+									selectionStart: paragraph.Range.Start,
+									selectionEnd: paragraph.Range.End
+									);
+							}
+							else
+							{
+								AddTextParagraph(
+									categoryGuid: categoryGuid,
+									subcategoryGuid: subcategoryGuid,
+									paragraph: paragraph,
+									patterns: patterns
+									);
+							}
+						}
+						else
+						{
+							AddDecimalParagraph(
+									categoryGuid: categoryGuid,
+									subcategoryGuid: subcategoryGuid,
+									paragraph: paragraph,
+									patterns: patterns
+									);
+						}
+					}
+				}
+			}
+		}
+
+		private static string[] GetPatters(string keyword)
+		{
+			string[] patterns = keyword.Split(new string[] { "';'" }, StringSplitOptions.RemoveEmptyEntries);
+			if (patterns.Length > 0)
+			{
+				if (patterns[0].Length >0 
+					&& patterns[0][0] == 39
+					&& patterns[patterns.Length - 1][patterns[patterns.Length - 1].Length-1] == 39)
+				{
+					patterns[0] = patterns[0].Substring(1);
+					patterns[patterns.Length - 1] = patterns[patterns.Length - 1].Substring(0, patterns[patterns.Length - 1].Length-1);
+				}
+			}
+			return patterns;
+		}
+
+		private static bool IsCompliance(Paragraph paragraph, string pattern) 
+		{
+			Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
+			return regex.IsMatch(paragraph.Range.Text);			
+		}
+
+		private void AddTextParagraph(string categoryGuid, string subcategoryGuid, Paragraph paragraph, string[] patterns)
+		{
+			string content = paragraph.Range.Text;
+			int selectionStart = paragraph.Range.Start;
+			for (int i = 1; i < patterns.Length; i++)
+			{
+				Regex regex = new Regex(patterns[i], RegexOptions.IgnoreCase);
+				if (regex.IsMatch(content))
+				{
+					Match match = regex.Match(content);
+					content = match.Value;
+					selectionStart += match.Index;
+				}
+				else
+				{
+					return;
+				}
+			}
+			AddTextNote(
+				categoryGuid: categoryGuid, 
+				subcategoryGuid: subcategoryGuid,
+				description: null,
+				value: content,
+				rating: 0,
+				selectionStart: selectionStart,
+				selectionEnd: selectionStart + content.Length);
+		}
+
+		private void AddDecimalParagraph(string categoryGuid, string subcategoryGuid, Paragraph paragraph, string[] patterns)
+		{
+			string content = paragraph.Range.Text;
+			for (int i = 1; i < patterns.Length - 1; i++)
+			{
+				Regex regex = new Regex(patterns[i], RegexOptions.IgnoreCase);
+				if (regex.IsMatch(content))
+				{
+					Match match = regex.Match(content);
+					content = match.Value;
+				}
+				else
+				{
+					return;
+				}
+			}
+			if (double.TryParse(content, out double result))
+				{
+				AddDecimalNote(
+				categoryGuid: categoryGuid,
+				subcategoryGuid: subcategoryGuid,
+				description: null,
+				value: result,
+				rating: 0,
+				selectionStart: paragraph.Range.Start,
+				selectionEnd: paragraph.Range.End
+				);
+			}
+		}
+
+		public void AiService(IEnumerable<SubcategoriesRow> rows)
+		{
+			Pane.ShowButtons = true;
+			foreach (SubcategoriesRow row in rows)
+			{
+				
+			}
+		}
 
 		private int GetFile(string fileName)
 		{
@@ -437,11 +671,7 @@ namespace WordHiddenPowers.Documents
 				}
 				dialogs.Clear();
 			}
-			if (pane != null)
-			{
-				pane.Dispose();
-				pane = null;
-			}
+			CustomPane?.Dispose();
 		}
 	}
 }
