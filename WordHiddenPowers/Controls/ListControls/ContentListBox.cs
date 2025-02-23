@@ -9,23 +9,26 @@ using System.Windows.Forms;
 using WordHiddenPowers.Repositories;
 using WordHiddenPowers.Repositories.Notes;
 using static WordHiddenPowers.Repositories.RepositoryDataSet;
-using Control = WordHiddenPowers.Controls.ListControls.NotesListControl;
+using Control = WordHiddenPowers.Controls.ListControls.ContentListControl;
+using ListItem = WordHiddenPowers.Controls.ListControls.ContentListControl.ListItem;
 using Version = ControlLibrary.Structures.Version;
 
 namespace WordHiddenPowers.Controls.ListControls
 {
 	[ToolboxBitmap(typeof(ListBox))]
 	[ComVisible(false)]
-	public class NotesListBox : ListControl<Control.ListItem, Control.ListItemNote>
+	public class ContentListBox : ListControl<Control.ListItem, Control.ListItemNote>
 	{
 		private RepositoryDataSet source;
-		private bool showButtons;
+		private string filter;
+		private bool hide;
+
 		public event EventHandler<ItemMouseEventArgs<Control.ListItem, Control.BottomBarNote>> ItemApplyClick;
 		public event EventHandler<ItemMouseEventArgs<Control.ListItem, Control.BottomBarNote>> ItemCancelClick;
 
-		public NotesListBox() : base()
+		public ContentListBox() : base()
 		{
-			showButtons = false;
+			hide = true;
 		}
 
 		public RepositoryDataSet DataSet
@@ -49,45 +52,168 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 		}
 
-		public bool ShowButtons
+		public string Filer
 		{
-			get { return showButtons; }
+			get => filter;
 			set
 			{
-				if (showButtons != value)
+				if (filter != value)
 				{
-					showButtons = value;
+					filter = value;
+					ReadData();
 				}
 			}
 		}
 
+
+		public bool Hide
+		{
+			get => hide;
+			set
+			{
+				if (hide != value)
+				{
+					hide = value;
+					ReadData();
+				}
+			}
+		}
+
+		private bool FilterHide(Note note)
+		{
+			if (!Hide)
+			{
+				return note.Hide == false;
+			}
+			return true;
+		}
 		protected override void OnItemMouseClick(ItemMouseEventArgs<Control.ListItem, Control.ListItemNote> e)
 		{
 			if (e.SubItem != null && e.SubItem is Control.BottomBarNote note)
 			{
-				if (!note.ShowButtons && note.ApplyButton.Contains(e.Location))
+				if (note.CheckButtonRectangle.Contains(e.Location))
 				{
-					ItemApplyClick?.Invoke(this,
-						new ItemMouseEventArgs<Control.ListItem, Control.BottomBarNote>(e.Item, note, e.Argument,
-						new MouseEventArgs(e.Button, e.Clicks, e.X, e.Y, e.Delta)));
+					e.Item.Hide = !e.Item.Hide;
 				}
-				else if (!note.ShowButtons && note.CancelButton.Contains(e.Location))
+				else if (note.AdditionButtonRectangle.Contains(e.Location))
 				{
-					ItemCancelClick?.Invoke(this,
-						new ItemMouseEventArgs<Control.ListItem, Control.BottomBarNote>(e.Item, note, e.Argument,
-						new MouseEventArgs(e.Button, e.Clicks, e.X, e.Y, e.Delta)));
+					if (e.Item.Rating < 5) e.Item.Rating++;
+				}
+				else if (note.SubtractionButtonRectangle.Contains(e.Location))
+				{
+					if (e.Item.Rating > -5) e.Item.Rating--;
+				}
+			}			
+			base.OnItemMouseClick(e);
+		}
+
+		private Rectangle checkBoxRectage = Rectangle.Empty;
+		private Rectangle additionButtonRectage = Rectangle.Empty;
+		private Rectangle subtractionButtonRectage = Rectangle.Empty;
+		protected override void OnMouseMove(MouseEventArgs e)
+		{
+			if (checkBoxRectage.Contains(e.Location))
+			{
+				Cursor = System.Windows.Forms.Cursors.Hand;
+				additionButtonRectage = Rectangle.Empty;
+				subtractionButtonRectage = Rectangle.Empty;
+			}
+			else if (additionButtonRectage.Contains(e.Location))
+			{
+				Cursor = System.Windows.Forms.Cursors.Hand;
+				checkBoxRectage = Rectangle.Empty;
+				subtractionButtonRectage = Rectangle.Empty;
+			}
+			else if (subtractionButtonRectage.Contains(e.Location))
+			{
+				checkBoxRectage = Rectangle.Empty;
+				additionButtonRectage = Rectangle.Empty;
+				Cursor = System.Windows.Forms.Cursors.Hand;
+			}
+			else
+			{
+				checkBoxRectage = Rectangle.Empty;
+				additionButtonRectage = Rectangle.Empty;
+				subtractionButtonRectage = Rectangle.Empty;
+				Cursor = System.Windows.Forms.Cursors.Default;
+			}
+			base.OnMouseMove(e);
+		}
+
+		protected override void OnItemMouseMove(ItemMouseEventArgs<Control.ListItem, Control.ListItemNote> e)
+		{
+			if (e.SubItem != null && e.SubItem is Control.BottomBarNote note)
+			{
+				if (note.CheckButtonRectangle.Contains(e.Location))
+				{
+					checkBoxRectage = note.CheckButtonRectangle;
+					additionButtonRectage = Rectangle.Empty;
+					subtractionButtonRectage = Rectangle.Empty;
+					Cursor = System.Windows.Forms.Cursors.Hand;
+				}
+				else if (note.AdditionButtonRectangle.Contains(e.Location))
+				{
+					checkBoxRectage = Rectangle.Empty;
+					additionButtonRectage = note.AdditionButtonRectangle;
+					subtractionButtonRectage = Rectangle.Empty;
+					Cursor = System.Windows.Forms.Cursors.Hand;
+				}
+				else if (note.SubtractionButtonRectangle.Contains(e.Location))
+				{
+					checkBoxRectage = Rectangle.Empty;
+					additionButtonRectage = Rectangle.Empty;
+					subtractionButtonRectage = note.SubtractionButtonRectangle;
+					Cursor = System.Windows.Forms.Cursors.Hand;
 				}
 				else
 				{
-					base.OnItemMouseClick(e);
+					checkBoxRectage = Rectangle.Empty;
+					additionButtonRectage = Rectangle.Empty;
+					subtractionButtonRectage = Rectangle.Empty;
+					Cursor = System.Windows.Forms.Cursors.Default;
 				}
 			}
 			else
 			{
-				base.OnItemMouseClick(e);
+				checkBoxRectage = Rectangle.Empty;
+				additionButtonRectage = Rectangle.Empty;
+				subtractionButtonRectage = Rectangle.Empty;
+				Cursor = System.Windows.Forms.Cursors.Default;
 			}
+			base.OnItemMouseMove(e);
 		}
 
+		protected override void OnItemContentChanged(ItemEventArgs<Control.ListItem> e)
+		{
+			DataSet.Set(e.Item.Note);
+			base.OnItemContentChanged(e);
+		}
+
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			if (e.KeyData == Keys.Space && SelectedItem != null)
+			{
+				((ListItem)SelectedItem).Hide = !((ListItem)SelectedItem).Hide;
+				e.SuppressKeyPress = false;
+			}
+			else if (e.KeyData == Keys.Left && SelectedItem != null)
+			{
+				if (((ListItem)SelectedItem).Rating > -5)
+					((ListItem)SelectedItem).Rating--;
+				e.SuppressKeyPress = true;
+			}
+			else if (e.KeyData == Keys.Right && SelectedItem != null)
+			{
+				if (((ListItem)SelectedItem).Rating < 5) 
+					((ListItem)SelectedItem).Rating++;
+				e.SuppressKeyPress = true;
+			}
+			else
+			{
+				base.OnKeyDown(e);
+			}
+		}
+		
 		private void WordFiles_TableCleared(object sender, DataTableClearEventArgs e)
 		{
 			ReadData();
@@ -97,12 +223,12 @@ namespace WordHiddenPowers.Controls.ListControls
 		{
 			//ReadData();
 		}
-				
+
 		private void Categories_RowChanged(object sender, CategoriesRowChangeEvent e)
 		{
 			//ReadData();
 		}
-		
+
 		private void Subcategories_RowChanged(object sender, SubcategoriesRowChangeEvent e)
 		{
 			//ReadData();
@@ -131,8 +257,7 @@ namespace WordHiddenPowers.Controls.ListControls
 				note.Subcategory = DataSet.GetSubcategory(e.Row.subcategory_guid);
 
 				ListItem item = GetListItem(e.Row);
-				((Control.TitleNote)item[0]).Code = Version.Create(note.Category.Position, note.Subcategory.Position, note.Subcategory.Guid);
-				((Control.TitleNote)item[0]).Text = note.Category.Text;
+				((Control.TitleNote)item[0]).Text = note.FileCaption;
 				((Control.TextNote)item[1]).Text = e.Row.Value.ToString();
 				((Control.DescriptionNote)item[2]).Text = e.Row.Description;
 
@@ -147,7 +272,7 @@ namespace WordHiddenPowers.Controls.ListControls
 			if (e.Action == DataRowAction.Add)
 			{
 				AddNote(Note.Create(
-					dataRow: e.Row, 
+					dataRow: e.Row,
 					fileRow: DataSet.WordFiles.GetRow(id: e.Row.file_id),
 					subcategory: DataSet.GetSubcategory(guid: e.Row.subcategory_guid)));
 			}
@@ -165,11 +290,10 @@ namespace WordHiddenPowers.Controls.ListControls
 				note.Subcategory = DataSet.GetSubcategory(e.Row.subcategory_guid);
 
 				ListItem item = GetListItem(e.Row);
-				((Control.TitleNote)item[0]).Code = Version.Create(note.Category.Position, note.Subcategory.Position, note.Subcategory.Guid);
-				((Control.TitleNote)item[0]).Text = note.Category.Text;
+				((Control.TitleNote)item[0]).Text = note.FileCaption;
 				((Control.TextNote)item[1]).Text = e.Row.Value;
 				((Control.DescriptionNote)item[2]).Text = e.Row.Description;
-				
+
 				int index = Items.IndexOf(item);
 				Rectangle rectangle = GetItemRectangle(index);
 				Invalidate(rectangle);
@@ -187,7 +311,7 @@ namespace WordHiddenPowers.Controls.ListControls
 			{
 				DataSet.DecimalPowers.DecimalPowersRowChanged -= DecimalPowers_RowChanged;
 				DataSet.TextPowers.TextPowersRowChanged -= TextPowers_RowChanged;
-				
+
 				DataSet.DecimalPowers.DecimalPowersRowDeleted -= DecimalPowers_RowChanged;
 				DataSet.TextPowers.TextPowersRowDeleted -= TextPowers_RowChanged;
 				DataSet.DecimalPowers.TableCleared -= TablesPowers_TableCleared;
@@ -256,12 +380,21 @@ namespace WordHiddenPowers.Controls.ListControls
 
 		private void AddNote(Note note)
 		{
-			Items.Add(new Control.ListItem(note: note, showButtons: showButtons));
+			if (!string.IsNullOrEmpty(Filer)
+				&& note.Subcategory.Guid.Equals(Filer) 
+				&& (FilterHide(note)))
+			{
+				Items.Add(new Control.ListItem(note: note));
+			}			
 		}
 
 		private void RemoveNote(Note note)
 		{
-			Items.Remove(GetListItem(note.DataRow as DataRow));
+			if (!string.IsNullOrEmpty(Filer)
+				&& !note.Subcategory.Guid.Equals(Filer))
+			{
+				Items.Remove(GetListItem(note.DataRow as DataRow));
+			}
 		}
 
 		private Note GetNote(DataRow dataRow)
@@ -277,7 +410,7 @@ namespace WordHiddenPowers.Controls.ListControls
 		}
 	}
 
-	namespace NotesListControl
+	namespace ContentListControl
 	{
 		public class ListItem : ControlLibrary.Controls.ListControls.ListItem
 		{
@@ -286,12 +419,12 @@ namespace WordHiddenPowers.Controls.ListControls
 				Note = default;
 			}
 
-			public ListItem(Note note, bool showButtons) : base(
+			public ListItem(Note note) : base(
 				new ListItemNote[] {
-				new TitleNote(note.Category.Position, note.Subcategory.Position, note.Subcategory.Guid, note.Category.Text),
+				new TitleNote(note),
 				new TextNote(note.Value.ToString()),
 				new DescriptionNote(note.Description),
-				new BottomBarNote() {ShowButtons = showButtons } })
+				new BottomBarNote(note: note) })
 			{
 				Note = note;
 			}
@@ -300,26 +433,37 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
-				e.DrawBackground();
-				base.OnDraw(e);
+				DrawItemEventArgs arg = new DrawItemEventArgs(
+					graphics: e.Graphics,
+					font: e.Font,
+					rect: e.Bounds,
+					index: e.Index,
+					state: DrawItemState.None,
+					foreColor: SystemColors.WindowText,
+					backColor: e.State == (e.State | DrawItemState.Selected) ? Color.FromArgb(250, Color.LightBlue) : SystemColors.Window);
+				arg.DrawBackground();
+				base.OnDraw(arg);
 				if (notes.Length > 2 && (!notes[1].Size.IsEmpty || !notes[2].Size.IsEmpty))
 				{
 					// Рисование линии после титульной части
-					Pen linePen = e.State == (e.State | DrawItemState.Selected) ? new Pen(e.ForeColor) : SystemPens.InactiveCaption;
-					e.Graphics.DrawLine(linePen,
-					e.Bounds.X + 7, notes[0].Size.Height - 2,
-					e.Bounds.X + e.Bounds.Width - 15, notes[0].Size.Height - 2);
+					Pen linePen = e.State == (e.State | DrawItemState.Selected) ? new Pen(arg.ForeColor) : SystemPens.InactiveCaption;
+					arg.Graphics.DrawLine(linePen,
+					arg.Bounds.X + 7, notes[0].Size.Height - 2,
+					arg.Bounds.X + e.Bounds.Width - 15, notes[0].Size.Height - 2);
 				}
-				e.DrawFocusRectangle();
+				arg.DrawFocusRectangle();
 			}
 
-			public bool ShowButtons
+			public bool Hide
 			{
-				get => ((BottomBarNote)notes[3]).ShowButtons;
-				set
-				{
-					((BottomBarNote)notes[3]).ShowButtons = value;
-				}
+				get => ((BottomBarNote)notes[3]).Hide;
+				set => ((BottomBarNote)notes[3]).Hide = value;
+			}
+
+			public Rating Rating
+			{
+				get => ((BottomBarNote)notes[3]).Rating;
+				set => ((BottomBarNote)notes[3]).Rating = value;
 			}
 		}
 
@@ -363,39 +507,17 @@ namespace WordHiddenPowers.Controls.ListControls
 
 		public class TitleNote : ListItemNote
 		{
-			private Version code;
-			private Size codeSize;
 			private Size textSize;
 
-			public TitleNote(int major, int minor, string guid, string text) : base(text: text)
+			public TitleNote(Note note) : base(text: note.FileCaption)
 			{
-				code = Version.Create(major: major, minor: minor, guid: guid);
-				codeSize = Size.Empty;
 				textSize = Size.Empty;
 			}
-
-			public Version Code
-			{
-				get
-				{
-					return code;
-				}
-				set
-				{
-					if (code != value)
-					{
-						code = value;
-						DoContentChanged();
-					}
-				}
-			}
+						
 
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
 				Font boldFont = new Font(e.Font.FontFamily, e.Font.Size, FontStyle.Bold);
-				Rectangle codeRectangle = new Rectangle(e.Bounds.X + 2, e.Bounds.Y + 2,
-					codeSize.Width, codeSize.Height);
-				Utils.Drawing.DrawCode( Code, new DrawItemEventArgs(e.Graphics, boldFont, codeRectangle, e.Index, e.State, e.ForeColor, e.BackColor));
 
 				if (!textSize.IsEmpty)
 				{
@@ -408,18 +530,8 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			protected override Size OnMeasureBound(Graphics graphics, Font font, int itemWidth, int itemHeight)
 			{
-				Font boldFont = new Font(font.FontFamily, font.Size, FontStyle.Bold);
-				codeSize = Utils.Drawing.GetCodeSize(graphics, boldFont);
-				textSize = GetTextSize(graphics, Text, font, itemWidth - codeSize.Width - 4, CENTER_STRING_FORMAT);
-
-				if (codeSize.Height < textSize.Height)
-				{
-					return new Size(itemWidth, textSize.Height + 8);
-				}
-				else
-				{
-					return new Size(itemWidth, codeSize.Height + 8);
-				}
+				textSize = GetTextSize(graphics, Text, font, itemWidth - 2, CENTER_STRING_FORMAT);
+				return new Size(itemWidth, textSize.Height + 8);				
 			}			
 		}
 
@@ -461,79 +573,108 @@ namespace WordHiddenPowers.Controls.ListControls
 
 		public class BottomBarNote : ListItemNote
 		{
-			private Rating rating;
-			private bool showButtons;
-			public Rectangle ApplyButton { get; private set; }
-			public Rectangle CancelButton { get; private set; }
+			private readonly Note note;
+			protected Size checkBoxSize;
+			protected Size ratingBoxSize;
+						
+			public Rectangle CheckButtonRectangle { get; private set; }
+			public Rectangle AdditionButtonRectangle { get; private set; }
+			public Rectangle SubtractionButtonRectangle { get; private set; }
 
-			public BottomBarNote() : base(text: string.Empty)
+			
+			public BottomBarNote(Note note) : base(text: string.Empty)
 			{
-				rating = Rating.Empty;
-				ApplyButton = Rectangle.Empty;
-				CancelButton = Rectangle.Empty;
+				this.note = note;
+				CheckButtonRectangle = Rectangle.Empty;
+				AdditionButtonRectangle = Rectangle.Empty;
+				SubtractionButtonRectangle = Rectangle.Empty;
+			}
+
+			public virtual bool Hide
+			{
+				get => note.Hide;
+				set
+				{
+					if (note.Hide != value)
+					{
+						note.Hide = value;
+						DoContentChanged();
+					}
+				}
 			}
 
 			public Rating Rating
 			{
-				get => rating;
+				get => (Rating)(note.Rating);
 				set
 				{
-					if (rating != value)
+					if (note.Rating != value.Value)
 					{
-						rating = value;
+						note.Rating = value.Value;
 						DoContentChanged();
 					}
 				}
 			}
-
-			public bool ShowButtons
-			{
-				get => showButtons;
-				set
-				{
-					if (showButtons != value)
-					{
-						showButtons = value;
-						DoContentChanged();
-					}
-				}
-			}
-
+						
 			protected override void OnDraw(DrawItemEventArgs e)
+			{
+				Rectangle checkBoxRectangle = new Rectangle(
+					e.Bounds.X + 4,
+					e.Bounds.Y + 2,
+					checkBoxSize.Width,
+					checkBoxSize.Height);				
+				DrawCheckBox(new DrawItemEventArgs(e.Graphics, e.Font, checkBoxRectangle, e.Index, e.State, e.ForeColor, e.BackColor));
+
+				Rectangle ratingBoxRectangle = new Rectangle(
+					e.Bounds.X + checkBoxSize.Width + 10,
+					e.Bounds.Y + 6,
+					ratingBoxSize.Width,
+					ratingBoxSize.Height);
+				DrawRatingBox(new DrawItemEventArgs(e.Graphics, e.Font, ratingBoxRectangle, e.Index, e.State, e.ForeColor, e.BackColor));
+			}
+
+			private void DrawCheckBox(DrawItemEventArgs e)
+			{
+				CheckButtonRectangle = new Rectangle(
+					e.Bounds.X + 1,
+					e.Bounds.Y + 2,
+					e.Bounds.Width - 3,
+					e.Bounds.Height - 3);
+
+				if (Hide)
+				{
+					ControlLibrary.Utils.Drawing.DrawCancelIcon(e.Graphics, Const.Globals.COLOR_CANCEL_ICON, e.BackColor, CheckButtonRectangle);
+				}
+				else
+				{
+					ControlLibrary.Utils.Drawing.DrawCheckedIcon(e.Graphics, Const.Globals.COLOR_OK_ICON, e.BackColor, CheckButtonRectangle);
+				}
+			}
+
+			private void DrawRatingBox(DrawItemEventArgs e)
 			{
 				for (int i = 0; i < 5; i++)
 				{
 					int percent = Rating.GetPercent(i + 1, 5);
 					Rectangle star = new Rectangle(e.Bounds.X + ((e.Bounds.Height + 1) * i), e.Bounds.Y, e.Bounds.Height, e.Bounds.Height);
 					ControlLibrary.Utils.Drawing.DrawStar(e.Graphics, e.ForeColor, Const.Globals.COLOR_STAR_ICON, percent, star);
+					if (i == 0) SubtractionButtonRectangle = star;
+					else if (i == 4) AdditionButtonRectangle = star;
 				}
+
 				Font boldFont = new Font(e.Font.FontFamily, e.Font.Size, FontStyle.Bold);
 				Rectangle rect = new Rectangle(e.Bounds.X + ((e.Bounds.Height + 1) * 5), e.Bounds.Y + 1,
 					e.Bounds.Height * 2, e.Bounds.Height);
 				e.Graphics.DrawString(Rating.ToString(), boldFont, Brushes.Red, rect);
-
-				if (showButtons)
-				{
-					ApplyButton = new Rectangle(e.Bounds.Width - (int)(e.Bounds.Height * 2.3), e.Bounds.Y,
-						e.Bounds.Height - 3, e.Bounds.Height - 3);
-					ControlLibrary.Utils.Drawing.DrawOkIcon(e.Graphics, Const.Globals.COLOR_OK_ICON, e.BackColor, ApplyButton);
-
-					CancelButton = new Rectangle(e.Bounds.Width - e.Bounds.Height - 3, e.Bounds.Y,
-						e.Bounds.Height - 3, e.Bounds.Height - 3);
-					ControlLibrary.Utils.Drawing.DrawCancelIcon(e.Graphics, Const.Globals.COLOR_CANCEL_ICON, e.BackColor, CancelButton);
-				}
-				else
-				{
-					ApplyButton = Rectangle.Empty;
-					CancelButton = Rectangle.Empty;
-				}
 			}
 
 			protected override Size OnMeasureBound(Graphics graphics, Font font, int itemWidth, int itemHeight)
 			{
 				Font boldFont = new Font(font.FontFamily, font.Size, FontStyle.Bold);
 				SizeF measure = graphics.MeasureString("8888", boldFont, itemWidth - 3, CENTER_STRING_FORMAT);
-				return new Size(itemWidth, (int)measure.Height + 4);
+				checkBoxSize = new Size((int)measure.Height + 8, (int)measure.Height + 8);
+				ratingBoxSize = new Size(((int)measure.Height + 1) * 5, (int)measure.Height);
+				return new Size(itemWidth, (int)measure.Height + 14);
 			}
 		}
 	}

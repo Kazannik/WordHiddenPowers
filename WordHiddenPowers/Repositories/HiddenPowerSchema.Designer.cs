@@ -592,6 +592,8 @@ namespace WordHiddenPowers.Repositories {
             
             private global::System.Data.DataColumn columnfile_id;
             
+            private global::System.Data.DataColumn columnHide;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public TextPowersDataTable() {
@@ -699,6 +701,14 @@ namespace WordHiddenPowers.Repositories {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn HideColumn {
+                get {
+                    return this.columnHide;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -734,7 +744,7 @@ namespace WordHiddenPowers.Repositories {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public TextPowersRow AddTextPowersRow(string category_guid, string subcategory_guid, string Description, string Value, int Rating, int WordSelectionStart, int WordSelectionEnd, int file_id) {
+            public TextPowersRow AddTextPowersRow(string category_guid, string subcategory_guid, string Description, string Value, int Rating, int WordSelectionStart, int WordSelectionEnd, int file_id, bool Hide) {
                 TextPowersRow rowTextPowersRow = ((TextPowersRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -745,7 +755,8 @@ namespace WordHiddenPowers.Repositories {
                         Rating,
                         WordSelectionStart,
                         WordSelectionEnd,
-                        file_id};
+                        file_id,
+                        Hide};
                 rowTextPowersRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowTextPowersRow);
                 return rowTextPowersRow;
@@ -784,6 +795,7 @@ namespace WordHiddenPowers.Repositories {
                 this.columnWordSelectionStart = base.Columns["WordSelectionStart"];
                 this.columnWordSelectionEnd = base.Columns["WordSelectionEnd"];
                 this.columnfile_id = base.Columns["file_id"];
+                this.columnHide = base.Columns["Hide"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -807,6 +819,8 @@ namespace WordHiddenPowers.Repositories {
                 base.Columns.Add(this.columnWordSelectionEnd);
                 this.columnfile_id = new global::System.Data.DataColumn("file_id", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnfile_id);
+                this.columnHide = new global::System.Data.DataColumn("Hide", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnHide);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("StringPowersTableKey", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -822,6 +836,8 @@ namespace WordHiddenPowers.Repositories {
                 this.columnWordSelectionEnd.AllowDBNull = false;
                 this.columnWordSelectionEnd.DefaultValue = ((int)(0));
                 this.columnfile_id.AllowDBNull = false;
+                this.columnHide.AllowDBNull = false;
+                this.columnHide.DefaultValue = ((bool)(false));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1738,6 +1754,8 @@ namespace WordHiddenPowers.Repositories {
             
             private global::System.Data.DataColumn columnfile_id;
             
+            private global::System.Data.DataColumn columnHide;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public DecimalPowersDataTable() {
@@ -1845,6 +1863,14 @@ namespace WordHiddenPowers.Repositories {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn HideColumn {
+                get {
+                    return this.columnHide;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1880,7 +1906,7 @@ namespace WordHiddenPowers.Repositories {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public DecimalPowersRow AddDecimalPowersRow(string category_guid, string subcategory_guid, string Description, double Value, int Rating, int WordSelectionStart, int WordSelectionEnd, int file_id) {
+            public DecimalPowersRow AddDecimalPowersRow(string category_guid, string subcategory_guid, string Description, double Value, int Rating, int WordSelectionStart, int WordSelectionEnd, int file_id, bool Hide) {
                 DecimalPowersRow rowDecimalPowersRow = ((DecimalPowersRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -1891,7 +1917,8 @@ namespace WordHiddenPowers.Repositories {
                         Rating,
                         WordSelectionStart,
                         WordSelectionEnd,
-                        file_id};
+                        file_id,
+                        Hide};
                 rowDecimalPowersRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDecimalPowersRow);
                 return rowDecimalPowersRow;
@@ -1930,6 +1957,7 @@ namespace WordHiddenPowers.Repositories {
                 this.columnWordSelectionStart = base.Columns["WordSelectionStart"];
                 this.columnWordSelectionEnd = base.Columns["WordSelectionEnd"];
                 this.columnfile_id = base.Columns["file_id"];
+                this.columnHide = base.Columns["Hide"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1953,6 +1981,8 @@ namespace WordHiddenPowers.Repositories {
                 base.Columns.Add(this.columnWordSelectionEnd);
                 this.columnfile_id = new global::System.Data.DataColumn("file_id", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnfile_id);
+                this.columnHide = new global::System.Data.DataColumn("Hide", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnHide);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("DesimalPowersTableKey", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -1969,6 +1999,8 @@ namespace WordHiddenPowers.Repositories {
                 this.columnWordSelectionEnd.AllowDBNull = false;
                 this.columnWordSelectionEnd.DefaultValue = ((int)(0));
                 this.columnfile_id.AllowDBNull = false;
+                this.columnHide.AllowDBNull = false;
+                this.columnHide.DefaultValue = ((bool)(false));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3468,6 +3500,17 @@ namespace WordHiddenPowers.Repositories {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool Hide {
+                get {
+                    return ((bool)(this[this.tableTextPowers.HideColumn]));
+                }
+                set {
+                    this[this.tableTextPowers.HideColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsDescriptionNull() {
                 return this.IsNull(this.tableTextPowers.DescriptionColumn);
             }
@@ -4040,6 +4083,17 @@ namespace WordHiddenPowers.Repositories {
                 }
                 set {
                     this[this.tableDecimalPowers.file_idColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool Hide {
+                get {
+                    return ((bool)(this[this.tableDecimalPowers.HideColumn]));
+                }
+                set {
+                    this[this.tableDecimalPowers.HideColumn] = value;
                 }
             }
             

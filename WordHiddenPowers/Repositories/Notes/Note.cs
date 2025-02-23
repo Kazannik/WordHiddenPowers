@@ -18,6 +18,7 @@ namespace WordHiddenPowers.Repositories.Notes
 				rating: dataRow.Rating,
 				wordSelectionStart: dataRow.WordSelectionStart,
 				wordSelectionEnd: dataRow.WordSelectionEnd,
+				hide: dataRow.Hide,
 				dataRow: dataRow,
 				fileName: fileRow.FileName,
 				fileCaption: fileRow.Caption,
@@ -36,6 +37,7 @@ namespace WordHiddenPowers.Repositories.Notes
 				rating: dataRow.Rating,
 				wordSelectionStart: dataRow.WordSelectionStart,
 				wordSelectionEnd: dataRow.WordSelectionEnd,
+				hide: dataRow.Hide,
 				dataRow: dataRow,
 				fileName: fileRow.FileName,
 				fileCaption: fileRow.Caption,
@@ -52,6 +54,7 @@ namespace WordHiddenPowers.Repositories.Notes
 			int rating, 
 			int wordSelectionStart, 
 			int wordSelectionEnd, 
+			bool hide,
 			object dataRow,
 			string fileName, 
 			string fileCaption, 
@@ -65,6 +68,7 @@ namespace WordHiddenPowers.Repositories.Notes
 			Rating = rating;
 			WordSelectionStart = wordSelectionStart;
 			WordSelectionEnd = wordSelectionEnd;
+			Hide = hide;
 			DataRow = dataRow;
 
 			FileName = fileName;
@@ -80,7 +84,8 @@ namespace WordHiddenPowers.Repositories.Notes
 			string strValue, 
 			int rating, 
 			int wordSelectionStart, 
-			int wordSelectionEnd, 
+			int wordSelectionEnd,
+			bool hide,
 			object dataRow,
 			string fileName, 
 			string fileCaption, 
@@ -94,6 +99,7 @@ namespace WordHiddenPowers.Repositories.Notes
 			Rating = rating;
 			WordSelectionStart = wordSelectionStart;
 			WordSelectionEnd = wordSelectionEnd;
+			Hide = hide;
 			DataRow = dataRow;
 
 			FileName = fileName;
@@ -118,6 +124,8 @@ namespace WordHiddenPowers.Repositories.Notes
 
 		public int WordSelectionEnd { get; }
 
+		public bool Hide { get; internal set; }
+
 		public bool IsText
 		{
 			get { return Value.GetType() != typeof(double); }
@@ -132,20 +140,7 @@ namespace WordHiddenPowers.Repositories.Notes
 		public string FileDescription { get; }
 
 		public DateTime FileDate { get; }
-
-		public object[] ToObjectsArray()
-		{
-			return new object[]{
-				Id,
-				Category.Guid,
-				Subcategory.Guid,
-				Description,
-				Value,
-				Rating,
-				WordSelectionStart,
-				WordSelectionEnd };
-		}
-
+			
 		#region INotifyPropertyChanged Members
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -183,8 +178,10 @@ namespace WordHiddenPowers.Repositories.Notes
 			{
 				try
 				{
-					return decimal.Compare(x.WordSelectionStart, y.WordSelectionStart) == 0 ?
+					int result = decimal.Compare(x.WordSelectionStart, y.WordSelectionStart) == 0 ?
 						decimal.Compare(x.WordSelectionEnd, y.WordSelectionEnd) : 0;
+					if (result == 0) result = string.Compare(x.Value.ToString(), y.Value.ToString());
+					return result; 
 				}
 				catch (Exception)
 				{ return 0; }
@@ -196,11 +193,21 @@ namespace WordHiddenPowers.Repositories.Notes
 			else { return 0; }
 		}
 
-		public class NoteComparer : IComparer<Note>
+		public class NoteComparer : IComparer<Note>, IEqualityComparer<Note>
 		{
 			public int Compare(Note x, Note y)
 			{
 				return Note.Compare(x, y);
+			}
+
+			public bool Equals(Note x, Note y)
+			{
+				return GetHashCode(x) == GetHashCode(y);
+			}
+
+			public int GetHashCode(Note obj)
+			{
+				return unchecked((87 * obj.Value.GetHashCode()) ^ obj.WordSelectionStart.GetHashCode() ^ obj.WordSelectionEnd.GetHashCode());
 			}
 		}
 

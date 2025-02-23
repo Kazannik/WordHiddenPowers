@@ -72,7 +72,7 @@ namespace WordHiddenPowers.Utils
 											isObligatory: attr.Contains("!"),
 											beforeText: string.Empty,
 											afterText: string.Empty); 
-					addingCategory = dataSet.Categories.Add(addingCategory);
+					addingCategory = dataSet.Add(addingCategory);
 					addingSubcategory = null;
 				}				
 				else if (mode == ReadMode.Default &&
@@ -93,7 +93,7 @@ namespace WordHiddenPowers.Utils
 						beforeText: string.Empty,
 						afterText: string.Empty,
 						keywords: keywords);
-					addingSubcategory = dataSet.Subcategories.Add(addingCategory, addingSubcategory);
+					addingSubcategory = dataSet.Add(addingCategory, addingSubcategory);
 					keywords = string.Empty;
 				}
 				else if (mode == ReadMode.Default &&
@@ -114,13 +114,13 @@ namespace WordHiddenPowers.Utils
 					if (addingSubcategory != null)
 					{
 						addingSubcategory.Description = description;
-						dataSet.Subcategories.Write(addingSubcategory);
+						dataSet.Write(addingSubcategory);
 						addingSubcategory = null;
 					}
 					else if (addingCategory != null)
 					{
 						addingCategory.Description = description;
-						dataSet.Categories.Write(addingCategory);
+						dataSet.Write(addingCategory);
 					}
 				}
 			}

@@ -90,8 +90,8 @@ namespace WordHiddenPowers.Dialogs
 			categoriesComboBox.InitializeSource(this.dataSet, isText);
 			okButton.Enabled = false;
 
-			categoriesComboBox.SelectedItem = categoriesComboBox.GetItem(note.Category.Guid);
-			subcategoriesComboBox.SelectedItem = subcategoriesComboBox.GetItem(note.Subcategory.Position);
+			categoriesComboBox.SelectedItem = categoriesComboBox.GetItem(note.Category.Position.ToString());
+			subcategoriesComboBox.SelectedItem = subcategoriesComboBox.GetItem(note.Subcategory.Position.ToString());
 		}
 
 		private void CategoriesComboBox_SelectedIndexChanged(object sender, System.EventArgs e)

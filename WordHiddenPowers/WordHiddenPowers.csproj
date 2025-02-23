@@ -27,7 +27,7 @@
     <NoStandardLibraries>false</NoStandardLibraries>
     <RootNamespace>WordHiddenPowers</RootNamespace>
     <AssemblyName>WordHiddenPowers</AssemblyName>
-    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <DefineConstants>VSTO40</DefineConstants>
     <IsWebBootstrapper>False</IsWebBootstrapper>
     <TargetFrameworkProfile />
@@ -130,9 +130,10 @@
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
-    <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+    <DefineConstants>TRACE;VSTO40;WORD</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <!--
     This section specifies references for the project.
@@ -206,15 +207,19 @@
     <Compile Include="Const\Content.cs" />
     <Compile Include="Const\Globals.cs" />
     <Compile Include="Const\Panes.cs" />
-    <Compile Include="Controls\AnalyzerNoteListBox.cs">
-      <SubType>Component</SubType>
+    <Compile Include="Controls\CategoryBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CategoryBox.Designer.cs">
+      <DependentUpon>CategoryBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ComboControls\CategoriesComboBox.cs" />
-    <Compile Include="Controls\ListControls\AnalyzerListBox.cs" />
     <Compile Include="Controls\ListControls\CategoriesCheckedListBox.cs" />
     <Compile Include="Controls\ListControls\CategoriesListBox.cs" />
     <Compile Include="Controls\CategoriesPicker.cs" />
+    <Compile Include="Controls\ListControls\ContentListBox.cs" />
     <Compile Include="Controls\ListControls\NotesListBox.cs" />
+    <Compile Include="Controls\ListControls\StatusListBox.cs" />
     <Compile Include="Controls\RatingBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -234,6 +239,7 @@
     <Compile Include="Controls\AddInMainRibbon.Designer.cs">
       <DependentUpon>AddInMainRibbon.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Utils\Drawing.cs" />
     <Compile Include="Dialogs\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -245,6 +251,12 @@
     </Compile>
     <Compile Include="Dialogs\AnalyzerDialog.Designer.cs">
       <DependentUpon>AnalyzerDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\InsertDataPropertiesDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\InsertDataPropertiesDialog.Designer.cs">
+      <DependentUpon>InsertDataPropertiesDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\SelectCategoriesDialog.cs">
       <SubType>Form</SubType>
@@ -328,11 +340,12 @@
     <Compile Include="Utils\CategoriesUtil.cs" />
     <Compile Include="Utils\FileSystemUtil.cs" />
     <Compile Include="Utils\ContentUtil.cs" />
+    <Compile Include="Utils\MLModelUtil.cs" />
     <Compile Include="Utils\ShowDialogUtil.cs" />
     <Compile Include="Utils\WordUtil.cs" />
     <Compile Include="Utils\Xml.cs" />
-    <EmbeddedResource Include="Controls\AnalyzerNoteListBox.resx">
-      <DependentUpon>AnalyzerNoteListBox.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\CategoryBox.resx">
+      <DependentUpon>CategoryBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ReitingBox.resx">
       <DependentUpon>RatingBox.cs</DependentUpon>
@@ -365,6 +378,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\CreadeNoteDialog.resx">
       <DependentUpon>CreadeNoteDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\InsertDataPropertiesDialog.resx">
+      <DependentUpon>InsertDataPropertiesDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\SelectCategoriesDialog.resx">
       <DependentUpon>SelectCategoriesDialog.cs</DependentUpon>
@@ -628,6 +644,9 @@
   <ItemGroup>
     <Content Include="Files\Example.txt" />
     <Content Include="Files\ListDocs.txt" />
+    <None Include="MLModel.filters">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\App.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -637,6 +656,10 @@
     <ProjectReference Include="..\..\ControlLibrary\ControlLibrary\ControlLibrary.csproj">
       <Project>{0c5678ee-de96-4f24-b5ff-9a0c7dd53edf}</Project>
       <Name>ControlLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NeuronetLibrary\NeuronetLibrary\NeuronetLibrary.csproj">
+      <Project>{D62452E4-6A69-45B0-BCC3-80BE32CC767A}</Project>
+      <Name>NeuronetLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
@@ -657,7 +680,7 @@
     <ApplicationIcon>Resources\App.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>Kazannik Test Software CA.pfx</AssemblyOriginatorKeyFile>
@@ -677,4 +700,7 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>"%25ProgramFiles(x86)%25\Windows Kits\10\bin\10.0.22621.0\x64\signtool.exe" sign /v /fd SHA256 /n "Mikhail Kazannik Software" /sha1 621E2114C5104C6CC726BABCAA86872D99B651DB /t http://timestamp.digicert.com /v $(TargetFileName)</PostBuildEvent>
+  </PropertyGroup>
 </Project>

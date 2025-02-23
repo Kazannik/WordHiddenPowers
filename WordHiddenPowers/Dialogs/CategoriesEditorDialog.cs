@@ -121,12 +121,12 @@ namespace WordHiddenPowers.Dialogs
 					if (item.owner is Category)
 					{
 						Category category = item.owner as Category;
-						document.DataSet.Categories.Write(category);
+						document.DataSet.Write(category);
 					}
 					else if (item.owner is Subcategory)
 					{
 						Subcategory subcategory = item.owner as Subcategory;
-						document.DataSet.Subcategories.Write(subcategory);
+						document.DataSet.Write(subcategory);
 					}
 				}
 								
@@ -206,7 +206,7 @@ namespace WordHiddenPowers.Dialogs
 		{
 			if (listBox.SelectedIndices.Count == 0)
 			{
-				string guid = this.document.DataSet.Categories.Add(Category.Create(
+				string guid = this.document.DataSet.Add(Category.Create(
 					position: 0,
 					caption: "Новая категория", 
 					description: "Пояснение", 
@@ -239,7 +239,7 @@ namespace WordHiddenPowers.Dialogs
 		{
 			if (listBox.SelectedItem is ListItem item && item.owner is Category category)
 			{
-				this.document.DataSet.Subcategories.Add(category, Subcategory.Create(
+				this.document.DataSet.Add(category, Subcategory.Create(
 					category: category,
 					position: 0,
 					caption: "Новая подкатегория",
@@ -257,7 +257,7 @@ namespace WordHiddenPowers.Dialogs
 		{
 			if (listBox.SelectedItem is ListItem item && item.owner is Category)
 			{
-				this.document.DataSet.Categories.Remove(item.owner.Code.Guid);
+				this.document.DataSet.Remove(item.owner.Code.Guid);
 			}
 		}
 			
@@ -266,7 +266,7 @@ namespace WordHiddenPowers.Dialogs
 		{
 			if (listBox.SelectedItem is ListItem item && item.owner is Subcategory)
 			{
-				this.document.DataSet.Subcategories.Remove(item.owner.Code.Guid);
+				this.document.DataSet.Remove(item.owner.Code.Guid);
 			}
 		}
 

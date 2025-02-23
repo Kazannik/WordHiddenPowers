@@ -6,7 +6,6 @@ namespace WordHiddenPowers
 {
 	public partial class AddInMainRibbon
 	{
-		private const string DIALOG_FILTER = "XML Schema File (.xsd)|*.xsd";
 
 		private Documents.Document ActiveDocument
 		{
@@ -30,9 +29,9 @@ namespace WordHiddenPowers
 				OpenFileDialog dialog = new OpenFileDialog
 				{
 					Multiselect = false,
-					Filter = DIALOG_FILTER
+					Filter = Const.Globals.DIALOG_XML_FILTER
 				};
-				if (Utils.ShowDialogUtil.ShowDialogO(dialog) == DialogResult.OK)
+				if (Utils.ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
 				{
 					ActiveDocument.LoadData(dialog.FileName);
 				}
@@ -43,9 +42,9 @@ namespace WordHiddenPowers
 		{
 			SaveFileDialog dialog = new SaveFileDialog
 			{
-				Filter = DIALOG_FILTER
+				Filter = Const.Globals.DIALOG_XML_FILTER
 			};
-			if (Utils.ShowDialogUtil.ShowDialogO(dialog) == DialogResult.OK)
+			if (Utils.ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
 			{
 				ActiveDocument.CommitVariables();
 				ActiveDocument.SaveData(dialog.FileName);
@@ -164,7 +163,7 @@ namespace WordHiddenPowers
 
 		private void AiService_Click(object sender, RibbonControlEventArgs e)
 		{
-			ActiveDocument.AiService(ActiveDocument.DataSet.Subcategories.GetSubcategories());
+			ActiveDocument.AiService(ActiveDocument.DataSet.Subcategories.GetSubcategoriesRows());
 			MessageBox.Show("Разметка документа с помощью нейронной сети выполнена!",
 						"Разметка документа",
 						MessageBoxButtons.OK,

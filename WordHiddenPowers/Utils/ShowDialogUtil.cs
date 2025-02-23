@@ -14,7 +14,7 @@ namespace WordHiddenPowers.Utils
 			return dialogResult;
 		}
 
-		public static DialogResult ShowDialogO(CommonDialog dialog)
+		public static DialogResult ShowDialog(CommonDialog dialog)
 		{
 			NativeWindow mainWindow = new NativeWindow();
 			mainWindow.AssignHandle(Process.GetCurrentProcess().MainWindowHandle);

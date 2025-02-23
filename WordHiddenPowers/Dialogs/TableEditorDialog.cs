@@ -25,7 +25,7 @@ namespace WordHiddenPowers.Dialogs
 
 		private void ReadValues()
 		{
-			string tableContext = Utils.ContentUtil.GetVariableValue(document.Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+			string tableContext = Utils.ContentUtil.GetVariableValueOrDefault(document.Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
 			if (string.IsNullOrWhiteSpace(tableContext))
 			{
 				tableEditBox.Table = new Table(tableEditBox.DataSet.RowsHeaders.Count, tableEditBox.DataSet.ColumnsHeaders.Count);

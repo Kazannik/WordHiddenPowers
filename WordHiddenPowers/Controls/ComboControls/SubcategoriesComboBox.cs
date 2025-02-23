@@ -26,7 +26,7 @@ namespace WordHiddenPowers.Controls.ComboControls
 		public void InitializeSource(RepositoryDataSet dataSet, Category category, bool isText)
 		{
 			Items.Clear();
-			foreach (RepositoryDataSet.SubcategoriesRow dataRow in dataSet.Subcategories.GetSubcategories(category.Guid, isText))
+			foreach (RepositoryDataSet.SubcategoriesRow dataRow in dataSet.Subcategories.GetSubcategoriesRows(category.Guid, isText))
 			{
 				Subcategory subcategory = Subcategory.Create(category, dataRow);
 				Add(subcategory);

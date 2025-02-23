@@ -4,13 +4,13 @@ using System.Runtime.InteropServices;
 // Управление общими сведениями о сборке осуществляется с помощью 
 // набора атрибутов. Отредактируйте эти значения атрибутов, чтобы изменить сведения,
 // сопоставленные со сборкой.
-[assembly: AssemblyTitle("WordHiddenPowers")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("WordHiddenPowers.dll")]
+[assembly: AssemblyDescription("WordHiddenPowers.dll")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Kazannik M.")]
 [assembly: AssemblyProduct("WordHiddenPowers")]
-[assembly: AssemblyCopyright("Copyright ©  2023")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCopyright("© Kazannik M. All rights reserved.")]
+[assembly: AssemblyTrademark("Kazannik M.")]
 [assembly: AssemblyCulture("")]
 
 // Установка значения False в параметре ComVisible делает типы в этой сборке невидимыми 

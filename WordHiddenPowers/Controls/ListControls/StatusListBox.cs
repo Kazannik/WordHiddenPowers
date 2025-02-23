@@ -1,4 +1,5 @@
 ﻿using ControlLibrary.Controls.ListControls;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
@@ -6,27 +7,26 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using System.Windows.Forms.Design;
 using WordHiddenPowers.Repositories;
 using WordHiddenPowers.Repositories.Categories;
 using static WordHiddenPowers.Controls.ListControls.CategoriesListBox;
 using static WordHiddenPowers.Repositories.RepositoryDataSet;
 using Category = WordHiddenPowers.Repositories.Categories.Category;
-using Control = WordHiddenPowers.Controls.ListControls.CategoriesListControl;
+using Control = WordHiddenPowers.Controls.ListControls.StatusListControl;
 using Font = System.Drawing.Font;
-using ListItem = WordHiddenPowers.Controls.ListControls.CategoriesListControl.ListItem;
+using ListItem = WordHiddenPowers.Controls.ListControls.StatusListControl.ListItem;
 using Rectangle = System.Drawing.Rectangle;
 using Version = ControlLibrary.Structures.Version;
 
 namespace WordHiddenPowers.Controls.ListControls
 {
-	[ToolboxBitmap(typeof(ListBox))]
+	[ToolboxBitmap(typeof(CheckedListBox))]
 	[ComVisible(false)]
-	public class CategoriesListBox : ListControl<ListItem, Control.ListItemNote>
+	public class StatusListBox : ListControl<ListItem, Control.ListItemNote>
 	{
 		private RepositoryDataSet source;
 
-		public CategoriesListBox() : base() { }
+		public StatusListBox() : base() { }
 
 		public RepositoryDataSet DataSet
 		{
@@ -48,7 +48,7 @@ namespace WordHiddenPowers.Controls.ListControls
 				}
 			}
 		}
-
+				
 		private void Categories_TableCleared(object sender, DataTableClearEventArgs e)
 		{
 			ReadData();
@@ -208,12 +208,12 @@ namespace WordHiddenPowers.Controls.ListControls
 
 		private void Add(ICategoriesListItem item)
 		{
-			Items.Add(new ListItem(item));
+			Items.Add(new ListItem(item, DataSet));
 		}
 
 		private void Insert(int index, ICategoriesListItem item)
 		{
-			Items.Insert(index, new ListItem(item));
+			Items.Insert(index, new ListItem(item, DataSet));
 		}
 
 		private void Remove(Category category)
@@ -245,7 +245,6 @@ namespace WordHiddenPowers.Controls.ListControls
 			return Items.AsEnumerable()
 				.Where(x => x.owner.Code.Guid == guid).First();
 		}
-
 
 		public int CategoryNextIndexOf(int index)
 		{
@@ -329,37 +328,50 @@ namespace WordHiddenPowers.Controls.ListControls
 				return GetListItem(row as SubcategoriesRow);
 			}
 		}
-
-		public interface ICategoriesListItem
-		{
-			Version Code { get; }
-			string Caption { get; }
-			string Description { get; }
-			string Guid { get; }
-		}
 	}
 
-	namespace CategoriesListControl
+	namespace StatusListControl
 	{
 		public class ListItem : ControlLibrary.Controls.ListControls.ListItem
 		{
 			protected internal ICategoriesListItem owner;
-
+			protected internal RepositoryDataSet dataSet;
 			public ListItem() : base()
 			{
 				owner = default;
 			}
 
-			public ListItem(ICategoriesListItem owner) : base(
-				new ListItemNote[] {
-				owner is Category ? new CategoryTitleNote(owner.Code, owner.Caption) : new TitleNote(owner.Code, owner.Caption),
-				new DescriptionNote(owner.Description)})
+			public ListItem(ICategoriesListItem owner, RepositoryDataSet dataSet) : base(
+				CreateNotesArray(owner))
 			{
+				this.dataSet = dataSet;
 				this.owner = owner;
+				((SubcategoryTitleListItemNote)notes[0]).owner = this;
+				if (notes.Length== 3)
+					((StatusListItemNote)notes[2]).owner = this;
+			}
+
+			private static ListItemNote[] CreateNotesArray(ICategoriesListItem owner)
+			{
+				if (owner is Category)
+				{
+					return new ListItemNote[] {
+						new CategoryTitleListItemNote(owner.Code, owner.Caption),
+						new DescriptionListItemNote(owner.Description)
+					};
+				}
+				else
+				{
+					return new ListItemNote[] {
+						new SubcategoryTitleListItemNote(owner.Code, owner.Caption),
+						new DescriptionListItemNote(owner.Description),
+						new StatusListItemNote()
+					};
+				}
 			}
 
 			protected override void OnDraw(DrawItemEventArgs e)
-			{
+			{				
 				e.DrawBackground();
 				base.OnDraw(e);
 				if (notes.Length > 2 && (!notes[1].Size.IsEmpty || !notes[2].Size.IsEmpty))
@@ -372,6 +384,10 @@ namespace WordHiddenPowers.Controls.ListControls
 				}
 				e.DrawFocusRectangle();
 			}
+
+			public bool IsCategory => owner is Category;
+
+			public int NoteCount => dataSet.GetNotesCount(owner.Guid);
 		}
 
 		public class CategoryListItem : ListItem
@@ -381,7 +397,7 @@ namespace WordHiddenPowers.Controls.ListControls
 				owner = default;
 			}
 
-			public CategoryListItem(Category category) : base(owner: category)
+			public CategoryListItem(Category category, RepositoryDataSet dataSet) : base(owner: category, dataSet: dataSet)
 			{
 				owner = category;
 			}
@@ -396,7 +412,7 @@ namespace WordHiddenPowers.Controls.ListControls
 				owner = default;
 			}
 
-			public SubcategoryListItem(Subcategory subcategory) : base(owner: subcategory)
+			public SubcategoryListItem(Subcategory subcategory, RepositoryDataSet dataSet) : base(owner: subcategory, dataSet: dataSet)
 			{
 				owner = subcategory;
 			}
@@ -442,15 +458,17 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 		}
 
-		public class TitleNote : ListItemNote
+		public class SubcategoryTitleListItemNote : ListItemNote
 		{
+			internal ListItem owner;
+
 			private Version code;
 			private Size codeSize;
 			private Size textSize;
 
-			public TitleNote(int major, int minor, string guid, string text) : this(code: Version.Create(major: major, minor: minor, guid: guid), text: text) { }
+			public SubcategoryTitleListItemNote(int major, int minor, string guid, string text) : this(code: Version.Create(major: major, minor: minor, guid: guid), text: text) { }
 
-			public TitleNote(Version code, string text) : base(text: text)
+			public SubcategoryTitleListItemNote(Version code, string text) : base(text: text)
 			{
 				this.code = code;
 				codeSize = Size.Empty;
@@ -472,19 +490,32 @@ namespace WordHiddenPowers.Controls.ListControls
 					}
 				}
 			}
-
+			
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
 				Font boldFont = new Font(e.Font.FontFamily, e.Font.Size, FontStyle.Bold);
-				Rectangle codeRectangle = new Rectangle(e.Bounds.X + 2, e.Bounds.Y + 2,
-					codeSize.Width, codeSize.Height);
-				Utils.Drawing.DrawCode(Code, new DrawItemEventArgs(e.Graphics, boldFont, codeRectangle, e.Index, e.State, e.ForeColor, e.BackColor));
+				Rectangle codeRectangle = new Rectangle(e.Bounds.X + 2, e.Bounds.Y + 2, codeSize.Width, codeSize.Height);
+
+				Color backColor = Color.Gray;
+				if (owner.IsCategory)
+				{
+					backColor= Color.Orange;
+				} 
+				else if (owner.NoteCount > 0)
+				{
+					backColor = Color.Green;
+				}
+
+				Utils.Drawing.DrawCode(Code, new DrawItemEventArgs(e.Graphics, boldFont, codeRectangle, e.Index, e.State, backColor, Color.White));
 
 				if (!textSize.IsEmpty)
 				{
 					Brush brush = new SolidBrush(e.ForeColor);
-					Rectangle rectangle = new Rectangle(e.Bounds.Width - textSize.Width - 1, e.Bounds.Y,
-						textSize.Width, textSize.Height);
+					Rectangle rectangle = new Rectangle(
+						e.Bounds.Width - textSize.Width - 1,
+						e.Bounds.Y,
+						textSize.Width,
+						textSize.Height);
 					e.Graphics.DrawString(Text, boldFont, brush, rectangle, LEFT_STRING_FORMAT);
 				}
 			}
@@ -503,15 +534,15 @@ namespace WordHiddenPowers.Controls.ListControls
 				{
 					return new Size(itemWidth, codeSize.Height + 8);
 				}
-			}
+			}		
 		}
 
-		public class CategoryTitleNote : TitleNote
+		public class CategoryTitleListItemNote : SubcategoryTitleListItemNote
 		{
-			public CategoryTitleNote(int major, int minor, string guid, string text) : base(major: major, minor: minor, guid: guid, text: text) { }
+			public CategoryTitleListItemNote(int major, int minor, string guid, string text) : base(major: major, minor: minor, guid: guid, text: text) { }
 
-			public CategoryTitleNote(Version code, string text) : base(code: code, text: text) { }
-
+			public CategoryTitleListItemNote(Version code, string text) : base(code: code, text: text) { }
+			
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
 				LinearGradientBrush brush;
@@ -526,12 +557,12 @@ namespace WordHiddenPowers.Controls.ListControls
 				e.Graphics.FillRectangle(brush, e.Bounds);
 
 				base.OnDraw(e);
-			}
+			}			
 		}
 
-		public class DescriptionNote : ListItemNote
+		public class DescriptionListItemNote : ListItemNote
 		{
-			public DescriptionNote(string text) : base(text: text) { }
+			public DescriptionListItemNote(string text) : base(text: text) { }
 
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
@@ -543,7 +574,27 @@ namespace WordHiddenPowers.Controls.ListControls
 			protected override Size OnMeasureBound(Graphics graphics, Font font, int itemWidth, int itemHeight)
 			{
 				Size result = GetTextSize(graphics: graphics, Text, font: font, width: itemWidth, LEFT_STRING_FORMAT);
-				return new Size(result.Width, result.Height + 18);
+				return new Size(result.Width, result.Height + 2);
+			}
+		}
+		
+		public class StatusListItemNote : ListItemNote
+		{
+			internal ListItem owner;
+
+			public StatusListItemNote() : base(text: string.Empty) { }
+
+			protected override void OnDraw(DrawItemEventArgs e)
+			{
+				Brush brush = new SolidBrush(e.ForeColor);
+				e.Graphics.DrawString(string.Format("Число записей: {0}", owner.NoteCount), e.Font, brush, e.Bounds, LEFT_STRING_FORMAT);
+				brush.Dispose();
+			}
+
+			protected override Size OnMeasureBound(Graphics graphics, Font font, int itemWidth, int itemHeight)
+			{
+				Size result = GetTextSize(graphics: graphics, "Число записей: 000000", font: font, width: itemWidth, LEFT_STRING_FORMAT);
+				return new Size(result.Width, result.Height + 10);
 			}
 		}
 	}

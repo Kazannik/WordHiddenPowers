@@ -50,12 +50,12 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 		}
 
-		public bool IsAnyChecked 
+		public bool IsAnyChecked
 		{
 			get
 			{
-				return Items.Any(i => i.IsChecked); 
-			} 
+				return Items.Any(i => i.IsChecked);
+			}
 		}
 
 		public IEnumerable<Subcategory> CheckedSubcategories
@@ -73,7 +73,7 @@ namespace WordHiddenPowers.Controls.ListControls
 				e.Item.IsChecked = !e.Item.IsChecked;
 			}
 		}
-		
+
 		protected override void OnKeyPress(KeyPressEventArgs e)
 		{
 			if (e.KeyChar == 32 && SelectedItem != null && !((ListItem)SelectedItem).IsCategory)
@@ -82,7 +82,7 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 			base.OnKeyPress(e);
 		}
-								
+
 		private void Categories_TableCleared(object sender, DataTableClearEventArgs e)
 		{
 			ReadData();
@@ -96,7 +96,7 @@ namespace WordHiddenPowers.Controls.ListControls
 		private void Categories_RowDeleting(object sender, DataRowChangeEventArgs e)
 		{
 			CategoriesRow row = e.Row as CategoriesRow;
-			IEnumerable<SubcategoriesRow> subcategories = DataSet.Subcategories.GetSubcategories(row.key_guid);
+			IEnumerable<SubcategoriesRow> subcategories = DataSet.Subcategories.GetSubcategoriesRows(row.key_guid);
 			if (subcategories.Any())
 			{
 				foreach (SubcategoriesRow refRow in subcategories)
@@ -146,7 +146,7 @@ namespace WordHiddenPowers.Controls.ListControls
 			{
 				if (DataSet.Categories.Exists(e.Row.category_guid))
 				{
-					Category category = DataSet.Categories.Get(e.Row.category_guid);
+					Category category = DataSet.GetCategory(e.Row.category_guid);
 					Add(Subcategory.Create(category, e.Row));
 				}
 			}
@@ -215,7 +215,7 @@ namespace WordHiddenPowers.Controls.ListControls
 			{
 				foreach (DataRow row in DataSet.Subcategories.Rows)
 				{
-					Category category = DataSet.Categories.Get(row["category_guid"] as string);
+					Category category = DataSet.GetCategory(row["category_guid"] as string);
 					Subcategory subcategory = Subcategory.Create(category: category, dataRow: row);
 					ListItem item = GetListItem(category);
 					int index = GetLastItemIndex(item);
@@ -361,7 +361,7 @@ namespace WordHiddenPowers.Controls.ListControls
 			{
 				return GetListItem(row as SubcategoriesRow);
 			}
-		}		
+		}
 	}
 
 	namespace CategoriesCheckedListControl
@@ -377,14 +377,14 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			public ListItem(ICategoriesListItem owner) : base(
 				new ListItemNote[] {
-				(owner is Category) 
-					? new CategoryTitleListItemNote(owner.Code, owner.Caption) 
+				(owner is Category)
+					? new CategoryTitleListItemNote(owner.Code, owner.Caption)
 					: new SubcategoryTitleListItemNote(owner.Code, owner.Caption),
 				new DescriptionListItemNote(owner.Description)})
 			{
 				this.owner = owner;
 			}
-						
+
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
 				DrawItemEventArgs arg = new DrawItemEventArgs(
@@ -444,7 +444,7 @@ namespace WordHiddenPowers.Controls.ListControls
 				owner = subcategory;
 			}
 
-			public Subcategory Category => (Subcategory)owner;			
+			public Subcategory Category => (Subcategory)owner;
 		}
 
 		public abstract class ListItemNote : ControlLibrary.Controls.ListControls.ListItemNote
@@ -541,28 +541,28 @@ namespace WordHiddenPowers.Controls.ListControls
 
 				if (!checkBoxSize.IsEmpty)
 				{
-					Rectangle checkBoxRectagle = new Rectangle(
-					e.Bounds.X + 2, 
+					Rectangle checkBoxRectangle = new Rectangle(
+					e.Bounds.X + 2,
 					e.Bounds.Y + 2,
 					checkBoxSize.Width,
 					checkBoxSize.Height);
-					DrawCheckBox(new DrawItemEventArgs(e.Graphics, boldFont, checkBoxRectagle, e.Index, e.State, e.ForeColor, e.BackColor));
+					DrawCheckBox(new DrawItemEventArgs(e.Graphics, boldFont, checkBoxRectangle, e.Index, e.State, e.ForeColor, e.BackColor));
 				}
 
-				Rectangle codeRectagle = new Rectangle(
-					e.Bounds.X + checkBoxSize.Width + 3, 
+				Rectangle codeRectangle = new Rectangle(
+					e.Bounds.X + checkBoxSize.Width + 3,
 					e.Bounds.Y + 2,
-					codeSize.Width, 
+					codeSize.Width,
 					codeSize.Height);
-				DrawCode(new DrawItemEventArgs(e.Graphics, boldFont, codeRectagle, e.Index, e.State, e.ForeColor, e.BackColor));
+				Utils.Drawing.DrawCode(Code, new DrawItemEventArgs(e.Graphics, boldFont, codeRectangle, e.Index, e.State, e.ForeColor, e.BackColor));
 
 				if (!textSize.IsEmpty)
 				{
 					Brush brush = new SolidBrush(e.ForeColor);
 					Rectangle rectangle = new Rectangle(
-						e.Bounds.Width - textSize.Width - 1, 
+						e.Bounds.Width - textSize.Width - 1,
 						e.Bounds.Y,
-						textSize.Width, 
+						textSize.Width,
 						textSize.Height);
 					e.Graphics.DrawString(Text, boldFont, brush, rectangle, LEFT_STRING_FORMAT);
 				}
@@ -571,11 +571,9 @@ namespace WordHiddenPowers.Controls.ListControls
 			protected override Size OnMeasureBound(Graphics graphics, Font font, int itemWidth, int itemHeight)
 			{
 				Font boldFont = new Font(font.FontFamily, font.Size, FontStyle.Bold);
-				SizeF measure = graphics.MeasureString("XXX.XXX", boldFont, itemWidth - 3, CENTER_STRING_FORMAT);
-
-				checkBoxSize = new Size((int)measure.Height, (int)measure.Height);
-				codeSize = new Size((int)measure.Width, (int)measure.Height);
-				textSize = GetTextSize(graphics, Text, font, itemWidth - (int)measure.Height - (int)measure.Width - 5, CENTER_STRING_FORMAT);
+				codeSize = Utils.Drawing.GetCodeSize(graphics, boldFont);
+				checkBoxSize = new Size(codeSize.Height, codeSize.Height);
+				textSize = GetTextSize(graphics, Text, font, itemWidth - codeSize.Width - checkBoxSize.Width - 5, CENTER_STRING_FORMAT);
 
 				if (codeSize.Height < textSize.Height)
 				{
@@ -590,33 +588,20 @@ namespace WordHiddenPowers.Controls.ListControls
 			private void DrawCheckBox(DrawItemEventArgs e)
 			{
 				CheckButton = new Rectangle(
-					e.Bounds.X + 1, 
+					e.Bounds.X + 1,
 					e.Bounds.Y + 2,
 					e.Bounds.Width - 3,
 					e.Bounds.Height - 3);
 
 				if (isChecked)
 				{
-					ControlLibrary.Utils.Drawing.DrawCheckedIcon(e.Graphics, Color.Green, e.BackColor, CheckButton);
+					ControlLibrary.Utils.Drawing.DrawCheckedIcon(e.Graphics, Const.Globals.COLOR_OK_ICON, e.BackColor, CheckButton);
 				}
 				else
 				{
-					ControlLibrary.Utils.Drawing.DrawUncheckedIcon(e.Graphics, Color.Green, e.BackColor, CheckButton);
+					ControlLibrary.Utils.Drawing.DrawUncheckedIcon(e.Graphics, Const.Globals.COLOR_OK_ICON, e.BackColor, CheckButton);
 				}
-			}
-
-			private void DrawCode(DrawItemEventArgs e)
-			{
-				Brush ForeColorBrush = new SolidBrush(e.BackColor);
-				Brush BackColorBrush = new SolidBrush(e.ForeColor);
-				Pen BackColorPen = new Pen(e.ForeColor, 1);
-				ControlLibrary.Utils.Drawing.FillRoundedRectangle(e.Graphics, BackColorBrush, e.Bounds, (e.Bounds.Height / 3) == 0 ? 1 : (e.Bounds.Height / 3));
-				e.Graphics.DrawString(Code.ToString(), e.Font, ForeColorBrush, e.Bounds, CENTER_STRING_FORMAT);
-				ControlLibrary.Utils.Drawing.DrawRoundedRectangle(e.Graphics, BackColorPen, e.Bounds, (e.Bounds.Height / 3) == 0 ? 1 : (e.Bounds.Height / 3));
-				ForeColorBrush.Dispose();
-				BackColorBrush.Dispose();
-				BackColorPen.Dispose();
-			}
+			}			
 		}
 
 		public class CategoryTitleListItemNote : SubcategoryTitleListItemNote
@@ -626,7 +611,7 @@ namespace WordHiddenPowers.Controls.ListControls
 			public CategoryTitleListItemNote(Version code, string text) : base(code: code, text: text) { }
 
 			protected override Size OnMeasureBound(Graphics graphics, Font font, int itemWidth, int itemHeight)
-			{				
+			{
 				Size measureSize = base.OnMeasureBound(graphics, font, itemWidth, itemHeight);
 				checkBoxSize = Size.Empty;
 				return measureSize;
@@ -637,11 +622,11 @@ namespace WordHiddenPowers.Controls.ListControls
 				LinearGradientBrush brush;
 				if (e.State == (e.State | DrawItemState.Selected))
 				{
-					brush = new LinearGradientBrush(e.Bounds, Color.LightGoldenrodYellow, Color.OrangeRed, LinearGradientMode.ForwardDiagonal);
+					brush = new LinearGradientBrush(e.Bounds, Const.Globals.COLOR_1_SELECTED_BACK, Const.Globals.COLOR_2_SELECTED_BACK, LinearGradientMode.ForwardDiagonal);
 				}
 				else
 				{
-					brush = new LinearGradientBrush(e.Bounds, Color.Orange, Color.LightPink, LinearGradientMode.ForwardDiagonal);
+					brush = new LinearGradientBrush(e.Bounds, Const.Globals.COLOR_1_BACK, Const.Globals.COLOR_2_BACK, LinearGradientMode.ForwardDiagonal);
 				}
 				e.Graphics.FillRectangle(brush, e.Bounds);
 
@@ -654,7 +639,7 @@ namespace WordHiddenPowers.Controls.ListControls
 				set { }
 			}
 		}
-		
+
 		public class DescriptionListItemNote : ListItemNote
 		{
 			public DescriptionListItemNote(string text) : base(text: text) { }

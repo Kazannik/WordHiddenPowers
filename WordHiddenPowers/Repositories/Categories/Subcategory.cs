@@ -209,5 +209,8 @@ namespace WordHiddenPowers.Repositories.Categories
 				return Subcategory.Compare(x, y);
 			}
 		}
+	
+	    public object Tag { get; set; }
+	
 	}
 }

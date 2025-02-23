@@ -25,9 +25,8 @@ namespace WordHiddenPowers.Controls.ComboControls
 		{
 			Items.Clear();
 
-			foreach (RepositoryDataSet.CategoriesRow dataRow in dataSet.GetCategories(isText))
+			foreach (Category category in dataSet.GetCategories(isText))
 			{
-				Category category = Category.Create(dataRow);
 				Add(category);
 			}
 		}
