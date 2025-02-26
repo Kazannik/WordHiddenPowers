@@ -25,7 +25,6 @@ namespace WordHiddenPowers.Controls.ListControls
 	public class CategoriesCheckedListBox : ListControl<ListItem, Control.ListItemNote>
 	{
 		private RepositoryDataSet source;
-		public event EventHandler<ItemMouseEventArgs<ListItem, Control.SubcategoryTitleListItemNote>> ItemCheckClick;
 
 		public CategoriesCheckedListBox() : base() { }
 

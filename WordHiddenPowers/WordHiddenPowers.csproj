@@ -32,10 +32,11 @@
     <IsWebBootstrapper>False</IsWebBootstrapper>
     <TargetFrameworkProfile />
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <PublishUrl>publish\</PublishUrl>
+    <BootstrapperComponentsLocation>Relative</BootstrapperComponentsLocation>
+    <PublishUrl>publish\WordHiddenPowers\</PublishUrl>
     <InstallUrl />
     <TargetCulture>ru</TargetCulture>
-    <ApplicationVersion>1.2.0.10</ApplicationVersion>
+    <ApplicationVersion>1.2.1.0</ApplicationVersion>
     <AutoIncrementApplicationRevision>false</AutoIncrementApplicationRevision>
     <UpdateEnabled>false</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
@@ -44,18 +45,13 @@
     <PublisherName>Генеральная прокуратура Российской Федерации</PublisherName>
     <SupportUrl />
     <FriendlyName>WordHiddenPowers</FriendlyName>
-    <OfficeApplicationDescription />
+    <OfficeApplicationDescription>Автоматизированный  анализ документов</OfficeApplicationDescription>
     <LoadBehavior>3</LoadBehavior>
   </PropertyGroup>
   <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+    <BootstrapperPackage Include=".NETFramework,Version=v4.8">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 и x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 и x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.8 %28x86 и x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
@@ -104,7 +100,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
     <DefineConstants>TRACE;DEBUG;VSTO40;UseOfficeInterop;WORD</DefineConstants>
-    <WarningLevel>0</WarningLevel>
+    <WarningLevel>1</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -674,13 +670,14 @@
     </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>621E2114C5104C6CC726BABCAA86872D99B651DB</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>621114F6FD186ADF11B6C9A3F479A971987ACE6E</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\App.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>Kazannik Test Software CA.pfx</AssemblyOriginatorKeyFile>
@@ -701,6 +698,6 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>"%25ProgramFiles(x86)%25\Windows Kits\10\bin\10.0.22621.0\x64\signtool.exe" sign /v /fd SHA256 /n "Mikhail Kazannik Software" /sha1 621E2114C5104C6CC726BABCAA86872D99B651DB /t http://timestamp.digicert.com /v $(TargetFileName)</PostBuildEvent>
+    <PostBuildEvent>"%25ProgramFiles(x86)%25\Windows Kits\10\bin\10.0.22621.0\x64\signtool.exe" sign /v /fd SHA256 /n "Mikhail Kazannik Software" /sha1 621114f6fd186adf11b6c9a3f479a971987ace6e /t http://timestamp.digicert.com /v $(TargetFileName)</PostBuildEvent>
   </PropertyGroup>
 </Project>

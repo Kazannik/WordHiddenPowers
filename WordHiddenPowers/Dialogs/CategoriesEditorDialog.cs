@@ -23,6 +23,8 @@ namespace WordHiddenPowers.Dialogs
 			InitializeComponent();
 
 			listBox.DataSet = this.document.DataSet;
+			this.listBox.SelectedItemChanged += new System.EventHandler<ControlLibrary.Controls.ListControls.ItemEventArgs<ListItem>>(this.ListBox_SelectedItemChanged);
+			if (listBox.Items.Count > 0) listBox.SelectedIndex = 0;
 		}
 
 		private void ListBox_SelectedItemChanged(object sender, ControlLibrary.Controls.ListControls.ItemEventArgs<ListItem> e)

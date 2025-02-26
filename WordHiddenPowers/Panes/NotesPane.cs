@@ -49,18 +49,28 @@ namespace WordHiddenPowers.Panes
 			noteListBox.DataSet = Document.DataSet;
 
 			InitializeVariables();
-						
+
+			this.noteListBox.ItemMouseDown += new System.EventHandler<ItemMouseEventArgs<ListItem, ListItemNote>>(this.NoteListBox_ItemMouseDown);
+			this.noteListBox.ItemMouseClick += new System.EventHandler<ItemMouseEventArgs<ListItem, ListItemNote>>(this.NoteListBox_NoteClick);
+			this.noteListBox.ItemMouseDoubleClick += new System.EventHandler<ItemMouseEventArgs<ListItem, ListItemNote>>(this.NoteListBox_NoteDoubleClick);
+			this.noteListBox.ItemDeleted += new EventHandler<EventArgs>(NoteListBox_ItemDeleted);
+
 			Document.DataSet.DocumentKeys.DocumentKeysRowChanged += new RepositoryDataSet.DocumentKeysRowChangeEventHandler(DocumentKeys_RowChanged);
 			Document.DataSet.DocumentKeys.DocumentKeysRowDeleted += new RepositoryDataSet.DocumentKeysRowChangeEventHandler(DocumentKeys_RowChanged);
 			Document.DataSet.DocumentKeys.TableCleared += new DataTableClearEventHandler(DocumentKeys_TableCleared);
 		}
-		
+
+		private void NoteListBox_ItemDeleted(object sender, EventArgs e)
+		{
+			Document.CommitVariables();
+		}
+
 		protected override void OnPropertiesChanged(EventArgs e)
 		{
 			noteListBox.ReadData();
 			base.OnPropertiesChanged(e);
 		}
-
+		
 		private void NoteOpen_Click(object sender, EventArgs e)
 		{
 			NoteOpen(noteContextMenu.Tag as ListItem);
@@ -133,18 +143,7 @@ namespace WordHiddenPowers.Panes
 				Document.CommitVariables();
 			}
 		}
-
-		private void NoteListBox_ApplyButtonNoteClick(object sender, ItemMouseEventArgs<ListItem, BottomBarNote> e)
-		{
-			e.SubItem.ShowButtons = true;
-		}
-
-		private void NoteListBox_CancelButtonNoteClick(object sender, ItemMouseEventArgs<ListItem, BottomBarNote> e)
-		{
-			Document.DataSet.Remove(e.Item.Note);
-			Document.CommitVariables();
-		}
-
+				
 		private void NoteListBox_NoteClick(object sender, ItemMouseEventArgs<ListItem, ListItemNote> e)
 		{
 			if (e.Button == MouseButtons.Right)
@@ -412,13 +411,10 @@ namespace WordHiddenPowers.Panes
 			this.noteListBox.Location = new System.Drawing.Point(0, 0);
 			this.noteListBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.noteListBox.Name = "noteListBox";
+			this.noteListBox.ShowButtons = false;
 			this.noteListBox.Size = new System.Drawing.Size(366, 218);
 			this.noteListBox.TabIndex = 6;
-			this.noteListBox.ItemApplyClick += new System.EventHandler<ControlLibrary.Controls.ListControls.ItemMouseEventArgs<WordHiddenPowers.Controls.ListControls.NotesListControl.ListItem, WordHiddenPowers.Controls.ListControls.NotesListControl.BottomBarNote>>(this.NoteListBox_ApplyButtonNoteClick);
-			this.noteListBox.ItemCancelClick += new System.EventHandler<ControlLibrary.Controls.ListControls.ItemMouseEventArgs<WordHiddenPowers.Controls.ListControls.NotesListControl.ListItem, WordHiddenPowers.Controls.ListControls.NotesListControl.BottomBarNote>>(this.NoteListBox_CancelButtonNoteClick);
-			this.noteListBox.ItemMouseDown += new System.EventHandler<ControlLibrary.Controls.ListControls.ItemMouseEventArgs<WordHiddenPowers.Controls.ListControls.NotesListControl.ListItem, WordHiddenPowers.Controls.ListControls.NotesListControl.ListItemNote>>(this.NoteListBox_ItemMouseDown);
-			this.noteListBox.ItemMouseClick += new System.EventHandler<ControlLibrary.Controls.ListControls.ItemMouseEventArgs<WordHiddenPowers.Controls.ListControls.NotesListControl.ListItem, WordHiddenPowers.Controls.ListControls.NotesListControl.ListItemNote>>(this.NoteListBox_NoteClick);
-			this.noteListBox.ItemMouseDoubleClick += new System.EventHandler<ControlLibrary.Controls.ListControls.ItemMouseEventArgs<WordHiddenPowers.Controls.ListControls.NotesListControl.ListItem, WordHiddenPowers.Controls.ListControls.NotesListControl.ListItemNote>>(this.NoteListBox_NoteDoubleClick);
+			this.noteListBox.ItemContentChanged += new  EventHandler<ItemEventArgs<ListItem>> (this.NotesPane_PropertiesChanged);
 			// 
 			// noteContextMenu
 			// 
@@ -429,20 +425,20 @@ namespace WordHiddenPowers.Panes
             this.toolStripMenuItem1,
             this.mnuNoteRemove});
 			this.noteContextMenu.Name = "noteContextMenu";
-			this.noteContextMenu.Size = new System.Drawing.Size(277, 106);
+			this.noteContextMenu.Size = new System.Drawing.Size(277, 100);
 			// 
 			// mnuNoteOpen
 			// 
 			this.mnuNoteOpen.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.mnuNoteOpen.Name = "mnuNoteOpen";
-			this.mnuNoteOpen.Size = new System.Drawing.Size(276, 32);
+			this.mnuNoteOpen.Size = new System.Drawing.Size(276, 30);
 			this.mnuNoteOpen.Text = "Открыть";
 			this.mnuNoteOpen.Click += new System.EventHandler(this.NoteOpen_Click);
 			// 
 			// mnuNoteEdit
 			// 
 			this.mnuNoteEdit.Name = "mnuNoteEdit";
-			this.mnuNoteEdit.Size = new System.Drawing.Size(276, 32);
+			this.mnuNoteEdit.Size = new System.Drawing.Size(276, 30);
 			this.mnuNoteEdit.Text = "Редактировать запись...";
 			this.mnuNoteEdit.Click += new System.EventHandler(this.NoteEdit_Click);
 			// 
@@ -454,7 +450,7 @@ namespace WordHiddenPowers.Panes
 			// mnuNoteRemove
 			// 
 			this.mnuNoteRemove.Name = "mnuNoteRemove";
-			this.mnuNoteRemove.Size = new System.Drawing.Size(276, 32);
+			this.mnuNoteRemove.Size = new System.Drawing.Size(276, 30);
 			this.mnuNoteRemove.Text = "Удалить запись";
 			this.mnuNoteRemove.Click += new System.EventHandler(this.NoteRemove_Click);
 			// 
@@ -483,7 +479,7 @@ namespace WordHiddenPowers.Panes
 		{
 			base.OnPropertiesChanged(new EventArgs());
 		}
-
+		
 		protected override void Dispose(bool disposing)
 		{
 			Settings.Default.NotesPaneSplitterDistance = notesSplitContainer.SplitterDistance;
@@ -512,6 +508,6 @@ namespace WordHiddenPowers.Panes
 			catch (Exception)
 			{
 			}
-		}
+		}		
 	}
 }

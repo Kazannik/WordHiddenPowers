@@ -23,9 +23,6 @@ namespace WordHiddenPowers.Controls.ListControls
 		private string filter;
 		private bool hide;
 
-		public event EventHandler<ItemMouseEventArgs<Control.ListItem, Control.BottomBarNote>> ItemApplyClick;
-		public event EventHandler<ItemMouseEventArgs<Control.ListItem, Control.BottomBarNote>> ItemCancelClick;
-
 		public ContentListBox() : base()
 		{
 			hide = true;
@@ -65,7 +62,6 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 		}
 
-
 		public bool Hide
 		{
 			get => hide;
@@ -87,6 +83,7 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 			return true;
 		}
+		
 		protected override void OnItemMouseClick(ItemMouseEventArgs<Control.ListItem, Control.ListItemNote> e)
 		{
 			if (e.SubItem != null && e.SubItem is Control.BottomBarNote note)

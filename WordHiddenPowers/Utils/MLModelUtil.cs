@@ -29,7 +29,6 @@ namespace WordHiddenPowers.Utils
 			return MLModel.PredictAllLabels(sampleData);			
 		}
 
-
 		public static string ConvertToCompliance(string text)
 		{
 			return filters.ConvertToCompliance(text);

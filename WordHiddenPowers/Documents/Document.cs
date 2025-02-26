@@ -544,7 +544,7 @@ namespace WordHiddenPowers.Documents
 								AddTextNote(
 									categoryGuid: categoryGuid,
 									subcategoryGuid: subcategoryGuid,
-									description: null,
+									description: "Добавлено с помощью поисковых алгоритмов",
 									value: paragraph.Range.Text,
 									rating: 0,
 									selectionStart: paragraph.Range.Start,
