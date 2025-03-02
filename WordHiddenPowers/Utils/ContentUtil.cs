@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: Utils
+﻿// Ignore Spelling: Utils Util
 
 using System;
 using System.Data;
@@ -18,7 +18,7 @@ namespace WordHiddenPowers.Utils
 			Regex regex = new Regex("^" + variableName + "(_\\d{1,})*$");
 			for (int i = 1; i <= array.Count; i++)
 			{
-				if (regex.IsMatch( array[i].Name))
+				if (regex.IsMatch(array[i].Name))
 					return true;
 			}
 			return false;
@@ -34,8 +34,7 @@ namespace WordHiddenPowers.Utils
 			}
 			return null;
 		}
-			
-
+	
 		public static string GetVariableValueOrDefault(Word.Variables array, string variableName)
 		{
 			if (ExistsVariable(array: array, variableName: variableName))
@@ -66,6 +65,11 @@ namespace WordHiddenPowers.Utils
 			{
 				array.Add(variableName, value);
 			}				
+		}
+
+		public static void CommitCurrentDataSet(Word.Variables array, RepositoryDataSet dataSet)
+		{
+			CommitVariable(array: array, variableName: Const.Globals.XML_VARIABLE_NAME, dataSet: dataSet);
 		}
 
 		public static void CommitVariable(Word.Variables array, string variableName, RepositoryDataSet dataSet)
@@ -147,6 +151,7 @@ namespace WordHiddenPowers.Utils
 				return NewGuid(Doc);
 			}
 		}
+		
 		public static string GetCaption(Word._Document Doc)
 		{
 			return GetVariableValueOrDefault(

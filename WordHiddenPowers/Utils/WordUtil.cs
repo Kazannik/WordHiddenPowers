@@ -1,21 +1,17 @@
 ﻿// Ignore Spelling: Mso Utils Util
 
 using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Reflection;
-using WordHiddenPowers.Documents;
 using WordHiddenPowers.Repositories.Categories;
 using WordHiddenPowers.Repositories.Notes;
-using WordHiddenPowers.Repositories;
-using static WordHiddenPowers.Utils.Gdi32;
-using Word = Microsoft.Office.Interop.Word;
-using static WordHiddenPowers.Repositories.RepositoryDataSet;
-using Microsoft.Office.Interop.Word;
-using Category = WordHiddenPowers.Repositories.Categories.Category;
-using EnvDTE;
-using System.Collections.Generic;
-using System.Linq;
 using static WordHiddenPowers.Repositories.Notes.Note;
+using static WordHiddenPowers.Repositories.RepositoryDataSet;
+using static WordHiddenPowers.Utils.Gdi32;
+using Category = WordHiddenPowers.Repositories.Categories.Category;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Utils
 {

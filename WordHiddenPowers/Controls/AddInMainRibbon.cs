@@ -9,12 +9,12 @@ namespace WordHiddenPowers
 
 		private Documents.Document ActiveDocument
 		{
-			get { return Globals.ThisAddIn.Documents.ActiveDocument; }
+			get { return Globals.ThisAddIn.Documents?.ActiveDocument; }
 		}
 
 		private Word.Selection Selection
 		{
-			get { return Globals.ThisAddIn.Application.ActiveWindow.Selection; }
+			get { return Globals.ThisAddIn.Application.ActiveWindow?.Selection; }
 		}
 
 		private void NewContent_Click(object sender, RibbonControlEventArgs e)
