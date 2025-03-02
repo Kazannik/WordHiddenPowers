@@ -1,4 +1,6 @@
-﻿using Microsoft.Office.Interop.Word;
+﻿// Ignore Spelling: dest
+
+using Microsoft.Office.Interop.Word;
 using Microsoft.Office.Tools;
 using System;
 using System.Collections.Generic;
@@ -10,7 +12,6 @@ using WordHiddenPowers.Dialogs;
 using WordHiddenPowers.Panes;
 using WordHiddenPowers.Repositories;
 using WordHiddenPowers.Repositories.Categories;
-using WordHiddenPowers.Repositories.Data;
 using WordHiddenPowers.Utils;
 using static WordHiddenPowers.Repositories.RepositoryDataSet;
 using DataTable = System.Data.DataTable;
@@ -24,9 +25,9 @@ namespace WordHiddenPowers.Documents
 	{
 		private readonly DocumentCollection parent;
 
-		private RepositoryDataSet dataSet;
+		private RepositoryDataSet currentDataSet;
 
-		private RepositoryDataSet importDataSet;
+		private RepositoryDataSet bufferDataSet;
 
 		public CustomTaskPane CustomPane { get; }
 		
@@ -143,16 +144,15 @@ namespace WordHiddenPowers.Documents
 		{
 			get
 			{
-				if (dataSet == null)
+				if (currentDataSet == null)
 				{
-					bool isCorrect;
-					dataSet = Xml.GetCurrentDataSet(Doc: Doc, out isCorrect);
+					currentDataSet = Xml.GetCurrentDataSet(Doc: Doc, out bool isCorrect);
 					if (!isCorrect)
 					{
-						dataSet = new RepositoryDataSet();
+						currentDataSet = new RepositoryDataSet();
 					}
 				}
-				return dataSet;
+				return currentDataSet;
 			}
 		}
 
@@ -160,20 +160,20 @@ namespace WordHiddenPowers.Documents
 		{
 			get
 			{
-				if (importDataSet == null)
+				if (bufferDataSet == null)
 				{
-					bool isCorrect;
-					importDataSet = Xml.GetAnalyzerDataSet(Doc: Doc, out isCorrect);
+					bufferDataSet = Xml.GetAnalyzerDataSet(Doc: Doc, out bool isCorrect);
+					if (!isCorrect)
 					{
-						importDataSet = new RepositoryDataSet();
+						bufferDataSet = new RepositoryDataSet();
 					}
 				}
-				return importDataSet;
+				return bufferDataSet;
 			}
 		}
 
 		public Word._Document Doc { get; }
-
+				
 		private Document(DocumentCollection parent, string fileName, Word._Document doc)
 		{
 			this.parent = parent;
@@ -200,7 +200,7 @@ namespace WordHiddenPowers.Documents
 		void Pane_VisibleChanged(object sender, EventArgs e)
 		{
 			CustomTaskPane pane = (CustomTaskPane)sender;
-			parent.paneVisibleButton.Checked = pane.Visible;
+			if (parent != null) parent.paneVisibleButton.Checked = pane.Visible;
 		}
 
 		public static Document Create(DocumentCollection parent, string fileName, Word._Document Doc)
@@ -211,7 +211,7 @@ namespace WordHiddenPowers.Documents
 				doc: Doc);
 			return document;
 		}
-
+				
 		public void NewData()
 		{
 			DataSet.RowsHeaders.Clear();
@@ -309,7 +309,7 @@ namespace WordHiddenPowers.Documents
 				ContentUtil.CommitVariable(Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME, ImportDataSet);
 			}
 		}
-
+		
 		public bool VariablesExists()
 		{
 			if (Doc.Variables.Count > 0)
@@ -396,7 +396,7 @@ namespace WordHiddenPowers.Documents
 			FolderBrowserDialog dialog = new FolderBrowserDialog();
 			if (ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
 			{
-				importDataSet = FileSystemUtil.GetDataSetFromWordFiles(dialog.SelectedPath);
+				FileSystemUtil.GetDataSetFromWordFiles(dialog.SelectedPath, ref bufferDataSet);
 				ContentUtil.CommitVariable(Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME, ImportDataSet);
 				Doc.Saved = false;
 			}
@@ -404,12 +404,22 @@ namespace WordHiddenPowers.Documents
 
 		public void ImportDataFromWordDocument()
 		{
-			FolderBrowserDialog dialog = new FolderBrowserDialog();
+			OpenFileDialog dialog = new OpenFileDialog
+			{
+				Filter = "Документ Word|*.doc,*.docx| Текстовый файл с контекстом заметок|*.*"
+			};
 			if (ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
 			{
-				importDataSet = FileSystemUtil.GetDataSetFromWordFiles(dialog.SelectedPath);
-				ContentUtil.CommitVariable(Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME, ImportDataSet);
-				Doc.Saved = false;
+				if (dialog.FilterIndex == 0)
+				{
+					FileSystemUtil.GetDataSetFromWordFile(dialog.FileName, ref bufferDataSet);
+					ContentUtil.CommitVariable(Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME, ImportDataSet);
+					Doc.Saved = false;
+				}
+				else
+				{
+					FileSystemUtil.GetContentFromTextFile(sourceDataSet: DataSet, fileName: dialog.FileName);
+				}
 			}
 		}
 
@@ -479,6 +489,34 @@ namespace WordHiddenPowers.Documents
 			CommitVariables();
 		}
 
+		public static void AddTextNote(Word._Document document, int categoryId, int subcategoryId, int rating, int selectionStart, int selectionEnd)
+		{
+			RepositoryDataSet dataSet = Xml.GetCurrentDataSet(document, out bool isCorrect);
+			if (isCorrect)
+			{
+				int fileId = GetFile(dataSet: dataSet, fileName: document.FullName);
+				string categoryGuid = dataSet.Categories[categoryId].key_guid;
+				string subcategoryGuid = dataSet.Subcategories[subcategoryId].key_guid;
+				Range range = document.Range(selectionStart, selectionEnd);
+				dataSet.TextPowers.Rows.Add(new object[]
+				{
+					null,
+					categoryGuid,
+					subcategoryGuid,
+					null,
+					range.Text,
+					rating,
+					selectionStart,
+					selectionEnd,
+					fileId
+				});
+				if (dataSet.HasChanges())
+				{
+					ContentUtil.CommitVariable(document.Variables, Const.Globals.XML_VARIABLE_NAME, dataSet);
+				}
+			}
+		}
+
 		private void AddDecimalNote(string categoryGuid, string subcategoryGuid, string description, double value, int rating, int selectionStart, int selectionEnd)
 		{
 			int fileId = GetFile(FileName);
@@ -495,6 +533,45 @@ namespace WordHiddenPowers.Documents
 				fileId
 			});
 			CommitVariables();
+		}
+
+		public static void AddDecimalNote(Word._Document document, int categoryId, int subcategoryId, double value, int rating, int selectionStart, int selectionEnd)
+		{
+			RepositoryDataSet dataSet = Xml.GetCurrentDataSet(document, out bool isCorrect);
+			if (isCorrect)
+			{
+				int fileId = GetFile(dataSet: dataSet, fileName: document.FullName);
+				string categoryGuid = dataSet.Categories[categoryId].key_guid;
+				string subcategoryGuid = dataSet.Subcategories[subcategoryId].key_guid;
+				dataSet.DecimalPowers.Rows.Add(new object[]
+				{
+					null,
+					categoryGuid,
+					subcategoryGuid,
+					null,
+					value,
+					rating,
+					selectionStart,
+					selectionEnd,
+					fileId
+				});
+				if (dataSet.HasChanges())
+				{
+					ContentUtil.CommitVariable(document.Variables, Const.Globals.XML_VARIABLE_NAME, dataSet);
+				}
+			}
+		}
+
+		public static void CopyModel(RepositoryDataSet sourceDataSet, Word._Document destDocument)
+		{
+			RepositoryDataSet destDataSet = new RepositoryDataSet();
+			Xml.CopyData(sourceDataSet, destDataSet);
+			destDataSet.DecimalPowers.Clear();
+			destDataSet.TextPowers.Clear();
+			destDataSet.DocumentKeys.Clear();
+			destDataSet.WordFiles.Clear();
+			destDataSet.AcceptChanges();
+			ContentUtil.CommitVariable(destDocument.Variables, Const.Globals.XML_VARIABLE_NAME, destDataSet);
 		}
 
 		public void ShowSearchServiceDialog()
@@ -683,19 +760,24 @@ namespace WordHiddenPowers.Documents
 		{
 			if (result == null) return null;
 			return result.OrderByDescending(p => p.Value)
-				.Where(p => p.Value > WordHiddenPowers.Const.Globals.LEVEL_PASSAGE)
-				.Select(p => (DataSet.GetSubcategory(guid: p.Key, tag: p.Value)));			
+				.Where(p => p.Value > Const.Globals.LEVEL_PASSAGE)
+				.Select(p => DataSet.GetSubcategory(guid: p.Key, tag: p.Value));			
 		}
 
 		private int GetFile(string fileName)
 		{
-			if (DataSet.WordFiles.Exists(fileName: fileName))
+			return GetFile(dataSet: DataSet, fileName: fileName);			
+		}
+
+		private static int GetFile(RepositoryDataSet dataSet, string fileName)
+		{
+			if (dataSet.WordFiles.Exists(fileName: fileName))
 			{
-				return DataSet.WordFiles.Get(fileName: fileName).Id;
+				return dataSet.WordFiles.Get(fileName: fileName).Id;
 			}
 			else
 			{
-				return DataSet.WordFiles.Add(fileName: fileName, caption: string.Empty, description: string.Empty, date: DateTime.Now).Id;
+				return dataSet.WordFiles.Add(fileName: fileName, caption: string.Empty, description: string.Empty, date: DateTime.Now).Id;
 			}
 		}
 

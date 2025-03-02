@@ -21,9 +21,10 @@ namespace WordHiddenPowers.Dialogs
 			this.Icon = WordUtil.GetIconMso("MindMapExportWord", SystemInformation.IconSize.Width, SystemInformation.IconSize.Height);
 
 			InitializeComponent();
+			ControlResize();
 
 			listBox.DataSet = this.document.DataSet;
-			this.listBox.SelectedItemChanged += new System.EventHandler<ControlLibrary.Controls.ListControls.ItemEventArgs<ListItem>>(this.ListBox_SelectedItemChanged);
+			listBox.SelectedItemChanged += new EventHandler<ControlLibrary.Controls.ListControls.ItemEventArgs<ListItem>>(ListBox_SelectedItemChanged);
 			if (listBox.Items.Count > 0) listBox.SelectedIndex = 0;
 		}
 
@@ -99,8 +100,7 @@ namespace WordHiddenPowers.Dialogs
 			};
 			if (dialog.ShowDialog(this) == DialogResult.OK)
 			{
-				string content = File.ReadAllText(dialog.FileName, Encoding.GetEncoding(1251));
-				
+				string content = File.ReadAllText(dialog.FileName, Encoding.GetEncoding(1251));				
 				Cursor.Current = Cursors.WaitCursor;
 				listBox.BeginUpdate();
 				CategoriesUtil.CreateFromText(document.DataSet, content);
@@ -110,6 +110,11 @@ namespace WordHiddenPowers.Dialogs
 		}
 
 		private void FileSave_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void FileSaveAs_Click(object sender, EventArgs e)
 		{
 
 		}
@@ -280,6 +285,43 @@ namespace WordHiddenPowers.Dialogs
 			this.document.DataSet.Categories.Clear();
 			listBox.EndUpdate();
 			Cursor.Current = Cursors.Default;
-		}		
+		}
+
+		private void Containers_Resize(object sender, EventArgs e)
+		{
+			ControlResize();
+		}
+
+		private void ControlResize()
+		{
+			tabControl1.Location = new Point(0, 0);
+			tabControl1.Size = new Size(splitContainer1.Panel2.Width, splitContainer1.Panel2.Height);
+
+			/// Tab Page 1
+			captionLabel.Location = new Point(0, 0);
+			obligatoryСheckBox.Location = new Point(0, tabPage1.Height - obligatoryСheckBox.Height);
+			descriptionLabel.Location = new Point(0, (tabPage1.Height - captionLabel.Height - descriptionLabel.Height - obligatoryСheckBox.Height) / 2);
+			captionTextBox.Location = new Point(0, captionLabel.Height);
+			captionTextBox.Size = new Size(tabPage1.Width, descriptionLabel.Top - captionTextBox.Top);
+			descriptionTextBox.Location = new Point(0, descriptionLabel.Top + descriptionLabel.Height);
+			descriptionTextBox.Size = new Size(tabPage1.Width, tabPage1.Height - descriptionTextBox.Top - obligatoryСheckBox.Height);
+
+			/// Tab Page 2
+			isTextRadioButton.Location = new Point(12, 12);
+			isDecimalRadioButton.Location = new Point(12, isTextRadioButton.Top + isTextRadioButton.Height + 12);
+			keywordsLabel.Location = new Point(0, isDecimalRadioButton.Top + isDecimalRadioButton.Height + 12);
+			keywordsTextBox.Location = new Point(0, keywordsLabel.Top + keywordsLabel.Height);
+			keywordsTextBox.Size = new Size(tabPage2.Width, tabPage2.Height - keywordsTextBox.Top);
+
+			/// Tab Page 3
+			beforeLabel.Location = new Point(0, 0);
+			afterLabel.Location = new Point(0, (tabPage3.Height - beforeLabel.Height - afterLabel.Height) / 2);
+			beforeTextBox.Location = new Point(0, beforeLabel.Height);
+			beforeTextBox.Size = new Size(tabPage3.Width, afterLabel.Top - beforeLabel.Height);
+			afterTextBox.Location = new Point(0, afterLabel.Top + afterLabel.Height);
+			afterTextBox.Size = new Size(tabPage3.Width, tabPage3.Height - afterTextBox.Top);
+		}
+
+		
 	}
 }

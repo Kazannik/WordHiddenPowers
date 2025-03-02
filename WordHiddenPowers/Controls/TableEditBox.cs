@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using WordHiddenPowers.Repositories;
 using WordHiddenPowers.Repositories.Data;
+using Font = System.Drawing.Font;
 
 namespace WordHiddenPowers.Controls
 {
@@ -116,11 +117,12 @@ namespace WordHiddenPowers.Controls
 		{
 			dataGridView.CancelEdit();
 			if (table == null) return;
-			for (int r = 0; r < table.Rows.Count; r++)
+			for (int r = 0; r < dataGridView.RowCount; r++)
 			{
-				for (int c = 0; c < table.ColumnCount; c++)
+				for (int c = 0; c < dataGridView.ColumnCount; c++)
 				{
-					dataGridView.Rows[r].Cells[c].Value = table.Rows[r][c].Value;
+					if (table.RowCount > r && table.ColumnCount > c)
+						dataGridView.Rows[r].Cells[c].Value = table.Rows[r][c].Value.ToString();
 				}
 			}
 		}
@@ -129,13 +131,14 @@ namespace WordHiddenPowers.Controls
 		{
 			dataGridView.CancelEdit();
 			if (table == null) return;
-			for (int r = 0; r < table.Rows.Count; r++)
+			for (int r = 0; r < dataGridView.RowCount; r++)
 			{
-				for (int c = 0; c < table.ColumnCount; c++)
+				for (int c = 0; c < dataGridView.ColumnCount; c++)
 				{
 					if (dataGridView.Rows[r].Cells[c].Value != null)
 					{
-						table.Rows[r][c].Value = int.Parse(dataGridView.Rows[r].Cells[c].Value.ToString());
+						if (table.RowCount > r && table.ColumnCount > c)
+							table.Rows[r][c].Value = int.Parse(dataGridView.Rows[r].Cells[c].Value.ToString());
 					}
 				}
 			}
@@ -160,17 +163,20 @@ namespace WordHiddenPowers.Controls
 				}
 
 				bool changed = false;
-				for (int r = 0; r < table.Rows.Count; r++)
+				for (int r = 0; r < dataGridView.RowCount; r++)
 				{
-					for (int c = 0; c < table.ColumnCount; c++)
+					for (int c = 0; c < dataGridView.ColumnCount; c++)
 					{
 						if (dataGridView.Rows[r].Cells[c].Value != null)
 						{
-							if (table.Rows[r][c].Value != int.Parse(dataGridView.Rows[r].Cells[c].Value.ToString()))
+							if (table.RowCount > r && table.ColumnCount > c)
 							{
-								changed = true;
-								break;
-							}
+								if (table.Rows[r][c].Value != int.Parse(dataGridView.Rows[r].Cells[c].Value.ToString()))
+								{
+									changed = true;
+									break;
+								}
+							}								
 						}
 					}
 				}

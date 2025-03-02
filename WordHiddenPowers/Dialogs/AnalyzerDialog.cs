@@ -68,7 +68,7 @@ namespace WordHiddenPowers.Dialogs
 				Multiselect = false,
 				Filter = Const.Globals.DIALOG_XML_FILTER
 			};
-			if (Utils.ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
+			if (ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
 			{
 				statusListBox.DataSet = null;
 				contentListBox.DataSet = null;
@@ -92,7 +92,7 @@ namespace WordHiddenPowers.Dialogs
 			{
 				Filter = Const.Globals.DIALOG_XML_FILTER
 			};
-			if (Utils.ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
+			if (ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
 			{
 				document.CommitVariables();
 				Xml.SaveData(document.ImportDataSet, dialog.FileName);
@@ -139,7 +139,7 @@ namespace WordHiddenPowers.Dialogs
 			InsertDataPropertiesDialog dialog = new InsertDataPropertiesDialog();
 			if (ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
 			{
-				Utils.WordUtil.InsertToWordDocument(
+				WordUtil.InsertToWordDocument(
 					sourceDocument: document,
 					minRating: dialog.MinRating,
 					maxRating: dialog.MaxRating,
@@ -182,21 +182,24 @@ namespace WordHiddenPowers.Dialogs
 			}
 		}
 
-		private void FileExportToCsv_Click(object sender, EventArgs e)
+		private void FileExportTo_Click(object sender, EventArgs e)
 		{
 			SaveFileDialog dialog = new SaveFileDialog
 			{
-				Filter = Const.Globals.DIALOG_TSV_FILTER,
-				FileName = "MLModelRetrainContent" + DateTime.Now.ToString("dd-MM-yyyy_hh-mm-ss")
-				
+				Filter = Const.Globals.DIALOG_TSV_FILTER + "|" + Const.Globals.DIALOG_TXT_FILTER,
+				FileName = "Content_" + DateTime.Now.ToString("dd-MM-yyyy_hh-mm-ss")				
 			};
-			if (Utils.ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
+			if (ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
 			{
 				document.CommitVariables();
+			
+				IEnumerable<string> content = dialog.FilterIndex == 0
+					? document.ImportDataSet.GetTsvContent()
+					: document.ImportDataSet.GetTxtContent() ;
 
 				using (StreamWriter outputFile = new StreamWriter(dialog.FileName, false, System.Text.Encoding.GetEncoding(1251)))
 				{
-					foreach (string line in document.ImportDataSet.GetTsvContent())
+					foreach (string line in content)
 					{
 						outputFile.WriteLine(line);
 					}

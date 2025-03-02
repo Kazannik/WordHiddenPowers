@@ -1,7 +1,4 @@
-﻿using Microsoft.Office.Interop.Word;
-using Microsoft.VisualStudio.TextManager.Interop;
-using stdole;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -182,7 +179,6 @@ namespace WordHiddenPowers.Repositories
 				DecimalPowers.Set(note);
 		}
 
-
 		public IEnumerable<string> GetTsvContent()
 		{
 			IEnumerable<string> content = (from row in TextPowers
@@ -197,6 +193,20 @@ namespace WordHiddenPowers.Repositories
 				note.Subcategory.Caption,
 				Utils.MLModelUtil.ConvertToCompliance(note.Value.ToString())));
 			return (new string[] { "Area\tCaption\tTitle" }).Union(content);
+		}
+
+		public IEnumerable<string> GetTxtContent()
+		{
+			return GetNotes()
+				.OrderBy(note => note.Subcategory.Guid)
+				.Select(note => string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}" + (note.IsText ? string.Empty : "\t{6}"),
+				note.FileName,
+				note.Category.Code,
+				note.Subcategory.Code,
+				note.Rating,
+				note.WordSelectionStart,
+				note.WordSelectionEnd,
+				note.Value));
 		}
 
 		public IEnumerable<string> GetContent()

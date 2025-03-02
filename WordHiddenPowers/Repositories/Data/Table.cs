@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace WordHiddenPowers.Repositories.Data
 {
@@ -20,11 +21,13 @@ namespace WordHiddenPowers.Repositories.Data
 
 		public int ColumnCount { get; }
 
+		public int RowCount => Rows.Count;
+
 		public RowCollection Rows { get; }
 
 		public bool IsEmpty
 		{
-			get { return Rows.Count == 0 || ColumnCount == 0; }
+			get { return RowCount == 0 || ColumnCount == 0; }
 		}
 
 		public void Clear()
@@ -32,7 +35,7 @@ namespace WordHiddenPowers.Repositories.Data
 			Caption = string.Empty;
 			FileName = string.Empty;
 
-			for (int r = 0; r < Rows.Count; r++)
+			for (int r = 0; r < RowCount; r++)
 			{
 				for (int c = 0; c < ColumnCount; c++)
 				{
@@ -60,6 +63,17 @@ namespace WordHiddenPowers.Repositories.Data
 			return result;
 		}
 
+
+		protected void OnValidate(object value)
+		{
+			if (!typeof(Table).IsAssignableFrom(value.GetType()))
+			{
+				throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Не удалось привести тип Value: {0} к поддерживаемому типу: {1}.", value.GetType().ToString(), typeof(Table).ToString()));
+			}
+
+		}
+
+
 		public static Table Create(string text)
 		{
 			return Create(text: text, caption: string.Empty, fileName: string.Empty);
@@ -73,7 +87,7 @@ namespace WordHiddenPowers.Repositories.Data
 			string[] cells = rows[0].Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 			Table table = new Table(rows.Length, cells.Length);
 
-			for (int r = 0; r < table.Rows.Count; r++)
+			for (int r = 0; r < table.RowCount; r++)
 			{
 				cells = rows[r].Split(';');
 				for (int c = 0; c < table.ColumnCount; c++)
@@ -88,11 +102,11 @@ namespace WordHiddenPowers.Repositories.Data
 
 		public static Table operator +(Table a, Table b)
 		{
-			for (int r = 0; r < a.Rows.Count; r++)
+			for (int r = 0; r < a.RowCount; r++)
 			{
 				for (int c = 0; c < a.ColumnCount; c++)
 				{
-					a.Rows[r][c].Value = a.Rows[r][c].Value + b.Rows[r][c].Value;
+					a.Rows[r][c].Value = a.Rows[r][c].Value + GetValue(b, r, c);
 				}
 			}
 			return a;
@@ -100,11 +114,11 @@ namespace WordHiddenPowers.Repositories.Data
 
 		public static Table operator -(Table a, Table b)
 		{
-			for (int r = 0; r < a.Rows.Count; r++)
+			for (int r = 0; r < a.RowCount; r++)
 			{
 				for (int c = 0; c < a.ColumnCount; c++)
 				{
-					a.Rows[r][c].Value = a.Rows[r][c].Value - b.Rows[r][c].Value;
+					a.Rows[r][c].Value = a.Rows[r][c].Value - GetValue(b, r, c); ;
 				}
 			}
 			return a;
@@ -112,7 +126,7 @@ namespace WordHiddenPowers.Repositories.Data
 
 		public static Table operator *(Table a, int b)
 		{
-			for (int r = 0; r < a.Rows.Count; r++)
+			for (int r = 0; r < a.RowCount; r++)
 			{
 				for (int c = 0; c < a.ColumnCount; c++)
 				{
@@ -124,7 +138,7 @@ namespace WordHiddenPowers.Repositories.Data
 
 		public static Table operator /(Table a, int b)
 		{
-			for (int r = 0; r < a.Rows.Count; r++)
+			for (int r = 0; r < a.RowCount; r++)
 			{
 				for (int c = 0; c < a.ColumnCount; c++)
 				{
@@ -133,5 +147,15 @@ namespace WordHiddenPowers.Repositories.Data
 			}
 			return a;
 		}
+	
+		private static int GetValue(Table table, int row, int column)
+		{
+			if (table.RowCount > row && table.ColumnCount > column)
+			{
+				return table.Rows[row][column].Value;
+			}
+			else return 0;
+		}
+	
 	}
 }

@@ -136,7 +136,7 @@
             this.mnuFileExportToCsv.Name = "mnuFileExportToCsv";
             this.mnuFileExportToCsv.Size = new System.Drawing.Size(371, 30);
             this.mnuFileExportToCsv.Text = "Экспорт данных...";
-            this.mnuFileExportToCsv.Click += new System.EventHandler(this.FileExportToCsv_Click);
+            this.mnuFileExportToCsv.Click += new System.EventHandler(this.FileExportTo_Click);
             // 
             // toolStripMenuItem2
             // 

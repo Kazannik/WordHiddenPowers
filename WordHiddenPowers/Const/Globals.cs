@@ -11,6 +11,7 @@ namespace WordHiddenPowers.Const
 
 		public const string DIALOG_XML_FILTER = "XML Schema File|*.xsd";
 		public const string DIALOG_TSV_FILTER = "Текстовый формат с разделителями|*.tsv";
+		public const string DIALOG_TXT_FILTER = "Текстовый формат|*.txt";
 		public const string DIALOG_DIC_FILTER = "Словарь использованных слов|*.dic";
 
 		public const string CAPTION_VARIABLE_NAME = "Title" + VARIABLES_NAME;

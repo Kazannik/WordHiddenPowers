@@ -10,7 +10,5 @@ namespace WordHiddenPowers.Controls
 	[ToolboxBitmap(typeof(ComboBox))]
 	[ComVisible(false)]
 	[ToolStripItemDesignerAvailability(ToolStripItemDesignerAvailability.All)]
-	public class CategoriesPicker : ToolStripComboBox
-	{
-	}
+	public class CategoriesPicker : ToolStripComboBox { }
 }

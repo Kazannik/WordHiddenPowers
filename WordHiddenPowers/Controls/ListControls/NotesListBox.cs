@@ -1,6 +1,5 @@
 ﻿using ControlLibrary.Controls.ListControls;
 using ControlLibrary.Structures;
-using System;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -395,7 +394,7 @@ namespace WordHiddenPowers.Controls.ListControls
 			public ListItem(Note note, bool showButtons) : base(
 				new ListItemNote[] {
 				new TitleNote(note.Category.Position, note.Subcategory.Position, note.Subcategory.Guid, note.Category.Text),
-				new CommentNote(note),
+				new SubtitleNote(note),
 				new TextNote(note),
 				new DescriptionNote(note),
 				new BottomBarNote(note) {ShowButtons = showButtons } })
@@ -536,12 +535,12 @@ namespace WordHiddenPowers.Controls.ListControls
 			}			
 		}
 
-		public class CommentNote : ListItemNote
+		public class SubtitleNote : ListItemNote
 		{
 			private Size codeSize;
 			private Size textSize;
 
-			public CommentNote(Note note) : base(text: note.Subcategory.Text) 
+			public SubtitleNote(Note note) : base(text: note.Subcategory.Text) 
 			{
 				codeSize = Size.Empty;
 				textSize = Size.Empty;
@@ -550,7 +549,7 @@ namespace WordHiddenPowers.Controls.ListControls
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
 				Font newFont = new Font(e.Font.FontFamily, e.Font.Size, FontStyle.Bold | FontStyle.Italic);
-				Brush brush = new SolidBrush(e.ForeColor);
+				Brush brush = new SolidBrush(e.State == (e.State | DrawItemState.Selected) ? e.ForeColor : Color.DarkGreen);
 				Rectangle rectangle = new Rectangle(e.Bounds.Width - textSize.Width - 1, e.Bounds.Y,
 	textSize.Width, textSize.Height);
 				e.Graphics.DrawString(Text, newFont, brush, rectangle, LEFT_STRING_FORMAT);
@@ -568,18 +567,26 @@ namespace WordHiddenPowers.Controls.ListControls
 
 		public class TextNote : ListItemNote
 		{
-			public TextNote(Note note) : base(text: note.Value as string) { }
+			private readonly bool IsText;
+
+			public TextNote(Note note) : base(text: note.Value.ToString()) 
+			{
+				IsText = note.IsText;
+			}
 
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
+				Font newFont = new Font(e.Font.FontFamily, e.Font.Size + 4, FontStyle.Bold);
+
 				Brush brush = new SolidBrush(e.ForeColor);
-				e.Graphics.DrawString(Text, e.Font, brush, e.Bounds, LEFT_STRING_FORMAT);
+				e.Graphics.DrawString(Text, IsText ? e.Font : newFont, brush, e.Bounds, IsText ? LEFT_STRING_FORMAT : CENTER_STRING_FORMAT);
 				brush.Dispose();
 			}
 
 			protected override Size OnMeasureBound(Graphics graphics, Font font, int itemWidth, int itemHeight)
 			{
-				return GetTextSize(graphics: graphics, Text, font: font, width: itemWidth, LEFT_STRING_FORMAT);
+				Font newFont = new Font(font.FontFamily, font.Size + 4, FontStyle.Bold);
+				return GetTextSize(graphics: graphics, Text, font: IsText ? font : newFont, width: itemWidth, IsText ? LEFT_STRING_FORMAT : CENTER_STRING_FORMAT);
 			}
 		}
 
@@ -651,18 +658,21 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
-				for (int i = 0; i < 5; i++)
+				if (note.IsText)
 				{
-					int percent = Rating.GetPercent(i + 1, 5);
-					Rectangle star = new Rectangle(e.Bounds.X + ((e.Bounds.Height + 1) * i), e.Bounds.Y, e.Bounds.Height, e.Bounds.Height);
-					ControlLibrary.Utils.Drawing.DrawStar(e.Graphics, e.ForeColor, Const.Globals.COLOR_STAR_ICON, percent, star);
-					if (i == 0) SubtractionButtonRectangle = star;
-					else if (i == 4) AdditionButtonRectangle = star;
+					for (int i = 0; i < 5; i++)
+					{
+						int percent = Rating.GetPercent(i + 1, 5);
+						Rectangle star = new Rectangle(e.Bounds.X + ((e.Bounds.Height + 1) * i), e.Bounds.Y, e.Bounds.Height, e.Bounds.Height);
+						ControlLibrary.Utils.Drawing.DrawStar(e.Graphics, e.ForeColor, Const.Globals.COLOR_STAR_ICON, percent, star);
+						if (i == 0) SubtractionButtonRectangle = star;
+						else if (i == 4) AdditionButtonRectangle = star;
+					}
+					Font boldFont = new Font(e.Font.FontFamily, e.Font.Size, FontStyle.Bold);
+					Rectangle rect = new Rectangle(e.Bounds.X + ((e.Bounds.Height + 1) * 5), e.Bounds.Y + 1,
+						e.Bounds.Height * 2, e.Bounds.Height);
+					e.Graphics.DrawString(Rating.ToString(), boldFont, e.State == (e.State | DrawItemState.Selected) ? new SolidBrush(e.ForeColor) : Brushes.Red, rect);
 				}
-				Font boldFont = new Font(e.Font.FontFamily, e.Font.Size, FontStyle.Bold);
-				Rectangle rect = new Rectangle(e.Bounds.X + ((e.Bounds.Height + 1) * 5), e.Bounds.Y + 1,
-					e.Bounds.Height * 2, e.Bounds.Height);
-				e.Graphics.DrawString(Rating.ToString(), boldFont, e.State == (e.State | DrawItemState.Selected) ? new SolidBrush(e.ForeColor) : Brushes.Red, rect);
 
 				if (showButtons)
 				{
@@ -686,7 +696,7 @@ namespace WordHiddenPowers.Controls.ListControls
 				Font boldFont = new Font(font.FontFamily, font.Size, FontStyle.Bold);
 				SizeF measure = graphics.MeasureString("8888", boldFont, itemWidth - 3, CENTER_STRING_FORMAT);
 				ratingBoxSize = new Size(((int)measure.Height + 1) * 5, (int)measure.Height);
-				return new Size(itemWidth, (int)measure.Height + 4);
+				return new Size(itemWidth, note.IsText || showButtons ? (int)measure.Height + 4 : 4);
 			}
 		}
 	}
