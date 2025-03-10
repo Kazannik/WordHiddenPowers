@@ -36,7 +36,7 @@
     <PublishUrl>publish\WordHiddenPowers\</PublishUrl>
     <InstallUrl />
     <TargetCulture>ru</TargetCulture>
-    <ApplicationVersion>1.2.1.1</ApplicationVersion>
+    <ApplicationVersion>2.0.0.0</ApplicationVersion>
     <AutoIncrementApplicationRevision>false</AutoIncrementApplicationRevision>
     <UpdateEnabled>false</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
@@ -61,7 +61,7 @@
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.VSTORuntime.4.0">
       <Visible>False</Visible>
-      <ProductName>Среда выполнения Microsoft Visual Studio 2010 Tools for Office %28x86 и x64%29</ProductName>
+      <ProductName>Microsoft Visual Studio 2010 Tools for Office Runtime %28x86 and x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
@@ -216,6 +216,9 @@
     <Compile Include="Controls\ListControls\ContentListBox.cs" />
     <Compile Include="Controls\ListControls\NotesListBox.cs" />
     <Compile Include="Controls\ListControls\StatusListBox.cs" />
+    <Compile Include="Controls\PatternsWizardBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\RatingBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -253,6 +256,12 @@
     </Compile>
     <Compile Include="Dialogs\InsertDataPropertiesDialog.Designer.cs">
       <DependentUpon>InsertDataPropertiesDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\PatternsWizardDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\PatternsWizardDialog.Designer.cs">
+      <DependentUpon>PatternsWizardDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\SelectCategoriesDialog.cs">
       <SubType>Form</SubType>
@@ -324,7 +333,6 @@
     <Compile Include="Panes\NotesPane.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Panes\PaneCollection.cs" />
     <Compile Include="Panes\WordHiddenPowersPane.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -333,6 +341,9 @@
     <Compile Include="Repositories\Notes\Note.cs" />
     <Compile Include="Repositories\Categories\Subcategory.cs" />
     <Compile Include="Repositories\WordFiles\WordFile.cs" />
+    <Compile Include="Services\AI.cs" />
+    <Compile Include="Services\Searcher.cs" />
+    <Compile Include="Services\Сombined.cs" />
     <Compile Include="Utils\CategoriesUtil.cs" />
     <Compile Include="Utils\FileSystemUtil.cs" />
     <Compile Include="Utils\ContentUtil.cs" />
@@ -343,7 +354,10 @@
     <EmbeddedResource Include="Controls\CategoryBox.resx">
       <DependentUpon>CategoryBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ReitingBox.resx">
+    <EmbeddedResource Include="Controls\PatternsWizardBox.resx">
+      <DependentUpon>PatternsWizardBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\RatingBox.resx">
       <DependentUpon>RatingBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TableEditBox.resx">
@@ -377,6 +391,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\InsertDataPropertiesDialog.resx">
       <DependentUpon>InsertDataPropertiesDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\PatternsWizardDialog.resx">
+      <DependentUpon>PatternsWizardDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\SelectCategoriesDialog.resx">
       <DependentUpon>SelectCategoriesDialog.cs</DependentUpon>
@@ -645,9 +662,7 @@
     </None>
     <None Include="Resources\App.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Service\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\ControlLibrary\ControlLibrary\ControlLibrary.csproj">
       <Project>{0c5678ee-de96-4f24-b5ff-9a0c7dd53edf}</Project>

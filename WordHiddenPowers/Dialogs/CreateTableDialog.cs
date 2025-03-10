@@ -75,26 +75,26 @@ namespace WordHiddenPowers.Dialogs
 		{
 			dataGridView.Rows.Clear();
 			dataGridView.Columns.Clear();
-			if (document.DataSet.ColumnsHeaders.Rows.Count > 0)
+			if (document.CurrentDataSet.ColumnsHeaders.Rows.Count > 0)
 			{
 				dataGridView.Columns.Add("HEADER", "");
 				int rowIndex = dataGridView.Rows.Add();
 				dataGridView.Rows[rowIndex].Cells["HEADER"].ReadOnly = true;
 				dataGridView.Rows[rowIndex].Cells["HEADER"].Style.BackColor = dataGridView.BackgroundColor;
 
-				for (int i = 0; i < document.DataSet.ColumnsHeaders.Rows.Count; i++)
+				for (int i = 0; i < document.CurrentDataSet.ColumnsHeaders.Rows.Count; i++)
 				{
-					string text = document.DataSet.ColumnsHeaders.Rows[i]["Header"].ToString();
+					string text = document.CurrentDataSet.ColumnsHeaders.Rows[i]["Header"].ToString();
 					int columnIndex = dataGridView.Columns.Add(text, "");
 					dataGridView.Columns[columnIndex].SortMode = DataGridViewColumnSortMode.NotSortable;
 					dataGridView.Rows[rowIndex].Cells[i + 1].Value = text;
 				}
 
-				foreach (DataRow item in document.DataSet.RowsHeaders.Rows)
+				foreach (DataRow item in document.CurrentDataSet.RowsHeaders.Rows)
 				{
 					rowIndex = dataGridView.Rows.Add(item["Header"].ToString());
 
-					for (int i = 0; i < document.DataSet.ColumnsHeaders.Rows.Count; i++)
+					for (int i = 0; i < document.CurrentDataSet.ColumnsHeaders.Rows.Count; i++)
 					{
 						dataGridView.Rows[rowIndex].Cells[i + 1].ReadOnly = true;
 						dataGridView.Rows[rowIndex].Cells[i + 1].Style.BackColor = System.Drawing.SystemColors.Control;
@@ -107,29 +107,29 @@ namespace WordHiddenPowers.Dialogs
 		{
 			dataGridView.EndEdit();
 
-			if (document.DataSet.RowsHeaders.Rows.Count != (dataGridView.Rows.Count - 1) ||
-					document.DataSet.ColumnsHeaders.Rows.Count != (dataGridView.Columns.Count - 1))
+			if (document.CurrentDataSet.RowsHeaders.Rows.Count != (dataGridView.Rows.Count - 1) ||
+					document.CurrentDataSet.ColumnsHeaders.Rows.Count != (dataGridView.Columns.Count - 1))
 			{
 				Word.Variable variable = ContentUtil.GetVariable(document.Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
 				variable?.Delete();
 			}
 
-			document.DataSet.ColumnsHeaders.Clear();
+			document.CurrentDataSet.ColumnsHeaders.Clear();
 
 			for (int i = 1; i < dataGridView.Columns.Count; i++)
 			{
 				string text = dataGridView.Rows[0].Cells[i].Value.ToString();
-				document.DataSet.ColumnsHeaders.Rows.Add(new object[] { null, text });
+				document.CurrentDataSet.ColumnsHeaders.Rows.Add(new object[] { null, text });
 			}
 
-			document.DataSet.RowsHeaders.Clear();
+			document.CurrentDataSet.RowsHeaders.Clear();
 
 			for (int i = 1; i < dataGridView.Rows.Count; i++)
 			{
-				document.DataSet.RowsHeaders.Rows.Add(new object[] { null, dataGridView.Rows[i].Cells["HEADER"].Value.ToString() });
+				document.CurrentDataSet.RowsHeaders.Rows.Add(new object[] { null, dataGridView.Rows[i].Cells["HEADER"].Value.ToString() });
 			}
 
-			ContentUtil.CommitVariable(document.Doc.Variables, Const.Globals.XML_VARIABLE_NAME, document.DataSet);
+			ContentUtil.CommitVariable(document.Doc.Variables, Const.Globals.XML_CURRENT_VARIABLE_NAME, document.CurrentDataSet);
 		}
 
 		private void Delete_Click(object sender, EventArgs e)
@@ -189,8 +189,8 @@ namespace WordHiddenPowers.Dialogs
 				}
 
 				bool edited = false;
-				if (document.DataSet.RowsHeaders.Rows.Count != (dataGridView.Rows.Count - 1) ||
-					document.DataSet.ColumnsHeaders.Rows.Count != (dataGridView.Columns.Count - 1))
+				if (document.CurrentDataSet.RowsHeaders.Rows.Count != (dataGridView.Rows.Count - 1) ||
+					document.CurrentDataSet.ColumnsHeaders.Rows.Count != (dataGridView.Columns.Count - 1))
 				{
 					edited = true;
 				}
@@ -199,7 +199,7 @@ namespace WordHiddenPowers.Dialogs
 					for (int i = 1; i < dataGridView.Columns.Count; i++)
 					{
 						string gridText = dataGridView.Rows[0].Cells[i].Value.ToString();
-						string dataText = document.DataSet.ColumnsHeaders.Rows[i - 1]["Header"].ToString();
+						string dataText = document.CurrentDataSet.ColumnsHeaders.Rows[i - 1]["Header"].ToString();
 						if (!gridText.Equals(dataText))
 						{
 							edited = true;
@@ -209,7 +209,7 @@ namespace WordHiddenPowers.Dialogs
 					for (int i = 1; i < dataGridView.Rows.Count; i++)
 					{
 						string gridText = dataGridView.Rows[i].Cells["HEADER"].Value.ToString();
-						string dataText = document.DataSet.RowsHeaders.Rows[i - 1]["Header"].ToString();
+						string dataText = document.CurrentDataSet.RowsHeaders.Rows[i - 1]["Header"].ToString();
 						if (!gridText.Equals(dataText))
 						{
 							edited = true;

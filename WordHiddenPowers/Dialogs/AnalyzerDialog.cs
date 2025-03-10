@@ -29,8 +29,8 @@ namespace WordHiddenPowers.Dialogs
 
 			this.statusListBox.SelectedItemChanged += new System.EventHandler<ControlLibrary.Controls.ListControls.ItemEventArgs<Controls.ListControls.StatusListControl.ListItem>>(this.StatusListBox_SelectedItemChanged);
 
-			statusListBox.DataSet = document.ImportDataSet;
-			contentListBox.DataSet = document.ImportDataSet;
+			statusListBox.DataSet = document.AggregatedDataSet;
+			contentListBox.DataSet = document.AggregatedDataSet;
 		}
 
 		private void StatusListBox_SelectedItemChanged(object sender, ControlLibrary.Controls.ListControls.ItemEventArgs<Controls.ListControls.StatusListControl.ListItem> e)
@@ -44,20 +44,20 @@ namespace WordHiddenPowers.Dialogs
 			DialogResult result = MessageBox.Show(this, "Создание чистого хранилища приведет к утрате данных. Создать хранилище данных?", "Анализ данных", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 			if (result == DialogResult.Yes)
 			{
-				document.ImportDataSet.RowsHeaders.Clear();
-				document.ImportDataSet.ColumnsHeaders.Clear();
+				document.AggregatedDataSet.RowsHeaders.Clear();
+				document.AggregatedDataSet.ColumnsHeaders.Clear();
 
-				document.ImportDataSet.Subcategories.Clear();
-				document.ImportDataSet.Categories.Clear();
+				document.AggregatedDataSet.Subcategories.Clear();
+				document.AggregatedDataSet.Categories.Clear();
 
-				document.ImportDataSet.DecimalPowers.Clear();
-				document.ImportDataSet.TextPowers.Clear();
+				document.AggregatedDataSet.DecimalPowers.Clear();
+				document.AggregatedDataSet.TextPowers.Clear();
 				
-				document.ImportDataSet.WordFiles.Clear();
-				document.ImportDataSet.DocumentKeys.Clear();
+				document.AggregatedDataSet.WordFiles.Clear();
+				document.AggregatedDataSet.DocumentKeys.Clear();
 
-				document.ImportDataSet.AcceptChanges();
-				ContentUtil.CommitVariable(document.Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME, document.ImportDataSet);
+				document.AggregatedDataSet.AcceptChanges();
+				ContentUtil.CommitVariable(document.Doc.Variables, Const.Globals.XML_AGGREGATED_VARIABLE_NAME, document.AggregatedDataSet);
 			}				
 		}
 		
@@ -73,17 +73,17 @@ namespace WordHiddenPowers.Dialogs
 				statusListBox.DataSet = null;
 				contentListBox.DataSet = null;
 
-				document.LoadAnalyzerData(dialog.FileName);
+				document.LoadAggregatedData(dialog.FileName);
 
-				statusListBox.DataSet = document.ImportDataSet;
-				contentListBox.DataSet = document.ImportDataSet;
+				statusListBox.DataSet = document.AggregatedDataSet;
+				contentListBox.DataSet = document.AggregatedDataSet;
 			}
 		}
 		
 		private void FileSave_Click(object sender, EventArgs e)
 		{
-			document.ImportDataSet.AcceptChanges();
-			ContentUtil.CommitVariable(document.Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME, document.ImportDataSet);
+			document.AggregatedDataSet.AcceptChanges();
+			ContentUtil.CommitVariable(document.Doc.Variables, Const.Globals.XML_AGGREGATED_VARIABLE_NAME, document.AggregatedDataSet);
 		}
 
 		private void FileSaveAs_Click(object sender, EventArgs e)
@@ -95,7 +95,7 @@ namespace WordHiddenPowers.Dialogs
 			if (ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
 			{
 				document.CommitVariables();
-				Xml.SaveData(document.ImportDataSet, dialog.FileName);
+				Xml.SaveData(document.AggregatedDataSet, dialog.FileName);
 			}
 		}
 
@@ -111,7 +111,7 @@ namespace WordHiddenPowers.Dialogs
 			if (ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
 			{
 				//importDataSet = FileSystemUtil.ImportFiles(dialog.SelectedPath);
-				ContentUtil.CommitVariable(document.Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME, document.ImportDataSet);
+				ContentUtil.CommitVariable(document.Doc.Variables, Const.Globals.XML_AGGREGATED_VARIABLE_NAME, document.AggregatedDataSet);
 				document.Doc.Saved = false;
 			}
 		}
@@ -123,13 +123,13 @@ namespace WordHiddenPowers.Dialogs
 
 		private void InsertToDocumentButton_Click(object sender, EventArgs e)
 		{
-			if (document.ImportDataSet.HasChanges())
+			if (document.AggregatedDataSet.HasChanges())
 			{
 				DialogResult result = MessageBox.Show(this, "Для вставки данных в документ необходимо зафиксировать все изменения. Зафиксировать измененные данные?", "Анализ данных", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 				if (result == DialogResult.Yes)
 				{
-					document.ImportDataSet.AcceptChanges();
-					ContentUtil.CommitVariable(document.Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME, document.ImportDataSet);
+					document.AggregatedDataSet.AcceptChanges();
+					ContentUtil.CommitVariable(document.Doc.Variables, Const.Globals.XML_AGGREGATED_VARIABLE_NAME, document.AggregatedDataSet);
 				}
 				else
 				{
@@ -166,13 +166,13 @@ namespace WordHiddenPowers.Dialogs
 		{
 			if (e.CloseReason == CloseReason.UserClosing)
 			{
-				if (document.ImportDataSet.HasChanges())
+				if (document.AggregatedDataSet.HasChanges())
 				{
 					DialogResult result = MessageBox.Show(this, "Зафиксировать измененные данные?", "Анализ данных", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 					if (result == DialogResult.Yes)
 					{
-						document.ImportDataSet.AcceptChanges();
-						ContentUtil.CommitVariable(document.Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME, document.ImportDataSet);
+						document.AggregatedDataSet.AcceptChanges();
+						ContentUtil.CommitVariable(document.Doc.Variables, Const.Globals.XML_AGGREGATED_VARIABLE_NAME, document.AggregatedDataSet);
 					}
 					else if (result == DialogResult.Cancel)
 					{
@@ -193,9 +193,9 @@ namespace WordHiddenPowers.Dialogs
 			{
 				document.CommitVariables();
 			
-				IEnumerable<string> content = dialog.FilterIndex == 0
-					? document.ImportDataSet.GetTsvContent()
-					: document.ImportDataSet.GetTxtContent() ;
+				IEnumerable<string> content = dialog.FilterIndex == 1
+					? document.AggregatedDataSet.GetMlModelDataSetTsvContent()
+					: document.AggregatedDataSet.GetTxtContent() ;
 
 				using (StreamWriter outputFile = new StreamWriter(dialog.FileName, false, System.Text.Encoding.GetEncoding(1251)))
 				{
@@ -204,6 +204,7 @@ namespace WordHiddenPowers.Dialogs
 						outputFile.WriteLine(line);
 					}
 				}
+				ShowDialogUtil.ShowMessageDialog("Экспорт данных завершен!");
 			}
 		}
 
@@ -219,7 +220,7 @@ namespace WordHiddenPowers.Dialogs
 			{
 				document.CommitVariables();
 				IList<string> result = new List<string>();
-				foreach (string line in document.ImportDataSet.GetContent())
+				foreach (string line in document.AggregatedDataSet.GetContent())
 				{
 					string[] buffer = line.Split(' ');
 					foreach (string word in buffer)

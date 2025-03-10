@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Ignore Spelling: Tsv
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -53,22 +55,18 @@ namespace WordHiddenPowers.Repositories
 		{
 			return (from row in TextPowers
 					where row.RowState != DataRowState.Deleted
-					&& (string.IsNullOrEmpty(subcategoryGuid)
-					? true
-					: not
+					&& (string.IsNullOrEmpty(subcategoryGuid) || (not
 					? whereNotGuidTextPowers(row, subcategoryGuid)
-					: whereGuidTextPowers(row, subcategoryGuid))
+					: whereGuidTextPowers(row, subcategoryGuid)))
 					select Note.Create(
 						dataRow: row,
 						fileRow: WordFiles.GetRow(row.file_id),
 						subcategory: GetSubcategoryOrDefault(row.subcategory_guid)))
 				.Union(from row in DecimalPowers
 					   where row.RowState != DataRowState.Deleted
-					   && (string.IsNullOrEmpty(subcategoryGuid)
-					   ? true
-					   : not
+					   && (string.IsNullOrEmpty(subcategoryGuid) || (not
 					   ? whereNotGuidDecimalPowers(row, subcategoryGuid)
-					   : whereGuidDecimalPowers(row, subcategoryGuid))
+					   : whereGuidDecimalPowers(row, subcategoryGuid)))
 					   select Note.Create(
 						   dataRow: row,
 						   fileRow: WordFiles.GetRow(row.file_id),
@@ -101,7 +99,7 @@ namespace WordHiddenPowers.Repositories
 			return (from row in TextPowers
 					where row.RowState != DataRowState.Deleted
 					&& row.subcategory_guid == subcategoryGuid
-					&& (viewHide ? true : row.Hide == false)
+					&& (viewHide || row.Hide == false)
 					select Note.Create(
 						dataRow: row,
 						fileRow: WordFiles.GetRow(row.file_id),
@@ -179,7 +177,11 @@ namespace WordHiddenPowers.Repositories
 				DecimalPowers.Set(note);
 		}
 
-		public IEnumerable<string> GetTsvContent()
+		/// <summary>
+		/// Получить контент в формате TSV для обучения нейронной сети. 
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<string> GetMlModelDataSetTsvContent()
 		{
 			IEnumerable<string> content = (from row in TextPowers
 										   where row.RowState != DataRowState.Deleted
@@ -190,7 +192,7 @@ namespace WordHiddenPowers.Repositories
 				.OrderBy(note => note.Subcategory.Guid)
 				.Select(note => string.Format("{0}\t{1}\t{2}",
 				note.Subcategory.Guid,
-				note.Subcategory.Caption,
+				note.Subcategory.Caption.Trim(),
 				Utils.MLModelUtil.ConvertToCompliance(note.Value.ToString())));
 			return (new string[] { "Area\tCaption\tTitle" }).Union(content);
 		}
@@ -553,6 +555,16 @@ namespace WordHiddenPowers.Repositories
 			{
 				return Subcategory.Dafault;
 			}
+		}
+
+		public IEnumerable<Subcategory> GetSubcategories()
+		{
+			return from subcategoryRow in Subcategories
+				   .Where(s => s.RowState != DataRowState.Deleted)
+				   join categoryRow in Categories
+				   .Where(c => c.RowState != DataRowState.Deleted)
+				   on subcategoryRow.category_guid equals categoryRow.key_guid
+				   select Subcategory.Create(Category.Create(categoryRow), subcategoryRow);
 		}
 
 		public void Write(Subcategory subcategory)

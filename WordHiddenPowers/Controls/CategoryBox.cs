@@ -30,13 +30,13 @@ namespace WordHiddenPowers.Controls
             set
             {
 				owner = value;
-				if (owner !=null && owner is Category)
+				if (owner !=null && owner is Category category)
 				{
-					descriptionTextBox.Text = ((Category)owner).Description;
+					descriptionTextBox.Text = category.Description;
 				}
-				else if (owner != null && owner is Subcategory)
+				else if (owner != null && owner is Subcategory subcategory)
 				{
-					descriptionTextBox.Text = ((Subcategory)owner).Description;
+					descriptionTextBox.Text = subcategory.Description;
 				}
 				else
 				{
@@ -48,13 +48,13 @@ namespace WordHiddenPowers.Controls
 
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			if (owner is Category)
+			if (owner is Category category)
 			{
-				e.Graphics.DrawString(((Category)owner).Text, Font, new SolidBrush(ForeColor), 0, 0);
+				e.Graphics.DrawString(category.Text, Font, new SolidBrush(ForeColor), 0, 0);
 			}
-			else if (owner is Subcategory)
+			else if (owner is Subcategory subcategory)
 			{
-				e.Graphics.DrawString(((Subcategory)owner).Text, Font, new SolidBrush(ForeColor), 0, 0);
+				e.Graphics.DrawString(subcategory.Text, Font, new SolidBrush(ForeColor), 0, 0);
 			}
 			base.OnPaint(e);
 		}

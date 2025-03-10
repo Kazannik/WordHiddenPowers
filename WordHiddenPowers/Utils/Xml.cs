@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: Utils
+﻿// Ignore Spelling: Utils dest
 
 using System;
 using System.Data;
@@ -13,12 +13,12 @@ namespace WordHiddenPowers.Utils
 	{
 		public static RepositoryDataSet GetCurrentDataSet(Word._Document Doc, out bool isCorrect)
 		{
-			return GetDataSet(Doc: Doc, variableName: Const.Globals.XML_VARIABLE_NAME, out isCorrect);
+			return GetDataSet(Doc: Doc, variableName: Const.Globals.XML_CURRENT_VARIABLE_NAME, out isCorrect);
 		}
 
-		public static RepositoryDataSet GetAnalyzerDataSet(Word._Document Doc, out bool isCorrect)
+		public static RepositoryDataSet GetAggregatedDataSet(Word._Document Doc, out bool isCorrect)
 		{
-			return GetDataSet(Doc: Doc, variableName: Const.Globals.XML_IMPORT_VARIABLE_NAME, out isCorrect);
+			return GetDataSet(Doc: Doc, variableName: Const.Globals.XML_AGGREGATED_VARIABLE_NAME, out isCorrect);
 		}
 
 		/// <summary>
@@ -59,6 +59,23 @@ namespace WordHiddenPowers.Utils
 		}
 
 		/// <summary>
+		/// Копирование модели из хранилища в документ.
+		/// </summary>
+		/// <param name="sourceDataSet">Хранилище данных, в котором содержится модель (шаблон).</param>
+		/// <param name="destDocument">Документ, в который производится копирование модели (шаблона)</param>
+		public static void CopyModel(RepositoryDataSet sourceDataSet, Word._Document destDocument)
+		{
+			RepositoryDataSet destDataSet = new RepositoryDataSet();
+			Xml.CopyData(sourceDataSet, destDataSet);
+			destDataSet.DecimalPowers.Clear();
+			destDataSet.TextPowers.Clear();
+			destDataSet.DocumentKeys.Clear();
+			destDataSet.WordFiles.Clear();
+			destDataSet.AcceptChanges();
+			ContentUtil.CommitVariable(destDocument.Variables, Const.Globals.XML_CURRENT_VARIABLE_NAME, destDataSet);
+		}
+
+		/// <summary>
 		/// Копирование данных между хранилищами.
 		/// </summary>
 		/// <param name="sourceDataSet">Источник данных.</param>
@@ -91,7 +108,6 @@ namespace WordHiddenPowers.Utils
 			}
 		}
 
-
 		/// <summary>
 		/// Сохранить данные из хранилища в файл в формате XML.
 		/// </summary>
@@ -111,7 +127,6 @@ namespace WordHiddenPowers.Utils
 				ShowDialogUtil.ShowErrorDialog(ex.Message);
 			}
 		}
-
 
 		/// <summary>
 		/// Получить из хранилища данные в формате XML.

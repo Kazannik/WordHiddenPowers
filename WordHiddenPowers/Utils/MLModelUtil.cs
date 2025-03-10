@@ -1,4 +1,6 @@
-﻿using NeuronetLibrary;
+﻿// Ignore Spelling: Util Pattersn Utils
+
+using NeuronetLibrary;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
@@ -16,32 +18,42 @@ namespace WordHiddenPowers.Utils
     {
 		private static readonly string MLNetModelFilterPath = Path.Combine(Environment.CurrentDirectory, "MLModel.filters");
 
-		private static readonly Filters filters = new Filters();
+		private static Filters filters = null;
 
 		public static IOrderedEnumerable<KeyValuePair<string, float>> PredictAll(string text)
 		{
+			if (filters == null) filters = new Filters();
+
 			text = filters.Clean(text);
 			if (string.IsNullOrEmpty(text)) return null;
-			ModelInput sampleData = new MLModel.ModelInput()
+			ModelInput sampleData = new ModelInput()
 			{
 				Title = text,
 			};
-			return MLModel.PredictAllLabels(sampleData);			
+			return PredictAllLabels(sampleData);
 		}
 
+		/// <summary>
+		///  Конвертирование текста в упорядоченный вид.
+		/// </summary>
+		/// <param name="text"></param>
+		/// <returns></returns>
 		public static string ConvertToCompliance(string text)
 		{
+			if (filters == null) filters = new Filters();
+
 			return filters.ConvertToCompliance(text);
 		}
 		
 		private class Filters
 		{
-			private static readonly string[] oldVal = new string[] { "\r\n", "\r", "\n", "\t", ".", ",", "-", "/", "\\", "(", ")", "\u0002", "\u00a0", "«", "»", "№" };
-			private static readonly string[] patterns = new string[] { "(\\d\\s*){1,}([,](\\d\\s*){1,})*", "^\\S{1,2}\\s", "\\s\\S{1,2}\\s", "\\s{2,}" };
-			private static readonly Regex regexWords = new Regex("\\w{1,}");
+			private static readonly Regex regexWords = new Regex("\\w+");
+			private static readonly Regex regexDecimal = new Regex("(\\d\\s*)+([,](\\d\\s*)+)*");
+			private static readonly Regex regexSpace = new Regex("\\s{2,}");
 
-
-			public IEnumerable<string> ExcludedStrings { get; }
+			/// <summary>
+			/// Регулярные выражения для удаления 
+			/// </summary>
 			public IEnumerable<string> ExcludedPattersn { get; }
 			public IEnumerable<string> ExcludedWords { get; }
 			public IEnumerable<string> RecommendWords { get; }
@@ -50,7 +62,6 @@ namespace WordHiddenPowers.Utils
 
 			public Filters()
 			{
-				List<string> excludedStrings = new List<string>();
 				List<string> excludedPatterns = new List<string>();
 				List<string> excludedWords = new List<string>();
 				List<string> recommendWords = new List<string>();
@@ -65,17 +76,11 @@ namespace WordHiddenPowers.Utils
 						{
 							string line = reader.ReadLine().Trim();
 							if (
-								line == "[excluded_string]"
-								|| line == "[excluded_patterns]"
+								line == "[excluded_patterns]"
 								|| line == "[excluded_words]"
 								|| line == "[recommend_word]")
 							{
 								mode = line;
-							}
-							else if (!string.IsNullOrWhiteSpace(line) 
-								&& mode == "[excluded_string]")
-							{
-								excludedStrings.Add(line.Trim());
 							}
 							else if (!string.IsNullOrWhiteSpace(line) 
 								&& mode == "[excluded_patterns]")
@@ -94,7 +99,6 @@ namespace WordHiddenPowers.Utils
 							}
 						}
 					}
-					ExcludedStrings = excludedStrings;
 					ExcludedPattersn = excludedPatterns;
 					ExcludedWords = excludedWords
 						.OrderBy(s => s)
@@ -112,7 +116,7 @@ namespace WordHiddenPowers.Utils
 
 			public string ConvertToCompliance(string text)
 			{
-				Clean(text: text);
+				text = Clean(text: text);
 
 				if (ExcludedWords.Any())
 				{
@@ -132,6 +136,7 @@ namespace WordHiddenPowers.Utils
 						text += IsRecommendWords(item.Value);
 					}					
 				}
+				text = regexSpace.Replace(text, " ");
 				return text.Trim();
 			}
 
@@ -162,19 +167,22 @@ namespace WordHiddenPowers.Utils
 				return text + " ";
 			}
 
+			/// <summary>
+			/// Очистка текста от символов
+			/// </summary>
+			/// <param name="text"></param>
+			/// <returns></returns>
 			public string Clean(string text)
 			{
 				text = text.ToLower();
-
-				foreach (string item in ExcludedStrings)
-				{
-					text = text.Replace(item, " ");
-				}
-
+								
 				foreach (string pattern in ExcludedPattersn)
 				{
 					text = Regex.Replace(text, pattern, " ");
 				}
+
+				text = regexDecimal.Replace(text, " [число] ");
+				text = regexSpace.Replace(text, " ");
 				return text.Trim();
 			}
 		}	

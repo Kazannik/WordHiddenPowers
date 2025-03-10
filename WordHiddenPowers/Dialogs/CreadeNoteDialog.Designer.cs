@@ -35,6 +35,7 @@
             this.subcategoriesComboBox = new WordHiddenPowers.Controls.ComboControls.SubcategoriesComboBox(this.components);
             this.ratingBox = new WordHiddenPowers.Controls.RatingBox();
             this.categoriesComboBox = new WordHiddenPowers.Controls.ComboControls.CategoriesComboBox(this.components);
+            this.wizardButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // cancelButton
@@ -86,7 +87,7 @@
             // 
             // ratingBox
             // 
-            this.ratingBox.Location = new System.Drawing.Point(12, 368);
+            this.ratingBox.Location = new System.Drawing.Point(78, 369);
             this.ratingBox.Margin = new System.Windows.Forms.Padding(2);
             this.ratingBox.Name = "ratingBox";
             this.ratingBox.Size = new System.Drawing.Size(310, 42);
@@ -111,6 +112,16 @@
             this.categoriesComboBox.TabIndex = 33;
             this.categoriesComboBox.SelectedIndexChanged += new System.EventHandler(this.CategoriesComboBox_SelectedIndexChanged);
             // 
+            // wizardButton
+            // 
+            this.wizardButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.wizardButton.Enabled = false;
+            this.wizardButton.Location = new System.Drawing.Point(12, 377);
+            this.wizardButton.Name = "wizardButton";
+            this.wizardButton.Size = new System.Drawing.Size(39, 34);
+            this.wizardButton.TabIndex = 35;
+            this.wizardButton.Click += new System.EventHandler(this.WizardButton_Click);
+            // 
             // CreateNoteDialog
             // 
             this.AcceptButton = this.okButton;
@@ -118,6 +129,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
             this.ClientSize = new System.Drawing.Size(868, 422);
+            this.Controls.Add(this.wizardButton);
             this.Controls.Add(this.subcategoriesComboBox);
             this.Controls.Add(this.categoriesComboBox);
             this.Controls.Add(this.ratingBox);
@@ -142,5 +154,6 @@
         private Controls.RatingBox ratingBox;
         private Controls.ComboControls.CategoriesComboBox categoriesComboBox;
         private Controls.ComboControls.SubcategoriesComboBox subcategoriesComboBox;
-    }
+		private System.Windows.Forms.Button wizardButton;
+	}
 }

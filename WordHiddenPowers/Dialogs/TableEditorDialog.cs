@@ -16,7 +16,7 @@ namespace WordHiddenPowers.Dialogs
 
 			nameLabel.Text = this.document.Doc.Name;
 
-			tableEditBox.DataSet = this.document.DataSet;
+			tableEditBox.DataSet = this.document.CurrentDataSet;
 
 			deleteButton.Enabled = Utils.ContentUtil.ExistsVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME);
 

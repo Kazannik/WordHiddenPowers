@@ -4,13 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Office = Microsoft.Office.Core;
+using Tools = Microsoft.Office.Tools;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Documents
 {
 	public class DocumentCollection : IEnumerable<Document>, IDisposable
 	{
-		internal RibbonToggleButton paneVisibleButton;
+		internal RibbonToggleButton PaneVisibleButton;
 
 		private readonly Office.CommandBarButton buttonSelectDecimalCategory;
 		private readonly Office.CommandBarButton buttonSelectTextCategory;
@@ -22,9 +23,9 @@ namespace WordHiddenPowers.Documents
 			Word.Application application = Globals.ThisAddIn.Application;
 			documents = new Dictionary<string, Document>();
 
-			this.paneVisibleButton = paneVisibleButton;
-			this.paneVisibleButton.Checked = false;
-			this.paneVisibleButton.Click += new RibbonControlEventHandler(PaneVisibleButtonClick);
+			this.PaneVisibleButton = paneVisibleButton;
+			this.PaneVisibleButton.Checked = false;
+			this.PaneVisibleButton.Click += new RibbonControlEventHandler(PaneVisibleButtonClick);
 
 			application.WindowSelectionChange += new Word.ApplicationEvents4_WindowSelectionChangeEventHandler(Document_WindowSelectionChange);
 
@@ -119,29 +120,44 @@ namespace WordHiddenPowers.Documents
 		}
 
 		#region Documents Command
-
+		
 		public void Activate(Word.Document Doc, Word.Window Wn)
 		{
+			List<Tools.CustomTaskPane> panes = new List<Tools.CustomTaskPane>(Globals.ThisAddIn.CustomTaskPanes
+				.Where(pane => pane.Window == Wn && ((Panes.WordHiddenPowersPane)pane.Control).Document.Doc != Doc));
+
+			foreach (Tools.CustomTaskPane pane in panes)
+			{
+				Globals.ThisAddIn.CustomTaskPanes.Remove(pane);
+			}			
+			
+			foreach (Tools.CustomTaskPane pane in Globals.ThisAddIn.CustomTaskPanes)
+			{
+				if (pane.Window == Wn)
+				{
+					PaneVisibleButton.Checked = pane.Visible;
+				}
+			}
+		}
+
+		public void Add(Word.Document Doc)
+		{
 			string guid = Utils.ContentUtil.GetGuidOrDefault(Doc);
 			if (!documents.ContainsKey(guid))
 			{
 				documents.Add(guid, Document.Create(this, Doc.FullName, Doc));
 			}
-			paneVisibleButton.Checked = ActiveDocument.CustomPane.Visible;
-		}
 
-		public void Deactivate(Word.Document Doc, Word.Window Wn)
-		{
-
-		}
-
-		public void Open(Word.Document Doc)
-		{
-			string guid = Utils.ContentUtil.GetGuidOrDefault(Doc);
-			if (!documents.ContainsKey(guid))
+			foreach (Tools.CustomTaskPane pane in Globals.ThisAddIn.CustomTaskPanes)
 			{
-				documents.Add(guid, Document.Create(this, Doc.FullName, Doc));
+				pane.Visible = false;
 			}
+
+			foreach (Tools.CustomTaskPane pane in Globals.ThisAddIn.CustomTaskPanes)
+			{
+				pane.Visible = PaneVisibleButton.Checked;
+			}
+
 		}
 
 		public void Remove(Word.Document Doc)

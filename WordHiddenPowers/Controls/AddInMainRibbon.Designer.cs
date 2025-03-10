@@ -72,29 +72,29 @@
 			editDocumentKeysButton.ScreenTip = Const.Content.EDIT_DOCUMENT_KEYS_SCREEN_TIP;
 			editDocumentKeysButton.SuperTip = Const.Content.EDIT_DOCUMENT_KEYS_SUPER_TIP;
 
-			analizerImportFoldersButton.Description = Const.Content.ANALAIZER_IMPORT_FOLDER_DESCRIPTION;
-			analizerImportFoldersButton.Label = Const.Content.ANALAIZER_IMPORT_FOLDER_LABEL;
-			analizerImportFoldersButton.OfficeImageId = Const.Content.ANALAIZER_IMPORT_FOLDER_OFFICE_IMAGE_ID;
-			analizerImportFoldersButton.ScreenTip = Const.Content.ANALAIZER_IMPORT_FOLDER_SCREEN_TIP;
-			analizerImportFoldersButton.SuperTip = Const.Content.ANALAIZER_IMPORT_FOLDER_SUPER_TIP;
+			aggregatedImportFoldersButton.Description = Const.Content.ANALAIZER_IMPORT_FOLDER_DESCRIPTION;
+			aggregatedImportFoldersButton.Label = Const.Content.ANALAIZER_IMPORT_FOLDER_LABEL;
+			aggregatedImportFoldersButton.OfficeImageId = Const.Content.ANALAIZER_IMPORT_FOLDER_OFFICE_IMAGE_ID;
+			aggregatedImportFoldersButton.ScreenTip = Const.Content.ANALAIZER_IMPORT_FOLDER_SCREEN_TIP;
+			aggregatedImportFoldersButton.SuperTip = Const.Content.ANALAIZER_IMPORT_FOLDER_SUPER_TIP;
 
-			analizerImportFileButton.Description = Const.Content.ANALAIZER_IMPORT_FILE_DESCRIPTION;
-			analizerImportFileButton.Label = Const.Content.ANALAIZER_IMPORT_FILE_LABEL;
-			analizerImportFileButton.OfficeImageId = Const.Content.ANALAIZER_IMPORT_FILE_OFFICE_IMAGE_ID;
-			analizerImportFileButton.ScreenTip = Const.Content.ANALAIZER_IMPORT_FILE_SCREEN_TIP;
-			analizerImportFileButton.SuperTip = Const.Content.ANALAIZER_IMPORT_FILE_SUPER_TIP;
+			aggregatedImportFileButton.Description = Const.Content.ANALAIZER_IMPORT_FILE_DESCRIPTION;
+			aggregatedImportFileButton.Label = Const.Content.ANALAIZER_IMPORT_FILE_LABEL;
+			aggregatedImportFileButton.OfficeImageId = Const.Content.ANALAIZER_IMPORT_FILE_OFFICE_IMAGE_ID;
+			aggregatedImportFileButton.ScreenTip = Const.Content.ANALAIZER_IMPORT_FILE_SCREEN_TIP;
+			aggregatedImportFileButton.SuperTip = Const.Content.ANALAIZER_IMPORT_FILE_SUPER_TIP;
 
-			analizerTableViewerButton.Description = Const.Content.ANALAIZER_TABLE_DESCRIPTION;
-			analizerTableViewerButton.Label = Const.Content.ANALAIZER_TABLE_LABEL;
-			analizerTableViewerButton.OfficeImageId = Const.Content.ANALAIZER_TABLE_OFFICE_IMAGE_ID;
-			analizerTableViewerButton.ScreenTip = Const.Content.ANALAIZER_TABLE_SCREEN_TIP;
-			analizerTableViewerButton.SuperTip = Const.Content.ANALAIZER_TABLE_SUPER_TIP;
+			aggregatedTableViewerButton.Description = Const.Content.ANALAIZER_TABLE_DESCRIPTION;
+			aggregatedTableViewerButton.Label = Const.Content.ANALAIZER_TABLE_LABEL;
+			aggregatedTableViewerButton.OfficeImageId = Const.Content.ANALAIZER_TABLE_OFFICE_IMAGE_ID;
+			aggregatedTableViewerButton.ScreenTip = Const.Content.ANALAIZER_TABLE_SCREEN_TIP;
+			aggregatedTableViewerButton.SuperTip = Const.Content.ANALAIZER_TABLE_SUPER_TIP;
 
-			analizerDialogButton.Description = Const.Content.ANALAIZER_DIALOG_DESCRIPTION;
-			analizerDialogButton.Label = Const.Content.ANALAIZER_DIALOG_LABEL;
-			analizerDialogButton.OfficeImageId = Const.Content.ANALAIZER_DIALOG_OFFICE_IMAGE_ID;
-			analizerDialogButton.ScreenTip = Const.Content.ANALAIZER_DIALOG_SCREEN_TIP;
-			analizerDialogButton.SuperTip = Const.Content.ANALAIZER_DIALOG_SUPER_TIP;
+			aggregatedDialogButton.Description = Const.Content.ANALAIZER_DIALOG_DESCRIPTION;
+			aggregatedDialogButton.Label = Const.Content.ANALAIZER_DIALOG_LABEL;
+			aggregatedDialogButton.OfficeImageId = Const.Content.ANALAIZER_DIALOG_OFFICE_IMAGE_ID;
+			aggregatedDialogButton.ScreenTip = Const.Content.ANALAIZER_DIALOG_SCREEN_TIP;
+			aggregatedDialogButton.SuperTip = Const.Content.ANALAIZER_DIALOG_SUPER_TIP;
 
 			editTableButton.Description = Const.Content.EDIT_TABLE_DESCRIPTION;
 			editTableButton.Label = Const.Content.EDIT_TABLE_LABEL;
@@ -142,7 +142,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-			this.WordHiddenPowersTab = this.Factory.CreateRibbonTab();
+			this.wordHiddenPowersTab = this.Factory.CreateRibbonTab();
 			this.maketGroup = this.Factory.CreateRibbonGroup();
 			this.newDataButton = this.Factory.CreateRibbonButton();
 			this.openDataButton = this.Factory.CreateRibbonButton();
@@ -153,12 +153,12 @@
 			this.editCategoriesButton = this.Factory.CreateRibbonButton();
 			this.createTableButton = this.Factory.CreateRibbonButton();
 			this.editDocumentKeysButton = this.Factory.CreateRibbonButton();
-			this.AnalizerGroup = this.Factory.CreateRibbonGroup();
-			this.analizerImportFoldersButton = this.Factory.CreateRibbonSplitButton();
-			this.analizerImportFileButton = this.Factory.CreateRibbonButton();
-			this.analizerTableViewerButton = this.Factory.CreateRibbonButton();
-			this.analizerDialogButton = this.Factory.CreateRibbonButton();
-			this.NotesGroup = this.Factory.CreateRibbonGroup();
+			this.aggregatedGroup = this.Factory.CreateRibbonGroup();
+			this.aggregatedImportFoldersButton = this.Factory.CreateRibbonSplitButton();
+			this.aggregatedImportFileButton = this.Factory.CreateRibbonButton();
+			this.aggregatedTableViewerButton = this.Factory.CreateRibbonButton();
+			this.aggregatedDialogButton = this.Factory.CreateRibbonButton();
+			this.notesGroup = this.Factory.CreateRibbonGroup();
 			this.addLastNoteTypeButton = this.Factory.CreateRibbonSplitButton();
 			this.addTextNoteButton = this.Factory.CreateRibbonButton();
 			this.addDecimalNoteButton = this.Factory.CreateRibbonButton();
@@ -168,20 +168,20 @@
 			this.editTableButton = this.Factory.CreateRibbonButton();
 			this.separator3 = this.Factory.CreateRibbonSeparator();
 			this.paneVisibleButton = this.Factory.CreateRibbonToggleButton();
-			this.WordHiddenPowersTab.SuspendLayout();
+			this.wordHiddenPowersTab.SuspendLayout();
 			this.maketGroup.SuspendLayout();
-			this.AnalizerGroup.SuspendLayout();
-			this.NotesGroup.SuspendLayout();
+			this.aggregatedGroup.SuspendLayout();
+			this.notesGroup.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// WordHiddenPowersTab
 			// 
-			this.WordHiddenPowersTab.Groups.Add(this.maketGroup);
-			this.WordHiddenPowersTab.Groups.Add(this.AnalizerGroup);
-			this.WordHiddenPowersTab.Groups.Add(this.NotesGroup);
-			this.WordHiddenPowersTab.Label = "Дополнительные данные";
-			this.WordHiddenPowersTab.Name = "WordHiddenPowersTab";
-			this.WordHiddenPowersTab.Position = this.Factory.RibbonPosition.AfterOfficeId("TabReferences");
+			this.wordHiddenPowersTab.Groups.Add(this.maketGroup);
+			this.wordHiddenPowersTab.Groups.Add(this.aggregatedGroup);
+			this.wordHiddenPowersTab.Groups.Add(this.notesGroup);
+			this.wordHiddenPowersTab.Label = "Дополнительные данные";
+			this.wordHiddenPowersTab.Name = "WordHiddenPowersTab";
+			this.wordHiddenPowersTab.Position = this.Factory.RibbonPosition.AfterOfficeId("TabReferences");
 			// 
 			// maketGroup
 			// 
@@ -261,53 +261,53 @@
 			this.editDocumentKeysButton.ShowImage = true;
 			this.editDocumentKeysButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.EditDocumentKeys_Click);
 			// 
-			// AnalizerGroup
+			// aggregatedGroup
 			// 
-			this.AnalizerGroup.Items.Add(this.analizerImportFoldersButton);
-			this.AnalizerGroup.Items.Add(this.analizerTableViewerButton);
-			this.AnalizerGroup.Items.Add(this.analizerDialogButton);
-			this.AnalizerGroup.Label = "Анализ данных";
-			this.AnalizerGroup.Name = "AnalizerGroup";
+			this.aggregatedGroup.Items.Add(this.aggregatedImportFoldersButton);
+			this.aggregatedGroup.Items.Add(this.aggregatedTableViewerButton);
+			this.aggregatedGroup.Items.Add(this.aggregatedDialogButton);
+			this.aggregatedGroup.Label = "Анализ данных";
+			this.aggregatedGroup.Name = "aggregatedGroup";
 			// 
-			// analizerImportFoldersButton
+			// aggregatedImportFoldersButton
 			// 
-			this.analizerImportFoldersButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-			this.analizerImportFoldersButton.Items.Add(this.analizerImportFileButton);
-			this.analizerImportFoldersButton.Label = "";
-			this.analizerImportFoldersButton.Name = "analizerImportFoldersButton";
-			this.analizerImportFoldersButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AnalizerImportFolder_Click);
+			this.aggregatedImportFoldersButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+			this.aggregatedImportFoldersButton.Items.Add(this.aggregatedImportFileButton);
+			this.aggregatedImportFoldersButton.Label = "";
+			this.aggregatedImportFoldersButton.Name = "aggregatedImportFoldersButton";
+			this.aggregatedImportFoldersButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AnalizerImportFolder_Click);
 			// 
-			// analizerImportFileButton
+			// aggregatedImportFileButton
 			// 
-			this.analizerImportFileButton.Label = "";
-			this.analizerImportFileButton.Name = "analizerImportFileButton";
-			this.analizerImportFileButton.ShowImage = true;
-			this.analizerImportFileButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AnalizerImportFile_Click);
+			this.aggregatedImportFileButton.Label = "";
+			this.aggregatedImportFileButton.Name = "aggregatedImportFileButton";
+			this.aggregatedImportFileButton.ShowImage = true;
+			this.aggregatedImportFileButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AnalizerImportFile_Click);
 			// 
-			// analizerTableViewerButton
+			// aggregatedTableViewerButton
 			// 
-			this.analizerTableViewerButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-			this.analizerTableViewerButton.Label = "";
-			this.analizerTableViewerButton.Name = "analizerTableViewerButton";
-			this.analizerTableViewerButton.ShowImage = true;
-			this.analizerTableViewerButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AnalizerTableViewer_Click);
+			this.aggregatedTableViewerButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+			this.aggregatedTableViewerButton.Label = "";
+			this.aggregatedTableViewerButton.Name = "aggregatedTableViewerButton";
+			this.aggregatedTableViewerButton.ShowImage = true;
+			this.aggregatedTableViewerButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AnalizerTableViewer_Click);
 			// 
-			// analizerDialogButton
+			// aggregatedDialogButton
 			// 
-			this.analizerDialogButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-			this.analizerDialogButton.Label = "";
-			this.analizerDialogButton.Name = "analizerDialogButton";
-			this.analizerDialogButton.ShowImage = true;
-			this.analizerDialogButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AnalizerDialog_Click);
+			this.aggregatedDialogButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+			this.aggregatedDialogButton.Label = "";
+			this.aggregatedDialogButton.Name = "aggregatedDialogButton";
+			this.aggregatedDialogButton.ShowImage = true;
+			this.aggregatedDialogButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AnalizerDialog_Click);
 			// 
-			// NotesGroup
+			// notesGroup
 			// 
-			this.NotesGroup.Items.Add(this.addLastNoteTypeButton);
-			this.NotesGroup.Items.Add(this.editTableButton);
-			this.NotesGroup.Items.Add(this.separator3);
-			this.NotesGroup.Items.Add(this.paneVisibleButton);
-			this.NotesGroup.Label = "Дополнительные данные";
-			this.NotesGroup.Name = "NotesGroup";
+			this.notesGroup.Items.Add(this.addLastNoteTypeButton);
+			this.notesGroup.Items.Add(this.editTableButton);
+			this.notesGroup.Items.Add(this.separator3);
+			this.notesGroup.Items.Add(this.paneVisibleButton);
+			this.notesGroup.Label = "Ввод данных";
+			this.notesGroup.Name = "notesGroup";
 			// 
 			// addLastNoteTypeButton
 			// 
@@ -376,22 +376,22 @@
 			// 
 			this.Name = "AddInMainRibbon";
 			this.RibbonType = "Microsoft.Word.Document";
-			this.Tabs.Add(this.WordHiddenPowersTab);
-			this.WordHiddenPowersTab.ResumeLayout(false);
-			this.WordHiddenPowersTab.PerformLayout();
+			this.Tabs.Add(this.wordHiddenPowersTab);
+			this.wordHiddenPowersTab.ResumeLayout(false);
+			this.wordHiddenPowersTab.PerformLayout();
 			this.maketGroup.ResumeLayout(false);
 			this.maketGroup.PerformLayout();
-			this.AnalizerGroup.ResumeLayout(false);
-			this.AnalizerGroup.PerformLayout();
-			this.NotesGroup.ResumeLayout(false);
-			this.NotesGroup.PerformLayout();
+			this.aggregatedGroup.ResumeLayout(false);
+			this.aggregatedGroup.PerformLayout();
+			this.notesGroup.ResumeLayout(false);
+			this.notesGroup.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
 
         #endregion
 
-        internal Microsoft.Office.Tools.Ribbon.RibbonTab WordHiddenPowersTab;
+        internal Microsoft.Office.Tools.Ribbon.RibbonTab wordHiddenPowersTab;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup maketGroup;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton newDataButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton openDataButton;
@@ -406,12 +406,12 @@
 		internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator4;
 		internal Microsoft.Office.Tools.Ribbon.RibbonButton editCategoriesButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton editDocumentKeysButton;
-        internal Microsoft.Office.Tools.Ribbon.RibbonGroup AnalizerGroup;
-        internal Microsoft.Office.Tools.Ribbon.RibbonSplitButton analizerImportFoldersButton;
-		internal Microsoft.Office.Tools.Ribbon.RibbonButton analizerImportFileButton;
-		internal Microsoft.Office.Tools.Ribbon.RibbonButton analizerTableViewerButton;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton analizerDialogButton;
-        internal Microsoft.Office.Tools.Ribbon.RibbonGroup NotesGroup;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup aggregatedGroup;
+        internal Microsoft.Office.Tools.Ribbon.RibbonSplitButton aggregatedImportFoldersButton;
+		internal Microsoft.Office.Tools.Ribbon.RibbonButton aggregatedImportFileButton;
+		internal Microsoft.Office.Tools.Ribbon.RibbonButton aggregatedTableViewerButton;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton aggregatedDialogButton;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup notesGroup;
         internal Microsoft.Office.Tools.Ribbon.RibbonSplitButton addLastNoteTypeButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton addTextNoteButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton addDecimalNoteButton;

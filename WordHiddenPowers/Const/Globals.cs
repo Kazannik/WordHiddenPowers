@@ -1,10 +1,16 @@
-﻿using System.Drawing;
+﻿// Ignore Spelling: ADDIN
+
+using System.Drawing;
 
 namespace WordHiddenPowers.Const
 {
 	public static class Globals
 	{
-		public const float LEVEL_PASSAGE = 0.2278f;
+		/// <summary>
+		/// Минимальный порог для оценки параграфа как удовлетворяющего требованиям. 
+		/// </summary>
+		public const float LEVEL_PASSAGE = 0.0f;
+
 		public const string ADDIN_TITLE = "Дополнительные данные";
 
 		private const string VARIABLES_NAME = "HiddenPower";
@@ -17,7 +23,7 @@ namespace WordHiddenPowers.Const
 		public const string CAPTION_VARIABLE_NAME = "Title" + VARIABLES_NAME;
 		public const string DESCRIPTION_VARIABLE_NAME = "Description" + VARIABLES_NAME;
 		public const string DATE_VARIABLE_NAME = "Date" + VARIABLES_NAME;
-		public const string XML_VARIABLE_NAME = "Xml" + VARIABLES_NAME;
+		public const string XML_CURRENT_VARIABLE_NAME = "Xml" + VARIABLES_NAME;
 		public const string TABLE_VARIABLE_NAME = "Table" + VARIABLES_NAME;
 
 		/// <summary>
@@ -28,7 +34,7 @@ namespace WordHiddenPowers.Const
 		/// <summary>
 		/// Имя переменной для хранения результатов импорта данных.
 		/// </summary>
-		public const string XML_IMPORT_VARIABLE_NAME = "78B817AB-4941-4CD9-9830-E39D15BBE28B";
+		public const string XML_AGGREGATED_VARIABLE_NAME = "78B817AB-4941-4CD9-9830-E39D15BBE28B";
 
 		public static readonly Color COLOR_STAR_ICON = Color.Red;
 

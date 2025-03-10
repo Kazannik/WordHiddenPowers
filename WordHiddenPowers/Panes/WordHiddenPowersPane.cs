@@ -25,7 +25,6 @@ namespace WordHiddenPowers.Panes
 			InitializeComponent();
 		}
 
-
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing && (components != null))
@@ -38,6 +37,7 @@ namespace WordHiddenPowers.Panes
 		private void InitializeComponent()
 		{
 			components = new Container();
+
 			SuspendLayout();
 
 			AutoScaleDimensions = new SizeF(8F, 16F);

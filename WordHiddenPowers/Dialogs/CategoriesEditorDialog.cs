@@ -23,7 +23,7 @@ namespace WordHiddenPowers.Dialogs
 			InitializeComponent();
 			ControlResize();
 
-			listBox.DataSet = this.document.DataSet;
+			listBox.DataSet = this.document.CurrentDataSet;
 			listBox.SelectedItemChanged += new EventHandler<ControlLibrary.Controls.ListControls.ItemEventArgs<ListItem>>(ListBox_SelectedItemChanged);
 			if (listBox.Items.Count > 0) listBox.SelectedIndex = 0;
 		}
@@ -103,7 +103,7 @@ namespace WordHiddenPowers.Dialogs
 				string content = File.ReadAllText(dialog.FileName, Encoding.GetEncoding(1251));				
 				Cursor.Current = Cursors.WaitCursor;
 				listBox.BeginUpdate();
-				CategoriesUtil.CreateFromText(document.DataSet, content);
+				CategoriesUtil.CreateFromText(document.CurrentDataSet, content);
 				listBox.EndUpdate();
 				Cursor.Current = Cursors.Default;
 			}
@@ -128,33 +128,33 @@ namespace WordHiddenPowers.Dialogs
 					if (item.owner is Category)
 					{
 						Category category = item.owner as Category;
-						document.DataSet.Write(category);
+						document.CurrentDataSet.Write(category);
 					}
 					else if (item.owner is Subcategory)
 					{
 						Subcategory subcategory = item.owner as Subcategory;
-						document.DataSet.Write(subcategory);
+						document.CurrentDataSet.Write(subcategory);
 					}
 				}
 								
-				if (document.DataSet.HasChanges())
+				if (document.CurrentDataSet.HasChanges())
 				{
 					DialogResult result = MessageBox.Show("Зафиксировать все изменения?", "Категории данные", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 					if (result == DialogResult.Yes)
 					{
 						Cursor.Current = Cursors.WaitCursor;
 						listBox.DataSet = null;
-						document.DataSet.Categories.AcceptChanges();
-						document.DataSet.Subcategories.AcceptChanges();
-						ContentUtil.CommitVariable(document.Doc.Variables, Const.Globals.XML_VARIABLE_NAME, document.DataSet);
+						document.CurrentDataSet.Categories.AcceptChanges();
+						document.CurrentDataSet.Subcategories.AcceptChanges();
+						ContentUtil.CommitVariable(document.Doc.Variables, Const.Globals.XML_CURRENT_VARIABLE_NAME, document.CurrentDataSet);
 						Cursor.Current = Cursors.Default;
 					}
 					else if (result == DialogResult.No)
 					{
 						Cursor.Current = Cursors.WaitCursor;
 						listBox.DataSet = null;
-						document.DataSet.Categories.RejectChanges();
-						document.DataSet.Subcategories.RejectChanges();
+						document.CurrentDataSet.Categories.RejectChanges();
+						document.CurrentDataSet.Subcategories.RejectChanges();
 						Cursor.Current = Cursors.Default;
 					}
 					else if (result == DialogResult.Cancel)
@@ -213,7 +213,7 @@ namespace WordHiddenPowers.Dialogs
 		{
 			if (listBox.SelectedIndices.Count == 0)
 			{
-				string guid = this.document.DataSet.Add(Category.Create(
+				string guid = this.document.CurrentDataSet.Add(Category.Create(
 					position: 0,
 					caption: "Новая категория", 
 					description: "Пояснение", 
@@ -229,7 +229,7 @@ namespace WordHiddenPowers.Dialogs
 					int id = listBox.Items.IndexOf(listBox.SelectedItem);
 					int nextId = listBox.CategoryNextIndexOf(id + 1);
 					ListItem item = listBox.Items[nextId];
-					this.document.DataSet.Insert(((Category)item.owner).Position, Category.Create(
+					this.document.CurrentDataSet.Insert(((Category)item.owner).Position, Category.Create(
 						guid: ((Category)item.owner).Guid,
 						position: 0,
 						caption: "Новая категория",
@@ -246,7 +246,7 @@ namespace WordHiddenPowers.Dialogs
 		{
 			if (listBox.SelectedItem is ListItem item && item.owner is Category category)
 			{
-				this.document.DataSet.Add(category, Subcategory.Create(
+				this.document.CurrentDataSet.Add(category, Subcategory.Create(
 					category: category,
 					position: 0,
 					caption: "Новая подкатегория",
@@ -264,7 +264,7 @@ namespace WordHiddenPowers.Dialogs
 		{
 			if (listBox.SelectedItem is ListItem item && item.owner is Category)
 			{
-				this.document.DataSet.Remove(item.owner.Code.Guid);
+				this.document.CurrentDataSet.Remove(item.owner.Code.Guid);
 			}
 		}
 			
@@ -273,7 +273,7 @@ namespace WordHiddenPowers.Dialogs
 		{
 			if (listBox.SelectedItem is ListItem item && item.owner is Subcategory)
 			{
-				this.document.DataSet.Remove(item.owner.Code.Guid);
+				this.document.CurrentDataSet.Remove(item.owner.Code.Guid);
 			}
 		}
 
@@ -281,8 +281,8 @@ namespace WordHiddenPowers.Dialogs
 		{
 			Cursor.Current = Cursors.WaitCursor;
 			listBox.BeginUpdate();
-			this.document.DataSet.Subcategories.Clear();
-			this.document.DataSet.Categories.Clear();
+			this.document.CurrentDataSet.Subcategories.Clear();
+			this.document.CurrentDataSet.Categories.Clear();
 			listBox.EndUpdate();
 			Cursor.Current = Cursors.Default;
 		}

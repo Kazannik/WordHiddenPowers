@@ -119,7 +119,7 @@ namespace WordHiddenPowers.Utils
 								wordDocument = application.Documents.Open(FileName: lastFileName, ReadOnly: false, Visible: false);
 								if (!modelFiles.Contains(items[0]))
 								{
-									Documents.Document.CopyModel(sourceDataSet: sourceDataSet, destDocument: wordDocument);
+									Xml.CopyModel(sourceDataSet: sourceDataSet, destDocument: wordDocument);
 									modelFiles.Add(items[0]);
 								}
 							}

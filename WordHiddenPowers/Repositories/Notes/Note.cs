@@ -8,7 +8,7 @@ namespace WordHiddenPowers.Repositories.Notes
 {
 	public class Note : INotifyPropertyChanged, IComparable<Note>
 	{
-		internal static Note Create(RepositoryDataSet.DecimalPowersRow dataRow, RepositoryDataSet.WordFilesRow fileRow, Subcategory subcategory)
+		internal static Note Create(RepositoryDataSet.DecimalPowersRow dataRow, RepositoryDataSet.WordFilesRow fileRow, Subcategory subcategory, string wordSelectionText = "")
 		{
 			return new Note(
 				id: dataRow.id,
@@ -16,6 +16,7 @@ namespace WordHiddenPowers.Repositories.Notes
 				description: !dataRow.IsDescriptionNull() ? dataRow.Description : string.Empty,
 				dblValue: dataRow.Value,
 				rating: dataRow.Rating,
+				wordSelectionText: wordSelectionText,
 				wordSelectionStart: dataRow.WordSelectionStart,
 				wordSelectionEnd: dataRow.WordSelectionEnd,
 				hide: dataRow.Hide,
@@ -27,7 +28,7 @@ namespace WordHiddenPowers.Repositories.Notes
 				);
 		}
 
-		internal static Note Create(RepositoryDataSet.TextPowersRow dataRow, RepositoryDataSet.WordFilesRow fileRow, Subcategory subcategory)
+		internal static Note Create(RepositoryDataSet.TextPowersRow dataRow, RepositoryDataSet.WordFilesRow fileRow, Subcategory subcategory, string wordSelectionText = "")
 		{
 			return new Note(
 				id: dataRow.id,
@@ -35,6 +36,7 @@ namespace WordHiddenPowers.Repositories.Notes
 				description: !dataRow.IsDescriptionNull() ? dataRow.Description : string.Empty,
 				strValue: dataRow.Value,
 				rating: dataRow.Rating,
+				wordSelectionText: wordSelectionText,
 				wordSelectionStart: dataRow.WordSelectionStart,
 				wordSelectionEnd: dataRow.WordSelectionEnd,
 				hide: dataRow.Hide,
@@ -51,7 +53,8 @@ namespace WordHiddenPowers.Repositories.Notes
 			Subcategory subcategory, 
 			string description, 
 			double dblValue, 
-			int rating, 
+			int rating,
+			string wordSelectionText,
 			int wordSelectionStart, 
 			int wordSelectionEnd, 
 			bool hide,
@@ -66,6 +69,7 @@ namespace WordHiddenPowers.Repositories.Notes
 			Description = description;
 			Value = dblValue;
 			Rating = rating;
+			WordSelectionText = wordSelectionText;
 			WordSelectionStart = wordSelectionStart;
 			WordSelectionEnd = wordSelectionEnd;
 			Hide = hide;
@@ -82,7 +86,8 @@ namespace WordHiddenPowers.Repositories.Notes
 			Subcategory subcategory, 
 			string description, 
 			string strValue, 
-			int rating, 
+			int rating,
+			string wordSelectionText,
 			int wordSelectionStart, 
 			int wordSelectionEnd,
 			bool hide,
@@ -97,6 +102,7 @@ namespace WordHiddenPowers.Repositories.Notes
 			Description = description;
 			Value = strValue;
 			Rating = rating;
+			WordSelectionText = wordSelectionText;
 			WordSelectionStart = wordSelectionStart;
 			WordSelectionEnd = wordSelectionEnd;
 			Hide = hide;
@@ -119,7 +125,9 @@ namespace WordHiddenPowers.Repositories.Notes
 		public object Value { get; internal set; }
 
 		public int Rating { get; internal set; }
-
+		
+		public string WordSelectionText { get; private set; }
+		
 		public int WordSelectionStart { get; }
 
 		public int WordSelectionEnd { get; }
@@ -140,7 +148,12 @@ namespace WordHiddenPowers.Repositories.Notes
 		public string FileDescription { get; }
 
 		public DateTime FileDate { get; }
-			
+		
+		public void SetWordSelectionText(string text)
+		{
+			WordSelectionText = text;
+		}
+
 		#region INotifyPropertyChanged Members
 
 		public event PropertyChangedEventHandler PropertyChanged;

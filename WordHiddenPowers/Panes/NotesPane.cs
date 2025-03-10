@@ -6,7 +6,6 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using WordHiddenPowers.Controls.ListControls;
-using WordHiddenPowers.Controls.ListControls.NotesListControl;
 using WordHiddenPowers.Dialogs;
 using WordHiddenPowers.Documents;
 using WordHiddenPowers.Properties;
@@ -46,18 +45,18 @@ namespace WordHiddenPowers.Panes
 			InitializeComponent();
 
 			mnuNoteRemove.Image = WordUtil.GetImageMso("Delete", 16, 16);
-			noteListBox.DataSet = Document.DataSet;
+			noteListBox.DataSet = Document.CurrentDataSet;
 
 			InitializeVariables();
 
-			this.noteListBox.ItemMouseDown += new System.EventHandler<ItemMouseEventArgs<ListItem, ListItemNote>>(this.NoteListBox_ItemMouseDown);
-			this.noteListBox.ItemMouseClick += new System.EventHandler<ItemMouseEventArgs<ListItem, ListItemNote>>(this.NoteListBox_NoteClick);
-			this.noteListBox.ItemMouseDoubleClick += new System.EventHandler<ItemMouseEventArgs<ListItem, ListItemNote>>(this.NoteListBox_NoteDoubleClick);
-			this.noteListBox.ItemDeleted += new EventHandler<EventArgs>(NoteListBox_ItemDeleted);
+			noteListBox.ItemMouseDown += new EventHandler<ItemMouseEventArgs<ListItem, ListItemNote>>(NoteListBox_ItemMouseDown);
+			noteListBox.ItemMouseClick += new EventHandler<ItemMouseEventArgs<ListItem, ListItemNote>>(NoteListBox_NoteClick);
+			noteListBox.ItemMouseDoubleClick += new EventHandler<ItemMouseEventArgs<ListItem, ListItemNote>>(NoteListBox_NoteDoubleClick);
+			noteListBox.ItemDeleted += new EventHandler<EventArgs>(NoteListBox_ItemDeleted);
 
-			Document.DataSet.DocumentKeys.DocumentKeysRowChanged += new RepositoryDataSet.DocumentKeysRowChangeEventHandler(DocumentKeys_RowChanged);
-			Document.DataSet.DocumentKeys.DocumentKeysRowDeleted += new RepositoryDataSet.DocumentKeysRowChangeEventHandler(DocumentKeys_RowChanged);
-			Document.DataSet.DocumentKeys.TableCleared += new DataTableClearEventHandler(DocumentKeys_TableCleared);
+			Document.CurrentDataSet.DocumentKeys.DocumentKeysRowChanged += new RepositoryDataSet.DocumentKeysRowChangeEventHandler(DocumentKeys_RowChanged);
+			Document.CurrentDataSet.DocumentKeys.DocumentKeysRowDeleted += new RepositoryDataSet.DocumentKeysRowChangeEventHandler(DocumentKeys_RowChanged);
+			Document.CurrentDataSet.DocumentKeys.TableCleared += new DataTableClearEventHandler(DocumentKeys_TableCleared);
 		}
 
 		private void NoteListBox_ItemDeleted(object sender, EventArgs e)
@@ -85,10 +84,16 @@ namespace WordHiddenPowers.Panes
 			}
 		}
 
+		private void SetSelectedText(ListItem item)
+		{
+			Word.Range range = Document.Doc.Range(item.Note.WordSelectionStart, item.Note.WordSelectionEnd);
+			item.Note.SetWordSelectionText(range.Text);
+		}
+
 		private void NoteOpen(ListItem item)
-		{			
-				Word.Range range = Document.Doc.Range(item.Note.WordSelectionStart, item.Note.WordSelectionEnd);
-				range.Select();
+		{
+			Word.Range range = Document.Doc.Range(item.Note.WordSelectionStart, item.Note.WordSelectionEnd);
+			range.Select();
 		}
 
 		private void NoteEdit_Click(object sender, EventArgs e)
@@ -96,34 +101,39 @@ namespace WordHiddenPowers.Panes
 			if (noteContextMenu.Tag is ListItem)
 			{
 				ListItem item = noteContextMenu.Tag as ListItem;
+				SetSelectedText(item);
 				if (item.Note.IsText)
 				{
-					TextNoteDialog dialog = new TextNoteDialog(Document.DataSet, item.Note);
+					TextNoteDialog dialog = new TextNoteDialog(Document.CurrentDataSet, item.Note);
 					if (dialog.ShowDialog() == DialogResult.OK)
 					{
-						Document.DataSet.TextPowers.Set(item.Note.Id,
+						Document.CurrentDataSet.TextPowers.Set(item.Note.Id,
 							dialog.Category.Guid,
 							dialog.Subcategory.Guid,
 							dialog.Description,
-							dialog.Value,
+							dialog.Value as string,
 							dialog.Rating,
 							dialog.SelectionStart,
 							dialog.SelectionEnd,
 							false);
+						if (item.Note.Subcategory.Keywords != dialog.Subcategory.Keywords)
+						{
+							Document.CurrentDataSet.Write(dialog.Subcategory);
+						}
 						Document.CommitVariables();
 					}
 				}
 				else
 				{
-					DecimalNoteDialog dialog = new DecimalNoteDialog(Document.DataSet, item.Note);
+					DecimalNoteDialog dialog = new DecimalNoteDialog(Document.CurrentDataSet, item.Note);
 					if (dialog.ShowDialog() == DialogResult.OK)
 					{
-						Document.DataSet.DecimalPowers.Set(
+						Document.CurrentDataSet.DecimalPowers.Set(
 							item.Note.Id,
 							dialog.Category.Guid,
 							dialog.Subcategory.Guid,
 							dialog.Description,
-							dialog.Value,
+							(double)dialog.Value,
 							dialog.Rating,
 							dialog.SelectionStart,
 							dialog.SelectionEnd,
@@ -139,7 +149,7 @@ namespace WordHiddenPowers.Panes
 			if (noteContextMenu.Tag is ListItem)
 			{
 				ListItem item = noteContextMenu.Tag as ListItem;
-				Document.DataSet.Remove(item.Note);
+				Document.CurrentDataSet.Remove(item.Note);
 				Document.CommitVariables();
 			}
 		}
@@ -173,7 +183,7 @@ namespace WordHiddenPowers.Panes
 		{
 			captionComboBox.BeginUpdate();
 			captionComboBox.Items.Clear();
-			foreach (DataRow row in Document.DataSet.DocumentKeys.Rows)
+			foreach (DataRow row in Document.CurrentDataSet.DocumentKeys.Rows)
 			{
 				captionComboBox.Items.Add(row["Caption"]);
 			}
@@ -245,7 +255,7 @@ namespace WordHiddenPowers.Panes
 			{
 				captionComboBox.BeginUpdate();
 				captionComboBox.Items.Clear();
-				foreach (DataRow row in Document.DataSet.DocumentKeys.Rows)
+				foreach (DataRow row in Document.CurrentDataSet.DocumentKeys.Rows)
 				{
 					captionComboBox.Items.Add(row["Caption"]);
 				}
@@ -266,31 +276,24 @@ namespace WordHiddenPowers.Panes
 			}
 		}
 
-		public bool DataSetRefresh()
+		public bool CurrentDataSetRefresh()
 		{
-			Word.Variable content = ContentUtil.GetVariable(Document.Doc.Variables, Const.Globals.XML_VARIABLE_NAME);
+			Word.Variable content = ContentUtil.GetVariable(Document.Doc.Variables, Const.Globals.XML_CURRENT_VARIABLE_NAME);
 			if (content != null)
 			{
-				foreach (DataTable table in Document.DataSet.Tables)
+				foreach (DataTable table in Document.CurrentDataSet.Tables)
 				{
 					table.Clear();
 				}
 				StringReader reader = new StringReader(content.Value);
-				Document.DataSet.ReadXml(reader, XmlReadMode.IgnoreSchema);
+				Document.CurrentDataSet.ReadXml(reader, XmlReadMode.IgnoreSchema);
 				reader.Close();
-				Document.DataSet.AcceptChanges();
+				Document.CurrentDataSet.AcceptChanges();
 				return true;
 			}
 			else
 				return false;
 		}
-
-
-		// add the button to the context menus that you need to support
-		//AddButton(applicationObject.CommandBars["Text"]);
-		//AddButton(applicationObject.CommandBars["Table Text"]);
-		//AddButton(applicationObject.CommandBars["Table Cells"]);
-
 
 		private void InitializeComponent()
 		{
@@ -341,7 +344,7 @@ namespace WordHiddenPowers.Panes
 			this.notesSplitContainer.Size = new System.Drawing.Size(366, 362);
 			this.notesSplitContainer.SplitterDistance = 140;
 			this.notesSplitContainer.TabIndex = 2;
-			this.notesSplitContainer.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.notesSplitContainer_SplitterMoved);
+			this.notesSplitContainer.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.NotesSplitContainer_SplitterMoved);
 			// 
 			// captionComboBox
 			// 
@@ -472,7 +475,6 @@ namespace WordHiddenPowers.Panes
 			this.notesSplitContainer.ResumeLayout(false);
 			this.noteContextMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
-
 		}
 		
 		private void NotesPane_PropertiesChanged(object sender, EventArgs e)
@@ -491,7 +493,7 @@ namespace WordHiddenPowers.Panes
 			base.Dispose(disposing);
 		}
 				
-		private void notesSplitContainer_SplitterMoved(object sender, SplitterEventArgs e)
+		private void NotesSplitContainer_SplitterMoved(object sender, SplitterEventArgs e)
 		{
 			Settings.Default.NotesPaneSplitterDistance = notesSplitContainer.SplitterDistance;
 			Settings.Default.Save();
@@ -505,9 +507,7 @@ namespace WordHiddenPowers.Panes
 			{
 				notesSplitContainer.SplitterDistance = Settings.Default.NotesPaneSplitterDistance;
 			}
-			catch (Exception)
-			{
-			}
+			catch (Exception) { }
 		}		
 	}
 }

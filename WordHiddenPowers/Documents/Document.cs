@@ -1,6 +1,5 @@
 ﻿// Ignore Spelling: dest
 
-using Microsoft.Office.Interop.Word;
 using Microsoft.Office.Tools;
 using System;
 using System.Collections.Generic;
@@ -27,7 +26,7 @@ namespace WordHiddenPowers.Documents
 
 		private RepositoryDataSet currentDataSet;
 
-		private RepositoryDataSet bufferDataSet;
+		private RepositoryDataSet aggregatedDataSet;
 
 		public CustomTaskPane CustomPane { get; }
 		
@@ -49,33 +48,27 @@ namespace WordHiddenPowers.Documents
 				Doc.Saved = false;
 			}
 
-			if (DataSet.HasChanges())
+			if (CurrentDataSet.HasChanges())
 			{
 				ContentUtil.CommitVariable(
 					array: Doc.Variables, 
-					variableName: Const.Globals.XML_VARIABLE_NAME, 
-					dataSet: DataSet);
+					variableName: Const.Globals.XML_CURRENT_VARIABLE_NAME, 
+					dataSet: CurrentDataSet);
 				Doc.Saved = false;
 			}
 
-			if (ImportDataSet.HasChanges())
+			if (AggregatedDataSet.HasChanges())
 			{
 				ContentUtil.CommitVariable(
 					array: Doc.Variables,
-					variableName: Const.Globals.XML_IMPORT_VARIABLE_NAME,
-					dataSet: ImportDataSet);
+					variableName: Const.Globals.XML_AGGREGATED_VARIABLE_NAME,
+					dataSet: AggregatedDataSet);
 				Doc.Saved = false;
 			}
 		}
 
-		public NotesPane Pane
-		{
-			get
-			{
-				return CustomPane.Control as NotesPane;
-			}
-		}
-
+		public NotesPane Pane => CustomPane.Control as NotesPane;
+		
 		public string FileName { get; }
 
 		public string Caption
@@ -140,7 +133,7 @@ namespace WordHiddenPowers.Documents
 
 		public bool ContentHide { get; set; }
 
-		public RepositoryDataSet DataSet
+		public RepositoryDataSet CurrentDataSet
 		{
 			get
 			{
@@ -156,19 +149,19 @@ namespace WordHiddenPowers.Documents
 			}
 		}
 
-		public RepositoryDataSet ImportDataSet
+		public RepositoryDataSet AggregatedDataSet
 		{
 			get
 			{
-				if (bufferDataSet == null)
+				if (aggregatedDataSet == null)
 				{
-					bufferDataSet = Xml.GetAnalyzerDataSet(Doc: Doc, out bool isCorrect);
+					aggregatedDataSet = Xml.GetAggregatedDataSet(Doc: Doc, out bool isCorrect);
 					if (!isCorrect)
 					{
-						bufferDataSet = new RepositoryDataSet();
+						aggregatedDataSet = new RepositoryDataSet();
 					}
 				}
-				return bufferDataSet;
+				return aggregatedDataSet;
 			}
 		}
 
@@ -183,24 +176,24 @@ namespace WordHiddenPowers.Documents
 			ContentHide = false;
 			Doc = doc;
 
-			bool oldState = this.parent.paneVisibleButton.Checked;
-			this.parent.paneVisibleButton.Checked = false;
+			bool oldState = this.parent.PaneVisibleButton.Checked;
+			this.parent.PaneVisibleButton.Checked = false;
 
-			CustomPane = Globals.ThisAddIn.CustomTaskPanes.Add(new NotesPane(this), Const.Panes.PANE_TITLE, Doc.ActiveWindow);
+			CustomPane = Globals.ThisAddIn.CustomTaskPanes.Add(new NotesPane(this), Const.Panes.PANE_TITLE, Doc.Windows[1]);
 			CustomPane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
 			CustomPane.Width = 400;
-			
+
 			CustomPane.VisibleChanged += new EventHandler(Pane_VisibleChanged);
 			Pane.PropertiesChanged += new EventHandler<EventArgs>(NotesPane_PropertiesChanged);
 			
 			CustomPane.Visible = oldState;
-			this.parent.paneVisibleButton.Checked = oldState;
+			this.parent.PaneVisibleButton.Checked = oldState;
 		}
-
+		
 		void Pane_VisibleChanged(object sender, EventArgs e)
 		{
 			CustomTaskPane pane = (CustomTaskPane)sender;
-			if (parent != null) parent.paneVisibleButton.Checked = pane.Visible;
+			if (parent != null) parent.PaneVisibleButton.Checked = pane.Visible;
 		}
 
 		public static Document Create(DocumentCollection parent, string fileName, Word._Document Doc)
@@ -214,42 +207,42 @@ namespace WordHiddenPowers.Documents
 				
 		public void NewData()
 		{
-			DataSet.RowsHeaders.Clear();
-			DataSet.ColumnsHeaders.Clear();
+			CurrentDataSet.RowsHeaders.Clear();
+			CurrentDataSet.ColumnsHeaders.Clear();
 
-			DataSet.Subcategories.Clear();
-			DataSet.Categories.Clear();
+			CurrentDataSet.Subcategories.Clear();
+			CurrentDataSet.Categories.Clear();
 
-			DataSet.DecimalPowers.Clear();
-			DataSet.TextPowers.Clear();
+			CurrentDataSet.DecimalPowers.Clear();
+			CurrentDataSet.TextPowers.Clear();
 
-			DataSet.DocumentKeys.Clear();
-			DataSet.WordFiles.Clear();
+			CurrentDataSet.DocumentKeys.Clear();
+			CurrentDataSet.WordFiles.Clear();
 
-			DataSet.AcceptChanges();
+			CurrentDataSet.AcceptChanges();
 
 			CommitVariables();
 		}
 
-		public void LoadData(string fileName)
+		public void LoadCurrentData(string fileName)
 		{
 			try
 			{
-				DataSet.RowsHeaders.Clear();
-				DataSet.ColumnsHeaders.Clear();
+				CurrentDataSet.RowsHeaders.Clear();
+				CurrentDataSet.ColumnsHeaders.Clear();
 
-				DataSet.Subcategories.Clear();
-				DataSet.Categories.Clear();
+				CurrentDataSet.Subcategories.Clear();
+				CurrentDataSet.Categories.Clear();
 				
-				DataSet.DocumentKeys.Clear();
-				DataSet.WordFiles.Clear();
+				CurrentDataSet.DocumentKeys.Clear();
+				CurrentDataSet.WordFiles.Clear();
 
-				DataSet.DecimalPowers.Clear();
-				DataSet.TextPowers.Clear();
+				CurrentDataSet.DecimalPowers.Clear();
+				CurrentDataSet.TextPowers.Clear();
 
-				DataSet.ReadXml(fileName, XmlReadMode.IgnoreSchema);
+				CurrentDataSet.ReadXml(fileName, XmlReadMode.IgnoreSchema);
 
-				DataSet.AcceptChanges();
+				CurrentDataSet.AcceptChanges();
 				
 				CommitVariables();
 			}
@@ -259,25 +252,25 @@ namespace WordHiddenPowers.Documents
 			}
 		}
 
-		public void LoadAnalyzerData(string fileName)
+		public void LoadAggregatedData(string fileName)
 		{
 			try
 			{
-				ImportDataSet.RowsHeaders.Clear();
-				ImportDataSet.ColumnsHeaders.Clear();
+				AggregatedDataSet.RowsHeaders.Clear();
+				AggregatedDataSet.ColumnsHeaders.Clear();
 
-				ImportDataSet.Subcategories.Clear();
-				ImportDataSet.Categories.Clear();
+				AggregatedDataSet.Subcategories.Clear();
+				AggregatedDataSet.Categories.Clear();
 
-				ImportDataSet.DocumentKeys.Clear();
-				ImportDataSet.WordFiles.Clear();
+				AggregatedDataSet.DocumentKeys.Clear();
+				AggregatedDataSet.WordFiles.Clear();
 
-				ImportDataSet.DecimalPowers.Clear();
-				ImportDataSet.TextPowers.Clear();
+				AggregatedDataSet.DecimalPowers.Clear();
+				AggregatedDataSet.TextPowers.Clear();
 
-				ImportDataSet.ReadXml(fileName, XmlReadMode.IgnoreSchema);
+				AggregatedDataSet.ReadXml(fileName, XmlReadMode.IgnoreSchema);
 
-				ImportDataSet.AcceptChanges();
+				AggregatedDataSet.AcceptChanges();
 
 				CommitVariables();
 			}
@@ -289,7 +282,7 @@ namespace WordHiddenPowers.Documents
 
 		public void SaveData(string fileName)
 		{
-			Xml.SaveDataSchema(Globals.ThisAddIn.Documents.ActiveDocument.DataSet, fileName);
+			Xml.SaveDataSchema(Globals.ThisAddIn.Documents.ActiveDocument.CurrentDataSet, fileName);
 		}
 
 		public void CommitVariables()
@@ -299,14 +292,14 @@ namespace WordHiddenPowers.Documents
 			ContentUtil.CommitVariable(Doc.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME, Description);
 			ContentUtil.CommitVariable(Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME, Table.ToString());
 
-			if (DataSet.HasChanges())
+			if (CurrentDataSet.HasChanges())
 			{
-				ContentUtil.CommitVariable(Doc.Variables, Const.Globals.XML_VARIABLE_NAME, DataSet);
+				ContentUtil.CommitVariable(Doc.Variables, Const.Globals.XML_CURRENT_VARIABLE_NAME, CurrentDataSet);
 			}
 
-			if (ImportDataSet.HasChanges())
+			if (AggregatedDataSet.HasChanges())
 			{
-				ContentUtil.CommitVariable(Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME, ImportDataSet);
+				ContentUtil.CommitVariable(Doc.Variables, Const.Globals.XML_AGGREGATED_VARIABLE_NAME, AggregatedDataSet);
 			}
 		}
 		
@@ -327,17 +320,17 @@ namespace WordHiddenPowers.Documents
 					Const.Globals.TABLE_VARIABLE_NAME))
 					return true;
 				else if (ContentUtil.ExistsVariable(Doc.Variables,
-					Const.Globals.XML_VARIABLE_NAME))
+					Const.Globals.XML_CURRENT_VARIABLE_NAME))
 					return true;
 				return ContentUtil.ExistsVariable(Doc.Variables,
-					Const.Globals.XML_IMPORT_VARIABLE_NAME);
+					Const.Globals.XML_AGGREGATED_VARIABLE_NAME);
 			}
 			return false;
 		}
 
 		public void DeleteVariables()
 		{
-			foreach (DataTable table in DataSet.Tables)
+			foreach (DataTable table in CurrentDataSet.Tables)
 			{
 				table.Clear();
 			}
@@ -348,8 +341,8 @@ namespace WordHiddenPowers.Documents
 				ContentUtil.DeleteVariable(Doc.Variables, Const.Globals.DATE_VARIABLE_NAME);
 				ContentUtil.DeleteVariable(Doc.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME);
 				ContentUtil.DeleteVariable(Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
-				ContentUtil.DeleteVariable(Doc.Variables, Const.Globals.XML_VARIABLE_NAME);
-				ContentUtil.DeleteVariable(Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME);
+				ContentUtil.DeleteVariable(Doc.Variables, Const.Globals.XML_CURRENT_VARIABLE_NAME);
+				ContentUtil.DeleteVariable(Doc.Variables, Const.Globals.XML_AGGREGATED_VARIABLE_NAME);
 			}
 		}
 
@@ -357,7 +350,7 @@ namespace WordHiddenPowers.Documents
 
 		public void ShowDocumentKeysDialog()
 		{
-			Form dialog = new DocumentKeysDialog(DataSet);
+			Form dialog = new DocumentKeysDialog(CurrentDataSet);
 			dialogs.Add(dialog);
 			if (ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
 			{
@@ -396,8 +389,8 @@ namespace WordHiddenPowers.Documents
 			FolderBrowserDialog dialog = new FolderBrowserDialog();
 			if (ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
 			{
-				FileSystemUtil.GetDataSetFromWordFiles(dialog.SelectedPath, ref bufferDataSet);
-				ContentUtil.CommitVariable(Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME, ImportDataSet);
+				FileSystemUtil.GetDataSetFromWordFiles(dialog.SelectedPath, ref aggregatedDataSet);
+				ContentUtil.CommitVariable(Doc.Variables, Const.Globals.XML_AGGREGATED_VARIABLE_NAME, AggregatedDataSet);
 				Doc.Saved = false;
 			}
 		}
@@ -412,20 +405,20 @@ namespace WordHiddenPowers.Documents
 			{
 				if (dialog.FilterIndex == 0)
 				{
-					FileSystemUtil.GetDataSetFromWordFile(dialog.FileName, ref bufferDataSet);
-					ContentUtil.CommitVariable(Doc.Variables, Const.Globals.XML_IMPORT_VARIABLE_NAME, ImportDataSet);
+					FileSystemUtil.GetDataSetFromWordFile(dialog.FileName, ref aggregatedDataSet);
+					ContentUtil.CommitVariable(Doc.Variables, Const.Globals.XML_AGGREGATED_VARIABLE_NAME, AggregatedDataSet);
 					Doc.Saved = false;
 				}
 				else
 				{
-					FileSystemUtil.GetContentFromTextFile(sourceDataSet: DataSet, fileName: dialog.FileName);
+					FileSystemUtil.GetContentFromTextFile(sourceDataSet: CurrentDataSet, fileName: dialog.FileName);
 				}
 			}
 		}
 
 		public void ShowTableViewerDialog()
 		{
-			TableViewerDialog dialog = new TableViewerDialog(ImportDataSet);
+			TableViewerDialog dialog = new TableViewerDialog(AggregatedDataSet);
 			dialogs.Add(dialog);
 			ShowDialogUtil.ShowDialog(dialog);
 		}
@@ -437,16 +430,16 @@ namespace WordHiddenPowers.Documents
 			ShowDialogUtil.Show(dialog);
 		}
 
-		public void AddTextNote(Selection selection)
+		public void AddTextNote(Word.Selection selection)
 		{
-			TextNoteDialog dialog = new TextNoteDialog(DataSet, selection);
+			TextNoteDialog dialog = new TextNoteDialog(CurrentDataSet, selection);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
 				AddTextNote(
 					categoryGuid: dialog.Category.Guid,
 					subcategoryGuid: dialog.Subcategory.Guid,
 					description: dialog.Description,
-					value: dialog.Value,
+					value: dialog.Value as string,
 					rating: dialog.Rating,
 					selectionStart: dialog.SelectionStart,
 					selectionEnd: dialog.SelectionEnd
@@ -454,16 +447,16 @@ namespace WordHiddenPowers.Documents
 			}
 		}
 
-		public void AddDecimalNote(Selection selection)
+		public void AddDecimalNote(Word.Selection selection)
 		{
-			DecimalNoteDialog dialog = new DecimalNoteDialog(DataSet, selection);
+			DecimalNoteDialog dialog = new DecimalNoteDialog(CurrentDataSet, selection);
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
 				AddDecimalNote(
 					categoryGuid: dialog.Category.Guid,
 					subcategoryGuid: dialog.Subcategory.Guid,
 					description: dialog.Description,
-					value: dialog.Value,
+					value: (double)dialog.Value,
 					rating: dialog.Rating,
 					selectionStart: dialog.SelectionStart,
 					selectionEnd: dialog.SelectionEnd
@@ -471,10 +464,10 @@ namespace WordHiddenPowers.Documents
 			}
 		}
 
-		private void AddTextNote(string categoryGuid, string subcategoryGuid, string description, string value, int rating, int selectionStart, int selectionEnd)
+		public void AddTextNote(string categoryGuid, string subcategoryGuid, string description, string value, int rating, int selectionStart, int selectionEnd)
 		{
 			int fileId = GetFile(FileName);
-			DataSet.TextPowers.Rows.Add(new object[]
+			CurrentDataSet.TextPowers.Rows.Add(new object[]
 			{
 				null,
 				categoryGuid,
@@ -497,7 +490,7 @@ namespace WordHiddenPowers.Documents
 				int fileId = GetFile(dataSet: dataSet, fileName: document.FullName);
 				string categoryGuid = dataSet.Categories[categoryId].key_guid;
 				string subcategoryGuid = dataSet.Subcategories[subcategoryId].key_guid;
-				Range range = document.Range(selectionStart, selectionEnd);
+				Word.Range range = document.Range(selectionStart, selectionEnd);
 				dataSet.TextPowers.Rows.Add(new object[]
 				{
 					null,
@@ -512,15 +505,15 @@ namespace WordHiddenPowers.Documents
 				});
 				if (dataSet.HasChanges())
 				{
-					ContentUtil.CommitVariable(document.Variables, Const.Globals.XML_VARIABLE_NAME, dataSet);
+					ContentUtil.CommitVariable(document.Variables, Const.Globals.XML_CURRENT_VARIABLE_NAME, dataSet);
 				}
 			}
 		}
 
-		private void AddDecimalNote(string categoryGuid, string subcategoryGuid, string description, double value, int rating, int selectionStart, int selectionEnd)
+		public void AddDecimalNote(string categoryGuid, string subcategoryGuid, string description, double value, int rating, int selectionStart, int selectionEnd)
 		{
 			int fileId = GetFile(FileName);
-			DataSet.DecimalPowers.Rows.Add(new object[]
+			CurrentDataSet.DecimalPowers.Rows.Add(new object[]
 			{
 				null,
 				categoryGuid,
@@ -557,30 +550,21 @@ namespace WordHiddenPowers.Documents
 				});
 				if (dataSet.HasChanges())
 				{
-					ContentUtil.CommitVariable(document.Variables, Const.Globals.XML_VARIABLE_NAME, dataSet);
+					ContentUtil.CommitVariable(document.Variables, Const.Globals.XML_CURRENT_VARIABLE_NAME, dataSet);
 				}
 			}
 		}
-
-		public static void CopyModel(RepositoryDataSet sourceDataSet, Word._Document destDocument)
-		{
-			RepositoryDataSet destDataSet = new RepositoryDataSet();
-			Xml.CopyData(sourceDataSet, destDataSet);
-			destDataSet.DecimalPowers.Clear();
-			destDataSet.TextPowers.Clear();
-			destDataSet.DocumentKeys.Clear();
-			destDataSet.WordFiles.Clear();
-			destDataSet.AcceptChanges();
-			ContentUtil.CommitVariable(destDocument.Variables, Const.Globals.XML_VARIABLE_NAME, destDataSet);
-		}
-
+				
 		public void ShowSearchServiceDialog()
 		{
 			Form dialog = new SelectCategoriesDialog(this);
 			dialogs.Add(dialog);
 			if (ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
 			{
-				SearchService(((SelectCategoriesDialog)dialog).CheckedSubcategories);
+				Pane.ShowButtons = true;
+				Services.Searcher.Search(
+					document: this,
+					subcategories: ((SelectCategoriesDialog)dialog).CheckedSubcategories);
 				MessageBox.Show("Разметка документа с помощью поисковых функций выполнена!",
 							"Разметка документа",
 							MessageBoxButtons.OK,
@@ -588,185 +572,19 @@ namespace WordHiddenPowers.Documents
 			}
 		}
 
-		public void SearchService(IEnumerable<Subcategory> items)
-		{
-			foreach (Subcategory item in items)
-			{
-				if (!string.IsNullOrEmpty(item.Keywords))
-				{
-					string[] keywords = item.Keywords.Split(separator: new string[] { Environment.NewLine }, options: StringSplitOptions.RemoveEmptyEntries);
-					foreach (string keyword in keywords)
-					{
-						SearchParagraphs( categoryGuid: item.Category.Guid, subcategoryGuid: item.Guid, keyword: keyword, isText: item.IsText);
-					}
-				}
-			}
-		}
-
-		private void SearchParagraphs(string categoryGuid, string subcategoryGuid, string keyword, bool isText)
+		public void AiSearchService()
 		{
 			Pane.ShowButtons = true;
-			string[] patterns = GetPatters(keyword);			
-			
-			if (patterns.Length > 0)
-			{
-				foreach (Paragraph paragraph in Doc.Content.Paragraphs)
-				{
-					if (IsCompliance(paragraph: paragraph, pattern: patterns[0]))
-					{
-						if (isText)
-						{
-							if (patterns.Length == 1)
-							{
-								AddTextNote(
-									categoryGuid: categoryGuid,
-									subcategoryGuid: subcategoryGuid,
-									description: "Добавлено с помощью поисковых алгоритмов",
-									value: paragraph.Range.Text,
-									rating: 0,
-									selectionStart: paragraph.Range.Start,
-									selectionEnd: paragraph.Range.End
-									);
-							}
-							else
-							{
-								AddTextParagraph(
-									categoryGuid: categoryGuid,
-									subcategoryGuid: subcategoryGuid,
-									paragraph: paragraph,
-									patterns: patterns
-									);
-							}
-						}
-						else
-						{
-							AddDecimalParagraph(
-									categoryGuid: categoryGuid,
-									subcategoryGuid: subcategoryGuid,
-									paragraph: paragraph,
-									patterns: patterns
-									);
-						}
-					}
-				}
-			}
+			Services.Сombined.Search(document: this);
+			MessageBox.Show("Разметка документа с помощью нейронной сети выполнена!",
+						"Разметка документа",
+						MessageBoxButtons.OK,
+						MessageBoxIcon.Information);
 		}
-
-		private static string[] GetPatters(string keyword)
-		{
-			string[] patterns = keyword.Split(new string[] { "';'" }, StringSplitOptions.RemoveEmptyEntries);
-			if (patterns.Length > 0)
-			{
-				if (patterns[0].Length >0 
-					&& patterns[0][0] == 39
-					&& patterns[patterns.Length - 1][patterns[patterns.Length - 1].Length-1] == 39)
-				{
-					patterns[0] = patterns[0].Substring(1);
-					patterns[patterns.Length - 1] = patterns[patterns.Length - 1].Substring(0, patterns[patterns.Length - 1].Length-1);
-				}
-			}
-			return patterns;
-		}
-
-		private static bool IsCompliance(Paragraph paragraph, string pattern) 
-		{
-			Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
-			return regex.IsMatch(paragraph.Range.Text);			
-		}
-
-		private void AddTextParagraph(string categoryGuid, string subcategoryGuid, Paragraph paragraph, string[] patterns)
-		{
-			string content = paragraph.Range.Text;
-			int selectionStart = paragraph.Range.Start;
-			for (int i = 1; i < patterns.Length; i++)
-			{
-				Regex regex = new Regex(patterns[i], RegexOptions.IgnoreCase);
-				if (regex.IsMatch(content))
-				{
-					Match match = regex.Match(content);
-					content = match.Value;
-					selectionStart += match.Index;
-				}
-				else
-				{
-					return;
-				}
-			}
-			AddTextNote(
-				categoryGuid: categoryGuid, 
-				subcategoryGuid: subcategoryGuid,
-				description: null,
-				value: content,
-				rating: 0,
-				selectionStart: selectionStart,
-				selectionEnd: selectionStart + content.Length);
-		}
-
-		private void AddDecimalParagraph(string categoryGuid, string subcategoryGuid, Paragraph paragraph, string[] patterns)
-		{
-			string content = paragraph.Range.Text;
-			for (int i = 1; i < patterns.Length - 1; i++)
-			{
-				Regex regex = new Regex(patterns[i], RegexOptions.IgnoreCase);
-				if (regex.IsMatch(content))
-				{
-					Match match = regex.Match(content);
-					content = match.Value;
-				}
-				else
-				{
-					return;
-				}
-			}
-			if (double.TryParse(content, out double result))
-				{
-				AddDecimalNote(
-				categoryGuid: categoryGuid,
-				subcategoryGuid: subcategoryGuid,
-				description: null,
-				value: result,
-				rating: 0,
-				selectionStart: paragraph.Range.Start,
-				selectionEnd: paragraph.Range.End
-				);
-			}
-		}
-
-		public void AiService(IEnumerable<SubcategoriesRow> rows)
-		{
-			Pane.ShowButtons = true;
-			foreach (Paragraph paragraph in Doc.Content.Paragraphs)
-			{
-				IOrderedEnumerable<KeyValuePair<string, float>> result = Utils.MLModelUtil.PredictAll(paragraph.Range.Text);
-				IEnumerable<Subcategory> subcategories = GetSubcategories(result);
-				if (subcategories != null)
-				{
-					foreach (Subcategory subcategory in subcategories)
-					{
-						AddTextNote(
-							categoryGuid: subcategory.Category.Guid,
-							subcategoryGuid: subcategory.Guid,
-							string.Format("Добавлено с помощью ИИ ({0} %)", (100 * (float)(subcategory.Tag)).ToString("0.000")),
-							value: paragraph.Range.Text,
-							rating: 0,
-							selectionStart: paragraph.Range.Start,
-							selectionEnd: paragraph.Range.End);
-					}
-				}							
-			}
-		}
-
-		private IEnumerable<Subcategory> GetSubcategories(IOrderedEnumerable<KeyValuePair<string, float>> result)
-		{
-			if (result == null) return null;
-			return result.OrderByDescending(p => p.Value)
-				.Where(p => p.Value > Const.Globals.LEVEL_PASSAGE)
-				.Select(p => DataSet.GetSubcategory(guid: p.Key, tag: p.Value));			
-		}
-
+		
 		private int GetFile(string fileName)
 		{
-			return GetFile(dataSet: DataSet, fileName: fileName);			
+			return GetFile(dataSet: CurrentDataSet, fileName: fileName);			
 		}
 
 		private static int GetFile(RepositoryDataSet dataSet, string fileName)

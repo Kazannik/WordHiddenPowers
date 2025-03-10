@@ -19,7 +19,7 @@ namespace WordHiddenPowers.Dialogs
 
 			InitializeComponent();
 
-			checkedListBox1.DataSet = this.document.DataSet;
+			checkedListBox1.DataSet = this.document.CurrentDataSet;
 			
 			foreach (ListItem item in checkedListBox1.Items)
 			{

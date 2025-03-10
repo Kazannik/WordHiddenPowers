@@ -28,10 +28,10 @@ namespace WordHiddenPowers.Utils
 			Word._Document destDocument = application.ActiveDocument;
 			application.Visible = true;
 			
-			IEnumerable<string> allCaptions = sourceDocument.ImportDataSet.GetFilesCaption();
+			IEnumerable<string> allCaptions = sourceDocument.AggregatedDataSet.GetFilesCaption();
 		    
 			string categoryGuid = string.Empty;
-			foreach (SubcategoriesRow row in sourceDocument.ImportDataSet.Subcategories.GetSubcategoriesRows())
+			foreach (SubcategoriesRow row in sourceDocument.AggregatedDataSet.Subcategories.GetSubcategoriesRows())
 			{
 				if (categoryGuid != row.category_guid)
 				{
@@ -67,7 +67,7 @@ namespace WordHiddenPowers.Utils
 			Word._Document destDocument,
 			string categoryGuid)
 		{
-			Category category = sourceDocument.ImportDataSet.GetCategory(guid: categoryGuid);
+			Category category = sourceDocument.AggregatedDataSet.GetCategory(guid: categoryGuid);
 			InsertParagraph(destDocument, string.Format("{0}) {1}", category.Code, category.Caption), true);
 			if (!string.IsNullOrEmpty(category.BeforeText))
 			{
@@ -80,7 +80,7 @@ namespace WordHiddenPowers.Utils
 			Word._Document destDocument,
 			string categoryGuid)
 		{
-			Category category = sourceDocument.ImportDataSet.GetCategory(guid: categoryGuid);
+			Category category = sourceDocument.AggregatedDataSet.GetCategory(guid: categoryGuid);
 			if (!string.IsNullOrEmpty(category.AfterText))
 			{
 				InsertParagraph(destDocument, category.AfterText);
@@ -119,11 +119,11 @@ namespace WordHiddenPowers.Utils
 			int maxCount = 3,
 			bool viewHide = true)
 		{
-			Subcategory subcategory = sourceDocument.ImportDataSet.GetSubcategory(guid: subcategoryGuid);
+			Subcategory subcategory = sourceDocument.AggregatedDataSet.GetSubcategory(guid: subcategoryGuid);
 			
 			InsertSubcategoryFirstParagraph(sourceDocument, destDocument, subcategory);
 
-			IEnumerable<string> captions = sourceDocument.ImportDataSet.GetFilesCaption(subcategoryGuid : subcategoryGuid);
+			IEnumerable<string> captions = sourceDocument.AggregatedDataSet.GetFilesCaption(subcategoryGuid : subcategoryGuid);
 
 			if (captions.Any()) 
 			{
@@ -144,7 +144,7 @@ namespace WordHiddenPowers.Utils
 				}
 			}
 			
-			IEnumerable<Note> allNotes = sourceDocument.ImportDataSet.GetTextNotes(subcategoryGuid: subcategoryGuid, viewHide: viewHide);
+			IEnumerable<Note> allNotes = sourceDocument.AggregatedDataSet.GetTextNotes(subcategoryGuid: subcategoryGuid, viewHide: viewHide);
 			if (minRating != 0 || maxRating != 0)
 			{
 				if (maxRating != 0)
@@ -208,21 +208,21 @@ namespace WordHiddenPowers.Utils
 		string subcategoryGuid,
 		IEnumerable<string> allCaptions)
 		{
-			Subcategory subcategory = sourceDocument.ImportDataSet.GetSubcategory(guid: subcategoryGuid);
+			Subcategory subcategory = sourceDocument.AggregatedDataSet.GetSubcategory(guid: subcategoryGuid);
 
 			InsertSubcategoryFirstParagraph(sourceDocument, destDocument, subcategory);
 
-			IEnumerable<string> captions = sourceDocument.ImportDataSet.GetFilesCaption(subcategoryGuid: subcategoryGuid);
+			IEnumerable<string> captions = sourceDocument.AggregatedDataSet.GetFilesCaption(subcategoryGuid: subcategoryGuid);
 			if (captions.Any())
 			{
-				double sum = sourceDocument.ImportDataSet.SumDecimalNote(subcategoryGuid: subcategoryGuid);
+				double sum = sourceDocument.AggregatedDataSet.SumDecimalNote(subcategoryGuid: subcategoryGuid);
 				
 				InsertParagraph(
 					document: destDocument,
 					text: string.Format("Общее количество: {0}", sum),
 					bold: false, italic: true);
 
-				IEnumerable<Note> notes = sourceDocument.ImportDataSet.GetDecimalNotes(subcategoryGuid: subcategoryGuid);
+				IEnumerable<Note> notes = sourceDocument.AggregatedDataSet.GetDecimalNotes(subcategoryGuid: subcategoryGuid);
 				IEnumerable<string> values = notes.Where(note => (double)note.Value != 0)
 					.Select(note => string.Format("{0} ({1} - {2})", note.FileCaption, note.Value, string.Format("{0:0.0} %", ((double)note.Value)*100/sum)));
 

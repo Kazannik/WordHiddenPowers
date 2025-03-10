@@ -33,7 +33,7 @@ namespace WordHiddenPowers
 				};
 				if (Utils.ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
 				{
-					ActiveDocument.LoadData(dialog.FileName);
+					ActiveDocument.LoadCurrentData(dialog.FileName);
 				}
 			}
 		}
@@ -163,11 +163,7 @@ namespace WordHiddenPowers
 
 		private void AiService_Click(object sender, RibbonControlEventArgs e)
 		{
-			ActiveDocument.AiService(ActiveDocument.DataSet.Subcategories.GetSubcategoriesRows());
-			MessageBox.Show("Разметка документа с помощью нейронной сети выполнена!",
-						"Разметка документа",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Information);
+			ActiveDocument.AiSearchService();
 		}
 	}
 }

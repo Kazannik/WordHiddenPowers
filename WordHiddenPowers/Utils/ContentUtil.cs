@@ -69,7 +69,7 @@ namespace WordHiddenPowers.Utils
 
 		public static void CommitCurrentDataSet(Word.Variables array, RepositoryDataSet dataSet)
 		{
-			CommitVariable(array: array, variableName: Const.Globals.XML_VARIABLE_NAME, dataSet: dataSet);
+			CommitVariable(array: array, variableName: Const.Globals.XML_CURRENT_VARIABLE_NAME, dataSet: dataSet);
 		}
 
 		public static void CommitVariable(Word.Variables array, string variableName, RepositoryDataSet dataSet)
@@ -193,7 +193,7 @@ namespace WordHiddenPowers.Utils
 		{
 			bool result = ExistsVariable(
 				array: Doc.Variables,
-				variableName: Const.Globals.XML_VARIABLE_NAME);
+				variableName: Const.Globals.XML_CURRENT_VARIABLE_NAME);
 			if (result)
 			{
 				return true;
@@ -202,7 +202,7 @@ namespace WordHiddenPowers.Utils
 			{
 				return ExistsVariable(
 				array: Doc.Variables,
-				variableName: Const.Globals.XML_VARIABLE_NAME + "_0");
+				variableName: Const.Globals.XML_CURRENT_VARIABLE_NAME + "_0");
 			}				
 		}
 
