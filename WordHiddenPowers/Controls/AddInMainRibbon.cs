@@ -1,4 +1,5 @@
 ﻿using Microsoft.Office.Tools.Ribbon;
+using System;
 using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
 
@@ -9,7 +10,7 @@ namespace WordHiddenPowers
 
 		private Documents.Document ActiveDocument
 		{
-			get { return Globals.ThisAddIn.Documents?.ActiveDocument; }
+			get { return Globals.ThisAddIn.Documents.ActiveDocument; }
 		}
 
 		private Word.Selection Selection
@@ -139,7 +140,7 @@ namespace WordHiddenPowers
 		private void AddDecimalNote_Click(object sender, RibbonControlEventArgs e)
 		{
 			ActiveDocument.AddDecimalNote(Selection);
-
+			
 			lastNoteType = NoteType.Decimal;
 			addLastNoteTypeButton.Description = Const.Content.DECIMAL_NOTE_DESCRIPTION;
 			addLastNoteTypeButton.Label = Const.Content.DECIMAL_NOTE_LABEL;

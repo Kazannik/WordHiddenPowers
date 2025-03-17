@@ -408,14 +408,13 @@ namespace WordHiddenPowers.Controls.ListControls
 			{
 				e.DrawBackground();
 				base.OnDraw(e);
-				if (notes.Length > 3 && (!notes[2].Size.IsEmpty || !notes[3].Size.IsEmpty))
-				{
+				
 					// Рисование линии после титульной части
 					Pen linePen = e.State == (e.State | DrawItemState.Selected) ? new Pen(e.ForeColor) : SystemPens.InactiveCaption;
 					e.Graphics.DrawLine(linePen,
-					e.Bounds.X + 7, notes[0].Size.Height + notes[1].Size.Height - 2,
-					e.Bounds.X + e.Bounds.Width - 15, notes[0].Size.Height + notes[1].Size.Height - 2);
-				}
+					e.Bounds.X + 7, notes[0].Size.Height + notes[1].Size.Height - 4,
+					e.Bounds.X + e.Bounds.Width - 15, notes[0].Size.Height + notes[1].Size.Height - 4);
+				
 				e.DrawFocusRectangle();
 			}
 

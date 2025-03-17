@@ -36,7 +36,7 @@
     <PublishUrl>publish\WordHiddenPowers\</PublishUrl>
     <InstallUrl />
     <TargetCulture>ru</TargetCulture>
-    <ApplicationVersion>2.0.0.0</ApplicationVersion>
+    <ApplicationVersion>2.0.0.2</ApplicationVersion>
     <AutoIncrementApplicationRevision>false</AutoIncrementApplicationRevision>
     <UpdateEnabled>false</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
@@ -61,7 +61,7 @@
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.VSTORuntime.4.0">
       <Visible>False</Visible>
-      <ProductName>Microsoft Visual Studio 2010 Tools for Office Runtime %28x86 and x64%29</ProductName>
+      <ProductName>Среда выполнения Microsoft Visual Studio 2010 Tools for Office %28x86 и x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
@@ -130,6 +130,7 @@
     <WarningLevel>4</WarningLevel>
     <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <!--
     This section specifies references for the project.
@@ -297,11 +298,11 @@
     <Compile Include="Dialogs\DocumentKeysDialog.Designer.cs">
       <DependentUpon>DocumentKeysDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\CreadeNoteDialog.cs">
+    <Compile Include="Dialogs\NoteDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\CreadeNoteDialog.Designer.cs">
-      <DependentUpon>CreadeNoteDialog.cs</DependentUpon>
+    <Compile Include="Dialogs\NoteDialog.Designer.cs">
+      <DependentUpon>NoteDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\TableViewerDialog.cs">
       <SubType>Form</SubType>
@@ -386,8 +387,8 @@
     <EmbeddedResource Include="Dialogs\DocumentKeysDialog.resx">
       <DependentUpon>DocumentKeysDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\CreadeNoteDialog.resx">
-      <DependentUpon>CreadeNoteDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\NoteDialog.resx">
+      <DependentUpon>NoteDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\InsertDataPropertiesDialog.resx">
       <DependentUpon>InsertDataPropertiesDialog.cs</DependentUpon>
@@ -688,8 +689,7 @@
     <ManifestCertificateThumbprint>621114F6FD186ADF11B6C9A3F479A971987ACE6E</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>Resources\App.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>

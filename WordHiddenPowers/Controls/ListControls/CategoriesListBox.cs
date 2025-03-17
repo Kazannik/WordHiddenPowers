@@ -6,7 +6,6 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using System.Windows.Forms.Design;
 using WordHiddenPowers.Repositories;
 using WordHiddenPowers.Repositories.Categories;
 using static WordHiddenPowers.Controls.ListControls.CategoriesListBox;

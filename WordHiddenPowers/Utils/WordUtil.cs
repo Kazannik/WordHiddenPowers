@@ -203,10 +203,11 @@ namespace WordHiddenPowers.Utils
 			InsertSubcategoryLastParagraph(sourceDocument, destDocument, subcategory);
 		}
 
-		private static void InsertDecimalSubcategoryContent(Documents.Document sourceDocument,
-		Word._Document destDocument,
-		string subcategoryGuid,
-		IEnumerable<string> allCaptions)
+		private static void InsertDecimalSubcategoryContent(
+			Documents.Document sourceDocument,
+			Word._Document destDocument,
+			string subcategoryGuid,
+			IEnumerable<string> allCaptions)
 		{
 			Subcategory subcategory = sourceDocument.AggregatedDataSet.GetSubcategory(guid: subcategoryGuid);
 
@@ -223,8 +224,12 @@ namespace WordHiddenPowers.Utils
 					bold: false, italic: true);
 
 				IEnumerable<Note> notes = sourceDocument.AggregatedDataSet.GetDecimalNotes(subcategoryGuid: subcategoryGuid);
-				IEnumerable<string> values = notes.Where(note => (double)note.Value != 0)
-					.Select(note => string.Format("{0} ({1} - {2})", note.FileCaption, note.Value, string.Format("{0:0.0} %", ((double)note.Value)*100/sum)));
+				
+				IEnumerable<string> values = notes
+					.Where(note => (double)note.Value != 0)
+					.Select(note => new { note.FileCaption, note.Value })
+					.GroupBy(note => note.FileCaption)
+					.Select(note => string.Format("{0} ({1} - {2})", note.First().FileCaption, note.Sum(n => (double)n.Value), string.Format("{0:0.0} %", note.Sum(n => (double)n.Value) * 100 / sum)));
 
 				InsertParagraph(
 					document: destDocument,

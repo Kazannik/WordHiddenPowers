@@ -14,8 +14,6 @@ namespace WordHiddenPowers.Controls
     public partial class CategoryBox: UserControl
     {
         private object owner;
-
-		private Version code;
 		private Size codeSize;
 		private Size textSize;
 

@@ -4,14 +4,8 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Windows.Forms;
-using WordHiddenPowers.Controls;
-using WordHiddenPowers.Repositories;
-using WordHiddenPowers.Repositories.Categories;
-using WordHiddenPowers.Repositories.Notes;
 using WordHiddenPowers.Utils;
-using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Dialogs
 {
@@ -152,9 +146,8 @@ namespace WordHiddenPowers.Dialogs
 		{
 			Close();
 		}
-			
 
-		private void splitContainer1_Panel2_Resize(object sender, EventArgs e)
+		private void SplitContainer1_Panel2_Resize(object sender, EventArgs e)
 		{
 			categoryBox1.Location = new Point(0, 0);
 			categoryBox1.Width = splitContainer1.Panel2.Width;

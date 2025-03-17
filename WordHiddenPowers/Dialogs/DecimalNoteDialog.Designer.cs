@@ -30,42 +30,41 @@ namespace WordHiddenPowers.Dialogs
         /// </summary>
         private void InitializeComponent()
         {
-			this.components = new System.ComponentModel.Container();
-			this.numericTextBox1 = new ControlLibrary.Controls.TextControl.NumericTextBox(this.components);
-			this.SuspendLayout();
-			// 
-			// numericTextBox1
-			// 
-			this.numericTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.numericTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.numericTextBox1.ForeColor = System.Drawing.SystemColors.Highlight;
-			this.numericTextBox1.Location = new System.Drawing.Point(13, 99);
-			this.numericTextBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-			this.numericTextBox1.Name = "numericTextBox1";
-			this.numericTextBox1.Size = new System.Drawing.Size(175, 40);
-			this.numericTextBox1.TabIndex = 33;
-			this.numericTextBox1.Text = "0";
-			this.numericTextBox1.Value = 0D;
-			this.numericTextBox1.TextChanged += new System.EventHandler(this.ValueTextBox_TextChanged);
-			// 
-			// DecimalNoteDialog
-			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 22F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(578, 294);
-			this.Controls.Add(this.numericTextBox1);
-			this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.MaximizeBox = false;
-			this.MaximumSize = new System.Drawing.Size(1200, 350);
-			this.MinimizeBox = false;
-			this.Name = "DecimalNoteDialog";
-			this.ShowIcon = false;
-			this.ShowInTaskbar = false;
-			this.Text = "Числовые данные";
-			this.Resize += new System.EventHandler(this.DecimalNoteDialog_Resize);
-			this.Controls.SetChildIndex(this.numericTextBox1, 0);
-			this.ResumeLayout(false);
-			this.PerformLayout();
+            this.components = new System.ComponentModel.Container();
+            this.numericTextBox1 = new ControlLibrary.Controls.TextControl.NumericTextBox(this.components);
+            this.SuspendLayout();
+            // 
+            // numericTextBox1
+            // 
+            this.numericTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.numericTextBox1.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.numericTextBox1.Location = new System.Drawing.Point(13, 99);
+            this.numericTextBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.numericTextBox1.Name = "numericTextBox1";
+            this.numericTextBox1.Size = new System.Drawing.Size(175, 40);
+            this.numericTextBox1.TabIndex = 33;
+            this.numericTextBox1.Text = "0";
+            this.numericTextBox1.Value = 0D;
+            this.numericTextBox1.TextChanged += new System.EventHandler(this.ValueTextBox_TextChanged);
+            // 
+            // DecimalNoteDialog
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 22F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(578, 294);
+            this.Controls.Add(this.numericTextBox1);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(1200, 350);
+            this.MinimizeBox = false;
+            this.Name = "DecimalNoteDialog";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.Text = "Числовые данные";
+            this.Controls.SetChildIndex(this.numericTextBox1, 0);
+            this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

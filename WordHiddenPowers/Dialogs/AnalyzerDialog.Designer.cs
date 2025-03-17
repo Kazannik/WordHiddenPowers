@@ -37,6 +37,7 @@
             this.mnuFileSave = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuFileSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuFileExportToCsv = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuFileExportDictionary = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuFileImportFromFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuFileImportFromFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,16 +52,10 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.statusListBox = new WordHiddenPowers.Controls.ListControls.StatusListBox();
-            this.contentListBox = new WordHiddenPowers.Controls.ListControls.ContentListBox();
-            this.categoryBox1 = new WordHiddenPowers.Controls.CategoryBox();
-            this.mnuFileExportDictionary = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -138,6 +133,13 @@
             this.mnuFileExportToCsv.Text = "Экспорт данных...";
             this.mnuFileExportToCsv.Click += new System.EventHandler(this.FileExportTo_Click);
             // 
+            // mnuFileExportDictionary
+            // 
+            this.mnuFileExportDictionary.Name = "mnuFileExportDictionary";
+            this.mnuFileExportDictionary.Size = new System.Drawing.Size(371, 30);
+            this.mnuFileExportDictionary.Text = "Экспорт словаря...";
+            this.mnuFileExportDictionary.Click += new System.EventHandler(this.FileExportDictionary_Click);
+            // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
@@ -204,7 +206,7 @@
             this.insertToDocumentButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 33);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1036, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(1036, 28);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -214,7 +216,7 @@
             this.insertToDocumentButton.Image = ((System.Drawing.Image)(resources.GetObject("insertToDocumentButton.Image")));
             this.insertToDocumentButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.insertToDocumentButton.Name = "insertToDocumentButton";
-            this.insertToDocumentButton.Size = new System.Drawing.Size(24, 24);
+            this.insertToDocumentButton.Size = new System.Drawing.Size(24, 25);
             this.insertToDocumentButton.Text = "Вставить в открытый документ";
             this.insertToDocumentButton.Click += new System.EventHandler(this.InsertToDocumentButton_Click);
             // 
@@ -239,61 +241,16 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 60);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 61);
             this.splitContainer1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.splitContainer1.Name = "splitContainer1";
             // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.statusListBox);
-            // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.contentListBox);
-            this.splitContainer1.Panel2.Controls.Add(this.categoryBox1);
-            this.splitContainer1.Panel2.Resize += new System.EventHandler(this.splitContainer1_Panel2_Resize);
-            this.splitContainer1.Size = new System.Drawing.Size(1036, 502);
+            this.splitContainer1.Panel2.Resize += new System.EventHandler(this.SplitContainer1_Panel2_Resize);
+            this.splitContainer1.Size = new System.Drawing.Size(1036, 501);
             this.splitContainer1.SplitterDistance = 423;
             this.splitContainer1.TabIndex = 3;
-            // 
-            // statusListBox
-            // 
-            this.statusListBox.DataSet = null;
-            this.statusListBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.statusListBox.FormattingEnabled = true;
-            this.statusListBox.Location = new System.Drawing.Point(0, 0);
-            this.statusListBox.Name = "statusListBox";
-            this.statusListBox.Size = new System.Drawing.Size(423, 502);
-            this.statusListBox.TabIndex = 1;
-            // 
-            // contentListBox
-            // 
-            this.contentListBox.DataSet = null;
-            this.contentListBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.contentListBox.Filer = null;
-            this.contentListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.contentListBox.FormattingEnabled = true;
-            this.contentListBox.Hide = true;
-            this.contentListBox.Location = new System.Drawing.Point(0, 98);
-            this.contentListBox.Name = "contentListBox";
-            this.contentListBox.Size = new System.Drawing.Size(609, 404);
-            this.contentListBox.TabIndex = 0;
-            // 
-            // categoryBox1
-            // 
-            this.categoryBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.categoryBox1.Location = new System.Drawing.Point(0, 0);
-            this.categoryBox1.Name = "categoryBox1";
-            this.categoryBox1.Owner = null;
-            this.categoryBox1.Size = new System.Drawing.Size(609, 98);
-            this.categoryBox1.TabIndex = 1;
-            // 
-            // mnuFileExportDictionary
-            // 
-            this.mnuFileExportDictionary.Name = "mnuFileExportDictionary";
-            this.mnuFileExportDictionary.Size = new System.Drawing.Size(371, 30);
-            this.mnuFileExportDictionary.Text = "Экспорт словаря...";
-            this.mnuFileExportDictionary.Click += new System.EventHandler(this.FileExportDictionary_Click);
             // 
             // AnalyzerDialog
             // 
@@ -315,8 +272,6 @@
             this.toolStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);

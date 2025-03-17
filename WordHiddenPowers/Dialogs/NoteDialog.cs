@@ -4,14 +4,14 @@ using System.Windows.Forms;
 using WordHiddenPowers.Repositories;
 using WordHiddenPowers.Repositories.Categories;
 using WordHiddenPowers.Repositories.Notes;
-using WordHiddenPowers.Utils;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Dialogs
 {
-	public partial class CreateNoteDialog : Form
+	public partial class NoteDialog : Form
 	{
-		private static readonly Size SMALL_BUTTON_SIZE = new Size(SystemInformation.MenuHeight, SystemInformation.MenuHeight);
+		private static readonly Size BUTTON_SIZE = new Size((int)(SystemInformation.MenuHeight * 3.2), (int)(SystemInformation.MenuHeight * 1.2));
+		private static readonly Size SMALL_BUTTON_SIZE = new Size((int)(SystemInformation.MenuHeight * 1.2), (int)(SystemInformation.MenuHeight * 1.2));
 
 		private readonly RepositoryDataSet dataSet;
 				
@@ -55,54 +55,42 @@ namespace WordHiddenPowers.Dialogs
 
 		public bool IsText { get; }
 
-		public CreateNoteDialog()
+		public NoteDialog()
 		{
 			InitializeComponent();
-
-			wizardButton.Image = WordUtil.GetImageMso("GanttChartWizard", SystemInformation.IconSize.Width, SystemInformation.IconSize.Height);
-
-			ControlResize();
-
 			okButton.Enabled = false;
 		}
 
-		public CreateNoteDialog(RepositoryDataSet dataSet, Word.Selection selection, bool isText)
+		public NoteDialog(RepositoryDataSet dataSet, Word.Selection selection, bool isText)
 		{
 			this.dataSet = dataSet;
-			
+			InitializeComponent();
+
 			IsText = isText;			
+			categoriesComboBox.InitializeSource(this.dataSet, IsText);
+			
 			SelectionText = selection.Text;
 			SelectionStart = selection.Start;
-			SelectionEnd = selection.End;
-			
-			InitializeComponent();
+			SelectionEnd = selection.End;	
 
-			wizardButton.Image = WordUtil.GetImageMso("GanttChartWizard", SystemInformation.IconSize.Width, SystemInformation.IconSize.Height);
-
-			ControlResize();
-			categoriesComboBox.InitializeSource(this.dataSet, isText);
 			okButton.Enabled = false;
 		}
 
-		public CreateNoteDialog(RepositoryDataSet dataSet, Note note, bool isText)
+		public NoteDialog(RepositoryDataSet dataSet, Note note, bool isText)
 		{
 			this.dataSet = dataSet;
+			InitializeComponent();
+			
 			IsText = isText;
-
+			categoriesComboBox.InitializeSource(this.dataSet, IsText);
+			
 			SelectionText = note.WordSelectionText;
 			SelectionStart = note.WordSelectionStart;
 			SelectionEnd = note.WordSelectionEnd;
 
-			InitializeComponent();
-
-			wizardButton.Image = WordUtil.GetImageMso("GanttChartWizard", SystemInformation.IconSize.Width, SystemInformation.IconSize.Height);
-
-			ControlResize();
-
 			ratingBox.Value = note.Rating;
 			descriptionTextBox.Text = note.Description;
 
-			categoriesComboBox.InitializeSource(this.dataSet, isText);
 			okButton.Enabled = false;
 
 			categoriesComboBox.SelectedItem = categoriesComboBox.GetItem(note.Category.Position.ToString());
@@ -111,7 +99,7 @@ namespace WordHiddenPowers.Dialogs
 
 		private void CategoriesComboBox_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
-			subcategoriesComboBox.InitializeSource(dataSet, (Category)categoriesComboBox.SelectedItem, IsText);
+			subcategoriesComboBox.InitializeSource(dataSet, categoriesComboBox.SelectedItem, IsText);
 			okButton.Enabled = categoriesComboBox.SelectedIndex >= 0 && subcategoriesComboBox.SelectedIndex >= 0;
 		}
 
@@ -132,15 +120,22 @@ namespace WordHiddenPowers.Dialogs
 
 		private void Dialog_Resize(object sender, System.EventArgs e)
 		{
-			ControlResize();
+			ControlsResize();
 		}
 
-		private void ControlResize()
+		protected virtual void ControlsResize()
 		{
+			okButton.Size = BUTTON_SIZE;
+			cancelButton.Size = BUTTON_SIZE;
+			
 			categoriesComboBox.Location = new Point(12, 12);
-			categoriesComboBox.Width = ClientSize.Width - 24;
+			categoriesComboBox.Size = new Size(ClientSize.Width - 24, BUTTON_SIZE.Height);
+			categoriesComboBox.BringToFront();
+
 			subcategoriesComboBox.Location = new Point(12, categoriesComboBox.Top + categoriesComboBox.Height + 12);
-			subcategoriesComboBox.Width = ClientSize.Width - 24;
+			subcategoriesComboBox.Size = new Size(ClientSize.Width - 24, BUTTON_SIZE.Height);
+			subcategoriesComboBox.BringToFront();
+
 			cancelButton.Location = new Point(ClientSize.Width - cancelButton.Width - 12, ClientSize.Height - cancelButton.Height - 12);
 			okButton.Location = new Point(cancelButton.Left - okButton.Width - 12, cancelButton.Top);
 			wizardButton.Location = new Point(12, cancelButton.Top);
@@ -153,6 +148,12 @@ namespace WordHiddenPowers.Dialogs
 				
 		protected int ControlTop { get => subcategoriesComboBox.Top + subcategoriesComboBox.Height + 12; }
 		protected int ControlHeight { get => descriptionTextBox.Top - ControlTop - 12; }
-		protected int MinHeight { get => ControlTop + descriptionTextBox.Height + 200; }		
+		protected int MinHeight { get => ControlTop + descriptionTextBox.Height + 200; }
+
+		private void CreateNoteDialog_Load(object sender, EventArgs e)
+		{
+			ControlsResize();
+			//wizardButton.Image = WordUtil.GetImageMso("GanttChartWizard", SystemInformation.IconSize.Width, SystemInformation.IconSize.Height);
+		}
 	}
 }

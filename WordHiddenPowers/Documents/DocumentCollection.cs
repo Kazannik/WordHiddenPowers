@@ -31,7 +31,7 @@ namespace WordHiddenPowers.Documents
 
 			application.CommandBars["Text"].Reset();
 
-			buttonSelectTextCategory = AddButtons(application.CommandBars["Text"], Const.Content.TEXT_NOTE_MENU_CAPTION, Const.Content.TEXT_NOTE_FACE_ID, Const.Panes.BUTTON_STRING_TAG, true, AddTextNoteClick);
+			buttonSelectTextCategory = AddButtons(application.CommandBars["Text"], Const.Content.TEXT_NOTE_MENU_CAPTION, Const.Content.TEXT_NOTE_OFFICE_IMAGE_ID, Const.Panes.BUTTON_STRING_TAG, true, AddTextNoteClick);
 			buttonSelectDecimalCategory = AddButtons(application.CommandBars["Text"], Const.Content.DECIMAL_NOTE_MENU_CAPTION, Const.Content.DECIMAL_NOTE_FACE_ID, Const.Panes.BUTTON_DECIMAL_TAG, false, AddDecimalNoteClick);
 		}
 
@@ -41,6 +41,11 @@ namespace WordHiddenPowers.Documents
 			{
 				return GetDocument(Globals.ThisAddIn.Application.ActiveDocument);
 			}
+		}
+
+		private Word.Selection Selection
+		{
+			get { return Globals.ThisAddIn.Application.ActiveWindow?.Selection; }
 		}
 
 		private void PaneVisibleButtonClick(object sender, RibbonControlEventArgs e)
@@ -69,12 +74,12 @@ namespace WordHiddenPowers.Documents
 
 		private void AddDecimalNoteClick(Office.CommandBarButton Ctrl, ref bool CancelDefault)
 		{
-			ActiveDocument?.AddDecimalNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
+			if (Selection != null) ActiveDocument.AddDecimalNote(Selection);
 		}
 
 		private void AddTextNoteClick(Office.CommandBarButton Ctrl, ref bool CancelDefault)
 		{
-			ActiveDocument?.AddTextNote(Globals.ThisAddIn.Application.ActiveWindow.Selection);
+			if (Selection !=null) ActiveDocument.AddTextNote(Selection);
 		}
 
 		private Office.CommandBarButton AddButtons(Office.CommandBar popupCommandBar, string caption, int faceId, string tag, bool beginGroup, Office._CommandBarButtonEvents_ClickEventHandler clickFunctionDelegate)

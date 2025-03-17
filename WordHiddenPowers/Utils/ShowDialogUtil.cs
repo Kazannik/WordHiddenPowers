@@ -47,6 +47,6 @@ namespace WordHiddenPowers.Utils
 			mainWindow.AssignHandle(Process.GetCurrentProcess().MainWindowHandle);
 			form.Show(mainWindow);
 			mainWindow.ReleaseHandle();
-		}
+		}		
 	}
 }

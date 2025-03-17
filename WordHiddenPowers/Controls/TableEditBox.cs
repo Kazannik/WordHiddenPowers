@@ -129,7 +129,7 @@ namespace WordHiddenPowers.Controls
 
 		public void CommitValue()
 		{
-			dataGridView.CancelEdit();
+			dataGridView.EndEdit();//.CancelEdit();
 			if (table == null) return;
 			for (int r = 0; r < dataGridView.RowCount; r++)
 			{
@@ -138,7 +138,9 @@ namespace WordHiddenPowers.Controls
 					if (dataGridView.Rows[r].Cells[c].Value != null)
 					{
 						if (table.RowCount > r && table.ColumnCount > c)
+						{
 							table.Rows[r][c].Value = int.Parse(dataGridView.Rows[r].Cells[c].Value.ToString());
+						}
 					}
 				}
 			}
@@ -148,6 +150,11 @@ namespace WordHiddenPowers.Controls
 				IsChanged = false;
 				DoValueChanged();
 			}
+		}
+
+		public void EndEdit()
+		{
+			dataGridView.EndEdit();
 		}
 
 		public bool IsChanged { get; private set; }
@@ -218,6 +225,7 @@ namespace WordHiddenPowers.Controls
 		{
 			SelectedCell?.Invoke(this, e);
 		}
+		
 		public class TableEventArgs : EventArgs
 		{
 			public TableEventArgs(DataGridViewCell cell) : base()
@@ -226,7 +234,7 @@ namespace WordHiddenPowers.Controls
 			}
 
 			public DataGridViewCell Cell { get; }
-		}
+		}		
 	}
 }
 

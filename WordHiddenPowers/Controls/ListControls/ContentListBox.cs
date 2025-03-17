@@ -1,6 +1,5 @@
 ﻿using ControlLibrary.Controls.ListControls;
 using ControlLibrary.Structures;
-using System;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -11,7 +10,6 @@ using WordHiddenPowers.Repositories.Notes;
 using static WordHiddenPowers.Repositories.RepositoryDataSet;
 using Control = WordHiddenPowers.Controls.ListControls.ContentListControl;
 using ListItem = WordHiddenPowers.Controls.ListControls.ContentListControl.ListItem;
-using Version = ControlLibrary.Structures.Version;
 
 namespace WordHiddenPowers.Controls.ListControls
 {

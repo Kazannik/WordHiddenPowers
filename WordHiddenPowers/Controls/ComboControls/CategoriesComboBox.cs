@@ -25,12 +25,14 @@ namespace WordHiddenPowers.Controls.ComboControls
 		{
 			Items.Clear();
 
-			foreach (Category category in dataSet.GetCategories(isText))
+			if (dataSet != null)
 			{
-				Add(category);
-			}
+				foreach (Category category in dataSet.GetCategories(isText))
+				{
+					Add(category);
+				}
+			}			
 		}
-
 		#endregion
 	}
 }

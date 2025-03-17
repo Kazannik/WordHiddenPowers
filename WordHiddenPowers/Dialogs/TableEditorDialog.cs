@@ -80,6 +80,8 @@ namespace WordHiddenPowers.Dialogs
 		{
 			if (e.CloseReason == CloseReason.UserClosing)
 			{
+				tableEditBox.EndEdit();
+				
 				if (tableEditBox.IsChanged)
 				{
 					DialogResult result = MessageBox.Show(this, "Зафиксировать табличные данные?", "Табличные данные", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);

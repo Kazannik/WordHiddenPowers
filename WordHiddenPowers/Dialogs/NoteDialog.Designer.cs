@@ -1,6 +1,6 @@
 ﻿namespace WordHiddenPowers.Dialogs
 {
-    partial class CreateNoteDialog
+    partial class NoteDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -42,7 +42,7 @@
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(750, 376);
+            this.cancelButton.Location = new System.Drawing.Point(448, 376);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(106, 34);
             this.cancelButton.TabIndex = 28;
@@ -52,7 +52,7 @@
             // 
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.okButton.Location = new System.Drawing.Point(638, 376);
+            this.okButton.Location = new System.Drawing.Point(336, 376);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(106, 34);
             this.okButton.TabIndex = 27;
@@ -60,11 +60,13 @@
             // 
             // descriptionTextBox
             // 
-            this.descriptionTextBox.Location = new System.Drawing.Point(12, 296);
+            this.descriptionTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.descriptionTextBox.Location = new System.Drawing.Point(12, 268);
             this.descriptionTextBox.Multiline = true;
             this.descriptionTextBox.Name = "descriptionTextBox";
             this.descriptionTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.descriptionTextBox.Size = new System.Drawing.Size(844, 64);
+            this.descriptionTextBox.Size = new System.Drawing.Size(542, 96);
             this.descriptionTextBox.TabIndex = 31;
             // 
             // subcategoriesComboBox
@@ -87,10 +89,10 @@
             // 
             // ratingBox
             // 
-            this.ratingBox.Location = new System.Drawing.Point(78, 369);
+            this.ratingBox.Location = new System.Drawing.Point(69, 369);
             this.ratingBox.Margin = new System.Windows.Forms.Padding(2);
             this.ratingBox.Name = "ratingBox";
-            this.ratingBox.Size = new System.Drawing.Size(310, 42);
+            this.ratingBox.Size = new System.Drawing.Size(167, 42);
             this.ratingBox.TabIndex = 32;
             this.ratingBox.Value = 0;
             // 
@@ -116,6 +118,7 @@
             // 
             this.wizardButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.wizardButton.Enabled = false;
+            this.wizardButton.Image = global::WordHiddenPowers.Properties.Resources.ColorMenu_24;
             this.wizardButton.Location = new System.Drawing.Point(12, 377);
             this.wizardButton.Name = "wizardButton";
             this.wizardButton.Size = new System.Drawing.Size(39, 34);
@@ -128,7 +131,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 22F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(868, 422);
+            this.ClientSize = new System.Drawing.Size(566, 422);
             this.Controls.Add(this.wizardButton);
             this.Controls.Add(this.subcategoriesComboBox);
             this.Controls.Add(this.categoriesComboBox);
@@ -141,6 +144,7 @@
             this.Name = "CreateNoteDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Текстовые данные";
+            this.Load += new System.EventHandler(this.CreateNoteDialog_Load);
             this.Resize += new System.EventHandler(this.Dialog_Resize);
             this.ResumeLayout(false);
             this.PerformLayout();

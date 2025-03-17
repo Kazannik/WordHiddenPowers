@@ -31,12 +31,38 @@ namespace WordHiddenPowers.Controls
 
 			InitializeComponent();
 
+			expressionTextBox.GotFocus += new EventHandler(Controls_GotFocus);
+			keywordsListBox.GotFocus += new EventHandler(Controls_GotFocus);
+			patternsListBox.GotFocus += new EventHandler(Controls_GotFocus);
+
 			NewKeyword();
 
 			isCorrect = false;
 			text = string.Empty;
 		}
-		
+
+		private void Controls_GotFocus(object sender, EventArgs e)
+		{
+			if (sender == expressionTextBox)
+			{
+				expressionTextBox.TextChanged += new EventHandler(ExpressionTextBox_TextChanged);
+				keywordsListBox.SelectedIndexChanged -= KeywordsListBox_SelectedIndexChanged;
+				patternsListBox.SelectedIndexChanged -= PatternsListBox_SelectedIndexChanged;
+			}
+			else if (sender == keywordsListBox)
+			{
+				keywordsListBox.SelectedIndexChanged += new EventHandler(KeywordsListBox_SelectedIndexChanged);
+				patternsListBox.SelectedIndexChanged -= PatternsListBox_SelectedIndexChanged;
+				expressionTextBox.TextChanged -= ExpressionTextBox_TextChanged;
+			}
+			else
+			{
+				patternsListBox.SelectedIndexChanged += new EventHandler(PatternsListBox_SelectedIndexChanged);
+				keywordsListBox.SelectedIndexChanged -= KeywordsListBox_SelectedIndexChanged;
+				expressionTextBox.TextChanged -= ExpressionTextBox_TextChanged;
+			}
+		}
+
 		public bool IsDecimal
 		{
 			get => decimalResultTextBox.Visible;
@@ -124,6 +150,8 @@ namespace WordHiddenPowers.Controls
 				patternsListBox.Items.Add(string.Empty);
 			}
 			patternsListBox.SelectedIndex = 0;
+			expressionTextBox.Text = patternsListBox.Items[patternsListBox.SelectedIndex] as string;
+			resultTextBox.Text = string.Empty;
 			patternsListBox.EndUpdate();
 		}
 
@@ -146,6 +174,9 @@ namespace WordHiddenPowers.Controls
 		/// <param name="e"></param>
 		private void AddKeywordButton_Click(object sender, EventArgs e)
 		{
+			expressionTextBox.TextChanged -= ExpressionTextBox_TextChanged;
+			patternsListBox.SelectedIndexChanged -= PatternsListBox_SelectedIndexChanged;
+			keywordsListBox.SelectedIndexChanged += new EventHandler(KeywordsListBox_SelectedIndexChanged);
 			NewKeyword();
 		}
 
@@ -156,6 +187,9 @@ namespace WordHiddenPowers.Controls
 		/// <param name="e"></param>
 		private void RemoveKeywordButton_Click(object sender, EventArgs e)
 		{
+			expressionTextBox.TextChanged -= ExpressionTextBox_TextChanged;
+			patternsListBox.SelectedIndexChanged -= PatternsListBox_SelectedIndexChanged;
+			keywordsListBox.SelectedIndexChanged += new EventHandler(KeywordsListBox_SelectedIndexChanged);
 			RemoveSelectedItem(keywordsListBox);			
 		}
 
@@ -179,6 +213,9 @@ namespace WordHiddenPowers.Controls
 		/// <param name="e"></param>
 		private void AddPatternButton_Click(object sender, EventArgs e)
 		{
+			expressionTextBox.TextChanged -= ExpressionTextBox_TextChanged;
+			keywordsListBox.SelectedIndexChanged -= KeywordsListBox_SelectedIndexChanged;
+			patternsListBox.SelectedIndexChanged += new EventHandler(PatternsListBox_SelectedIndexChanged);
 			NewPattern();
 		}
 
@@ -189,6 +226,9 @@ namespace WordHiddenPowers.Controls
 		/// <param name="e"></param>
 		private void DeletePatternButton_Click(object sender, EventArgs e)
 		{
+			expressionTextBox.TextChanged -= ExpressionTextBox_TextChanged;
+			keywordsListBox.SelectedIndexChanged -= KeywordsListBox_SelectedIndexChanged;
+			patternsListBox.SelectedIndexChanged += new EventHandler(PatternsListBox_SelectedIndexChanged);
 			RemoveSelectedItem(patternsListBox);
 			CopyPatternToKeyword();
 			removePatternButton.Enabled = patternsListBox.SelectedIndex >= 0;
@@ -205,14 +245,10 @@ namespace WordHiddenPowers.Controls
 
 		private void PatternsListBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			expressionTextBox.TextChanged -= ExpressionTextBox_TextChanged;
 			if (patternsListBox.SelectedIndex >= 0)
 			{
 				expressionTextBox.Text = patternsListBox.Items[patternsListBox.SelectedIndex] as string;
-				expressionTextBox.SelectionStart = expressionTextBox.Text.Length;
-				expressionTextBox.SelectionLength = 0;
-			}			
-			expressionTextBox.TextChanged += new EventHandler(ExpressionTextBox_TextChanged);
+			}
 			SetText();
 		}
 
@@ -432,7 +468,7 @@ namespace WordHiddenPowers.Controls
 		/// <summary> 
 		/// Обязательная переменная конструктора.
 		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+		private readonly System.ComponentModel.IContainer components = null;
 
 		/// <summary> 
 		/// Освободить все используемые ресурсы.

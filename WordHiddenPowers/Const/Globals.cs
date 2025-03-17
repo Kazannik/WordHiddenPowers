@@ -9,7 +9,7 @@ namespace WordHiddenPowers.Const
 		/// <summary>
 		/// Минимальный порог для оценки параграфа как удовлетворяющего требованиям. 
 		/// </summary>
-		public const float LEVEL_PASSAGE = 0.0f;
+		public const float LEVEL_PASSAGE = 0.001f;
 
 		public const string ADDIN_TITLE = "Дополнительные данные";
 

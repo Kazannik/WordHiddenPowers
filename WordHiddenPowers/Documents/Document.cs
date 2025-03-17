@@ -4,15 +4,11 @@ using Microsoft.Office.Tools;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using WordHiddenPowers.Dialogs;
 using WordHiddenPowers.Panes;
 using WordHiddenPowers.Repositories;
-using WordHiddenPowers.Repositories.Categories;
 using WordHiddenPowers.Utils;
-using static WordHiddenPowers.Repositories.RepositoryDataSet;
 using DataTable = System.Data.DataTable;
 using Office = Microsoft.Office.Core;
 using Table = WordHiddenPowers.Repositories.Data.Table;
@@ -433,7 +429,7 @@ namespace WordHiddenPowers.Documents
 		public void AddTextNote(Word.Selection selection)
 		{
 			TextNoteDialog dialog = new TextNoteDialog(CurrentDataSet, selection);
-			if (dialog.ShowDialog() == DialogResult.OK)
+			if (ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
 			{
 				AddTextNote(
 					categoryGuid: dialog.Category.Guid,
@@ -450,7 +446,7 @@ namespace WordHiddenPowers.Documents
 		public void AddDecimalNote(Word.Selection selection)
 		{
 			DecimalNoteDialog dialog = new DecimalNoteDialog(CurrentDataSet, selection);
-			if (dialog.ShowDialog() == DialogResult.OK)
+			if (ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
 			{
 				AddDecimalNote(
 					categoryGuid: dialog.Category.Guid,
@@ -575,7 +571,7 @@ namespace WordHiddenPowers.Documents
 		public void AiSearchService()
 		{
 			Pane.ShowButtons = true;
-			Services.Сombined.Search(document: this);
+			Services.AI.Search(document: this);
 			MessageBox.Show("Разметка документа с помощью нейронной сети выполнена!",
 						"Разметка документа",
 						MessageBoxButtons.OK,

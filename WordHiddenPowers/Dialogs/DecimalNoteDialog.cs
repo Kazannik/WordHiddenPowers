@@ -6,7 +6,7 @@ using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Dialogs
 {
-	public partial class DecimalNoteDialog : CreateNoteDialog
+	public partial class DecimalNoteDialog : NoteDialog
 	{
 		public double Value
 		{
@@ -19,13 +19,11 @@ namespace WordHiddenPowers.Dialogs
 		public DecimalNoteDialog(RepositoryDataSet dataSet, Word.Selection selection) : base(dataSet, selection, false)
 		{
 			InitializeComponent();
-			ControlsResize();
 		}
 
 		public DecimalNoteDialog(RepositoryDataSet dataSet, Note note) : base(dataSet, note, false)
 		{
 			InitializeComponent();
-			ControlsResize();
 			numericTextBox1.Value = long.Parse(note.Value.ToString());
 		}
 
@@ -33,16 +31,12 @@ namespace WordHiddenPowers.Dialogs
 		{
 			Text = numericTextBox1.Value.ToString();
 		}
-
-		private void DecimalNoteDialog_Resize(object sender, EventArgs e)
+		
+		protected override void ControlsResize()
 		{
-			ControlsResize();
-		}
-
-		private void ControlsResize()
-		{
+			base.ControlsResize();
 			numericTextBox1.Location = new Point(12, ControlTop);
 			MinimumSize = new Size(500, MinHeight);
-		}
+		}		
 	}
 }

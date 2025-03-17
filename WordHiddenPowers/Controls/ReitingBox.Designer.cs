@@ -28,49 +28,49 @@
         /// </summary>
         private void InitializeComponent()
         {
-			this.ratingTrackBar = new System.Windows.Forms.TrackBar();
-			this.ratingLabel = new System.Windows.Forms.Label();
-			((System.ComponentModel.ISupportInitialize)(this.ratingTrackBar)).BeginInit();
-			this.SuspendLayout();
-			// 
-			// ratingTrackBar
-			// 
-			this.ratingTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.ratingTrackBar = new System.Windows.Forms.TrackBar();
+            this.ratingLabel = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.ratingTrackBar)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // ratingTrackBar
+            // 
+            this.ratingTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.ratingTrackBar.LargeChange = 1;
-			this.ratingTrackBar.Location = new System.Drawing.Point(52, 2);
-			this.ratingTrackBar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.ratingTrackBar.Maximum = 5;
-			this.ratingTrackBar.Minimum = -5;
-			this.ratingTrackBar.Name = "ratingTrackBar";
-			this.ratingTrackBar.Size = new System.Drawing.Size(423, 69);
-			this.ratingTrackBar.TabIndex = 0;
-			this.ratingTrackBar.ValueChanged += new System.EventHandler(this.TrackBar_ValueChanged);
-			// 
-			// ratingLabel
-			// 
-			this.ratingLabel.AutoSize = true;
-			this.ratingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.ratingLabel.ForeColor = System.Drawing.SystemColors.Highlight;
-			this.ratingLabel.Location = new System.Drawing.Point(0, 9);
-			this.ratingLabel.Name = "ratingLabel";
-			this.ratingLabel.Size = new System.Drawing.Size(41, 29);
-			this.ratingLabel.TabIndex = 1;
-			this.ratingLabel.Text = "##";
-			// 
-			// RatingBox
-			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.ratingLabel);
-			this.Controls.Add(this.ratingTrackBar);
-			this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.Name = "RatingBox";
-			this.Size = new System.Drawing.Size(478, 52);
-			this.Resize += new System.EventHandler(this.RatingBox_Resize);
-			((System.ComponentModel.ISupportInitialize)(this.ratingTrackBar)).EndInit();
-			this.ResumeLayout(false);
-			this.PerformLayout();
+            this.ratingTrackBar.LargeChange = 1;
+            this.ratingTrackBar.Location = new System.Drawing.Point(52, 2);
+            this.ratingTrackBar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ratingTrackBar.Maximum = 5;
+            this.ratingTrackBar.Minimum = -5;
+            this.ratingTrackBar.Name = "ratingTrackBar";
+            this.ratingTrackBar.Size = new System.Drawing.Size(344, 69);
+            this.ratingTrackBar.TabIndex = 0;
+            this.ratingTrackBar.ValueChanged += new System.EventHandler(this.TrackBar_ValueChanged);
+            // 
+            // ratingLabel
+            // 
+            this.ratingLabel.AutoSize = true;
+            this.ratingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ratingLabel.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.ratingLabel.Location = new System.Drawing.Point(0, 9);
+            this.ratingLabel.Name = "ratingLabel";
+            this.ratingLabel.Size = new System.Drawing.Size(41, 29);
+            this.ratingLabel.TabIndex = 1;
+            this.ratingLabel.Text = "##";
+            // 
+            // RatingBox
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.ratingLabel);
+            this.Controls.Add(this.ratingTrackBar);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Name = "RatingBox";
+            this.Size = new System.Drawing.Size(460, 52);
+            this.Resize += new System.EventHandler(this.RatingBox_Resize);
+            ((System.ComponentModel.ISupportInitialize)(this.ratingTrackBar)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
