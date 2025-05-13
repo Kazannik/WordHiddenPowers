@@ -141,9 +141,9 @@
             this.Controls.Add(this.okButton);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-            this.Name = "CreateNoteDialog";
+            this.Name = "NoteDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Текстовые данные";
+            this.Text = "Данные";
             this.Load += new System.EventHandler(this.CreateNoteDialog_Load);
             this.Resize += new System.EventHandler(this.Dialog_Resize);
             this.ResumeLayout(false);

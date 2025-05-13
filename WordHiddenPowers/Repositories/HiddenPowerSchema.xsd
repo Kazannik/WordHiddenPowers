@@ -24,7 +24,7 @@
               <xs:element name="WordSelectionStart" msprop:Generator_ColumnPropNameInTable="WordSelectionStartColumn" msprop:Generator_ColumnPropNameInRow="WordSelectionStart" msprop:Generator_UserColumnName="WordSelectionStart" msprop:Generator_ColumnVarNameInTable="columnWordSelectionStart" type="xs:int" default="0" />
               <xs:element name="WordSelectionEnd" msprop:Generator_ColumnPropNameInTable="WordSelectionEndColumn" msprop:Generator_ColumnPropNameInRow="WordSelectionEnd" msprop:Generator_UserColumnName="WordSelectionEnd" msprop:Generator_ColumnVarNameInTable="columnWordSelectionEnd" type="xs:int" default="0" />
               <xs:element name="file_id" msprop:Generator_ColumnPropNameInTable="file_idColumn" msprop:Generator_ColumnPropNameInRow="file_id" msprop:Generator_UserColumnName="file_id" msprop:Generator_ColumnVarNameInTable="columnfile_id" type="xs:int" />
-              <xs:element name="Hide" msprop:Generator_ColumnPropNameInRow="Hide" msprop:Generator_ColumnPropNameInTable="HideColumn" msprop:Generator_ColumnVarNameInTable="columnHide" msprop:Generator_UserColumnName="Hide" type="xs:boolean" default="false" />
+              <xs:element name="Hide" msprop:Generator_ColumnPropNameInTable="HideColumn" msprop:Generator_ColumnPropNameInRow="Hide" msprop:Generator_UserColumnName="Hide" msprop:Generator_ColumnVarNameInTable="columnHide" type="xs:boolean" default="false" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -70,7 +70,7 @@
               <xs:element name="WordSelectionStart" msprop:Generator_ColumnPropNameInTable="WordSelectionStartColumn" msprop:Generator_ColumnPropNameInRow="WordSelectionStart" msprop:Generator_UserColumnName="WordSelectionStart" msprop:Generator_ColumnVarNameInTable="columnWordSelectionStart" type="xs:int" default="0" />
               <xs:element name="WordSelectionEnd" msprop:Generator_ColumnPropNameInTable="WordSelectionEndColumn" msprop:Generator_ColumnPropNameInRow="WordSelectionEnd" msprop:Generator_UserColumnName="WordSelectionEnd" msprop:Generator_ColumnVarNameInTable="columnWordSelectionEnd" type="xs:int" default="0" />
               <xs:element name="file_id" msprop:Generator_ColumnPropNameInTable="file_idColumn" msprop:Generator_ColumnPropNameInRow="file_id" msprop:Generator_UserColumnName="file_id" msprop:Generator_ColumnVarNameInTable="columnfile_id" type="xs:int" />
-              <xs:element name="Hide" msprop:Generator_ColumnPropNameInRow="Hide" msprop:Generator_ColumnPropNameInTable="HideColumn" msprop:Generator_ColumnVarNameInTable="columnHide" msprop:Generator_UserColumnName="Hide" type="xs:boolean" default="false" />
+              <xs:element name="Hide" msprop:Generator_ColumnPropNameInTable="HideColumn" msprop:Generator_ColumnPropNameInRow="Hide" msprop:Generator_UserColumnName="Hide" msprop:Generator_ColumnVarNameInTable="columnHide" type="xs:boolean" default="false" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -117,6 +117,14 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="Setting" msprop:Generator_RowEvHandlerName="SettingRowChangeEventHandler" msprop:Generator_RowDeletedName="SettingRowDeleted" msprop:Generator_RowDeletingName="SettingRowDeleting" msprop:Generator_RowEvArgName="SettingRowChangeEvent" msprop:Generator_TablePropName="Setting" msprop:Generator_RowChangedName="SettingRowChanged" msprop:Generator_RowChangingName="SettingRowChanging" msprop:Generator_TableClassName="SettingDataTable" msprop:Generator_RowClassName="SettingRow" msprop:Generator_TableVarName="tableSetting" msprop:Generator_UserTableName="Setting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="key" msprop:Generator_ColumnPropNameInRow="key" msprop:Generator_ColumnPropNameInTable="keyColumn" msprop:Generator_ColumnVarNameInTable="columnkey" msprop:Generator_UserColumnName="key" type="xs:string" />
+              <xs:element name="value" msprop:Generator_ColumnPropNameInRow="value" msprop:Generator_ColumnPropNameInTable="valueColumn" msprop:Generator_ColumnVarNameInTable="columnvalue" msprop:Generator_UserColumnName="value" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:choice>
     </xs:complexType>
     <xs:unique name="StringPowersTableKey" msdata:PrimaryKey="true">
@@ -159,20 +167,24 @@
       <xs:selector xpath=".//mstns:WordFiles" />
       <xs:field xpath="mstns:id" />
     </xs:unique>
-    <xs:unique name="Constraint2">
+    <xs:unique name="Constraint4">
       <xs:selector xpath=".//mstns:WordFiles" />
       <xs:field xpath="mstns:FileName" />
+    </xs:unique>
+    <xs:unique name="Setting_Constraint1" msdata:ConstraintName="Constraint1">
+      <xs:selector xpath=".//mstns:Setting" />
+      <xs:field xpath="mstns:key" />
     </xs:unique>
   </xs:element>
   <xs:annotation>
     <xs:appinfo>
-      <msdata:Relationship name="DecimalPowers_WordFiles" msdata:parent="DecimalPowers" msdata:child="WordFiles" msdata:parentkey="file_id" msdata:childkey="id" msprop:Generator_UserParentTable="DecimalPowers" msprop:Generator_UserChildTable="WordFiles" msprop:Generator_RelationVarName="relationDecimalPowers_WordFiles" msprop:Generator_ChildPropName="GetWordFilesRows" msprop:Generator_UserRelationName="DecimalPowers_WordFiles" msprop:Generator_ParentPropName="DecimalPowersRow" />
-      <msdata:Relationship name="TextPowers_WordFiles" msdata:parent="TextPowers" msdata:child="WordFiles" msdata:parentkey="file_id" msdata:childkey="id" msprop:Generator_UserParentTable="TextPowers" msprop:Generator_UserChildTable="WordFiles" msprop:Generator_RelationVarName="relationTextPowers_WordFiles" msprop:Generator_ChildPropName="GetWordFilesRows" msprop:Generator_UserRelationName="TextPowers_WordFiles" msprop:Generator_ParentPropName="TextPowersRow" />
-      <msdata:Relationship name="Subcategories_Categories" msdata:parent="Subcategories" msdata:child="Categories" msdata:parentkey="category_guid" msdata:childkey="key_guid" msprop:Generator_UserParentTable="Subcategories" msprop:Generator_UserChildTable="Categories" msprop:Generator_RelationVarName="relationSubcategories_Categories" msprop:Generator_ChildPropName="GetCategoriesRows" msprop:Generator_ParentPropName="SubcategoriesRow" msprop:Generator_UserRelationName="Subcategories_Categories" />
-      <msdata:Relationship name="TextPowers_Categories" msdata:parent="TextPowers" msdata:child="Categories" msdata:parentkey="category_guid" msdata:childkey="key_guid" msprop:Generator_UserParentTable="TextPowers" msprop:Generator_UserChildTable="Categories" msprop:Generator_RelationVarName="relationTextPowers_Categories" msprop:Generator_ChildPropName="GetCategoriesRows" msprop:Generator_ParentPropName="TextPowersRow" msprop:Generator_UserRelationName="TextPowers_Categories" />
-      <msdata:Relationship name="TextPowers_Subcategories" msdata:parent="TextPowers" msdata:child="Subcategories" msdata:parentkey="subcategory_guid" msdata:childkey="key_guid" msprop:Generator_UserParentTable="TextPowers" msprop:Generator_UserChildTable="Subcategories" msprop:Generator_RelationVarName="relationTextPowers_Subcategories" msprop:Generator_ChildPropName="GetSubcategoriesRows" msprop:Generator_ParentPropName="TextPowersRow" msprop:Generator_UserRelationName="TextPowers_Subcategories" />
-      <msdata:Relationship name="DecimalPowers_Categories" msdata:parent="DecimalPowers" msdata:child="Categories" msdata:parentkey="category_guid" msdata:childkey="key_guid" msprop:Generator_UserParentTable="DecimalPowers" msprop:Generator_UserChildTable="Categories" msprop:Generator_RelationVarName="relationDecimalPowers_Categories" msprop:Generator_ChildPropName="GetCategoriesRows" msprop:Generator_UserRelationName="DecimalPowers_Categories" msprop:Generator_ParentPropName="DecimalPowersRow" />
-      <msdata:Relationship name="DecimalPowers_Subcategories" msdata:parent="DecimalPowers" msdata:child="Subcategories" msdata:parentkey="subcategory_guid" msdata:childkey="key_guid" msprop:Generator_UserParentTable="DecimalPowers" msprop:Generator_UserChildTable="Subcategories" msprop:Generator_RelationVarName="relationDecimalPowers_Subcategories" msprop:Generator_ChildPropName="GetSubcategoriesRows" msprop:Generator_UserRelationName="DecimalPowers_Subcategories" msprop:Generator_ParentPropName="DecimalPowersRow" />
+      <msdata:Relationship name="DecimalPowers_WordFiles" msdata:parent="DecimalPowers" msdata:child="WordFiles" msdata:parentkey="file_id" msdata:childkey="id" msprop:Generator_UserParentTable="DecimalPowers" msprop:Generator_UserChildTable="WordFiles" msprop:Generator_RelationVarName="relationDecimalPowers_WordFiles" msprop:Generator_ChildPropName="GetWordFilesRows" msprop:Generator_ParentPropName="DecimalPowersRow" msprop:Generator_UserRelationName="DecimalPowers_WordFiles" />
+      <msdata:Relationship name="TextPowers_WordFiles" msdata:parent="TextPowers" msdata:child="WordFiles" msdata:parentkey="file_id" msdata:childkey="id" msprop:Generator_UserParentTable="TextPowers" msprop:Generator_UserChildTable="WordFiles" msprop:Generator_RelationVarName="relationTextPowers_WordFiles" msprop:Generator_ChildPropName="GetWordFilesRows" msprop:Generator_ParentPropName="TextPowersRow" msprop:Generator_UserRelationName="TextPowers_WordFiles" />
+      <msdata:Relationship name="Subcategories_Categories" msdata:parent="Subcategories" msdata:child="Categories" msdata:parentkey="category_guid" msdata:childkey="key_guid" msprop:Generator_UserParentTable="Subcategories" msprop:Generator_UserChildTable="Categories" msprop:Generator_RelationVarName="relationSubcategories_Categories" msprop:Generator_ChildPropName="GetCategoriesRows" msprop:Generator_UserRelationName="Subcategories_Categories" msprop:Generator_ParentPropName="SubcategoriesRow" />
+      <msdata:Relationship name="TextPowers_Categories" msdata:parent="TextPowers" msdata:child="Categories" msdata:parentkey="category_guid" msdata:childkey="key_guid" msprop:Generator_UserParentTable="TextPowers" msprop:Generator_UserChildTable="Categories" msprop:Generator_RelationVarName="relationTextPowers_Categories" msprop:Generator_ChildPropName="GetCategoriesRows" msprop:Generator_UserRelationName="TextPowers_Categories" msprop:Generator_ParentPropName="TextPowersRow" />
+      <msdata:Relationship name="TextPowers_Subcategories" msdata:parent="TextPowers" msdata:child="Subcategories" msdata:parentkey="subcategory_guid" msdata:childkey="key_guid" msprop:Generator_UserParentTable="TextPowers" msprop:Generator_UserChildTable="Subcategories" msprop:Generator_RelationVarName="relationTextPowers_Subcategories" msprop:Generator_ChildPropName="GetSubcategoriesRows" msprop:Generator_UserRelationName="TextPowers_Subcategories" msprop:Generator_ParentPropName="TextPowersRow" />
+      <msdata:Relationship name="DecimalPowers_Categories" msdata:parent="DecimalPowers" msdata:child="Categories" msdata:parentkey="category_guid" msdata:childkey="key_guid" msprop:Generator_UserParentTable="DecimalPowers" msprop:Generator_UserChildTable="Categories" msprop:Generator_RelationVarName="relationDecimalPowers_Categories" msprop:Generator_ChildPropName="GetCategoriesRows" msprop:Generator_ParentPropName="DecimalPowersRow" msprop:Generator_UserRelationName="DecimalPowers_Categories" />
+      <msdata:Relationship name="DecimalPowers_Subcategories" msdata:parent="DecimalPowers" msdata:child="Subcategories" msdata:parentkey="subcategory_guid" msdata:childkey="key_guid" msprop:Generator_UserParentTable="DecimalPowers" msprop:Generator_UserChildTable="Subcategories" msprop:Generator_RelationVarName="relationDecimalPowers_Subcategories" msprop:Generator_ChildPropName="GetSubcategoriesRows" msprop:Generator_ParentPropName="DecimalPowersRow" msprop:Generator_UserRelationName="DecimalPowers_Subcategories" />
     </xs:appinfo>
   </xs:annotation>
 </xs:schema>

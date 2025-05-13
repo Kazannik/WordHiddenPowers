@@ -34,5 +34,17 @@ namespace WordHiddenPowers.Properties {
                 this["NotesPaneSplitterDistance"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("MLModel.mlnet")]
+        public string MLNetModelPath {
+            get {
+                return ((string)(this["MLNetModelPath"]));
+            }
+            set {
+                this["MLNetModelPath"] = value;
+            }
+        }
     }
 }

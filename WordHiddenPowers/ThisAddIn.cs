@@ -10,14 +10,19 @@ namespace WordHiddenPowers
 	{
 		public Documents.DocumentCollection Documents { get; private set; }
 
+		public Documents.Document ActiveDocument => Documents.ActiveDocument;
+
+		public Word.Selection Selection => Globals.ThisAddIn.Application.ActiveWindow?.Selection;
+		
 		private void ThisAddIn_Startup(object sender, EventArgs e)
 		{
 			Properties.Settings.Default.Reload();
-			Documents = new Documents.DocumentCollection(Globals.Ribbons.WordHiddenPowersRibbon.paneVisibleButton);
+			Documents = new Documents.DocumentCollection(paneVisibleButton: Globals.Ribbons.WordHiddenPowersRibbon.paneVisibleButton);
 		}
 
 		private void ThisAddIn_Shutdown(object sender, EventArgs e)
 		{
+			Utils.Dialogs.CloseAllDialogs();
 			Documents.Dispose();
 		}
 
@@ -36,6 +41,11 @@ namespace WordHiddenPowers
 			Application.DocumentOpen += new Word.ApplicationEvents4_DocumentOpenEventHandler(Application_DocumentOpen);
 			Application.DocumentBeforeClose += new Word.ApplicationEvents4_DocumentBeforeCloseEventHandler(Application_DocumentBeforeClose);
 			Application.WindowActivate += new Word.ApplicationEvents4_WindowActivateEventHandler(Application_WindowActivate);
+		}
+
+		private void Application_DocumentChange()
+		{
+			throw new NotImplementedException();
 		}
 
 		private void Application_WindowActivate(Word.Document Doc, Word.Window Wn)

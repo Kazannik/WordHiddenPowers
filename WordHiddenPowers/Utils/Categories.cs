@@ -8,7 +8,7 @@ using WordHiddenPowers.Repositories.Categories;
 
 namespace WordHiddenPowers.Utils
 {
-	static class CategoriesUtil
+	static class Categories
 	{
 		private const string TEXT = "/*\r\n! # Наименование категории\r\n      : Пояснение к первой категории\r\n  S ## Наименование текстовой подкатегории\r\n      : Пояснение к подкатегории\r\n  D ## Наименование числовой подкатегории\r\n      : Пояснение к подкатегории\r\n  D! ## Наименование обязательной числовой подкатегории\r\n      : Пояснение к подкатегории  \r\n*/\r\n";
 

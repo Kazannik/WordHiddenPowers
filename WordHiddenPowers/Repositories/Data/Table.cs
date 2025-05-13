@@ -7,6 +7,7 @@ namespace WordHiddenPowers.Repositories.Data
 	{
 		public Table(int RowCount, int ColumnCount)
 		{
+			this.IsOld = false;
 			this.ColumnCount = ColumnCount;
 			Rows = new RowCollection();
 			for (int i = 0; i < RowCount; i++)
@@ -30,6 +31,8 @@ namespace WordHiddenPowers.Repositories.Data
 			get { return RowCount == 0 || ColumnCount == 0; }
 		}
 
+		public bool IsOld {  get; private set; }
+
 		public void Clear()
 		{
 			Caption = string.Empty;
@@ -40,6 +43,7 @@ namespace WordHiddenPowers.Repositories.Data
 				for (int c = 0; c < ColumnCount; c++)
 				{
 					Rows[r][c].Value = 0;
+					Rows[r][c].OldValue = 0;
 				}
 			}
 		}
@@ -63,6 +67,19 @@ namespace WordHiddenPowers.Repositories.Data
 			return result;
 		}
 
+		public new string ToStringOld()
+		{
+			string result = string.Empty;
+			for (int r = 0; r < Rows.Count; r++)
+			{
+				for (int c = 0; c < ColumnCount; c++)
+				{
+					result += Rows[r][c].OldValue.ToString("0") + ';';
+				}
+				result += Environment.NewLine;
+			}
+			return result;
+		}
 
 		protected void OnValidate(object value)
 		{
@@ -70,9 +87,7 @@ namespace WordHiddenPowers.Repositories.Data
 			{
 				throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Не удалось привести тип Value: {0} к поддерживаемому типу: {1}.", value.GetType().ToString(), typeof(Table).ToString()));
 			}
-
 		}
-
 
 		public static Table Create(string text)
 		{
@@ -100,13 +115,42 @@ namespace WordHiddenPowers.Repositories.Data
 			return table;
 		}
 
+		public void AddOldData(string text)
+		{
+			string[] rows = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+			for (int r = 0; r < RowCount; r++)
+			{
+				string[] cells = rows[r].Split(';');
+				for (int c = 0; c < ColumnCount; c++)
+				{
+					Rows[r][c].OldValue = int.Parse(cells[c]);
+				}
+			}
+			IsOld= true;
+		}
+
+		public void AddOldData(Table table)
+		{
+			for (int r = 0; r < RowCount; r++)
+			{
+				for (int c = 0; c < ColumnCount; c++)
+				{
+					if (r < table.RowCount && c < table.ColumnCount)
+						Rows[r][c].OldValue = table.Rows[r][c].Value;
+				}
+			}
+			IsOld = true;
+		}
+
 		public static Table operator +(Table a, Table b)
 		{
+			if (b.IsOld) a.IsOld = true;
 			for (int r = 0; r < a.RowCount; r++)
 			{
 				for (int c = 0; c < a.ColumnCount; c++)
 				{
 					a.Rows[r][c].Value = a.Rows[r][c].Value + GetValue(b, r, c);
+					a.Rows[r][c].OldValue = a.Rows[r][c].OldValue + GetOldValue(b, r, c);
 				}
 			}
 			return a;
@@ -118,7 +162,8 @@ namespace WordHiddenPowers.Repositories.Data
 			{
 				for (int c = 0; c < a.ColumnCount; c++)
 				{
-					a.Rows[r][c].Value = a.Rows[r][c].Value - GetValue(b, r, c); ;
+					a.Rows[r][c].Value = a.Rows[r][c].Value - GetValue(b, r, c);
+					a.Rows[r][c].OldValue = a.Rows[r][c].OldValue - GetOldValue(b, r, c);
 				}
 			}
 			return a;
@@ -156,6 +201,14 @@ namespace WordHiddenPowers.Repositories.Data
 			}
 			else return 0;
 		}
-	
+
+		private static int GetOldValue(Table table, int row, int column)
+		{
+			if (table.RowCount > row && table.ColumnCount > column)
+			{
+				return table.Rows[row][column].OldValue;
+			}
+			else return 0;
+		}
 	}
 }

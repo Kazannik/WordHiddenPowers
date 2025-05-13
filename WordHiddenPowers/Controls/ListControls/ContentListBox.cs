@@ -377,9 +377,9 @@ namespace WordHiddenPowers.Controls.ListControls
 		{
 			if (!string.IsNullOrEmpty(Filer)
 				&& note.Subcategory.Guid.Equals(Filer) 
-				&& (FilterHide(note)))
+				&& FilterHide(note))
 			{
-				Items.Add(new Control.ListItem(note: note));
+				Items.Add(new ListItem(note: note));
 			}			
 		}
 
@@ -397,9 +397,9 @@ namespace WordHiddenPowers.Controls.ListControls
 			return GetListItem(dataRow: dataRow).Note;
 		}
 
-		private Control.ListItem GetListItem(DataRow dataRow)
+		private ListItem GetListItem(DataRow dataRow)
 		{
-			return (from Control.ListItem item in Items
+			return (from ListItem item in Items
 					where item.Note.DataRow.Equals(dataRow)
 					select item).First();
 		}

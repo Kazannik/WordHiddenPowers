@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using WordHiddenPowers.Repositories.Data;
+using Content = WordHiddenPowers.Utils.WordDocuments.Content;
 
 namespace WordHiddenPowers.Dialogs
 {
@@ -18,14 +19,14 @@ namespace WordHiddenPowers.Dialogs
 
 			tableEditBox.DataSet = this.document.CurrentDataSet;
 
-			deleteButton.Enabled = Utils.ContentUtil.ExistsVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME);
+			deleteButton.Enabled = Content.ExistsVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME);
 
 			ReadValues();
 		}
 
 		private void ReadValues()
 		{
-			string tableContext = Utils.ContentUtil.GetVariableValueOrDefault(document.Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+			string tableContext = Content.GetVariableValueOrDefault(document.Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
 			if (string.IsNullOrWhiteSpace(tableContext))
 			{
 				tableEditBox.Table = new Table(tableEditBox.DataSet.RowsHeaders.Count, tableEditBox.DataSet.ColumnsHeaders.Count);
@@ -39,7 +40,7 @@ namespace WordHiddenPowers.Dialogs
 		private void SaveValues()
 		{
 			tableEditBox.CommitValue();
-			Utils.ContentUtil.CommitVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME, value: tableEditBox.Table.ToString());
+			Content.CommitVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME, value: tableEditBox.Table.ToString());
 			document.Doc.Saved = false;
 		}
 
@@ -55,12 +56,12 @@ namespace WordHiddenPowers.Dialogs
 
 		private void DeleteButton_Click(object sender, EventArgs e)
 		{
-			if (Utils.ContentUtil.ExistsVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME))
+			if (Content.ExistsVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME))
 			{
 				DialogResult result = MessageBox.Show(this, "Удалить таблицу с данными из документа?", "Табличные данные", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 				if (result == DialogResult.Yes)
 				{
-					Utils.ContentUtil.DeleteVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME);
+					Content.DeleteVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME);
 					Close();
 				}
 			}

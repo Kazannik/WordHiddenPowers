@@ -17,7 +17,7 @@ namespace WordHiddenPowers.Dialogs
             Subcategory = subcategory;
             InitializeComponent();
 			
-            Icon = WordUtil.GetIconMso("GanttChartWizard", SystemInformation.IconSize.Width, SystemInformation.IconSize.Height);
+            Icon = WordDocument.GetIconMso("GanttChartWizard", SystemInformation.IconSize.Width, SystemInformation.IconSize.Height);
 
 			okButton.Enabled = false;
 			patternsWizardBox1.Text = text;

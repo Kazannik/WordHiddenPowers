@@ -9,6 +9,7 @@ namespace WordHiddenPowers.Repositories.Data
 		{
 			Row = row;
 			Value = 0;
+			OldValue = 0;
 		}
 
 		public int Index { get { return Row.IndexOf(this); } }
@@ -16,6 +17,12 @@ namespace WordHiddenPowers.Repositories.Data
 		public Row Row { get; internal set; }
 
 		public int Value { get; set; }
+
+		public int OldValue { get; set; }
+
+		public string Growth => ((Value - OldValue) > 0 ? "+":"") + (Value - OldValue).ToString("### ### ###");
+
+		public string GrowthPercent => OldValue != 0 ? ((Value - OldValue) > 0 ? "+" : "") +(((double)(Value - OldValue)) * 100 / OldValue).ToString("### ### ##0.00") + " %" : "-";
 
 		public int ToInt()
 		{
@@ -34,7 +41,7 @@ namespace WordHiddenPowers.Repositories.Data
 			else
 			{
 				Cell c = (Cell)obj;
-				return (Value == c.Value);
+				return Value == c.Value;
 			}
 		}
 
@@ -46,12 +53,14 @@ namespace WordHiddenPowers.Repositories.Data
 		public static Cell operator +(Cell a, Cell b)
 		{
 			a.Value += b.Value;
+			a.OldValue += b.OldValue;
 			return a;
 		}
 
 		public static Cell operator -(Cell a, Cell b)
 		{
 			a.Value -= b.Value;
+			a.OldValue -= b.OldValue;
 			return a;
 		}
 

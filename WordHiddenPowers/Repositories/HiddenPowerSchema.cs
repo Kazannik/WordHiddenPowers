@@ -23,10 +23,71 @@ namespace WordHiddenPowers.Repositories
 		private static readonly Func<DecimalPowersRow, string, bool> whereGuidDecimalPowers = new Func<DecimalPowersRow, string, bool>((row, guid) => row.subcategory_guid == guid);
 		private static readonly Func<DecimalPowersRow, string, bool> whereNotGuidDecimalPowers = new Func<DecimalPowersRow, string, bool>((row, guid) => row.subcategory_guid != guid);
 
+
+		public bool IsTables => DocumentKeys.Any();
+
+		public bool IsModel => (RowsHeaders.Any() && ColumnsHeaders.Any()) ||
+			(Categories.Any() && Subcategories.Any());
+
 		public enum SortType : int
 		{
 			SelectionStart = 0,
 			CategoryPosition = 1
+		}
+		
+
+		public string GetValue(string key)
+		{
+			return GetOrDefault(key: key)?["value"] as string;
+		}
+
+		public void SetValue(string key, string value)
+		{
+			if (Exists(key))
+			{
+				SettingRow row = Get(key: key) as SettingRow;
+				row.BeginEdit();
+				row.value = value;
+				row.EndEdit();
+			}
+			else
+			{
+				Setting.Rows.Add(new object[] { key, value });
+			}
+		}
+
+		public void RemoveValue(string key)
+		{
+			DataRow row = GetOrDefault(key: key);
+			row?.Delete();
+		}
+
+		private DataRow GetOrDefault(string key)
+		{
+			if (Exists(key: key))
+			{
+				return Get(key: key);
+			}
+			else
+			{
+				return null;
+			}
+		}
+
+		private DataRow Get(string key)
+		{
+			return (from DataRow row in Setting
+					where row.RowState != DataRowState.Deleted
+					&& row["key"].Equals(key)
+					select row).First();
+		}
+
+		private bool Exists(string key)
+		{
+			return (from DataRow row in Setting
+					where row.RowState != DataRowState.Deleted
+					&& row["key"].Equals(key)
+					select row).Any();
 		}
 
 		public void AddNote(Note note, string fileName, string caption, string description, DateTime date)
@@ -43,11 +104,13 @@ namespace WordHiddenPowers.Repositories
 
 			if (note.IsText)
 			{
-				TextPowers.AddTextPowersRow(note.Category.Guid, note.Subcategory.Guid, note.Description, note.Value.ToString(), note.Rating, note.WordSelectionStart, note.WordSelectionEnd, fileId, false);
+				if (!TextPowers.Exists(note: note, fileId: fileId))
+					TextPowers.AddTextPowersRow(note.Category.Guid, note.Subcategory.Guid, note.Description, note.Value.ToString(), note.Rating, note.WordSelectionStart, note.WordSelectionEnd, fileId, false);
 			}
 			else
 			{
-				DecimalPowers.AddDecimalPowersRow(note.Category.Guid, note.Subcategory.Guid, note.Description, (double)note.Value, note.Rating, note.WordSelectionStart, note.WordSelectionEnd, fileId, false);
+				if (!DecimalPowers.Exists(note: note, fileId: fileId))
+					DecimalPowers.AddDecimalPowersRow(note.Category.Guid, note.Subcategory.Guid, note.Description, (double)note.Value, note.Rating, note.WordSelectionStart, note.WordSelectionEnd, fileId, false);
 			}
 		}
 
@@ -181,7 +244,7 @@ namespace WordHiddenPowers.Repositories
 		/// Получить контент в формате TSV для обучения нейронной сети. 
 		/// </summary>
 		/// <returns></returns>
-		public IEnumerable<string> GetMlModelDataSetTsvContent()
+		public IEnumerable<string> GetMlModelDataSetTsvContent(bool header)
 		{
 			IEnumerable<string> content = (from row in TextPowers
 										   where row.RowState != DataRowState.Deleted
@@ -190,11 +253,13 @@ namespace WordHiddenPowers.Repositories
 											   fileRow: WordFiles.GetRow(row.file_id),
 											   subcategory: GetSubcategoryOrDefault(row.subcategory_guid)))
 				.OrderBy(note => note.Subcategory.Guid)
-				.Select(note => string.Format("{0}\t{1}\t{2}",
+				.Select(note => string.Format("{0}\t{1}",
 				note.Subcategory.Guid,
-				note.Subcategory.Caption.Trim(),
-				Utils.MLModelUtil.ConvertToCompliance(note.Value.ToString())));
-			return (new string[] { "Area\tCaption\tTitle" }).Union(content);
+				Utils.MLModel.ConvertToCompliance(note.Value.ToString())));
+			if (header)
+				return (new string[] { "Area\tTitle" }).Union(content);
+			else
+				return content;
 		}
 
 		public IEnumerable<string> GetTxtContent()
@@ -308,6 +373,33 @@ namespace WordHiddenPowers.Repositories
 						&& row["id"].Equals(id)
 						select row).Any();
 			}
+
+			public bool Exists(Note note, int fileId)
+			{
+				return Exists(category_guid: note.Category.Guid,
+					subcategory_guid: note.Subcategory.Guid,
+					Description: note.Description,
+					Value: note.Value.ToString(),
+					Rating: note.Rating,
+					WordSelectionStart: note.WordSelectionStart,
+					WordSelectionEnd: note.WordSelectionEnd,
+					file_id: fileId);
+			}
+
+			public bool Exists(string category_guid, string subcategory_guid, string Description, string Value, int Rating, int WordSelectionStart, int WordSelectionEnd, int file_id)
+			{
+				return (from TextPowersRow row in Rows
+						where row.RowState != DataRowState.Deleted
+						&& row.category_guid == category_guid
+						&& row.subcategory_guid == subcategory_guid
+						&& row.Description == Description
+						&& row.Value == Value
+						&& row.Rating == Rating
+						&& row.WordSelectionStart == WordSelectionStart
+						&& row.WordSelectionEnd == WordSelectionEnd
+						&& row.file_id == file_id
+						select row).Any();
+			}
 		}
 
 		partial class DecimalPowersDataTable
@@ -391,6 +483,34 @@ namespace WordHiddenPowers.Repositories
 						&& row["id"].Equals(id)
 						select row).Any();
 			}
+
+			public bool Exists(Note note, int fileId)
+			{
+				return Exists(category_guid: note.Category.Guid,
+					subcategory_guid: note.Subcategory.Guid,
+					Description: note.Description,
+					Value: (double)note.Value,
+					Rating: note.Rating,
+					WordSelectionStart: note.WordSelectionStart,
+					WordSelectionEnd: note.WordSelectionEnd,
+					file_id: fileId);
+			}
+
+			public bool Exists(string category_guid, string subcategory_guid, string Description, double Value, int Rating, int WordSelectionStart, int WordSelectionEnd, int file_id)
+			{
+				return (from DecimalPowersRow row in Rows
+						where row.RowState != DataRowState.Deleted
+						&& row.category_guid == category_guid
+						&& row.subcategory_guid == subcategory_guid
+						&& row.Description == Description
+						&& row.Value == Value
+						&& row.Rating == Rating
+						&& row.WordSelectionStart == WordSelectionStart
+						&& row.WordSelectionEnd == WordSelectionEnd
+						&& row.file_id == file_id
+						select row).Any();
+			}
+
 		}
 
 		public Category Add(Category category)
@@ -727,6 +847,59 @@ namespace WordHiddenPowers.Repositories
 				return (from DataRow row in Rows
 						where row.RowState != DataRowState.Deleted
 						&& row["FileName"].Equals(fileName)
+						select row).Any();
+			}
+		}
+
+		public partial class DocumentKeysDataTable
+		{
+			public void Write(string caption, string fileName, string tableContent)
+			{
+				if (getRow(caption) is DocumentKeysRow row)
+				{
+					row.BeginEdit();
+					row.Caption = caption;
+					row.Description1 = fileName;
+					row.Description2 = tableContent;
+					row.EndEdit();
+				}
+			}
+
+			public DocumentKeysRow GetRow(int id)
+			{
+				return getRow(id) as DocumentKeysRow;
+			}
+
+			private DataRow getRow(int id)
+			{
+				return (from DataRow row in Rows
+						where row.RowState != DataRowState.Deleted
+						&& row["id"].Equals(id)
+						select row).First();
+
+			}
+
+			private DataRow getRow(string caption)
+			{
+				return (from DataRow row in Rows
+						where row.RowState != DataRowState.Deleted
+						&& row["Caption"].Equals(caption)
+						select row).First();
+			}
+
+			public bool Exists(int id)
+			{
+				return (from DataRow row in Rows
+						where row.RowState != DataRowState.Deleted
+						&& row["id"].Equals(id)
+						select row).Any();
+			}
+
+			public bool Exists(string caption)
+			{
+				return (from DataRow row in Rows
+						where row.RowState != DataRowState.Deleted
+						&& row["Caption"].Equals(caption)
 						select row).Any();
 			}
 		}

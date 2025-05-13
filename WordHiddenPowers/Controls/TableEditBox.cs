@@ -11,6 +11,7 @@ namespace WordHiddenPowers.Controls
 	public partial class TableEditBox : UserControl
 	{
 		private RepositoryDataSet source;
+		private RepositoryDataSet old;
 		private Table table;
 
 		public TableEditBox()
@@ -19,6 +20,8 @@ namespace WordHiddenPowers.Controls
 		}
 
 		public bool ReadOnly { get; set; }
+
+		public bool IsOld { get; private set; }	
 
 		public RepositoryDataSet DataSet
 		{
@@ -29,6 +32,19 @@ namespace WordHiddenPowers.Controls
 			set
 			{
 				source = value;
+				ReadStructure();
+			}
+		}
+
+		public RepositoryDataSet OldDataSet
+		{
+			get
+			{
+				return old;
+			}
+			set
+			{
+				old = value;
 				ReadStructure();
 			}
 		}
@@ -58,7 +74,11 @@ namespace WordHiddenPowers.Controls
 				return;
 			}
 
+			IsOld = false;
+
 			if (source == null) return;
+			IsOld = old != null && old.IsTables;
+
 			if (source.ColumnsHeaders.Rows.Count > 0)
 			{
 				for (int i = 0; i < source.ColumnsHeaders.Rows.Count; i++)
@@ -66,35 +86,52 @@ namespace WordHiddenPowers.Controls
 					string text = source.ColumnsHeaders.Rows[i]["Header"].ToString();
 					int columnIndex = dataGridView.Columns.Add(text, text);
 					dataGridView.Columns[columnIndex].SortMode = DataGridViewColumnSortMode.NotSortable;
-				}
-
-				foreach (DataRow item in source.RowsHeaders.Rows)
-				{
-					int rowIndex = dataGridView.Rows.Add();
-					dataGridView.Rows[rowIndex].HeaderCell.Value = (rowIndex + 1).ToString() + ".   " + item["Header"].ToString();
-				}
-
-				for (int r = 0; r < source.RowsHeaders.Rows.Count; r++)
-				{
-					bool rowBold = bool.Parse(source.RowsHeaders.Rows[r]["Bold"].ToString());
-					int rowColor = int.Parse(source.RowsHeaders.Rows[r]["Color"].ToString());
-					int rowBackColor = int.Parse(source.RowsHeaders.Rows[r]["BackColor"].ToString());
-					for (int c = 0; c < source.ColumnsHeaders.Rows.Count; c++)
+					if (IsOld)
 					{
-						bool columnBold = bool.Parse(source.ColumnsHeaders.Rows[c]["Bold"].ToString());
-						int columnColor = int.Parse(source.ColumnsHeaders.Rows[c]["Color"].ToString());
-						int columnBackColor = int.Parse(source.ColumnsHeaders.Rows[c]["BackColor"].ToString());
+						columnIndex = dataGridView.Columns.Add(text + "_old", "АППГ");
+						dataGridView.Columns[columnIndex].CellTemplate = new DataGridViewTextCell();
+						dataGridView.Columns[columnIndex].SortMode = DataGridViewColumnSortMode.NotSortable;
+						dataGridView.Columns[columnIndex].ReadOnly = true;
 
-						dataGridView.Rows[r].Cells[c].ReadOnly = ReadOnly;
+						columnIndex = dataGridView.Columns.Add(text + "_growth", "+/-");
+						dataGridView.Columns[columnIndex].CellTemplate = new DataGridViewTextCell();
+						dataGridView.Columns[columnIndex].SortMode = DataGridViewColumnSortMode.NotSortable;
+						dataGridView.Columns[columnIndex].ReadOnly = true;
 
-						// -16777216
+						columnIndex = dataGridView.Columns.Add(text + "_percent", "%");
+						dataGridView.Columns[columnIndex].CellTemplate = new DataGridViewTextCell();
+						dataGridView.Columns[columnIndex].SortMode = DataGridViewColumnSortMode.NotSortable;
+						dataGridView.Columns[columnIndex].ReadOnly = true;
+					}
 
-						if (rowBold || columnBold)
+					foreach (DataRow item in source.RowsHeaders.Rows)
+					{
+						int rowIndex = dataGridView.Rows.Add();
+						dataGridView.Rows[rowIndex].HeaderCell.Value = (rowIndex + 1).ToString() + ".   " + item["Header"].ToString();
+					}
+
+					for (int r = 0; r < source.RowsHeaders.Rows.Count; r++)
+					{
+						bool rowBold = bool.Parse(source.RowsHeaders.Rows[r]["Bold"].ToString());
+						int rowColor = int.Parse(source.RowsHeaders.Rows[r]["Color"].ToString());
+						int rowBackColor = int.Parse(source.RowsHeaders.Rows[r]["BackColor"].ToString());
+						for (int c = 0; c < source.ColumnsHeaders.Rows.Count; c++)
 						{
-							if (dataGridView.Rows[r].Cells[c].Style.Font.Style != FontStyle.Bold)
-								dataGridView.Rows[r].Cells[c].Style.Font = new Font(dataGridView.Rows[r].Cells[c].Style.Font, FontStyle.Bold);
-							else
-								dataGridView.Rows[r].Cells[c].Style.Font = new Font(dataGridView.Rows[r].Cells[c].Style.Font, FontStyle.Regular);
+							bool columnBold = bool.Parse(source.ColumnsHeaders.Rows[c]["Bold"].ToString());
+							int columnColor = int.Parse(source.ColumnsHeaders.Rows[c]["Color"].ToString());
+							int columnBackColor = int.Parse(source.ColumnsHeaders.Rows[c]["BackColor"].ToString());
+
+							dataGridView.Rows[r].Cells[c].ReadOnly = ReadOnly;
+
+							// -16777216
+
+							if (rowBold || columnBold)
+							{
+								if (dataGridView.Rows[r].Cells[c].Style.Font.Style != FontStyle.Bold)
+									dataGridView.Rows[r].Cells[c].Style.Font = new Font(dataGridView.Rows[r].Cells[c].Style.Font, FontStyle.Bold);
+								else
+									dataGridView.Rows[r].Cells[c].Style.Font = new Font(dataGridView.Rows[r].Cells[c].Style.Font, FontStyle.Regular);
+							}
 						}
 					}
 				}
@@ -115,21 +152,42 @@ namespace WordHiddenPowers.Controls
 
 		public void RefreshValues()
 		{
-			dataGridView.CancelEdit();
 			if (table == null) return;
+			dataGridView.CancelEdit();
+			int step = IsOld ? 4 : 1;
 			for (int r = 0; r < dataGridView.RowCount; r++)
 			{
-				for (int c = 0; c < dataGridView.ColumnCount; c++)
+				for (int c = 0; c < dataGridView.ColumnCount; c = c + step)
 				{
-					if (table.RowCount > r && table.ColumnCount > c)
-						dataGridView.Rows[r].Cells[c].Value = table.Rows[r][c].Value.ToString();
+					if (table.RowCount > r && table.ColumnCount > c / step)
+					{
+						dataGridView.Rows[r].Cells[c / step].Value = table.Rows[r][c / step].Value;
+						if (IsOld && table.IsOld)
+						{
+							((DataGridViewTextCell)dataGridView.Rows[r].Cells[c / step + 1]).Text = table.Rows[r][c / step].OldValue.ToString("### ### ###");
+							((DataGridViewTextCell)dataGridView.Rows[r].Cells[c / step + 2]).Text = table.Rows[r][c / step].Growth;
+							((DataGridViewTextCell)dataGridView.Rows[r].Cells[c / step + 3]).Text = table.Rows[r][c / step].GrowthPercent;
+						}
+						else if (IsOld && !table.IsOld)
+						{
+							((DataGridViewTextCell)dataGridView.Rows[r].Cells[c / step + 1]).Text = "-";
+							((DataGridViewTextCell)dataGridView.Rows[r].Cells[c / step + 2]).Text = "-";
+							((DataGridViewTextCell)dataGridView.Rows[r].Cells[c / step + 3]).Text = "-";
+						}						
+					}
+					else
+					{
+						dataGridView.Rows[r].Cells[c / step].Value = 0;
+					}
 				}
 			}
+			dataGridView.Update();
+			dataGridView.Invalidate();
 		}
 
 		public void CommitValue()
 		{
-			dataGridView.EndEdit();//.CancelEdit();
+			dataGridView.EndEdit();
 			if (table == null) return;
 			for (int r = 0; r < dataGridView.RowCount; r++)
 			{
@@ -234,7 +292,65 @@ namespace WordHiddenPowers.Controls
 			}
 
 			public DataGridViewCell Cell { get; }
-		}		
+		}
+
+				
+
+
+		public class DataGridViewTextCell : DataGridViewTextBoxCell
+		{
+			public string Text { get; set; }			
+
+			protected override void Paint(Graphics graphics, Rectangle clipBounds,
+				Rectangle cellBounds, int rowIndex,
+				DataGridViewElementStates elementState,
+				object value, object formattedValue, string errorText,
+				DataGridViewCellStyle cellStyle,
+				DataGridViewAdvancedBorderStyle advancedBorderStyle,
+				DataGridViewPaintParts paintParts)
+			{
+
+		
+				base.Paint(graphics, clipBounds, cellBounds, rowIndex, elementState,
+					value, Text, errorText, cellStyle, advancedBorderStyle,
+					DataGridViewPaintParts.All &
+					~DataGridViewPaintParts.ContentBackground);
+
+				//var r1 = DataGridView.GetCellDisplayRectangle(OwningColumn.Index, rowIndex, false);
+
+				//var r3 = new Rectangle(r1.Location, new Size(GetTextWidth(), r1.Height));
+				//contentBounds.Offset(r1.Location);
+
+				//base.Paint(graphics, clipBounds, contentBounds, rowIndex, elementState,
+				//	"value", "Text", errorText, cellStyle, advancedBorderStyle, DataGridViewPaintParts.All);
+
+				
+			}
+
+			//protected override Rectangle GetContentBounds(Graphics graphics,
+			//	DataGridViewCellStyle cellStyle, int rowIndex)
+			//{
+			//	int textWidth = GetTextWidth();
+			//	Rectangle contentBounds = base.GetContentBounds(graphics, cellStyle, rowIndex);
+			//	return new Rectangle(contentBounds.Left + textWidth, contentBounds.Top, contentBounds.Width - textWidth, contentBounds.Height);
+			//}
+
+			//protected override void OnContentClick(DataGridViewCellEventArgs e)
+			//{
+			//	base.OnContentClick(e);
+			//	DataGridViewColumn owningColumn = OwningColumn;
+			//	Rectangle contentBounds = GetContentBounds(e.RowIndex);
+			//	Rectangle cellDisplayRectangle = DataGridView.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
+
+			//	Point position = new Point(cellDisplayRectangle.Left + contentBounds.Left, cellDisplayRectangle.Top + contentBounds.Bottom);
+			//	owningColumn.ContextMenuStrip?.Show(DataGridView, position);
+			//}
+
+			private int GetTextWidth()
+			{
+				return TextRenderer.MeasureText(Text, OwningColumn.DefaultCellStyle.Font).Width;
+			}
+		}
 	}
 }
 

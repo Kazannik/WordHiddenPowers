@@ -5,6 +5,7 @@ using System.Data;
 using System.IO;
 using System.Text;
 using WordHiddenPowers.Repositories;
+using Content = WordHiddenPowers.Utils.WordDocuments.Content;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Utils
@@ -21,6 +22,11 @@ namespace WordHiddenPowers.Utils
 			return GetDataSet(Doc: Doc, variableName: Const.Globals.XML_AGGREGATED_VARIABLE_NAME, out isCorrect);
 		}
 
+		public static RepositoryDataSet GetOldAggregatedDataSet(Word._Document Doc, out bool isCorrect)
+		{
+			return GetDataSet(Doc: Doc, variableName: Const.Globals.XML_OLD_AGGREGATED_VARIABLE_NAME, out isCorrect);
+		}
+
 		/// <summary>
 		/// Получение данных.
 		/// </summary>
@@ -33,22 +39,22 @@ namespace WordHiddenPowers.Utils
 			isCorrect = false;
 			RepositoryDataSet dataSet = new RepositoryDataSet();
 		
-			if (ContentUtil.ExistsVariable(array: Doc.Variables, variableName: variableName + "_0"))
+			if (Content.ExistsVariable(array: Doc.Variables, variableName: variableName + "_0"))
 			{
 				int i = 0;
 				string xml = string.Empty;
-				while (ContentUtil.ExistsVariable(array: Doc.Variables, variableName: variableName + "_" + i.ToString()))
+				while (Content.ExistsVariable(array: Doc.Variables, variableName: variableName + "_" + i.ToString()))
 				{
-					Word.Variable content = ContentUtil.GetVariable(array: Doc.Variables, variableName: variableName + "_" + i.ToString());
+					Word.Variable content = Content.GetVariable(array: Doc.Variables, variableName: variableName + "_" + i.ToString());
 					xml += content.Value;
 					i += 1;
 				}
 				if (!string.IsNullOrEmpty(xml))
 					isCorrect = SetXml(dataSet, xml);
 			}
-			else if (ContentUtil.ExistsVariable(array: Doc.Variables, variableName: variableName))
+			else if (Content.ExistsVariable(array: Doc.Variables, variableName: variableName))
 			{
-				Word.Variable content = ContentUtil.GetVariable(array: Doc.Variables, variableName: variableName);
+				Word.Variable content = Content.GetVariable(array: Doc.Variables, variableName: variableName);
 				if (content != null)
 				{
 					isCorrect = SetXml(dataSet, content.Value);
@@ -66,14 +72,25 @@ namespace WordHiddenPowers.Utils
 		public static void CopyModel(RepositoryDataSet sourceDataSet, Word._Document destDocument)
 		{
 			RepositoryDataSet destDataSet = new RepositoryDataSet();
-			Xml.CopyData(sourceDataSet, destDataSet);
+			CopyModel(sourceDataSet, destDataSet);			
+			Content.CommitVariable(destDocument.Variables, Const.Globals.XML_CURRENT_VARIABLE_NAME, destDataSet);
+		}
+
+		/// <summary>
+		/// Копирование модели из одного хранилище в другое.
+		/// </summary>
+		/// <param name="sourceDataSet">Хранилище данных, в котором содержится модель (шаблон).</param>
+		/// <param name="destDataSet">Хранилище назначения, в которое копируется модель (шаблон).</param>
+		public static void CopyModel(RepositoryDataSet sourceDataSet, RepositoryDataSet destDataSet)
+		{
+			CopyData(sourceDataSet, destDataSet);
 			destDataSet.DecimalPowers.Clear();
 			destDataSet.TextPowers.Clear();
 			destDataSet.DocumentKeys.Clear();
 			destDataSet.WordFiles.Clear();
 			destDataSet.AcceptChanges();
-			ContentUtil.CommitVariable(destDocument.Variables, Const.Globals.XML_CURRENT_VARIABLE_NAME, destDataSet);
 		}
+
 
 		/// <summary>
 		/// Копирование данных между хранилищами.
@@ -83,7 +100,17 @@ namespace WordHiddenPowers.Utils
 		public static void CopyData(RepositoryDataSet sourceDataSet, RepositoryDataSet destDataSet)
 		{
 			string sourceXml = GetXml(sourceDataSet);
-			SetXml(destDataSet, sourceXml);
+			if (!SetXml(destDataSet, sourceXml))
+			{
+				foreach (var row in sourceDataSet.DecimalPowers)
+				{
+					destDataSet.DecimalPowers.ImportRow(row);
+				}
+				foreach (var row in sourceDataSet.TextPowers)
+				{
+					destDataSet.TextPowers.ImportRow(row);
+				}
+			}			
 		}
 
 		/// <summary>
@@ -104,7 +131,7 @@ namespace WordHiddenPowers.Utils
 			}
 			catch (Exception ex)
 			{
-				ShowDialogUtil.ShowErrorDialog(ex.Message);
+				Dialogs.ShowErrorDialog(ex.Message);
 			}
 		}
 
@@ -119,12 +146,12 @@ namespace WordHiddenPowers.Utils
 			{
 				string xml = GetXml(dataSet);
 				RepositoryDataSet outDataSet = new RepositoryDataSet();
-				SetXml(outDataSet, xml);
-				outDataSet.WriteXml(fileName, XmlWriteMode.WriteSchema);
+				if (SetXml(outDataSet, xml))
+					outDataSet.WriteXml(fileName, XmlWriteMode.WriteSchema);
 			}
 			catch (Exception ex)
 			{
-				ShowDialogUtil.ShowErrorDialog(ex.Message);
+				Dialogs.ShowErrorDialog(ex.Message);
 			}
 		}
 
@@ -151,21 +178,22 @@ namespace WordHiddenPowers.Utils
 		private static bool SetXml(RepositoryDataSet dataSet, string xml)
 		{
 			StringReader reader = new StringReader(xml);
+			bool result = false;
 			try
 			{
 				dataSet.ReadXml(reader, XmlReadMode.IgnoreSchema);
+				result = true;
 			}
 			catch (Exception ex)
 			{
 				dataSet.Reset();
-				ShowDialogUtil.ShowErrorDialog(ex.Message);
-				return false;
+				result = false;
 			}
 			finally
 			{
 				reader.Close();				
 			}
-			return true;
+			return result;
 		}
 	}
 }

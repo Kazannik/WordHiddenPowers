@@ -105,10 +105,17 @@ namespace WordHiddenPowers.Repositories.WordFiles
 				{ return 0; }
 			}
 			else if (!Equals(x, null) & Equals(y, null))
-			{ return 1; }
+			{
+				return 1;
+			}
 			else if (Equals(x, null) & !Equals(y, null))
-			{ return -1; }
-			else { return 0; }
+			{
+				return -1;
+			}
+			else
+			{
+				return 0;
+			}
 		}
 
 		public class WordFileComparer : IComparer<WordFile>

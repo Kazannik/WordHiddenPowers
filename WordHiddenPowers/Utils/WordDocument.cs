@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using WordHiddenPowers.Repositories.Categories;
 using WordHiddenPowers.Repositories.Notes;
 using static WordHiddenPowers.Repositories.Notes.Note;
@@ -15,15 +16,16 @@ using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Utils
 {
-	public static class WordUtil
+	static class WordDocument
 	{
+		private readonly static Regex spiceRegex = new Regex("\\s{2,}", RegexOptions.Compiled & RegexOptions.IgnoreCase & RegexOptions.Multiline);
+
 		public static void InsertToWordDocument(Documents.Document sourceDocument,
 			int minRating = 0,
 			int maxRating = 0,
 			int maxCount = 3,
 			bool viewHide = true)
 		{
-			object oMissing = Missing.Value;
 			Word._Application application = Globals.ThisAddIn.Application;
 			Word._Document destDocument = application.ActiveDocument;
 			application.Visible = true;
@@ -233,7 +235,7 @@ namespace WordHiddenPowers.Utils
 
 				InsertParagraph(
 					document: destDocument,
-					text: string.Format("В том числе ({0}): {1}", values.Count(), string.Join(", ", values)),
+					text: string.Format("В том числе (в разбивке по {0} подразделениям): {1}", values.Count(), string.Join(", ", values)),
 					bold: false, italic: true);
 			}
 			if (subcategory.IsObligatory)
@@ -260,7 +262,7 @@ namespace WordHiddenPowers.Utils
 		{
 			object oMissing = Missing.Value;
 			Word.Paragraph paragraph = document.Content.Paragraphs.Add(ref oMissing);
-			paragraph.Range.Text = text.Trim().Replace("  "," ").Replace("  ", " ").Replace("  ", " ");
+			paragraph.Range.Text = spiceRegex.Replace(text, " ").Trim();
 			paragraph.Range.Font.Bold = bold ? 1 : 0;
 			paragraph.Range.Font.Italic = italic ? 1 : 0;
 			paragraph.Range.InsertParagraphAfter();

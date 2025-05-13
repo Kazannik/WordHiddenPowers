@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using WordHiddenPowers.Documents;
+using WordHiddenPowers.Dialogs;
 using WordHiddenPowers.Repositories.Categories;
 using WordHiddenPowers.Utils;
+using Document = WordHiddenPowers.Documents.Document;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Services
@@ -11,12 +14,32 @@ namespace WordHiddenPowers.Services
     {
 		private const string NOTE_DESCRIPTION = "Добавлено с помощью ИИ ({0} %)";
 
-		public static void Search(Document document)
+		public static void Search(Document document, float levelPassage)
 		{
+			string mlNetModelName = document.MLModelName;
+			string mlNetModelPath = Path.Combine(FileSystem.UserDirectory.FullName, mlNetModelName);
+			if (!File.Exists(mlNetModelPath)) return;
+
+			ProgressDialog dialog = new ProgressDialog
+			{
+				Text = "Разметка документа с помощью ИИ",
+				Percent = 0
+			};
+			Utils.Dialogs.Show(dialog);
+
+			int count = 0;
+
 			foreach (Word.Paragraph paragraph in document.Doc.Content.Paragraphs)
 			{
-				IOrderedEnumerable<KeyValuePair<string, float>> result = MLModelUtil.PredictAll(paragraph.Range.Text);
-				IEnumerable<Subcategory> subcategories = GetSubcategories(document, result);
+				count++;
+				dialog.Percent = count * 100 / document.Doc.Content.Paragraphs.Count;
+
+				string paragraphText = paragraph.Range.Text;
+
+				if (paragraphText.Split(' ').Length < 15) continue;
+								
+				IOrderedEnumerable<KeyValuePair<string, float>> result = MLModel.PredictAll(paragraph.Range.Text, mlNetModelPath);
+				IEnumerable<Subcategory> subcategories = GetSubcategories(document, result, levelPassage);
 				if (subcategories != null)
 				{
 					foreach (Subcategory subcategory in subcategories)
@@ -32,15 +55,32 @@ namespace WordHiddenPowers.Services
 					}
 				}
 			}
+			dialog.Close();
 		}
 
-		internal static IEnumerable<Subcategory> GetSubcategories(Document document, IOrderedEnumerable<KeyValuePair<string, float>> result)
+		internal static IEnumerable<Subcategory> GetSubcategories(Document document, IOrderedEnumerable<KeyValuePair<string, float>> result, float levelPassage)
 		{
 			if (result == null) return null;
 			return result
 				.OrderByDescending(p => p.Value)
-				.Where(p => p.Value > Const.Globals.LEVEL_PASSAGE)
+				.Where(p => p.Value >= levelPassage)
 				.Select(p => document.CurrentDataSet.GetSubcategory(guid: p.Key, tag: p.Value));
 		}
 	}
 }
+
+
+//public static DirectoryInfo UserDirectory
+//{
+//	get
+//	{
+//		string userDirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Microsoft Word MLModel");
+//		if (!Directory.Exists(userDirectoryPath))
+//		{
+//			Directory.CreateDirectory(userDirectoryPath);
+//		}
+//		return new DirectoryInfo(userDirectoryPath);
+//	}
+//}
+
+//public static string MLNetModelPath = Path.Combine(UserDirectory.FullName, "MLModel.mlnet");

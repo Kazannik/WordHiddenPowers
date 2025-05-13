@@ -21,38 +21,14 @@ namespace WordHiddenPowers.Dialogs
 
 		public int SelectionEnd { get; }
 
-		public int Rating
-		{
-			get
-			{
-				return ratingBox.Value;
-			}
-		}
-
-		public Category Category
-		{
-			get
-			{
-				return categoriesComboBox.SelectedItem;
-			}
-		}
-
-		public Subcategory Subcategory
-		{
-			get
-			{
-				return subcategoriesComboBox.SelectedItem;
-			}
-		}
-
-		public string Description
-		{
-			get
-			{
-				return descriptionTextBox.Text;
-			}
-		}
-
+		public int Rating => ratingBox.Value;
+		
+		public Category Category => categoriesComboBox.SelectedItem;
+		
+		public Subcategory Subcategory => subcategoriesComboBox.SelectedItem;
+		
+		public string Description => descriptionTextBox.Text;
+		
 		public bool IsText { get; }
 
 		public NoteDialog()
@@ -63,10 +39,13 @@ namespace WordHiddenPowers.Dialogs
 
 		public NoteDialog(RepositoryDataSet dataSet, Word.Selection selection, bool isText)
 		{
+			IsText = isText;			
 			this.dataSet = dataSet;
+
 			InitializeComponent();
 
-			IsText = isText;			
+			this.Visible = false;
+
 			categoriesComboBox.InitializeSource(this.dataSet, IsText);
 			
 			SelectionText = selection.Text;
@@ -78,10 +57,12 @@ namespace WordHiddenPowers.Dialogs
 
 		public NoteDialog(RepositoryDataSet dataSet, Note note, bool isText)
 		{
+			IsText = isText;
 			this.dataSet = dataSet;
 			InitializeComponent();
+
+			this.Visible = false;
 			
-			IsText = isText;
 			categoriesComboBox.InitializeSource(this.dataSet, IsText);
 			
 			SelectionText = note.WordSelectionText;
@@ -97,28 +78,28 @@ namespace WordHiddenPowers.Dialogs
 			subcategoriesComboBox.SelectedItem = subcategoriesComboBox.GetItem(note.Subcategory.Position.ToString());
 		}
 
-		private void CategoriesComboBox_SelectedIndexChanged(object sender, System.EventArgs e)
+		private void CategoriesComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			subcategoriesComboBox.InitializeSource(dataSet, categoriesComboBox.SelectedItem, IsText);
 			okButton.Enabled = categoriesComboBox.SelectedIndex >= 0 && subcategoriesComboBox.SelectedIndex >= 0;
 		}
 
-		private void SubcategoriesComboBox_SelectedIndexChanged(object sender, System.EventArgs e)
+		private void SubcategoriesComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			okButton.Enabled = categoriesComboBox.SelectedIndex >= 0 && subcategoriesComboBox.SelectedIndex >= 0;
 			wizardButton.Enabled = categoriesComboBox.SelectedIndex >= 0 && subcategoriesComboBox.SelectedIndex >= 0;
 		}
 
-		private void WizardButton_Click(object sender, System.EventArgs e)
+		private void WizardButton_Click(object sender, EventArgs e)
 		{
 			PatternsWizardDialog dialog = new PatternsWizardDialog(subcategory: Subcategory, text: SelectionText);			
-			if (Utils.ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
+			if (Utils.Dialogs.ShowDialog(dialog) == DialogResult.OK)
 			{
 				Subcategory.Keywords = string.Join(Environment.NewLine, dialog.Keywords);			
 			}
 		}
 
-		private void Dialog_Resize(object sender, System.EventArgs e)
+		private void Dialog_Resize(object sender, EventArgs e)
 		{
 			ControlsResize();
 		}
@@ -146,14 +127,15 @@ namespace WordHiddenPowers.Dialogs
 			descriptionTextBox.Size = new Size(ClientSize.Width - 24, ClientSize.Height - descriptionTextBox.Top - cancelButton.Height - 24);
 		}
 				
-		protected int ControlTop { get => subcategoriesComboBox.Top + subcategoriesComboBox.Height + 12; }
-		protected int ControlHeight { get => descriptionTextBox.Top - ControlTop - 12; }
-		protected int MinHeight { get => ControlTop + descriptionTextBox.Height + 200; }
+		protected int ControlTop => subcategoriesComboBox.Top + subcategoriesComboBox.Height + 12;
+		protected int ControlHeight => descriptionTextBox.Top - ControlTop - 12;
+		protected int MinHeight => ControlTop + descriptionTextBox.Height + 200;
 
 		private void CreateNoteDialog_Load(object sender, EventArgs e)
 		{
 			ControlsResize();
 			//wizardButton.Image = WordUtil.GetImageMso("GanttChartWizard", SystemInformation.IconSize.Width, SystemInformation.IconSize.Height);
+			this.Visible = true;
 		}
 	}
 }

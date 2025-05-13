@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿// Ignore Spelling: Utils
+
+using System.Drawing;
 using System.Windows.Forms;
 using Version = ControlLibrary.Structures.Version;
 

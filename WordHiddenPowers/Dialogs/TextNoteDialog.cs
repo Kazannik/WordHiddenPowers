@@ -7,14 +7,8 @@ namespace WordHiddenPowers.Dialogs
 {
 	public partial class TextNoteDialog : NoteDialog
 	{
-		public string Value
-		{
-			get
-			{
-				return valueTextBox.Text;
-			}
-		}
-
+		public string Value => valueTextBox.Text;
+		
 		public TextNoteDialog(RepositoryDataSet dataSet, Word.Selection selection) : base(dataSet, selection, true)
 		{
 			InitializeComponent();

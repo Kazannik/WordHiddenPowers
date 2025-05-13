@@ -11,6 +11,7 @@ using WordHiddenPowers.Documents;
 using WordHiddenPowers.Properties;
 using WordHiddenPowers.Repositories;
 using WordHiddenPowers.Utils;
+using Content = WordHiddenPowers.Utils.WordDocuments.Content;
 using ListItem = WordHiddenPowers.Controls.ListControls.NotesListControl.ListItem;
 using ListItemNote = WordHiddenPowers.Controls.ListControls.NotesListControl.ListItemNote;
 using Word = Microsoft.Office.Interop.Word;
@@ -44,7 +45,7 @@ namespace WordHiddenPowers.Panes
 		{
 			InitializeComponent();
 
-			mnuNoteRemove.Image = WordUtil.GetImageMso("Delete", 16, 16);
+			mnuNoteRemove.Image = WordDocument.GetImageMso("Delete", 16, 16);
 			noteListBox.DataSet = Document.CurrentDataSet;
 
 			InitializeVariables();
@@ -199,25 +200,16 @@ namespace WordHiddenPowers.Panes
 			base.OnPropertiesChanged(new EventArgs());
 		}
 
-		public string Caption
-		{
-			get { return captionComboBox.Text; }
-		}
+		public string Caption =>  captionComboBox.Text; 
 
-		public DateTime Date
-		{
-			get { return dateTimePicker.Value; }
-		}
+		public DateTime Date =>  dateTimePicker.Value;
 
-		public string Description
-		{
-			get { return descriptionTextBox.Text; }
-		}
+		public string Description => descriptionTextBox.Text;
 
 		public bool ShowButtons
 		{
 			get => noteListBox.ShowButtons;
-			set { noteListBox.ShowButtons = value; }
+			set => noteListBox.ShowButtons = value; 
 		}
 
 		private void NotesPane_Resize(object sender, EventArgs e)
@@ -261,16 +253,16 @@ namespace WordHiddenPowers.Panes
 				}
 				captionComboBox.EndUpdate();
 
-				string caption = ContentUtil.GetVariableValueOrDefault(Document.Doc.Variables, Const.Globals.CAPTION_VARIABLE_NAME);
+				string caption = Content.GetVariableValueOrDefault(Document.Doc.Variables, Const.Globals.CAPTION_VARIABLE_NAME);
 				if (captionComboBox.Text != caption)
 					captionComboBox.Text = caption;
 
-				string strDate = ContentUtil.GetVariableValueOrDefault(Document.Doc.Variables, Const.Globals.DATE_VARIABLE_NAME);
+				string strDate = Content.GetVariableValueOrDefault(Document.Doc.Variables, Const.Globals.DATE_VARIABLE_NAME);
 				DateTime date = string.IsNullOrWhiteSpace(strDate) ? DateTime.Today : DateTime.Parse(strDate);
 				if (dateTimePicker.Value != date)
 					dateTimePicker.Value = date;
 
-				string description = ContentUtil.GetVariableValueOrDefault(Document.Doc.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME);
+				string description = Content.GetVariableValueOrDefault(Document.Doc.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME);
 				if (descriptionTextBox.Text != description)
 					descriptionTextBox.Text = description;
 			}
@@ -278,7 +270,7 @@ namespace WordHiddenPowers.Panes
 
 		public bool CurrentDataSetRefresh()
 		{
-			Word.Variable content = ContentUtil.GetVariable(Document.Doc.Variables, Const.Globals.XML_CURRENT_VARIABLE_NAME);
+			Word.Variable content = Content.GetVariable(Document.Doc.Variables, Const.Globals.XML_CURRENT_VARIABLE_NAME);
 			if (content != null)
 			{
 				foreach (DataTable table in Document.CurrentDataSet.Tables)

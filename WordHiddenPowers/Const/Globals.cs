@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: ADDIN
+﻿// Ignore Spelling: ADDIN TSV DIC APP
 
 using System.Drawing;
 
@@ -6,10 +6,12 @@ namespace WordHiddenPowers.Const
 {
 	public static class Globals
 	{
+		public const string APP_FOLDER_NAME = "Microsoft Word MLModel";
+
 		/// <summary>
 		/// Минимальный порог для оценки параграфа как удовлетворяющего требованиям. 
 		/// </summary>
-		public const float LEVEL_PASSAGE = 0.001f;
+		public const float LEVEL_PASSAGE = 0.8f;
 
 		public const string ADDIN_TITLE = "Дополнительные данные";
 
@@ -25,6 +27,8 @@ namespace WordHiddenPowers.Const
 		public const string DATE_VARIABLE_NAME = "Date" + VARIABLES_NAME;
 		public const string XML_CURRENT_VARIABLE_NAME = "Xml" + VARIABLES_NAME;
 		public const string TABLE_VARIABLE_NAME = "Table" + VARIABLES_NAME;
+		public const string ML_MODEL_VARIABLE_NAME = "MLModel" + VARIABLES_NAME;
+
 
 		/// <summary>
 		/// Имя переменной для хранения уникального идентификатора документа в формате GUID
@@ -36,6 +40,11 @@ namespace WordHiddenPowers.Const
 		/// </summary>
 		public const string XML_AGGREGATED_VARIABLE_NAME = "78B817AB-4941-4CD9-9830-E39D15BBE28B";
 
+		/// <summary>
+		/// Имя переменной для хранения результатов импорта данных за прошлый период.
+		/// </summary>
+		public const string XML_OLD_AGGREGATED_VARIABLE_NAME = "6B0F57EE-BE9F-4C83-A660-2FCDBB1E6B34";
+
 		public static readonly Color COLOR_STAR_ICON = Color.Red;
 
 		public static readonly Color COLOR_OK_ICON = Color.Green;
@@ -46,7 +55,5 @@ namespace WordHiddenPowers.Const
 
 		public static readonly Color COLOR_1_BACK = Color.Orange;
 		public static readonly Color COLOR_2_BACK = Color.LightPink;
-
-
 	}
 }

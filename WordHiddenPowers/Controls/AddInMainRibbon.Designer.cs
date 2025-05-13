@@ -72,17 +72,30 @@
 			editDocumentKeysButton.ScreenTip = Const.Content.EDIT_DOCUMENT_KEYS_SCREEN_TIP;
 			editDocumentKeysButton.SuperTip = Const.Content.EDIT_DOCUMENT_KEYS_SUPER_TIP;
 
-			aggregatedImportFoldersButton.Description = Const.Content.ANALAIZER_IMPORT_FOLDER_DESCRIPTION;
-			aggregatedImportFoldersButton.Label = Const.Content.ANALAIZER_IMPORT_FOLDER_LABEL;
-			aggregatedImportFoldersButton.OfficeImageId = Const.Content.ANALAIZER_IMPORT_FOLDER_OFFICE_IMAGE_ID;
-			aggregatedImportFoldersButton.ScreenTip = Const.Content.ANALAIZER_IMPORT_FOLDER_SCREEN_TIP;
-			aggregatedImportFoldersButton.SuperTip = Const.Content.ANALAIZER_IMPORT_FOLDER_SUPER_TIP;
+			aggregatedImportFolderButton.Description = Const.Content.ANALAIZER_IMPORT_FOLDER_DESCRIPTION;
+			aggregatedImportFolderButton.Label = Const.Content.ANALAIZER_IMPORT_FOLDER_LABEL;
+			aggregatedImportFolderButton.OfficeImageId = Const.Content.ANALAIZER_IMPORT_FOLDER_OFFICE_IMAGE_ID;
+			aggregatedImportFolderButton.ScreenTip = Const.Content.ANALAIZER_IMPORT_FOLDER_SCREEN_TIP;
+			aggregatedImportFolderButton.SuperTip = Const.Content.ANALAIZER_IMPORT_FOLDER_SUPER_TIP;
 
 			aggregatedImportFileButton.Description = Const.Content.ANALAIZER_IMPORT_FILE_DESCRIPTION;
 			aggregatedImportFileButton.Label = Const.Content.ANALAIZER_IMPORT_FILE_LABEL;
 			aggregatedImportFileButton.OfficeImageId = Const.Content.ANALAIZER_IMPORT_FILE_OFFICE_IMAGE_ID;
 			aggregatedImportFileButton.ScreenTip = Const.Content.ANALAIZER_IMPORT_FILE_SCREEN_TIP;
 			aggregatedImportFileButton.SuperTip = Const.Content.ANALAIZER_IMPORT_FILE_SUPER_TIP;
+
+			oldAggregatedImportFolderButton.Description = Const.Content.OLD_ANALAIZER_IMPORT_FOLDER_DESCRIPTION;
+			oldAggregatedImportFolderButton.Label = Const.Content.OLD_ANALAIZER_IMPORT_FOLDER_LABEL;
+			oldAggregatedImportFolderButton.OfficeImageId = Const.Content.OLD_ANALAIZER_IMPORT_FOLDER_OFFICE_IMAGE_ID;
+			oldAggregatedImportFolderButton.ScreenTip = Const.Content.OLD_ANALAIZER_IMPORT_FOLDER_SCREEN_TIP;
+			oldAggregatedImportFolderButton.SuperTip = Const.Content.OLD_ANALAIZER_IMPORT_FOLDER_SUPER_TIP;
+
+			oldAggregatedImportFileButton.Description = Const.Content.OLD_ANALAIZER_IMPORT_FILE_DESCRIPTION;
+			oldAggregatedImportFileButton.Label = Const.Content.OLD_ANALAIZER_IMPORT_FILE_LABEL;
+			oldAggregatedImportFileButton.OfficeImageId = Const.Content.OLD_ANALAIZER_IMPORT_FILE_OFFICE_IMAGE_ID;
+			oldAggregatedImportFileButton.ScreenTip = Const.Content.OLD_ANALAIZER_IMPORT_FILE_SCREEN_TIP;
+			oldAggregatedImportFileButton.SuperTip = Const.Content.OLD_ANALAIZER_IMPORT_FILE_SUPER_TIP;
+
 
 			aggregatedTableViewerButton.Description = Const.Content.ANALAIZER_TABLE_DESCRIPTION;
 			aggregatedTableViewerButton.Label = Const.Content.ANALAIZER_TABLE_LABEL;
@@ -142,6 +155,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+			Microsoft.Office.Tools.Ribbon.RibbonDialogLauncher ribbonDialogLauncherImpl = this.Factory.CreateRibbonDialogLauncher();
+
 			this.wordHiddenPowersTab = this.Factory.CreateRibbonTab();
 			this.maketGroup = this.Factory.CreateRibbonGroup();
 			this.newDataButton = this.Factory.CreateRibbonButton();
@@ -154,8 +169,11 @@
 			this.createTableButton = this.Factory.CreateRibbonButton();
 			this.editDocumentKeysButton = this.Factory.CreateRibbonButton();
 			this.aggregatedGroup = this.Factory.CreateRibbonGroup();
-			this.aggregatedImportFoldersButton = this.Factory.CreateRibbonSplitButton();
+			this.aggregatedImportFolderButton = this.Factory.CreateRibbonSplitButton();
 			this.aggregatedImportFileButton = this.Factory.CreateRibbonButton();
+			this.separator5 = this.Factory.CreateRibbonSeparator();
+			this.oldAggregatedImportFolderButton = this.Factory.CreateRibbonButton();
+			this.oldAggregatedImportFileButton = this.Factory.CreateRibbonButton();
 			this.aggregatedTableViewerButton = this.Factory.CreateRibbonButton();
 			this.aggregatedDialogButton = this.Factory.CreateRibbonButton();
 			this.notesGroup = this.Factory.CreateRibbonGroup();
@@ -263,7 +281,7 @@
 			// 
 			// aggregatedGroup
 			// 
-			this.aggregatedGroup.Items.Add(this.aggregatedImportFoldersButton);
+			this.aggregatedGroup.Items.Add(this.aggregatedImportFolderButton);
 			this.aggregatedGroup.Items.Add(this.aggregatedTableViewerButton);
 			this.aggregatedGroup.Items.Add(this.aggregatedDialogButton);
 			this.aggregatedGroup.Label = "Анализ данных";
@@ -271,11 +289,14 @@
 			// 
 			// aggregatedImportFoldersButton
 			// 
-			this.aggregatedImportFoldersButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-			this.aggregatedImportFoldersButton.Items.Add(this.aggregatedImportFileButton);
-			this.aggregatedImportFoldersButton.Label = "";
-			this.aggregatedImportFoldersButton.Name = "aggregatedImportFoldersButton";
-			this.aggregatedImportFoldersButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AnalizerImportFolder_Click);
+			this.aggregatedImportFolderButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+			this.aggregatedImportFolderButton.Items.Add(this.aggregatedImportFileButton);
+			this.aggregatedImportFolderButton.Items.Add(this.separator5);
+			this.aggregatedImportFolderButton.Items.Add(this.oldAggregatedImportFolderButton);
+			this.aggregatedImportFolderButton.Items.Add(this.oldAggregatedImportFileButton);
+			this.aggregatedImportFolderButton.Label = "";
+			this.aggregatedImportFolderButton.Name = "aggregatedImportFolderButton";
+			this.aggregatedImportFolderButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AnalizerImportFolder_Click);
 			// 
 			// aggregatedImportFileButton
 			// 
@@ -283,6 +304,20 @@
 			this.aggregatedImportFileButton.Name = "aggregatedImportFileButton";
 			this.aggregatedImportFileButton.ShowImage = true;
 			this.aggregatedImportFileButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AnalizerImportFile_Click);
+			// 
+			// oldAggregatedImportFolderButton
+			// 
+			this.oldAggregatedImportFolderButton.Label = "";
+			this.oldAggregatedImportFolderButton.Name = "oldAggregatedImportFolderButton";
+			this.oldAggregatedImportFolderButton.ShowImage = true;
+			this.oldAggregatedImportFolderButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AnalizerImportOldFolder_Click);
+			// 
+			// oldAggregatedImportFileButton
+			// 
+			this.oldAggregatedImportFileButton.Label = "";
+			this.oldAggregatedImportFileButton.Name = "oldAggregatedImportFileButton";
+			this.oldAggregatedImportFileButton.ShowImage = true;
+			this.oldAggregatedImportFileButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AnalizerImportOldFile_Click);
 			// 
 			// aggregatedTableViewerButton
 			// 
@@ -302,6 +337,8 @@
 			// 
 			// notesGroup
 			// 
+			this.notesGroup.DialogLauncher = ribbonDialogLauncherImpl;
+			this.notesGroup.DialogLauncherClick += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.NotesGroup_DialogLauncherClick);
 			this.notesGroup.Items.Add(this.addLastNoteTypeButton);
 			this.notesGroup.Items.Add(this.editTableButton);
 			this.notesGroup.Items.Add(this.separator3);
@@ -404,11 +441,14 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator2;
 		internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator3;
 		internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator4;
+		internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator5;
 		internal Microsoft.Office.Tools.Ribbon.RibbonButton editCategoriesButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton editDocumentKeysButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup aggregatedGroup;
-        internal Microsoft.Office.Tools.Ribbon.RibbonSplitButton aggregatedImportFoldersButton;
+        internal Microsoft.Office.Tools.Ribbon.RibbonSplitButton aggregatedImportFolderButton;
 		internal Microsoft.Office.Tools.Ribbon.RibbonButton aggregatedImportFileButton;
+		internal Microsoft.Office.Tools.Ribbon.RibbonButton oldAggregatedImportFolderButton;
+		internal Microsoft.Office.Tools.Ribbon.RibbonButton oldAggregatedImportFileButton;
 		internal Microsoft.Office.Tools.Ribbon.RibbonButton aggregatedTableViewerButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton aggregatedDialogButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup notesGroup;

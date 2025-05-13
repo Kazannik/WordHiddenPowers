@@ -1,5 +1,4 @@
 ﻿using Microsoft.Office.Tools.Ribbon;
-using System;
 using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
 
@@ -7,34 +6,23 @@ namespace WordHiddenPowers
 {
 	public partial class AddInMainRibbon
 	{
-
-		private Documents.Document ActiveDocument
-		{
-			get { return Globals.ThisAddIn.Documents.ActiveDocument; }
-		}
-
-		private Word.Selection Selection
-		{
-			get { return Globals.ThisAddIn.Application.ActiveWindow?.Selection; }
-		}
-
 		private void NewContent_Click(object sender, RibbonControlEventArgs e)
 		{
-			ActiveDocument?.NewData();
+			Globals.ThisAddIn.ActiveDocument?.NewData();
 		}
 
 		private void OpenContent_Click(object sender, RibbonControlEventArgs e)
 		{
-			if (ActiveDocument != null)
+			if (Globals.ThisAddIn.ActiveDocument != null)
 			{
 				OpenFileDialog dialog = new OpenFileDialog
 				{
 					Multiselect = false,
 					Filter = Const.Globals.DIALOG_XML_FILTER
 				};
-				if (Utils.ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
+				if (Utils.Dialogs.ShowDialog(dialog) == DialogResult.OK)
 				{
-					ActiveDocument.LoadCurrentData(dialog.FileName);
+					Globals.ThisAddIn.ActiveDocument.LoadCurrentData(dialog.FileName);
 				}
 			}
 		}
@@ -45,18 +33,18 @@ namespace WordHiddenPowers
 			{
 				Filter = Const.Globals.DIALOG_XML_FILTER
 			};
-			if (Utils.ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
+			if (Utils.Dialogs.ShowDialog(dialog) == DialogResult.OK)
 			{
-				ActiveDocument.CommitVariables();
-				ActiveDocument.SaveData(dialog.FileName);
+				Globals.ThisAddIn.ActiveDocument.CommitVariables();
+				Globals.ThisAddIn.ActiveDocument.SaveData(dialog.FileName);
 			}
 		}
 
 		private void DeleteContent_Click(object sender, RibbonControlEventArgs e)
 		{
-			if (ActiveDocument != null)
+			if (Globals.ThisAddIn.ActiveDocument != null)
 			{
-				if (ActiveDocument.VariablesExists())
+				if (Globals.ThisAddIn.ActiveDocument.VariablesExists())
 				{
 					if (MessageBox.Show("Удалить дополнительные данные из документа?",
 						"Удаление скрытых данных",
@@ -64,7 +52,7 @@ namespace WordHiddenPowers
 						MessageBoxIcon.Question,
 						MessageBoxDefaultButton.Button2) == DialogResult.Yes)
 					{
-						ActiveDocument.DeleteVariables();
+						Globals.ThisAddIn.ActiveDocument.DeleteVariables();
 					}
 				}
 				else
@@ -79,42 +67,52 @@ namespace WordHiddenPowers
 
 		private void CreateTable_Click(object sender, RibbonControlEventArgs e)
 		{
-			ActiveDocument.ShowCreateTableDialog();
+			Globals.ThisAddIn.ActiveDocument.ShowCreateTableDialog();
 		}
 
 		private void EditTable_Click(object sender, RibbonControlEventArgs e)
 		{
-			ActiveDocument.ShowEditTableDialog();
+			Globals.ThisAddIn.ActiveDocument.ShowEditTableDialog();
 		}
 
 		private void EditCategories_Click(object sender, RibbonControlEventArgs e)
 		{
-			ActiveDocument.ShowEditCategoriesDialog();
+			Globals.ThisAddIn.ActiveDocument.ShowEditCategoriesDialog();
 		}
 
 		private void EditDocumentKeys_Click(object sender, RibbonControlEventArgs e)
 		{
-			ActiveDocument.ShowDocumentKeysDialog();
+			Globals.ThisAddIn.ActiveDocument.ShowDocumentKeysDialog();
 		}
 
 		private void AnalizerImportFolder_Click(object sender, RibbonControlEventArgs e)
 		{
-			ActiveDocument.ImportDataFromWordDocuments();
+			Globals.ThisAddIn.ActiveDocument.ImportDataFromWordDocuments();
 		}
 
 		private void AnalizerImportFile_Click(object sender, RibbonControlEventArgs e)
 		{
-			ActiveDocument.ImportDataFromWordDocument();
+			Globals.ThisAddIn.ActiveDocument.ImportDataFromWordDocument();
+		}
+
+		private void AnalizerImportOldFolder_Click(object sender, RibbonControlEventArgs e)
+		{
+			Globals.ThisAddIn.ActiveDocument.ImportOldDataFromWordDocuments();
+		}
+
+		private void AnalizerImportOldFile_Click(object sender, RibbonControlEventArgs e)
+		{
+			Globals.ThisAddIn.ActiveDocument.ImportOldDataFromWordDocument();
 		}
 
 		private void AnalizerTableViewer_Click(object sender, RibbonControlEventArgs e)
 		{
-			ActiveDocument.ShowTableViewerDialog();
+			Globals.ThisAddIn.ActiveDocument.ShowTableViewerDialog();
 		}
 
 		private void AnalizerDialog_Click(object sender, RibbonControlEventArgs e)
 		{
-			ActiveDocument.ShowAnalyzerDialog();
+			Globals.ThisAddIn.ActiveDocument.ShowAnalyzerDialog();
 		}
 
 		private enum NoteType : int
@@ -127,7 +125,8 @@ namespace WordHiddenPowers
 
 		private void AddTextNote_Click(object sender, RibbonControlEventArgs e)
 		{
-			ActiveDocument.AddTextNote(Selection);
+			if (Globals.ThisAddIn.Selection != null)
+				Globals.ThisAddIn.ActiveDocument.AddTextNote(Globals.ThisAddIn.Selection);
 
 			lastNoteType = NoteType.Text;
 			addLastNoteTypeButton.Description = Const.Content.TEXT_NOTE_DESCRIPTION;
@@ -139,8 +138,9 @@ namespace WordHiddenPowers
 
 		private void AddDecimalNote_Click(object sender, RibbonControlEventArgs e)
 		{
-			ActiveDocument.AddDecimalNote(Selection);
-			
+			if (Globals.ThisAddIn.Selection != null)
+				Globals.ThisAddIn.ActiveDocument.AddDecimalNote(Globals.ThisAddIn.Selection);
+
 			lastNoteType = NoteType.Decimal;
 			addLastNoteTypeButton.Description = Const.Content.DECIMAL_NOTE_DESCRIPTION;
 			addLastNoteTypeButton.Label = Const.Content.DECIMAL_NOTE_LABEL;
@@ -151,20 +151,26 @@ namespace WordHiddenPowers
 
 		private void AddLastNoteType_Click(object sender, RibbonControlEventArgs e)
 		{
-			if (lastNoteType == NoteType.Text)
-				ActiveDocument.AddTextNote(Selection);
+			if (Globals.ThisAddIn.Selection != null 
+				&& lastNoteType == NoteType.Text)
+				Globals.ThisAddIn.ActiveDocument.AddTextNote(Globals.ThisAddIn.Selection);
 			else
-				ActiveDocument.AddDecimalNote(Selection);
+				Globals.ThisAddIn.ActiveDocument.AddDecimalNote(Globals.ThisAddIn.Selection);
 		}
 
 		private void SearchService_Click(object sender, RibbonControlEventArgs e)
 		{
-			ActiveDocument.ShowSearchServiceDialog();
+			Globals.ThisAddIn.ActiveDocument.ShowSearchServiceDialog();
 		}
 
 		private void AiService_Click(object sender, RibbonControlEventArgs e)
 		{
-			ActiveDocument.AiSearchService();
+			Globals.ThisAddIn.ActiveDocument.AiSearchService();
+		}
+
+		private void NotesGroup_DialogLauncherClick(object sender, RibbonControlEventArgs e)
+		{
+			Globals.ThisAddIn.ActiveDocument.ShowNotesSettingDialog();
 		}
 	}
 }

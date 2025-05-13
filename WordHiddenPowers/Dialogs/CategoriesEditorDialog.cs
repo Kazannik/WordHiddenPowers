@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using WordHiddenPowers.Controls.ListControls.CategoriesListControl;
 using WordHiddenPowers.Repositories.Categories;
 using WordHiddenPowers.Utils;
+using Content = WordHiddenPowers.Utils.WordDocuments.Content;
 
 
 namespace WordHiddenPowers.Dialogs
@@ -18,7 +19,7 @@ namespace WordHiddenPowers.Dialogs
 		{			
 			this.document = document;
 
-			this.Icon = WordUtil.GetIconMso("MindMapExportWord", SystemInformation.IconSize.Width, SystemInformation.IconSize.Height);
+			this.Icon = WordDocument.GetIconMso("MindMapExportWord", SystemInformation.IconSize.Width, SystemInformation.IconSize.Height);
 
 			InitializeComponent();
 			ControlResize();
@@ -103,7 +104,7 @@ namespace WordHiddenPowers.Dialogs
 				string content = File.ReadAllText(dialog.FileName, Encoding.GetEncoding(1251));				
 				Cursor.Current = Cursors.WaitCursor;
 				listBox.BeginUpdate();
-				CategoriesUtil.CreateFromText(document.CurrentDataSet, content);
+				Categories.CreateFromText(document.CurrentDataSet, content);
 				listBox.EndUpdate();
 				Cursor.Current = Cursors.Default;
 			}
@@ -146,7 +147,7 @@ namespace WordHiddenPowers.Dialogs
 						listBox.DataSet = null;
 						document.CurrentDataSet.Categories.AcceptChanges();
 						document.CurrentDataSet.Subcategories.AcceptChanges();
-						ContentUtil.CommitVariable(document.Doc.Variables, Const.Globals.XML_CURRENT_VARIABLE_NAME, document.CurrentDataSet);
+						Content.CommitVariable(document.Doc.Variables, Const.Globals.XML_CURRENT_VARIABLE_NAME, document.CurrentDataSet);
 						Cursor.Current = Cursors.Default;
 					}
 					else if (result == DialogResult.No)

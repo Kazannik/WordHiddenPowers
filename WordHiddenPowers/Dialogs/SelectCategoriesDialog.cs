@@ -15,7 +15,7 @@ namespace WordHiddenPowers.Dialogs
 		{
 			this.document = document;
 
-			this.Icon = WordUtil.GetIconMso("MindMapExportWord", SystemInformation.IconSize.Width, SystemInformation.IconSize.Height);
+			this.Icon = WordDocument.GetIconMso("MindMapExportWord", SystemInformation.IconSize.Width, SystemInformation.IconSize.Height);
 
 			InitializeComponent();
 

@@ -2,58 +2,107 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
+using WordHiddenPowers.Dialogs;
 using WordHiddenPowers.Repositories;
 using WordHiddenPowers.Repositories.Notes;
+using Content = WordHiddenPowers.Utils.WordDocuments.Content;
 using Table = WordHiddenPowers.Repositories.Data.Table;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Utils
 {
-	static class FileSystemUtil
+	static class FileSystem
 	{
+		public static DirectoryInfo CurrentDirectory => Directory.GetParent(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location));
+
+		public static DirectoryInfo UserDirectory
+		{ 
+			get
+			{
+				string userDirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Const.Globals.APP_FOLDER_NAME);
+				if (!Directory.Exists(userDirectoryPath))
+				{
+					Directory.CreateDirectory(userDirectoryPath);
+				}
+				return new DirectoryInfo(userDirectoryPath);
+			}		
+		}
+
 		public static void GetDataSetFromWordFiles(string path, ref RepositoryDataSet destDataSet)
 		{
 			if (Directory.Exists(path))
 			{
 				Word._Application application = Globals.ThisAddIn.Application;
 				application.Visible = true;
-
+				application.ChangeFileOpenDirectory(path);
+				
 				if (destDataSet == null) destDataSet = new RepositoryDataSet();
 
 				FileInfo[] files = new DirectoryInfo(path).GetFiles("*.doc*");
-				bool loadModel = true;
+				
+				ProgressDialog dialog = new ProgressDialog
+				{
+					Text = "Импорт данных из документов Word",
+					Percent = 0
+				};
+				Dialogs.Show(dialog);
 
+				int count = 0;
 				foreach (FileInfo file in files)
 				{
+					Debug.WriteLine(file.FullName);
+
+					count++;
+					dialog.Percent = count * 100 / files.Length;
+
 					if (file.Extension == ".doc" || file.Extension == ".docx")
 					{
 						try
 						{
-							Word._Document document = application.Documents.Open(FileName: file.FullName, ReadOnly: true, Visible: false);
-
-							if (ContentUtil.ExistsContent(document))
-							{
-								if (loadModel)
-								{
-									CopyModel(document, destDataSet);
-									loadModel = false;
-								}
-								CopyData(document, destDataSet);								
-							}
-							document.Close();
+							CopyWordDocument(fileName: file.Name, application: application, destDataSet: ref destDataSet);
 						}
-						catch (Exception ex)
+						catch (COMException ex)
 						{
-							ShowDialogUtil.ShowErrorDialog(ex.Message);
+							if (ex.ErrorCode == -2146824090)
+							{
+								string tmpFile = GetTempFileName(file.Name);
+								File.Copy(file.FullName, tmpFile);								
+								CopyWordDocument(fileName: tmpFile, application: application, destDataSet: ref destDataSet);
+								File.Delete(tmpFile);
+							}
+						}
+						finally
+						{
+							Application.DoEvents();
 						}
 					}
-				}
+				}				
+				dialog.Close();
 			}
 			else
 			{
 				throw new ArgumentException();
 			}
+		}
+
+
+		private static void CopyWordDocument(string fileName, Word._Application application, ref RepositoryDataSet destDataSet)
+		{
+			Word._Document document = application.Documents.Open(FileName: fileName, ConfirmConversions: false, ReadOnly: true, Visible: false, AddToRecentFiles: false);
+
+			if (Content.ExistsContent(document))
+			{
+				if (!destDataSet.IsModel)
+				{
+					CopyModel(document, destDataSet);
+				}
+				CopyData(document, fileName: fileName, destDataSet);
+			}
+			document.Close();
 		}
 
 		public static void GetDataSetFromWordFile(string fileName, ref RepositoryDataSet destDataSet)
@@ -64,26 +113,24 @@ namespace WordHiddenPowers.Utils
 				application.Visible = true;
 				if (destDataSet == null) destDataSet = new RepositoryDataSet();
 				FileInfo file = new FileInfo(fileName);
-				bool loadModel = true;
 				if (file.Extension == ".doc" || file.Extension == ".docx")
 				{
 					try
 					{
 						Word._Document document = application.Documents.Open(FileName: file.FullName, ReadOnly: true, Visible: false);
-						if (ContentUtil.ExistsContent(document))
+						if (Content.ExistsContent(document))
 						{
-							if (loadModel)
+							if (!destDataSet.IsModel)
 							{
 								CopyModel(document, destDataSet);
-								loadModel = false;
 							}
-							CopyData(document, destDataSet);
+							CopyData(document, fileName, destDataSet);
 						}
 						document.Close();
 					}
 					catch (Exception ex)
 					{
-						ShowDialogUtil.ShowErrorDialog(ex.Message);
+						Dialogs.ShowErrorDialog(ex.Message);
 					}
 				}
 			}
@@ -136,7 +183,7 @@ namespace WordHiddenPowers.Utils
 				}
 				wordDocument?.Save();
 				wordDocument?.Close();
-				ShowDialogUtil.ShowMessageDialog("Копирование данных завешено!");
+				Dialogs.ShowMessageDialog("Копирование данных завешено!");
 			}
 		}
 
@@ -147,22 +194,22 @@ namespace WordHiddenPowers.Utils
 		/// <param name="filename">Имя файла документа Word (включая путь) из которого копируются данные.</param>
 		/// <param name="destDataSet">Хранилище для загрузки данных.</param>
 		/// <returns></returns>
-		private static bool CopyData(Word._Application application, string filename, RepositoryDataSet destDataSet)
+		private static bool CopyData(Word._Application application, string fileName, RepositoryDataSet destDataSet)
 		{
 			bool isCorrect = false;
 			try
 			{
-				Word._Document document = application.Documents.Open(FileName: filename, ReadOnly: true, Visible: false);
-				if (ContentUtil.ExistsContent(document))
+				Word._Document document = application.Documents.Open(FileName: fileName, ReadOnly: true, Visible: false);
+				if (Content.ExistsContent(document))
 				{
-					isCorrect = CopyData(document, destDataSet);
+					isCorrect = CopyData(document, fileName, destDataSet);
 				}
 				document.Close();
 			}
 			catch (Exception ex)
 			{
 				isCorrect = false;
-				ShowDialogUtil.ShowErrorDialog(ex.Message);
+				Dialogs.ShowErrorDialog(ex.Message);
 			}
 			return isCorrect;
 		}
@@ -174,22 +221,30 @@ namespace WordHiddenPowers.Utils
 		/// <param name="sourceDocument">Документ Word - источник данных.</param>
 		/// <param name="destDataSet">Хранилище для загрузки данных.</param>
 		/// <returns></returns>
-		private static bool CopyData(Word._Document sourceDocument, RepositoryDataSet destDataSet)
+		private static bool CopyData(Word._Document sourceDocument, string fileName, RepositoryDataSet destDataSet)
 		{
 			RepositoryDataSet sourceDataSet = Xml.GetCurrentDataSet(sourceDocument, out bool isCorrect);
 			if (isCorrect)
 			{
-				string fileName = sourceDocument.FullName;
-				string caption = ContentUtil.GetCaption(sourceDocument);
-				string description = ContentUtil.GetDescription(sourceDocument);
-				DateTime date = ContentUtil.GetDate(sourceDocument);
-				Table table = ContentUtil.GetTable(sourceDocument);
+				string caption = Content.GetCaption(sourceDocument);
+				if (string.IsNullOrEmpty(caption))
+				{
+					Dialogs.ShowErrorDialog(string.Format("В данных файла {0} отсутствуют сведения о наименовании.", fileName));
+					return false;
+				}
+				string description = Content.GetDescription(sourceDocument);
+				DateTime date = Content.GetDate(sourceDocument);
+				Table table = Content.GetTable(sourceDocument);
 				foreach (Note note in sourceDataSet.GetNotes())
 				{
 					destDataSet.AddNote(note, fileName, caption, description, date);
 				}
+
 				// Добавление таблицы.
-				destDataSet.DocumentKeys.AddDocumentKeysRow(caption, fileName, table.ToString());
+				if (destDataSet.DocumentKeys.Exists(caption))
+					destDataSet.DocumentKeys.Write(caption, fileName, table.ToString());
+				else
+					destDataSet.DocumentKeys.AddDocumentKeysRow(caption, fileName, table.ToString());
 			}
 			return isCorrect;
 		}
@@ -211,6 +266,11 @@ namespace WordHiddenPowers.Utils
 				destDataSet.WordFiles.Clear();
 				destDataSet.AcceptChanges();
 			}
-		}
+		}	
+	
+		public static string GetTempFileName(string fileName)
+		{
+			return Path.Combine(Path.GetTempPath(), fileName);
+		}	
 	}
 }

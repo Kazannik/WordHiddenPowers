@@ -47,15 +47,22 @@
             this.mnuFileExit = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuView = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuViewHide = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuViewRefresh = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.insertToDocumentButton = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.statusListBox = new WordHiddenPowers.Controls.ListControls.StatusListBox();
+            this.categoryBox1 = new WordHiddenPowers.Controls.CategoryBox();
+            this.contentListBox = new WordHiddenPowers.Controls.ListControls.ContentListBox();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -131,7 +138,7 @@
             this.mnuFileExportToCsv.Name = "mnuFileExportToCsv";
             this.mnuFileExportToCsv.Size = new System.Drawing.Size(371, 30);
             this.mnuFileExportToCsv.Text = "Экспорт данных...";
-            this.mnuFileExportToCsv.Click += new System.EventHandler(this.FileExportTo_Click);
+            this.mnuFileExportToCsv.Click += new System.EventHandler(this.FileExportTo_ClickAsync);
             // 
             // mnuFileExportDictionary
             // 
@@ -186,7 +193,9 @@
             // mnuView
             // 
             this.mnuView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuViewHide});
+            this.mnuViewHide,
+            this.toolStripMenuItem5,
+            this.mnuViewRefresh});
             this.mnuView.Name = "mnuView";
             this.mnuView.Size = new System.Drawing.Size(54, 29);
             this.mnuView.Text = "Вид";
@@ -199,6 +208,18 @@
             this.mnuViewHide.Text = "Скрытые записи";
             this.mnuViewHide.Click += new System.EventHandler(this.ViewHide_Click);
             // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(214, 6);
+            // 
+            // mnuViewRefresh
+            // 
+            this.mnuViewRefresh.Name = "mnuViewRefresh";
+            this.mnuViewRefresh.Size = new System.Drawing.Size(217, 30);
+            this.mnuViewRefresh.Text = "Обновить";
+            this.mnuViewRefresh.Click += new System.EventHandler(this.ViewRefresh_Click);
+            // 
             // toolStrip1
             // 
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -206,7 +227,7 @@
             this.insertToDocumentButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 33);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1036, 28);
+            this.toolStrip1.Size = new System.Drawing.Size(1036, 27);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -216,7 +237,7 @@
             this.insertToDocumentButton.Image = ((System.Drawing.Image)(resources.GetObject("insertToDocumentButton.Image")));
             this.insertToDocumentButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.insertToDocumentButton.Name = "insertToDocumentButton";
-            this.insertToDocumentButton.Size = new System.Drawing.Size(24, 25);
+            this.insertToDocumentButton.Size = new System.Drawing.Size(24, 24);
             this.insertToDocumentButton.Text = "Вставить в открытый документ";
             this.insertToDocumentButton.Click += new System.EventHandler(this.InsertToDocumentButton_Click);
             // 
@@ -241,16 +262,49 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 61);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 60);
             this.splitContainer1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.splitContainer1.Name = "splitContainer1";
             // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.statusListBox);
+            this.splitContainer1.Panel1.Resize += new System.EventHandler(this.SplitContainer1_Panel1_Resize);
+            // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.categoryBox1);
+            this.splitContainer1.Panel2.Controls.Add(this.contentListBox);
             this.splitContainer1.Panel2.Resize += new System.EventHandler(this.SplitContainer1_Panel2_Resize);
-            this.splitContainer1.Size = new System.Drawing.Size(1036, 501);
+            this.splitContainer1.Size = new System.Drawing.Size(1036, 502);
             this.splitContainer1.SplitterDistance = 423;
             this.splitContainer1.TabIndex = 3;
+            // 
+            // statusListBox
+            // 
+            this.statusListBox.DataSet = null;
+            this.statusListBox.Location = new System.Drawing.Point(0, 0);
+            this.statusListBox.Name = "statusListBox";
+            this.statusListBox.Size = new System.Drawing.Size(120, 96);
+            this.statusListBox.TabIndex = 0;
+            // 
+            // categoryBox1
+            // 
+            this.categoryBox1.Location = new System.Drawing.Point(0, 0);
+            this.categoryBox1.Name = "categoryBox1";
+            this.categoryBox1.Owner = null;
+            this.categoryBox1.Size = new System.Drawing.Size(488, 175);
+            this.categoryBox1.TabIndex = 0;
+            // 
+            // contentListBox
+            // 
+            this.contentListBox.DataSet = null;
+            this.contentListBox.Filer = null;
+            this.contentListBox.Hide = true;
+            this.contentListBox.Location = new System.Drawing.Point(0, 0);
+            this.contentListBox.Name = "contentListBox";
+            this.contentListBox.Size = new System.Drawing.Size(120, 96);
+            this.contentListBox.TabIndex = 1;
             // 
             // AnalyzerDialog
             // 
@@ -266,12 +320,15 @@
             this.Name = "AnalyzerDialog";
             this.Text = "Анализ данных";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AnalyzerDialog_FormClosing);
+            this.Load += new System.EventHandler(this.AnalyzerDialog_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -307,5 +364,7 @@
 		private System.Windows.Forms.ToolStripMenuItem mnuFileNew;
 		private System.Windows.Forms.ToolStripMenuItem mnuFileExportToCsv;
 		private System.Windows.Forms.ToolStripMenuItem mnuFileExportDictionary;
+		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
+		private System.Windows.Forms.ToolStripMenuItem mnuViewRefresh;
 	}
 }

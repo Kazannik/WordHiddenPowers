@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using WordHiddenPowers.Documents;
 using WordHiddenPowers.Repositories.Categories;
@@ -15,14 +15,23 @@ namespace WordHiddenPowers.Services
 
     static class Сombined
     {
-		public static void Search(Document document)
+		public static void Search(Document document, float levelPassage)
 		{
+			string mlNetModelName = document.MLModelName;
+			string mlNetModelPath = Path.Combine(FileSystem.UserDirectory.FullName, mlNetModelName);
+			if (!Directory.Exists(mlNetModelPath)) return;
+
 			IEnumerable<Subcategory> subcategories = document.CurrentDataSet.GetSubcategories();
 
 			foreach (Word.Paragraph paragraph in document.Doc.Content.Paragraphs)
 			{
-				IOrderedEnumerable<KeyValuePair<string, float>> result = MLModelUtil.PredictAll(paragraph.Range.Text);
-				IEnumerable<Subcategory> predictSubcategories = AI.GetSubcategories(document, result);
+				//MLModelService.MLModel.ModelInput sampleData = new MLModelService.MLModel.ModelInput()
+				//{
+				//	Title = paragraph.Range.Text,
+				//};
+
+				IOrderedEnumerable<KeyValuePair<string, float>> result = MLModel.PredictAll(paragraph.Range.Text, mlNetModelPath);
+				IEnumerable<Subcategory> predictSubcategories = AI.GetSubcategories(document, result, levelPassage);
 				
 				if (predictSubcategories != null)
 				{

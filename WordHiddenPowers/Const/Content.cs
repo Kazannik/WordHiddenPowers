@@ -128,6 +128,18 @@ namespace WordHiddenPowers.Const
 		public const string ANALAIZER_IMPORT_FILE_SUPER_TIP = "Для анализа данных, содержащихся в документе Word, необходимо выбрать файл.";
 		public const string ANALAIZER_IMPORT_FILE_OFFICE_IMAGE_ID = "ExportWord";
 
+		public const string OLD_ANALAIZER_IMPORT_FOLDER_LABEL = "Импорт данных за АППГ из папки";
+		public const string OLD_ANALAIZER_IMPORT_FOLDER_DESCRIPTION = "Импортирование данных за АППГ из документов Word, размещенных в папке";
+		public const string OLD_ANALAIZER_IMPORT_FOLDER_SCREEN_TIP = "Импортировать данные за АППГ из документов Word, размещенных в папке";
+		public const string OLD_ANALAIZER_IMPORT_FOLDER_SUPER_TIP = "Для анализа данных, содержащихся в документах Word, необходимо указать директорию хранения этих документов.";
+		public const string OLD_ANALAIZER_IMPORT_FOLDER_OFFICE_IMAGE_ID = "ExportWord";
+
+		public const string OLD_ANALAIZER_IMPORT_FILE_LABEL = "Импорт данных за АППГ из файла";
+		public const string OLD_ANALAIZER_IMPORT_FILE_DESCRIPTION = "Импортирование данных за АППГ из документа Word";
+		public const string OLD_ANALAIZER_IMPORT_FILE_SCREEN_TIP = "Импортировать данные за АППГ из документа Word";
+		public const string OLD_ANALAIZER_IMPORT_FILE_SUPER_TIP = "Для анализа данных, содержащихся в документе Word, необходимо выбрать файл.";
+		public const string OLD_ANALAIZER_IMPORT_FILE_OFFICE_IMAGE_ID = "ExportWord";
+
 		public const string ANALAIZER_TABLE_LABEL = "Сводные табличные данные";
 		public const string ANALAIZER_TABLE_DESCRIPTION = "Сводные табличные данные";
 		public const string ANALAIZER_TABLE_SCREEN_TIP = "Сводные табличные данные";

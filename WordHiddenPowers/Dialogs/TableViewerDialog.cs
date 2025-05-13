@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using WordHiddenPowers.Repositories;
 using WordHiddenPowers.Repositories.Data;
+using static Tensorboard.TensorShapeProto.Types;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Dialogs
@@ -11,21 +14,45 @@ namespace WordHiddenPowers.Dialogs
 	public partial class TableViewerDialog : Form
 	{
 		private readonly RepositoryDataSet dataSet;
+		private readonly RepositoryDataSet oldDataSet;
 
 		private List<Table> dataBase;
+		private List<Table> oldDataBase;
 
 		private Table summTable;
 		private double maxValue;
+		private double maxOldValue;
 
-		public TableViewerDialog(RepositoryDataSet dataSet)
+		public TableViewerDialog(RepositoryDataSet dataSet) : this(dataSet: dataSet, oldDataSet: null) { }
+		
+		public TableViewerDialog(RepositoryDataSet dataSet, RepositoryDataSet oldDataSet)
 		{
 			this.dataSet = dataSet;
+			this.oldDataSet = oldDataSet;
 
 			InitializeComponent();
 
 			nameLabel.Text = "";
 
 			tableEditBox.DataSet = this.dataSet;
+			tableEditBox.OldDataSet = this.oldDataSet;
+
+			listView1.Columns[1].Width = 120;
+			listView1.Columns[2].Width = 100;
+
+			if (tableEditBox.OldDataSet != null &&
+				tableEditBox.OldDataSet.IsTables)
+			{
+				listView1.Columns.Add("АППГ").Width = 120;
+				listView1.Columns.Add("%").Width = 100;
+				listView1.Columns.Add("+/-").Width = 100;
+				listView1.Columns.Add("%").Width = 120;
+			}
+
+			for (int i = 1; i < listView1.Columns.Count; i++)
+			{
+				listView1.Columns[i].TextAlign = HorizontalAlignment.Right;
+			}
 
 			InitializeDatabase();
 		}
@@ -36,24 +63,47 @@ namespace WordHiddenPowers.Dialogs
 			if (dataSet == null) return;
 
 			dataBase = new List<Table>();
-
 			foreach (RepositoryDataSet.DocumentKeysRow row in dataSet.DocumentKeys)
 			{
 				Table table = Table.Create(row.Description2, row.Caption, row.Description1);
 				if (!table.IsEmpty) dataBase.Add(table);
 			}
+			
+			oldDataBase = new List<Table>();
+			if (oldDataBase !=null && oldDataSet.IsTables)
+			{				
+				foreach (RepositoryDataSet.DocumentKeysRow row in oldDataSet.DocumentKeys)
+				{
+					Table table = Table.Create(row.Description2, row.Caption, row.Description1);
+					if (!table.IsEmpty) oldDataBase.Add(table);
+				}
+			}
 
 			if (dataBase.Count > 0)
 			{
 				summTable = dataBase[0].Clone();
+				Table oldTable = GetOldTable(dataBase[0].Caption);
+				if (oldTable != null) 
+					summTable.AddOldData(oldTable);
+
 				listView1.Items.Clear();
 				foreach (Table table in dataBase)
 				{
+					oldTable = GetOldTable(table.Caption);
+					if (oldTable != null)
+						table.AddOldData(oldTable);
+
 					ListViewItem item = listView1.Items.Add(table.Caption);
 					item.SubItems.Add("0");
 					item.SubItems.Add("0");
+					if (oldTable != null)
+					{
+						item.SubItems.Add("0");
+						item.SubItems.Add("0");
+						item.SubItems.Add("0");
+						item.SubItems.Add("0");
+					}
 					item.Tag = table;
-
 					summTable += table;
 				}
 
@@ -62,6 +112,13 @@ namespace WordHiddenPowers.Dialogs
 				ListViewItem summItem = listView1.Items.Add("Итого:");
 				summItem.SubItems.Add("0");
 				summItem.SubItems.Add("0");
+				if (oldTable != null)
+				{
+					summItem.SubItems.Add("0");
+					summItem.SubItems.Add("0");
+					summItem.SubItems.Add("0");
+					summItem.SubItems.Add("0");
+				}
 				summItem.Tag = summTable;
 				summItem.Font = new System.Drawing.Font(summItem.Font, System.Drawing.FontStyle.Bold);
 				summItem.Selected = true;
@@ -70,14 +127,45 @@ namespace WordHiddenPowers.Dialogs
 			}
 		}
 
+		private Table GetOldTable(string caption)
+		{
+			if (oldDataBase.Any(t => t.Caption == caption))
+			{
+				return oldDataBase.Where(t=> t.Caption == caption).FirstOrDefault();
+			}
+			else
+			{
+				return null;
+			}
+		}
+
 		private void TableEditBox_SelectedCell(object sender, Controls.TableEditBox.TableEventArgs e)
 		{
 			foreach (ListViewItem item in listView1.Items)
 			{
 				Table table = (Table)item.Tag;
-				item.SubItems[1].Text = table.Rows[e.Cell.RowIndex][e.Cell.ColumnIndex].Value.ToString();
-				item.SubItems[2].Text = (((double)table.Rows[e.Cell.RowIndex][e.Cell.ColumnIndex].Value) * 100 / ((double)summTable.Rows[e.Cell.RowIndex][e.Cell.ColumnIndex].Value)).ToString("0.00");
-				maxValue = summTable.Rows[e.Cell.RowIndex][e.Cell.ColumnIndex].Value;
+
+				int columnIndex = e.Cell.ColumnIndex;
+				if (summTable.IsOld)
+				{
+					columnIndex = Math.DivRem(e.Cell.ColumnIndex, 4, out _);
+				}	
+
+				Cell cell = table.Rows[e.Cell.RowIndex][columnIndex];
+				Cell summCell = summTable.Rows[e.Cell.RowIndex][columnIndex];
+
+				item.SubItems[1].Text = cell.Value.ToString("### ### ###");
+				item.SubItems[2].Text = (((double)cell.Value) * 100 / summCell.Value).ToString("### ### ##0.00");
+				
+				if (table.IsOld)
+				{
+					item.SubItems[3].Text = cell.OldValue.ToString("### ### ###");
+					item.SubItems[4].Text = (((double)cell.OldValue) * 100 / summCell.OldValue).ToString("### ### ##0.00");
+					item.SubItems[5].Text = cell.Growth;
+					item.SubItems[6].Text = cell.GrowthPercent;
+				}
+				maxValue = summCell.Value;
+				maxOldValue = summCell.OldValue;
 			}
 		}
 
@@ -150,12 +238,11 @@ namespace WordHiddenPowers.Dialogs
 			listView1.Sort();
 		}
 
-
 		private ListViewItemComparer GetListViewSorter(int columnIndex, List<Table> dataBase)
 		{
 			ListViewItemComparer sorter = (ListViewItemComparer)listView1.ListViewItemSorter ?? new ListViewItemComparer(dataBase);
 			sorter.ColumnIndex = columnIndex;
-			sorter.MaxValue = columnIndex == 1 ? maxValue : 100;
+			sorter.MaxValue = (columnIndex == 1 || columnIndex == 3 || columnIndex == 5) ? maxValue : 100;
 
 			if (sorter.SortDirection == SortOrder.Ascending)
 			{
@@ -188,40 +275,42 @@ namespace WordHiddenPowers.Dialogs
 			{
 				ListViewItem lviX = x as ListViewItem;
 				ListViewItem lviY = y as ListViewItem;
-
-				int result;
-
-				if (lviX == null && lviY == null)
-				{
-					result = 0;
-				}
-				else if (lviX == null)
-				{
-					result = -1;
-				}
-
-				else if (lviY == null)
-				{
-					result = 1;
-				}
+				int xInt, yInt;
+				double xDbl, yDbl;
+				int result;				
 
 				switch (ColumnIndex)
 				{
 					case 0:
-						int xInt = GetIndex(lviX.SubItems[ColumnIndex].Text, SortDirection);
-						int yInt = GetIndex(lviY.SubItems[ColumnIndex].Text, SortDirection);
+						xInt = GetIndex(lviX.SubItems[ColumnIndex].Text, SortDirection);
+						yInt = GetIndex(lviY.SubItems[ColumnIndex].Text, SortDirection);
 						result = xInt.CompareTo(yInt);
 						break;
 					case 1:
 					case 2:
-						double xDbl = double.Parse(lviX.SubItems[ColumnIndex].Text);
+					case 3:
+					case 4:
+						xDbl = ColumnIndex < lviX.SubItems.Count ? double.Parse(lviX.SubItems[ColumnIndex].Text) : 0;
 						if (xDbl == MaxValue && SortDirection == SortOrder.Descending)
 							xDbl = -1;
-						double yDbl = double.Parse(lviY.SubItems[ColumnIndex].Text);
+						yDbl = ColumnIndex < lviY.SubItems.Count ? double.Parse(lviY.SubItems[ColumnIndex].Text) : 0;
 						if (yDbl == MaxValue && SortDirection == SortOrder.Descending)
 							yDbl = -1;
 						result = xDbl.CompareTo(yDbl);
 						break;
+					case 5:
+					case 6:
+						xDbl = (ColumnIndex < lviX.SubItems.Count &&
+							!string.IsNullOrWhiteSpace(lviX.SubItems[ColumnIndex].Text)) ? double.Parse(lviX.SubItems[ColumnIndex].Text.Replace("%", "").Replace(" ", "").Replace("+","")) : 0;
+						if (xDbl == MaxValue && SortDirection == SortOrder.Descending)
+							xDbl = -1;
+						yDbl = (ColumnIndex < lviY.SubItems.Count &&
+							!string.IsNullOrWhiteSpace(lviY.SubItems[ColumnIndex].Text)) ? double.Parse(lviY.SubItems[ColumnIndex].Text.Replace("%","").Replace(" ","").Replace("+", "")) : 0;
+						if (yDbl == MaxValue && SortDirection == SortOrder.Descending)
+							yDbl = -1;
+						result = xDbl.CompareTo(yDbl);
+						break;
+
 					default:
 						result = string.Compare(
 							lviX.SubItems[ColumnIndex].Text,

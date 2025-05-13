@@ -8,13 +8,7 @@ namespace WordHiddenPowers.Dialogs
 {
 	public partial class DecimalNoteDialog : NoteDialog
 	{
-		public double Value
-		{
-			get
-			{
-				return numericTextBox1.Value;
-			}
-		}
+		public double Value => numericTextBox1.Value;			
 
 		public DecimalNoteDialog(RepositoryDataSet dataSet, Word.Selection selection) : base(dataSet, selection, false)
 		{

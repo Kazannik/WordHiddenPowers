@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: Utils Util
+﻿// Ignore Spelling: Utils Util dest
 
 using System;
 using System.Data;
@@ -9,13 +9,13 @@ using WordHiddenPowers.Repositories;
 using WordHiddenPowers.Repositories.Data;
 using Word = Microsoft.Office.Interop.Word;
 
-namespace WordHiddenPowers.Utils
+namespace WordHiddenPowers.Utils.WordDocuments
 {
-	public static class ContentUtil
+	static class Content
 	{
 		public static bool ExistsVariable(Word.Variables array, string variableName)
 		{
-			Regex regex = new Regex("^" + variableName + "(_\\d{1,})*$");
+			Regex regex = new Regex("^" + variableName + "(_\\d+)*$");
 			for (int i = 1; i <= array.Count; i++)
 			{
 				if (regex.IsMatch(array[i].Name))
@@ -26,7 +26,7 @@ namespace WordHiddenPowers.Utils
 
 		public static Word.Variable GetVariable(Word.Variables array, string variableName)
 		{
-			Regex regex = new Regex("^" + variableName + "(_\\d{1,})*$");
+			Regex regex = new Regex("^" + variableName + "(_\\d+)*$");
 			for (int i = 1; i <= array.Count; i++)
 			{
 				if (regex.IsMatch(array[i].Name)) 
@@ -52,7 +52,7 @@ namespace WordHiddenPowers.Utils
 		{
 			if (!string.IsNullOrEmpty(value) && value.Length > 65280)
 			{
-				ShowDialogUtil.ShowErrorDialog("Длина значения сохраняемой переменной не может превышать 65 280 знаков!");
+				Dialogs.ShowErrorDialog("Длина значения сохраняемой переменной не может превышать 65 280 знаков!");
 				return;
 			}
 
@@ -66,12 +66,7 @@ namespace WordHiddenPowers.Utils
 				array.Add(variableName, value);
 			}				
 		}
-
-		public static void CommitCurrentDataSet(Word.Variables array, RepositoryDataSet dataSet)
-		{
-			CommitVariable(array: array, variableName: Const.Globals.XML_CURRENT_VARIABLE_NAME, dataSet: dataSet);
-		}
-
+		
 		public static void CommitVariable(Word.Variables array, string variableName, RepositoryDataSet dataSet)
 		{
 			StringBuilder builder = new StringBuilder();
@@ -166,6 +161,13 @@ namespace WordHiddenPowers.Utils
 				variableName: Const.Globals.DESCRIPTION_VARIABLE_NAME);
 		}
 
+		public static string GetMLModelName(Word._Document Doc)
+		{
+			return GetVariableValueOrDefault(
+				array: Doc.Variables,
+				variableName: Const.Globals.ML_MODEL_VARIABLE_NAME);
+		}
+
 		public static DateTime GetDate(Word._Document Doc)
 		{
 			string value = GetVariableValueOrDefault(
@@ -204,29 +206,6 @@ namespace WordHiddenPowers.Utils
 				array: Doc.Variables,
 				variableName: Const.Globals.XML_CURRENT_VARIABLE_NAME + "_0");
 			}				
-		}
-
-
-		public static void UnregisterAllEvents(object objectWithEvents)
-		{
-			Type theType = objectWithEvents.GetType();
-
-			//Even though the events are public, the FieldInfo associated with them is private
-			foreach (System.Reflection.FieldInfo field in theType.GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance))
-			{
-				//eventInfo will be null if this is a normal field and not an event.
-				System.Reflection.EventInfo eventInfo = theType.GetEvent(field.Name);
-				if (eventInfo != null)
-				{
-					if (field.GetValue(objectWithEvents) is MulticastDelegate multicastDelegate)
-					{
-						foreach (Delegate _delegate in multicastDelegate.GetInvocationList())
-						{
-							eventInfo.RemoveEventHandler(objectWithEvents, _delegate);
-						}
-					}
-				}
-			}
-		}
+		}		
 	}
 }

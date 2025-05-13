@@ -1,26 +1,20 @@
 ﻿// Ignore Spelling: Util Pattersn Utils
 
-using NeuronetLibrary;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static NeuronetLibrary.MLModel;
+using static WordHiddenPowers.MLService.MLModel;
 
 namespace WordHiddenPowers.Utils
 {
-    public static class MLModelUtil
+    static class MLModel
     {
-		private static readonly string MLNetModelFilterPath = Path.Combine(Environment.CurrentDirectory, "MLModel.filters");
+		private static readonly string MLNetModelFilterPath = Path.Combine(FileSystem.UserDirectory.FullName, "MLModel.filters");
 
 		private static Filters filters = null;
 
-		public static IOrderedEnumerable<KeyValuePair<string, float>> PredictAll(string text)
+		public static IOrderedEnumerable<KeyValuePair<string, float>> PredictAll(string text, string mlNetModelPath)
 		{
 			if (filters == null) filters = new Filters();
 
@@ -30,7 +24,7 @@ namespace WordHiddenPowers.Utils
 			{
 				Title = text,
 			};
-			return PredictAllLabels(sampleData);
+			return PredictAllLabels(sampleData, mlNetModelPath);
 		}
 
 		/// <summary>
@@ -118,7 +112,7 @@ namespace WordHiddenPowers.Utils
 			{
 				text = Clean(text: text);
 
-				if (ExcludedWords.Any())
+				if (IsInitialize && ExcludedWords.Any())
 				{
 					MatchCollection words = regexWords.Matches(text);
 					text = string.Empty;
@@ -127,7 +121,7 @@ namespace WordHiddenPowers.Utils
 						text += IsExcludedWords(item.Value);
 					}
 				}
-				if (RecommendWords.Any())
+				if (IsInitialize && RecommendWords.Any())
 				{
 					MatchCollection words = regexWords.Matches(text);
 					text = string.Empty;
@@ -175,12 +169,16 @@ namespace WordHiddenPowers.Utils
 			public string Clean(string text)
 			{
 				text = text.ToLower();
-								
-				foreach (string pattern in ExcludedPattersn)
+				text = text.Replace("ё", "е");
+				
+				if (IsInitialize)
 				{
-					text = Regex.Replace(text, pattern, " ");
+					foreach (string pattern in ExcludedPattersn)
+					{
+						text = Regex.Replace(text, pattern, " ");
+					}
 				}
-
+				
 				text = regexDecimal.Replace(text, " [число] ");
 				text = regexSpace.Replace(text, " ");
 				return text.Trim();

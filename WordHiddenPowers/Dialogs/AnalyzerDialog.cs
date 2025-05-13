@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using WordHiddenPowers.Repositories;
 using WordHiddenPowers.Utils;
+using static System.Net.Mime.MediaTypeNames;
+using Content = WordHiddenPowers.Utils.WordDocuments.Content;
 
 namespace WordHiddenPowers.Dialogs
 {
@@ -15,12 +20,13 @@ namespace WordHiddenPowers.Dialogs
 
 		public AnalyzerDialog(Documents.Document document)
 		{
-			this.Icon = WordUtil.GetIconMso(Const.Content.ANALAIZER_DIALOG_OFFICE_IMAGE_ID, SystemInformation.IconSize.Width, SystemInformation.IconSize.Height);
+			this.Icon = WordDocument.GetIconMso(Const.Content.ANALAIZER_DIALOG_OFFICE_IMAGE_ID, SystemInformation.IconSize.Width, SystemInformation.IconSize.Height);
 
 			this.document = document;
 
 			InitializeComponent();
 
+			this.Visible = false;
 			this.statusListBox.SelectedItemChanged += new System.EventHandler<ControlLibrary.Controls.ListControls.ItemEventArgs<Controls.ListControls.StatusListControl.ListItem>>(this.StatusListBox_SelectedItemChanged);
 
 			statusListBox.DataSet = document.AggregatedDataSet;
@@ -51,7 +57,7 @@ namespace WordHiddenPowers.Dialogs
 				document.AggregatedDataSet.DocumentKeys.Clear();
 
 				document.AggregatedDataSet.AcceptChanges();
-				ContentUtil.CommitVariable(document.Doc.Variables, Const.Globals.XML_AGGREGATED_VARIABLE_NAME, document.AggregatedDataSet);
+				Content.CommitVariable(document.Doc.Variables, Const.Globals.XML_AGGREGATED_VARIABLE_NAME, document.AggregatedDataSet);
 			}				
 		}
 		
@@ -62,7 +68,7 @@ namespace WordHiddenPowers.Dialogs
 				Multiselect = false,
 				Filter = Const.Globals.DIALOG_XML_FILTER
 			};
-			if (ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
+			if (Utils.Dialogs.ShowDialog(dialog) == DialogResult.OK)
 			{
 				statusListBox.DataSet = null;
 				contentListBox.DataSet = null;
@@ -77,7 +83,7 @@ namespace WordHiddenPowers.Dialogs
 		private void FileSave_Click(object sender, EventArgs e)
 		{
 			document.AggregatedDataSet.AcceptChanges();
-			ContentUtil.CommitVariable(document.Doc.Variables, Const.Globals.XML_AGGREGATED_VARIABLE_NAME, document.AggregatedDataSet);
+			Content.CommitVariable(document.Doc.Variables, Const.Globals.XML_AGGREGATED_VARIABLE_NAME, document.AggregatedDataSet);
 		}
 
 		private void FileSaveAs_Click(object sender, EventArgs e)
@@ -86,7 +92,7 @@ namespace WordHiddenPowers.Dialogs
 			{
 				Filter = Const.Globals.DIALOG_XML_FILTER
 			};
-			if (ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
+			if (Utils.Dialogs.ShowDialog(dialog) == DialogResult.OK)
 			{
 				document.CommitVariables();
 				Xml.SaveData(document.AggregatedDataSet, dialog.FileName);
@@ -97,15 +103,19 @@ namespace WordHiddenPowers.Dialogs
 		{
 			contentListBox.Hide = mnuViewHide.Checked;
 		}
-		
+
+		private void ViewRefresh_Click(object sender, EventArgs e)
+		{
+			contentListBox.ReadData();
+		}
 
 		private void FileImportFromFolder_Click(object sender, EventArgs e)
 		{
 			FolderBrowserDialog dialog = new FolderBrowserDialog();
-			if (ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
+			if (Utils.Dialogs.ShowDialog(dialog) == DialogResult.OK)
 			{
 				//importDataSet = FileSystemUtil.ImportFiles(dialog.SelectedPath);
-				ContentUtil.CommitVariable(document.Doc.Variables, Const.Globals.XML_AGGREGATED_VARIABLE_NAME, document.AggregatedDataSet);
+				Content.CommitVariable(document.Doc.Variables, Const.Globals.XML_AGGREGATED_VARIABLE_NAME, document.AggregatedDataSet);
 				document.Doc.Saved = false;
 			}
 		}
@@ -123,7 +133,7 @@ namespace WordHiddenPowers.Dialogs
 				if (result == DialogResult.Yes)
 				{
 					document.AggregatedDataSet.AcceptChanges();
-					ContentUtil.CommitVariable(document.Doc.Variables, Const.Globals.XML_AGGREGATED_VARIABLE_NAME, document.AggregatedDataSet);
+					Content.CommitVariable(document.Doc.Variables, Const.Globals.XML_AGGREGATED_VARIABLE_NAME, document.AggregatedDataSet);
 				}
 				else
 				{
@@ -131,9 +141,9 @@ namespace WordHiddenPowers.Dialogs
 				}
 			}
 			InsertDataPropertiesDialog dialog = new InsertDataPropertiesDialog();
-			if (ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
+			if (Utils.Dialogs.ShowDialog(dialog) == DialogResult.OK)
 			{
-				WordUtil.InsertToWordDocument(
+				WordDocument.InsertToWordDocument(
 					sourceDocument: document,
 					minRating: dialog.MinRating,
 					maxRating: dialog.MaxRating,
@@ -147,12 +157,18 @@ namespace WordHiddenPowers.Dialogs
 			Close();
 		}
 
+		private void SplitContainer1_Panel1_Resize(object sender, EventArgs e)
+		{
+			statusListBox.Location = new Point(0, 0);
+			statusListBox.Size = splitContainer1.Panel1.ClientSize;
+		}
+
 		private void SplitContainer1_Panel2_Resize(object sender, EventArgs e)
 		{
-			categoryBox1.Location = new Point(0, 0);
-			categoryBox1.Width = splitContainer1.Panel2.Width;
-			contentListBox.Location = new Point(0, categoryBox1.Height);
-			contentListBox.Size = new Size(splitContainer1.Panel2.Width, splitContainer1.Panel2.Height - categoryBox1.Height);
+				categoryBox1.Location = new Point(0, 0);
+				categoryBox1.Width = splitContainer1.Panel2.Width;
+				contentListBox.Location = new Point(0, categoryBox1.Height);
+				contentListBox.Size = new Size(splitContainer1.Panel2.Width, splitContainer1.Panel2.Height - categoryBox1.Height);
 		}
 				
 		private void AnalyzerDialog_FormClosing(object sender, FormClosingEventArgs e)
@@ -165,7 +181,7 @@ namespace WordHiddenPowers.Dialogs
 					if (result == DialogResult.Yes)
 					{
 						document.AggregatedDataSet.AcceptChanges();
-						ContentUtil.CommitVariable(document.Doc.Variables, Const.Globals.XML_AGGREGATED_VARIABLE_NAME, document.AggregatedDataSet);
+						Content.CommitVariable(document.Doc.Variables, Const.Globals.XML_AGGREGATED_VARIABLE_NAME, document.AggregatedDataSet);
 					}
 					else if (result == DialogResult.Cancel)
 					{
@@ -175,29 +191,30 @@ namespace WordHiddenPowers.Dialogs
 			}
 		}
 
-		private void FileExportTo_Click(object sender, EventArgs e)
+		private void FileExportTo_ClickAsync(object sender, EventArgs e)
 		{
 			SaveFileDialog dialog = new SaveFileDialog
 			{
 				Filter = Const.Globals.DIALOG_TSV_FILTER + "|" + Const.Globals.DIALOG_TXT_FILTER,
 				FileName = "Content_" + DateTime.Now.ToString("dd-MM-yyyy_hh-mm-ss")				
 			};
-			if (ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
+			if (Utils.Dialogs.ShowDialog(dialog) == DialogResult.OK)
 			{
 				document.CommitVariables();
-			
-				IEnumerable<string> content = dialog.FilterIndex == 1
-					? document.AggregatedDataSet.GetMlModelDataSetTsvContent()
-					: document.AggregatedDataSet.GetTxtContent() ;
 
-				using (StreamWriter outputFile = new StreamWriter(dialog.FileName, false, System.Text.Encoding.GetEncoding(1251)))
-				{
-					foreach (string line in content)
-					{
-						outputFile.WriteLine(line);
-					}
-				}
-				ShowDialogUtil.ShowMessageDialog("Экспорт данных завершен!");
+    			IEnumerable<string> contents = dialog.FilterIndex == 1
+					? document.AggregatedDataSet.GetMlModelDataSetTsvContent(true)
+					: document.AggregatedDataSet.GetTxtContent();
+
+				IEnumerable<string> oldContent = dialog.FilterIndex == 1
+					? document.OldAggregatedDataSet.GetMlModelDataSetTsvContent(false)
+					: document.OldAggregatedDataSet.GetTxtContent();
+
+				contents = contents.Union(oldContent);
+
+				File.WriteAllLines(dialog.FileName, contents, System.Text.Encoding.GetEncoding(1251));
+
+				MessageBox.Show(owner: this, text: "Экспорт данных завершен!", caption: Const.Globals.ADDIN_TITLE, buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Information);
 			}
 		}
 
@@ -209,23 +226,13 @@ namespace WordHiddenPowers.Dialogs
 				FileName = "MLModelDictionary" + DateTime.Now.ToString("dd-MM-yyyy_hh-mm-ss")
 
 			};
-			if (Utils.ShowDialogUtil.ShowDialog(dialog) == DialogResult.OK)
+			if (Utils.Dialogs.ShowDialog(dialog) == DialogResult.OK)
 			{
 				document.CommitVariables();
 				IList<string> result = new List<string>();
-				foreach (string line in document.AggregatedDataSet.GetContent())
-				{
-					string[] buffer = line.Split(' ');
-					foreach (string word in buffer)
-					{
-						if (!string.IsNullOrWhiteSpace(word)
-							&& word.Length > 2
-							&& !result.Contains(word))
-						{
-							result.Add(word);
-						}						
-					}
-				}
+
+				GetDictionary(ref result, document.AggregatedDataSet);
+				GetDictionary(ref result, document.OldAggregatedDataSet);
 
 				using (StreamWriter outputFile = new StreamWriter(dialog.FileName, false, System.Text.Encoding.GetEncoding(1251)))
 				{
@@ -234,7 +241,31 @@ namespace WordHiddenPowers.Dialogs
 						outputFile.WriteLine(line);
 					}
 				}
+				Utils.Dialogs.ShowMessageDialog("Экспорт словаря завершен!");
 			}
+		}
+		
+		private void GetDictionary(ref IList<string> list, RepositoryDataSet sourceDataSet)
+		{			
+			foreach (string line in sourceDataSet.GetContent())
+			{
+				string[] buffer = line.Split(' ');
+				foreach (string word in buffer)
+				{
+					if (!string.IsNullOrWhiteSpace(word)
+						&& word.Length > 2
+						&& !list.Contains(word))
+					{
+						list.Add(word);
+					}
+				}
+			}
+		}
+
+		private void AnalyzerDialog_Load(object sender, EventArgs e)
+		{
+			this.Height++;
+			this.Visible = true;
 		}
 	}
 }

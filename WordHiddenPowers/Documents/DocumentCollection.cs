@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Content = WordHiddenPowers.Utils.WordDocuments.Content;
 using Office = Microsoft.Office.Core;
 using Tools = Microsoft.Office.Tools;
 using Word = Microsoft.Office.Interop.Word;
@@ -20,34 +21,28 @@ namespace WordHiddenPowers.Documents
 
 		public DocumentCollection(RibbonToggleButton paneVisibleButton)
 		{
-			Word.Application application = Globals.ThisAddIn.Application;
 			documents = new Dictionary<string, Document>();
 
-			this.PaneVisibleButton = paneVisibleButton;
-			this.PaneVisibleButton.Checked = false;
-			this.PaneVisibleButton.Click += new RibbonControlEventHandler(PaneVisibleButtonClick);
+			PaneVisibleButton = paneVisibleButton;
+			PaneVisibleButton.Checked = false;
+			PaneVisibleButton.Click += new RibbonControlEventHandler(PaneVisibleButtonClick);
 
-			application.WindowSelectionChange += new Word.ApplicationEvents4_WindowSelectionChangeEventHandler(Document_WindowSelectionChange);
+			Globals.ThisAddIn.Application.WindowSelectionChange += new Word.ApplicationEvents4_WindowSelectionChangeEventHandler(Document_WindowSelectionChange);
 
-			application.CommandBars["Text"].Reset();
+			Globals.ThisAddIn.Application.CommandBars["Text"].Reset();
 
-			buttonSelectTextCategory = AddButtons(application.CommandBars["Text"], Const.Content.TEXT_NOTE_MENU_CAPTION, Const.Content.TEXT_NOTE_OFFICE_IMAGE_ID, Const.Panes.BUTTON_STRING_TAG, true, AddTextNoteClick);
-			buttonSelectDecimalCategory = AddButtons(application.CommandBars["Text"], Const.Content.DECIMAL_NOTE_MENU_CAPTION, Const.Content.DECIMAL_NOTE_FACE_ID, Const.Panes.BUTTON_DECIMAL_TAG, false, AddDecimalNoteClick);
+			buttonSelectTextCategory = AddButtons(Globals.ThisAddIn.Application, Globals.ThisAddIn.Application.CommandBars["Text"], Const.Content.TEXT_NOTE_MENU_CAPTION, Const.Content.TEXT_NOTE_OFFICE_IMAGE_ID, Const.Panes.BUTTON_STRING_TAG, true, AddTextNote_Click);
+			buttonSelectDecimalCategory = AddButtons(Globals.ThisAddIn.Application, Globals.ThisAddIn.Application.CommandBars["Text"], Const.Content.DECIMAL_NOTE_MENU_CAPTION, Const.Content.DECIMAL_NOTE_OFFICE_IMAGE_ID, Const.Panes.BUTTON_DECIMAL_TAG, false, AddDecimalNote_Click);
 		}
 
 		public Document ActiveDocument
 		{
 			get
 			{
-				return GetDocument(Globals.ThisAddIn.Application.ActiveDocument);
+				return GetDocument(Globals.ThisAddIn.Application, Globals.ThisAddIn.Application.ActiveDocument);
 			}
 		}
-
-		private Word.Selection Selection
-		{
-			get { return Globals.ThisAddIn.Application.ActiveWindow?.Selection; }
-		}
-
+		
 		private void PaneVisibleButtonClick(object sender, RibbonControlEventArgs e)
 		{
 			RibbonToggleButton button = (RibbonToggleButton)sender;
@@ -55,9 +50,8 @@ namespace WordHiddenPowers.Documents
 		}
 
 		private void Document_WindowSelectionChange(Word.Selection Sel)
-		{
-			Word.Application application = Globals.ThisAddIn.Application;
-			Office.CommandBarButton button = GetButton(application.CommandBars["Text"], Const.Panes.BUTTON_STRING_TAG);
+		{			
+			Office.CommandBarButton button = GetButton(Globals.ThisAddIn.Application.CommandBars["Text"], Const.Panes.BUTTON_STRING_TAG);
 			if (button != null)
 			{
 				if (Sel != null &&
@@ -72,14 +66,16 @@ namespace WordHiddenPowers.Documents
 			}
 		}
 
-		private void AddDecimalNoteClick(Office.CommandBarButton Ctrl, ref bool CancelDefault)
+		private void AddDecimalNote_Click(Office.CommandBarButton Ctrl, ref bool CancelDefault)
 		{
-			if (Selection != null) ActiveDocument.AddDecimalNote(Selection);
+			if (Globals.ThisAddIn.Selection != null)
+				ActiveDocument.AddDecimalNote(Globals.ThisAddIn.Selection);
 		}
 
-		private void AddTextNoteClick(Office.CommandBarButton Ctrl, ref bool CancelDefault)
+		private void AddTextNote_Click(Office.CommandBarButton Ctrl, ref bool CancelDefault)
 		{
-			if (Selection !=null) ActiveDocument.AddTextNote(Selection);
+			if (Globals.ThisAddIn.Selection != null)
+				ActiveDocument.AddTextNote(Globals.ThisAddIn.Selection);
 		}
 
 		private Office.CommandBarButton AddButtons(Office.CommandBar popupCommandBar, string caption, int faceId, string tag, bool beginGroup, Office._CommandBarButtonEvents_ClickEventHandler clickFunctionDelegate)
@@ -97,14 +93,14 @@ namespace WordHiddenPowers.Documents
 			return commandBarButton;
 		}
 
-		private Office.CommandBarButton AddButtons(Office.CommandBar popupCommandBar, string caption, string idMso, string tag, bool beginGroup, Office._CommandBarButtonEvents_ClickEventHandler clickFunctionDelegate)
+		private Office.CommandBarButton AddButtons(Word.Application application, Office.CommandBar popupCommandBar, string caption, string idMso, string tag, bool beginGroup, Office._CommandBarButtonEvents_ClickEventHandler clickFunctionDelegate)
 		{
 			Office.CommandBarButton commandBarButton = GetButton(popupCommandBar, tag);
 			if (commandBarButton == null)
 			{
 				commandBarButton = (Office.CommandBarButton)popupCommandBar.Controls.Add(Office.MsoControlType.msoControlButton);
 				commandBarButton.Caption = caption;
-				commandBarButton.Picture = Globals.ThisAddIn.Application.CommandBars.GetImageMso(idMso, 16, 16);
+				commandBarButton.Picture = application.CommandBars.GetImageMso(idMso, 16, 16);
 				commandBarButton.Tag = tag;
 				commandBarButton.BeginGroup = beginGroup;
 				commandBarButton.Click += new Office._CommandBarButtonEvents_ClickEventHandler(clickFunctionDelegate);
@@ -126,7 +122,7 @@ namespace WordHiddenPowers.Documents
 
 		#region Documents Command
 		
-		public void Activate(Word.Document Doc, Word.Window Wn)
+		public void Activate(Word._Document Doc, Word.Window Wn)
 		{
 			List<Tools.CustomTaskPane> panes = new List<Tools.CustomTaskPane>(Globals.ThisAddIn.CustomTaskPanes
 				.Where(pane => pane.Window == Wn && ((Panes.WordHiddenPowersPane)pane.Control).Document.Doc != Doc));
@@ -145,9 +141,9 @@ namespace WordHiddenPowers.Documents
 			}
 		}
 
-		public void Add(Word.Document Doc)
+		public void Add(Word._Document Doc)
 		{
-			string guid = Utils.ContentUtil.GetGuidOrDefault(Doc);
+			string guid = Content.GetGuidOrDefault(Doc);
 			if (!documents.ContainsKey(guid))
 			{
 				documents.Add(guid, Document.Create(this, Doc.FullName, Doc));
@@ -165,25 +161,25 @@ namespace WordHiddenPowers.Documents
 
 		}
 
-		public void Remove(Word.Document Doc)
+		public void Remove(Word._Document Doc)
 		{
-			string guid = Utils.ContentUtil.GetGuid(Doc);
+			string guid = Content.GetGuid(Doc);
 			if (documents.ContainsKey(guid))
 			{
 				documents.Remove(guid);
 			}
 		}
 
-		private Document GetDocument(Word.Document Doc)
+		private Document GetDocument(Word.Application application, Word._Document Doc)
 		{
-			string guid = Utils.ContentUtil.GetGuidOrDefault(Doc);
+			string guid = Content.GetGuidOrDefault(Doc);
 			if (!documents.ContainsKey(guid))
 			{
 				documents.Add(guid, Document.Create(this, Doc.FullName, Doc));
 			}
 
-			List<string> closeDocs = (from Word.Document document in Globals.ThisAddIn.Application.Documents
-									  let id = Utils.ContentUtil.GetGuidOrDefault(Doc)
+			List<string> closeDocs = (from Word._Document document in application.Documents
+									  let id = Content.GetGuidOrDefault(Doc)
 									  where !documents.ContainsKey(id)
 									  select id).ToList();
 
@@ -203,8 +199,7 @@ namespace WordHiddenPowers.Documents
 
 		public void Dispose()
 		{
-			Word.Application application = Globals.ThisAddIn.Application as Word.Application;
-			application.CommandBars["Text"].Reset();
+			Globals.ThisAddIn.Application.CommandBars["Text"].Reset();
 		}
 
 		public IEnumerator<Document> GetEnumerator()
