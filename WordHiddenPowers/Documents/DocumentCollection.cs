@@ -3,19 +3,33 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Content = WordHiddenPowers.Utils.WordDocuments.Content;
 using Office = Microsoft.Office.Core;
 using Tools = Microsoft.Office.Tools;
 using Word = Microsoft.Office.Interop.Word;
+using WordHiddenPowers.LLMService;
+
+
+
+#if WORD
+using Content = WordHiddenPowers.Utils.WordDocuments.Content;
 
 namespace WordHiddenPowers.Documents
+#else
+using Content = ProsecutorialSupervision.Utils.WordDocuments.Content;
+
+namespace ProsecutorialSupervision.Documents
+#endif
 {
-	public class DocumentCollection : IEnumerable<Document>, IDisposable
+	public partial class DocumentCollection : IEnumerable<Document>, IDisposable
 	{
 		internal RibbonToggleButton PaneVisibleButton;
 
 		private readonly Office.CommandBarButton buttonSelectDecimalCategory;
 		private readonly Office.CommandBarButton buttonSelectTextCategory;
+		private readonly Office.CommandBarButton buttonLMMChat1;
+		private readonly Office.CommandBarButton buttonLMMChat2;
+
+		private readonly LLMClient llmClient;
 
 		private readonly IDictionary<string, Document> documents;
 
@@ -33,15 +47,30 @@ namespace WordHiddenPowers.Documents
 
 			buttonSelectTextCategory = AddButtons(Globals.ThisAddIn.Application, Globals.ThisAddIn.Application.CommandBars["Text"], Const.Content.TEXT_NOTE_MENU_CAPTION, Const.Content.TEXT_NOTE_OFFICE_IMAGE_ID, Const.Panes.BUTTON_STRING_TAG, true, AddTextNote_Click);
 			buttonSelectDecimalCategory = AddButtons(Globals.ThisAddIn.Application, Globals.ThisAddIn.Application.CommandBars["Text"], Const.Content.DECIMAL_NOTE_MENU_CAPTION, Const.Content.DECIMAL_NOTE_OFFICE_IMAGE_ID, Const.Panes.BUTTON_DECIMAL_TAG, false, AddDecimalNote_Click);
+
+			buttonLMMChat1 = AddButtons(Globals.ThisAddIn.Application, Globals.ThisAddIn.Application.CommandBars["Text"], Properties.Settings.Default.LLMButton1, Const.Content.LLM_BUTTON_IMAGE_ID, $"Системный промпт: {Properties.Settings.Default.LLMSystemMessage1}", true, AiButton1_Click);
+			buttonLMMChat2 = AddButtons(Globals.ThisAddIn.Application, Globals.ThisAddIn.Application.CommandBars["Text"], Properties.Settings.Default.LLMButton2, Const.Content.LLM_BUTTON_IMAGE_ID, $"Системный промпт: {Properties.Settings.Default.LLMSystemMessage2}", false, AiButton2_Click);
+
+			llmClient = new LLMClient();
+
+			llmClient.ChatCompleted += new EventHandler<LLMClient.ChatCompletedEventArgs>(LLMClient_ChatCompleted);
+			llmClient.ChatProgress += new EventHandler<LLMClient.ChatProgressEventArgs>(LLMClient_ChatProgress);
+
+			llmClient.EmbedCompleted += new EventHandler<LLMClient.EmbedCompletedEventArgs>(LLMClient_EmbedCompleted);
+			llmClient.EmbedProgress += new EventHandler<LLMClient.EmbedProgressEventArgs>(LLMClient_EmbedProgress);
+
+			//if (!string.IsNullOrEmpty(aiClient.SelectedModel))
+			//{
+			//	AiModelName = aiClient.SelectedModel;
+			//}
+
+			//if (!string.IsNullOrEmpty(aiClient.Url))
+			//{
+			//	AiUrl = aiClient.Url;
+			//}
 		}
 
-		public Document ActiveDocument
-		{
-			get
-			{
-				return GetDocument(Globals.ThisAddIn.Application, Globals.ThisAddIn.Application.ActiveDocument);
-			}
-		}
+		public Document ActiveDocument => GetDocument(Globals.ThisAddIn.Application, Globals.ThisAddIn.Application.ActiveDocument);
 		
 		private void PaneVisibleButtonClick(object sender, RibbonControlEventArgs e)
 		{
@@ -65,19 +94,7 @@ namespace WordHiddenPowers.Documents
 				}
 			}
 		}
-
-		private void AddDecimalNote_Click(Office.CommandBarButton Ctrl, ref bool CancelDefault)
-		{
-			if (Globals.ThisAddIn.Selection != null)
-				ActiveDocument.AddDecimalNote(Globals.ThisAddIn.Selection);
-		}
-
-		private void AddTextNote_Click(Office.CommandBarButton Ctrl, ref bool CancelDefault)
-		{
-			if (Globals.ThisAddIn.Selection != null)
-				ActiveDocument.AddTextNote(Globals.ThisAddIn.Selection);
-		}
-
+		
 		private Office.CommandBarButton AddButtons(Office.CommandBar popupCommandBar, string caption, int faceId, string tag, bool beginGroup, Office._CommandBarButtonEvents_ClickEventHandler clickFunctionDelegate)
 		{
 			Office.CommandBarButton commandBarButton = GetButton(popupCommandBar, tag);
@@ -127,18 +144,61 @@ namespace WordHiddenPowers.Documents
 			List<Tools.CustomTaskPane> panes = new List<Tools.CustomTaskPane>(Globals.ThisAddIn.CustomTaskPanes
 				.Where(pane => pane.Window == Wn && ((Panes.WordHiddenPowersPane)pane.Control).Document.Doc != Doc));
 
+			panes.ForEach(x => Globals.ThisAddIn.CustomTaskPanes.Remove(x));
+			
+			
+
+			HashSet<Word._Document> seen = new HashSet<Word._Document>();
+			panes.Clear();
+
+			foreach (Tools.CustomTaskPane pane in Globals.ThisAddIn.CustomTaskPanes)
+			{
+				if (!seen.Add(((Panes.WordHiddenPowersPane)pane.Control).Document.Doc)) // Если Add вернул false, значит элемент уже есть
+				{
+					panes.Add(pane);
+				}
+			}
+
 			foreach (Tools.CustomTaskPane pane in panes)
 			{
 				Globals.ThisAddIn.CustomTaskPanes.Remove(pane);
-			}			
-			
-			foreach (Tools.CustomTaskPane pane in Globals.ThisAddIn.CustomTaskPanes)
-			{
-				if (pane.Window == Wn)
-				{
-					PaneVisibleButton.Checked = pane.Visible;
-				}
 			}
+
+			PaneVisibleButton.Checked = Globals.ThisAddIn.CustomTaskPanes
+				.Where(x => x.Window == Wn).Any(x => x.Visible);
+			
+			bool isContent = ActiveDocument.VariablesExists();
+
+			Globals.Ribbons.AddInMainRibbon.saveDataButton.Enabled = isContent;
+			Globals.Ribbons.AddInMainRibbon.deleteDataButton.Enabled = isContent;
+
+			Globals.Ribbons.AddInMainRibbon.editCategoriesButton.Enabled = isContent;
+			Globals.Ribbons.AddInMainRibbon.createTableButton.Enabled = isContent;
+			Globals.Ribbons.AddInMainRibbon.editDocumentKeysButton.Enabled = isContent;
+
+			Globals.Ribbons.AddInMainRibbon.aggregatedImportFolderButton.Enabled = !isContent;
+			Globals.Ribbons.AddInMainRibbon.aggregatedImportFileButton.Enabled = !isContent;
+			Globals.Ribbons.AddInMainRibbon.oldAggregatedImportFolderButton.Enabled = ActiveDocument.CurrentDataSet.WordFiles.Any();
+			Globals.Ribbons.AddInMainRibbon.oldAggregatedImportFileButton.Enabled = ActiveDocument.CurrentDataSet.WordFiles.Any();
+			Globals.Ribbons.AddInMainRibbon.aggregatedTableViewerButton.Enabled = isContent;
+			Globals.Ribbons.AddInMainRibbon.aggregatedDialogButton.Enabled = isContent;
+
+			Globals.Ribbons.AddInMainRibbon.addLastNoteTypeButton.Enabled = isContent && ActiveDocument.CurrentDataSet.Subcategories.Any();
+			Globals.Ribbons.AddInMainRibbon.addTextNoteButton.Enabled = isContent && ActiveDocument.CurrentDataSet.Subcategories.Any(x=> x.IsText);
+			Globals.Ribbons.AddInMainRibbon.addDecimalNoteButton.Enabled = isContent && ActiveDocument.CurrentDataSet.Subcategories.Any(x => x.IsDecimal);
+			Globals.Ribbons.AddInMainRibbon.searchServiceButton.Enabled = isContent && ActiveDocument.CurrentDataSet.Subcategories.Any();
+			Globals.Ribbons.AddInMainRibbon.aiServiceButton.Enabled = isContent && ActiveDocument.CurrentDataSet.Subcategories.Any();
+
+			Globals.Ribbons.AddInMainRibbon.editTableButton.Enabled = isContent;
+
+			//Globals.Ribbons.AddInMainRibbon.paneVisibleButton.Enabled = isContent;
+
+			try
+			{
+				buttonSelectTextCategory.Enabled = isContent;
+                buttonSelectDecimalCategory.Enabled = isContent;
+            }
+			catch (Exception) { }
 		}
 
 		public void Add(Word._Document Doc)
@@ -151,14 +211,13 @@ namespace WordHiddenPowers.Documents
 
 			foreach (Tools.CustomTaskPane pane in Globals.ThisAddIn.CustomTaskPanes)
 			{
-				pane.Visible = false;
+				pane.Visible = true;
 			}
 
 			foreach (Tools.CustomTaskPane pane in Globals.ThisAddIn.CustomTaskPanes)
 			{
 				pane.Visible = PaneVisibleButton.Checked;
 			}
-
 		}
 
 		public void Remove(Word._Document Doc)
@@ -178,12 +237,13 @@ namespace WordHiddenPowers.Documents
 				documents.Add(guid, Document.Create(this, Doc.FullName, Doc));
 			}
 
-			List<string> closeDocs = (from Word._Document document in application.Documents
+			List<string> closedDocs = (from Word._Document document in application.Documents
 									  let id = Content.GetGuidOrDefault(Doc)
 									  where !documents.ContainsKey(id)
-									  select id).ToList();
+									  select id)
+									  .ToList();
 
-			foreach (string id in closeDocs)
+			foreach (string id in closedDocs)
 			{
 				if (documents.ContainsKey(id))
 				{
@@ -197,19 +257,10 @@ namespace WordHiddenPowers.Documents
 
 		#endregion
 
-		public void Dispose()
-		{
-			Globals.ThisAddIn.Application.CommandBars["Text"].Reset();
-		}
+		public void Dispose() => Globals.ThisAddIn.Application.CommandBars["Text"].Reset();
 
-		public IEnumerator<Document> GetEnumerator()
-		{
-			return documents.Values.GetEnumerator();
-		}
+		public IEnumerator<Document> GetEnumerator() => documents.Values.GetEnumerator();
 
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 	}
 }

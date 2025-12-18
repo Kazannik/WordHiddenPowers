@@ -5,9 +5,9 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using WordHiddenPowers.Repositories;
-using WordHiddenPowers.Repositories.Notes;
-using static WordHiddenPowers.Repositories.RepositoryDataSet;
+using WordHiddenPowers.Repository;
+using WordHiddenPowers.Repository.Notes;
+using static WordHiddenPowers.Repository.RepositoryDataSet;
 using Control = WordHiddenPowers.Controls.ListControls.ContentListControl;
 using ListItem = WordHiddenPowers.Controls.ListControls.ContentListControl.ListItem;
 

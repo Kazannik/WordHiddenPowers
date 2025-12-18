@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using WordHiddenPowers.Repositories;
-using WordHiddenPowers.Repositories.Data;
+using WordHiddenPowers.Repository;
+using WordHiddenPowers.Repository.Data;
 using static Tensorboard.TensorShapeProto.Types;
 using Word = Microsoft.Office.Interop.Word;
 
@@ -135,7 +135,7 @@ namespace WordHiddenPowers.Dialogs
 			}
 			else
 			{
-				return null;
+				return default;
 			}
 		}
 
@@ -196,20 +196,11 @@ namespace WordHiddenPowers.Dialogs
 			return null;
 		}
 
-		private void ClearButton_Click(object sender, EventArgs e)
-		{
-			tableEditBox.ClearValues();
-		}
+		private void ClearButton_Click(object sender, EventArgs e) => tableEditBox.ClearValues();
 
-		private void RefreshButton_Click(object sender, EventArgs e)
-		{
-			tableEditBox.RefreshValues();
-		}
+		private void RefreshButton_Click(object sender, EventArgs e) => tableEditBox.RefreshValues();
 
-		private void SaveButton_Click(object sender, EventArgs e)
-		{
-			tableEditBox.CommitValue();
-		}
+		private void SaveButton_Click(object sender, EventArgs e) => tableEditBox.CommitValue();
 
 		private void TableEditorDialog_FormClosing(object sender, FormClosingEventArgs e)
 		{

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
-using WordHiddenPowers.Repositories;
-using WordHiddenPowers.Repositories.Notes;
+using WordHiddenPowers.Repository;
+using WordHiddenPowers.Repository.Notes;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Dialogs

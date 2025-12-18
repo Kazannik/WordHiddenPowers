@@ -1,10 +1,15 @@
-﻿// Ignore Spelling: Utils
+﻿// Ignore Spelling: Utils Dialogs
 
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 
+
+#if WORD
 namespace WordHiddenPowers.Utils
+#else
+namespace ProsecutorialSupervision.Utils
+#endif
 {
 	static class Dialogs
 	{

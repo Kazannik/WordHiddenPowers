@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using WordHiddenPowers.Repositories.Data;
+using WordHiddenPowers.Repository.Data;
 using Content = WordHiddenPowers.Utils.WordDocuments.Content;
 
 namespace WordHiddenPowers.Dialogs

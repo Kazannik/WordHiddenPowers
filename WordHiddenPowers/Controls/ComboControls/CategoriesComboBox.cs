@@ -4,8 +4,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms.Design;
-using WordHiddenPowers.Repositories;
-using WordHiddenPowers.Repositories.Categories;
+using WordHiddenPowers.Repository;
+using WordHiddenPowers.Repository.Categories;
 
 namespace WordHiddenPowers.Controls.ComboControls
 {

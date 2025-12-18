@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: Utils dest
+﻿// Ignore Spelling: Utils dest Prosecutorial
 
 using System;
 using System.Collections.Generic;
@@ -6,14 +6,23 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using WordHiddenPowers.Dialogs;
-using WordHiddenPowers.Repositories;
-using WordHiddenPowers.Repositories.Notes;
-using Content = WordHiddenPowers.Utils.WordDocuments.Content;
-using Table = WordHiddenPowers.Repositories.Data.Table;
 using Word = Microsoft.Office.Interop.Word;
 
+#if WORD
+using WordHiddenPowers.Repository;
+using WordHiddenPowers.Repository.Notes;
+using WordHiddenPowers.Dialogs;
+using Content = WordHiddenPowers.Utils.WordDocuments.Content;
+using Table = WordHiddenPowers.Repository.Data.Table;
+
 namespace WordHiddenPowers.Utils
+#else
+using ProsecutorialSupervision.Repository;
+using ProsecutorialSupervision.Dialogs;
+using Content = ProsecutorialSupervision.Utils.WordDocuments.Content;
+
+namespace ProsecutorialSupervision.Utils
+#endif
 {
 	static class FileSystem
 	{
@@ -213,8 +222,7 @@ namespace WordHiddenPowers.Utils
 			}
 			return isCorrect;
 		}
-
-		
+				
 		/// <summary>
 		/// Копирование данных из документа Word в хранилище.
 		/// </summary>

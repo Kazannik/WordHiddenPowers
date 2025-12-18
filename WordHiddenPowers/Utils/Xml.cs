@@ -4,7 +4,7 @@ using System;
 using System.Data;
 using System.IO;
 using System.Text;
-using WordHiddenPowers.Repositories;
+using WordHiddenPowers.Repository;
 using Content = WordHiddenPowers.Utils.WordDocuments.Content;
 using Word = Microsoft.Office.Interop.Word;
 

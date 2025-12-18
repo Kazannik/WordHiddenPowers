@@ -61,6 +61,16 @@ namespace WordHiddenPowers.Properties {
         }
         
         /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ai_process {
+            get {
+                object obj = ResourceManager.GetObject("ai-process", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
         /// </summary>
         internal static System.Drawing.Icon App {
@@ -493,9 +503,29 @@ namespace WordHiddenPowers.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap FINDCOMP_00 {
+            get {
+                object obj = ResourceManager.GetObject("FINDCOMP_00", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap GroupContTypeNew_24 {
             get {
                 object obj = ResourceManager.GetObject("GroupContTypeNew_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LLMFormat {
+            get {
+                object obj = ResourceManager.GetObject("LLMFormat", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

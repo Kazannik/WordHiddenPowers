@@ -175,5 +175,8 @@ namespace WordHiddenPowers.Const
 		public const string AI_SERVICE_SCREEN_TIP = "Разметить с помощью нейросети";
 		public const string AI_SERVICE_SUPER_TIP = "Нейросеть позволяет разметить документ путем его анализа.";
 		public const string AI_SERVICE_OFFICE_IMAGE_ID = "ChartUpDownBars";
+
+		public const string LLM_BUTTON_IMAGE_ID = "AutoFormat";
+
 	}
 }

@@ -118,190 +118,199 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="ColorYellow_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorYellow_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CreateTable_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CreateTable_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorNavy_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorNavy_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Bold_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Bold_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TableInsertColumnsRight_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TableInsertColumnsRight_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Refresh_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Refresh_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TableInsertColumnsLeft_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TableInsertColumnsLeft_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TableDeleteRows_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TableDeleteRows_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TableInsertRowsAbove_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TableInsertRowsAbove_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorRed_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorRed_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BackColor_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BackColor_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TableDelete_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TableDelete_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="WindowClose_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\WindowClose_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TableInsertColumnsLeft_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TableInsertColumnsLeft_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorTeal_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorTeal_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TableInsertRowsAbove_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TableInsertRowsAbove_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorMenu_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorMenu_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Save_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Save_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorGray_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorGray_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorFuchsia_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorFuchsia_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorSilver_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorSilver_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorPalette_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorPalette_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorMaroon_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorMaroon_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Bold_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Bold_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorWhite_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorWhite_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorBlack_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorBlack_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorBlue_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorBlue_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorYellow_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorYellow_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TableInsertRowsBelow_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TableInsertRowsBelow_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorAqua_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorAqua_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="BackColor_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BackColor_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorLime_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorLime_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TableDeleteColumns_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TableDeleteColumns_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorAqua_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorAqua_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorGreen_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorGreen_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorOlive_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorOlive_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorGreen_26" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorGreen_26.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorPurple_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorPurple_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TableDeleteRows_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TableDeleteRows_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorMenu_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorMenu_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorNavy_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorNavy_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorOlive_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorOlive_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorRed_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorRed_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorBlack_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorBlack_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TableInsertRowsBelow_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TableInsertRowsBelow_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ColorPurple_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ColorPurple_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="TableDeleteColumns_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TableDeleteColumns_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="LLMFormat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LLMFormat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ColorTeal_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorTeal_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorFuchsia_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorFuchsia_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorGray_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorGray_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ColorPalette_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorPalette_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Refresh_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Refresh_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ColorSilver_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ColorSilver_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ColorBlue_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorBlue_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ColorGreen_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ColorGreen_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ColorWhite_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorWhite_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="TableInsertColumnsRight_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TableInsertColumnsRight_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CreateTable_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CreateTable_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Bold_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Bold_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableDelete_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TableDelete_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorAqua_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorAqua_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableInsertColumnsLeft_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TableInsertColumnsLeft_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableDeleteRows_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TableDeleteRows_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorFuchsia_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorFuchsia_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableDeleteColumns_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TableDeleteColumns_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorGreen_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorGreen_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TableClear_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TableClear_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ColorMaroon_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorMaroon_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="FINDCOMP_00" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FINDCOMP_00.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ColorLime_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorLime_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ColorTeal_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorTeal_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="TableDelete_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TableDelete_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ColorPalette_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorPalette_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorGray_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorGray_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorTeal_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorTeal_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableDeleteRows_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TableDeleteRows_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorMenu_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorMenu_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableInsertRowsBelow_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TableInsertRowsBelow_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorMaroon_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorMaroon_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableInsertRowsAbove_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TableInsertRowsAbove_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorGray_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorGray_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="WindowClose_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WindowClose_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableInsertRowsAbove_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TableInsertRowsAbove_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorRed_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorRed_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorMenu_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorMenu_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorYellow_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorYellow_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorNavy_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorNavy_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TableInsertColumnsRight_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TableInsertColumnsRight_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="TableDelete_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TableDelete_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableInsertColumnsLeft_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TableInsertColumnsLeft_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorBlack_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorBlack_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorPalette_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorPalette_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorSilver_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorSilver_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorLime_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorLime_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableDeleteColumns_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TableDeleteColumns_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorBlue_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorBlue_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorFuchsia_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorFuchsia_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorWhite_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorWhite_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorLime_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorLime_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="GroupContTypeNew_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GroupContTypeNew_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ColorYellow_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorYellow_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorOlive_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorOlive_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableInsertRowsBelow_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TableInsertRowsBelow_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="App" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\App.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorBlue_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorBlue_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorAqua_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorAqua_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BackColor_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BackColor_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorGreen_26" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorGreen_26.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorOlive_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorOlive_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorRed_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorRed_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorPurple_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorPurple_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Save_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Save_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorMaroon_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorMaroon_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorBlack_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorBlack_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorWhite_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorWhite_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Bold_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Bold_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorNavy_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorNavy_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ai-process" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ai-process.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

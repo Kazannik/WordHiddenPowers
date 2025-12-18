@@ -11,7 +11,7 @@ namespace WordHiddenPowers.Panes
 	{
 		private IContainer components;
 
-		public Document Document { get; }
+		public readonly Document Document;
 
 		protected WordHiddenPowersPane()
 		{

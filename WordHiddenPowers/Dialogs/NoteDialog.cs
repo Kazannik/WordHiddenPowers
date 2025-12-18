@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using WordHiddenPowers.Repositories;
-using WordHiddenPowers.Repositories.Categories;
-using WordHiddenPowers.Repositories.Notes;
+using WordHiddenPowers.Repository;
+using WordHiddenPowers.Repository.Categories;
+using WordHiddenPowers.Repository.Notes;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Dialogs

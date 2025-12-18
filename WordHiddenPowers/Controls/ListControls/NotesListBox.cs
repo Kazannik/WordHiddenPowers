@@ -5,9 +5,9 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using WordHiddenPowers.Repositories;
-using WordHiddenPowers.Repositories.Notes;
-using static WordHiddenPowers.Repositories.RepositoryDataSet;
+using WordHiddenPowers.Repository;
+using WordHiddenPowers.Repository.Notes;
+using static WordHiddenPowers.Repository.RepositoryDataSet;
 using Control = WordHiddenPowers.Controls.ListControls.NotesListControl;
 using Version = ControlLibrary.Structures.Version;
 
@@ -27,10 +27,7 @@ namespace WordHiddenPowers.Controls.ListControls
 
 		public RepositoryDataSet DataSet
 		{
-			get
-			{
-				return source;
-			}
+			get => source;
 			set
 			{
 				if (source != value)
@@ -48,7 +45,7 @@ namespace WordHiddenPowers.Controls.ListControls
 
 		public bool ShowButtons
 		{
-			get { return showButtons; }
+			get => showButtons;
 			set
 			{
 				if (showButtons != value)
@@ -94,7 +91,7 @@ namespace WordHiddenPowers.Controls.ListControls
 		{
 			if (additionButtonRectage.Contains(e.Location))
 			{
-				Cursor = System.Windows.Forms.Cursors.Hand;
+				Cursor = Cursors.Hand;
 				subtractionButtonRectage = Rectangle.Empty;
 				applyButtonRectage = Rectangle.Empty;
 				cancelButtonRectage = Rectangle.Empty;
@@ -104,21 +101,21 @@ namespace WordHiddenPowers.Controls.ListControls
 				additionButtonRectage = Rectangle.Empty;
 				applyButtonRectage = Rectangle.Empty;
 				cancelButtonRectage = Rectangle.Empty;
-				Cursor = System.Windows.Forms.Cursors.Hand;
+				Cursor = Cursors.Hand;
 			}
 			else if (applyButtonRectage.Contains(e.Location))
 			{
 				additionButtonRectage = Rectangle.Empty;
 				subtractionButtonRectage = Rectangle.Empty;
 				cancelButtonRectage = Rectangle.Empty;
-				Cursor = System.Windows.Forms.Cursors.Hand;
+				Cursor = Cursors.Hand;
 			}
 			else if (cancelButtonRectage.Contains(e.Location))
 			{
 				additionButtonRectage = Rectangle.Empty;
 				subtractionButtonRectage = Rectangle.Empty;
 				applyButtonRectage = Rectangle.Empty;
-				Cursor = System.Windows.Forms.Cursors.Hand;
+				Cursor = Cursors.Hand;
 			}
 			else
 			{
@@ -126,7 +123,7 @@ namespace WordHiddenPowers.Controls.ListControls
 				subtractionButtonRectage = Rectangle.Empty;
 				applyButtonRectage = Rectangle.Empty;
 				cancelButtonRectage = Rectangle.Empty;
-				Cursor = System.Windows.Forms.Cursors.Default;
+				Cursor = Cursors.Default;
 			}
 			base.OnMouseMove(e);
 		}
@@ -141,7 +138,7 @@ namespace WordHiddenPowers.Controls.ListControls
 					subtractionButtonRectage = Rectangle.Empty;
 					applyButtonRectage = Rectangle.Empty;
 					cancelButtonRectage = Rectangle.Empty;
-					Cursor = System.Windows.Forms.Cursors.Hand;
+					Cursor = Cursors.Hand;
 				}
 				else if (note.SubtractionButtonRectangle.Contains(e.Location))
 				{
@@ -149,7 +146,7 @@ namespace WordHiddenPowers.Controls.ListControls
 					subtractionButtonRectage = note.SubtractionButtonRectangle;
 					applyButtonRectage = Rectangle.Empty;
 					cancelButtonRectage = Rectangle.Empty;
-					Cursor = System.Windows.Forms.Cursors.Hand;
+					Cursor = Cursors.Hand;
 				}
 				else if (note.ApplyButtonRectangle.Contains(e.Location))
 				{
@@ -157,7 +154,7 @@ namespace WordHiddenPowers.Controls.ListControls
 					subtractionButtonRectage = Rectangle.Empty;
 					applyButtonRectage = note.ApplyButtonRectangle;
 					cancelButtonRectage = Rectangle.Empty;
-					Cursor = System.Windows.Forms.Cursors.Hand;
+					Cursor = Cursors.Hand;
 				}
 				else if (note.CancelButtonRectangle.Contains(e.Location))
 				{
@@ -165,7 +162,7 @@ namespace WordHiddenPowers.Controls.ListControls
 					subtractionButtonRectage = Rectangle.Empty;
 					applyButtonRectage = Rectangle.Empty;
 					cancelButtonRectage = note.CancelButtonRectangle;
-					Cursor = System.Windows.Forms.Cursors.Hand;
+					Cursor = Cursors.Hand;
 				}
 				else
 				{
@@ -173,7 +170,7 @@ namespace WordHiddenPowers.Controls.ListControls
 					subtractionButtonRectage = Rectangle.Empty;
 					applyButtonRectage = Rectangle.Empty;
 					cancelButtonRectage = Rectangle.Empty;
-					Cursor = System.Windows.Forms.Cursors.Default;
+					Cursor = Cursors.Default;
 				}
 			}
 			else
@@ -182,7 +179,7 @@ namespace WordHiddenPowers.Controls.ListControls
 				subtractionButtonRectage = Rectangle.Empty;
 				applyButtonRectage = Rectangle.Empty;
 				cancelButtonRectage = Rectangle.Empty;
-				Cursor = System.Windows.Forms.Cursors.Default;
+				Cursor = Cursors.Default;
 			}
 			base.OnItemMouseMove(e);
 		}
@@ -550,7 +547,7 @@ namespace WordHiddenPowers.Controls.ListControls
 				Font newFont = new Font(e.Font.FontFamily, e.Font.Size, FontStyle.Bold | FontStyle.Italic);
 				Brush brush = new SolidBrush(e.State == (e.State | DrawItemState.Selected) ? e.ForeColor : Color.DarkGreen);
 				Rectangle rectangle = new Rectangle(e.Bounds.Width - textSize.Width - 1, e.Bounds.Y,
-	textSize.Width, textSize.Height);
+					textSize.Width, textSize.Height);
 				e.Graphics.DrawString(Text, newFont, brush, rectangle, LEFT_STRING_FORMAT);
 				brush.Dispose();
 			}

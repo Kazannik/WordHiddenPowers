@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 using WordHiddenPowers.Panes;
-using Word = Microsoft.Office.Interop.Word;
 using Tools = Microsoft.Office.Tools;
+using Word = Microsoft.Office.Interop.Word;
+using MyMicrosoft.Office.Hooks;
 
 namespace WordHiddenPowers
 {
@@ -16,15 +18,132 @@ namespace WordHiddenPowers
 		
 		private void ThisAddIn_Startup(object sender, EventArgs e)
 		{
+			//mouseProc = MouseHookCallback;
+			keyboardProc = KeyboardHookCallback;
+
+			SetWindowsHooks();
+
 			Properties.Settings.Default.Reload();
-			Documents = new Documents.DocumentCollection(paneVisibleButton: Globals.Ribbons.WordHiddenPowersRibbon.paneVisibleButton);
+
+			Services.OpenAIService.MainSystemMessage = Properties.Settings.Default.MainSystemMessage;
+
+			Services.OpenAIService.Uri = Properties.Settings.Default.LLMHostUri;
+			Services.OpenAIService.LLMName = Properties.Settings.Default.LLMName;
+
+			Services.OpenAIService.CaptionButton1 = Properties.Settings.Default.LLMButton1;
+			Services.OpenAIService.SystemMessageButton1 = Properties.Settings.Default.LLMSystemMessage1;
+			Services.OpenAIService.PrefixUserMessageButton1 = Properties.Settings.Default.LLMPrefixUserMessage1;
+			Services.OpenAIService.PostfixUserMessageButton1 = Properties.Settings.Default.LLMPostfixUserMessage1;
+
+			Services.OpenAIService.CaptionButton2 = Properties.Settings.Default.LLMButton2;
+			Services.OpenAIService.SystemMessageButton2 = Properties.Settings.Default.LLMSystemMessage2;
+			Services.OpenAIService.PrefixUserMessageButton2 = Properties.Settings.Default.LLMPrefixUserMessage2;
+			Services.OpenAIService.PostfixUserMessageButton2 = Properties.Settings.Default.LLMPostfixUserMessage2;
+
+			Documents = new Documents.DocumentCollection(paneVisibleButton: Globals.Ribbons.AddInMainRibbon.paneVisibleButton);
 		}
 
 		private void ThisAddIn_Shutdown(object sender, EventArgs e)
 		{
+			UnhookWindowsHooks();
+
 			Utils.Dialogs.CloseAllDialogs();
 			Documents.Dispose();
+
+			Properties.Settings.Default.MainSystemMessage = Properties.Settings.Default.MainSystemMessage;
+
+			Properties.Settings.Default.LLMHostUri = Services.OpenAIService.Uri;
+			Properties.Settings.Default.LLMName = Services.OpenAIService.LLMName;
+
+			Properties.Settings.Default.LLMButton1 = Services.OpenAIService.CaptionButton1;
+			Properties.Settings.Default.LLMSystemMessage1 = Services.OpenAIService.SystemMessageButton1;
+			Properties.Settings.Default.LLMPrefixUserMessage1 = Services.OpenAIService.PrefixUserMessageButton1;
+			Properties.Settings.Default.LLMPostfixUserMessage1 = Services.OpenAIService.PostfixUserMessageButton1;
+
+			Properties.Settings.Default.LLMButton2 = Services.OpenAIService.CaptionButton2;
+			Properties.Settings.Default.LLMSystemMessage2 = Services.OpenAIService.SystemMessageButton2;
+			Properties.Settings.Default.LLMPrefixUserMessage2 = Services.OpenAIService.PrefixUserMessageButton2;
+			Properties.Settings.Default.LLMPostfixUserMessage2 = Services.OpenAIService.PostfixUserMessageButton2;
+
+			Properties.Settings.Default.Save();
 		}
+
+		#region Hooks
+
+		//private SafeNativeMethods.HookProc mouseProc;
+		private SafeNativeMethods.HookProc keyboardProc;
+
+		//private IntPtr hookIdMouse;
+		private IntPtr hookIdKeyboard;
+
+		private void SetWindowsHooks()
+		{
+			uint threadId = (uint)SafeNativeMethods.GetCurrentThreadId();
+
+			//hookIdMouse =
+			//	SafeNativeMethods.SetWindowsHookEx(
+			//		(int)SafeNativeMethods.HookType.WH_MOUSE,
+			//		mouseProc,
+			//		IntPtr.Zero,
+			//		threadId);
+
+			hookIdKeyboard =
+				SafeNativeMethods.SetWindowsHookEx(
+					(int)SafeNativeMethods.HookType.WH_KEYBOARD,
+					keyboardProc,
+					IntPtr.Zero,
+					threadId);
+		}
+
+		private void UnhookWindowsHooks()
+		{
+			//SafeNativeMethods.UnhookWindowsHookEx(hookIdMouse);
+			SafeNativeMethods.UnhookWindowsHookEx(hookIdKeyboard);
+		}
+
+		private IntPtr MouseHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+		{
+			if (nCode >= 0)
+			{
+				var mouseHookStruct =
+					(SafeNativeMethods.MouseHookStructEx)
+						Marshal.PtrToStructure(lParam, typeof(SafeNativeMethods.MouseHookStructEx));
+
+				// handle mouse message here
+				var message = (SafeNativeMethods.WindowMessages)wParam;
+				//Debug.WriteLine(
+				//	"{0} event detected at position {1} - {2}",
+				//	message,
+				//	mouseHookStruct.pt.X,
+				//	mouseHookStruct.pt.Y);
+			}
+			return SafeNativeMethods.CallNextHookEx(
+				hookIdKeyboard,
+				nCode,
+				wParam,
+				lParam);
+		}
+
+		private IntPtr KeyboardHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+		{
+			if (nCode >= 0)
+			{				
+				Word.Range range;
+				string systemPrompt, prompt;
+
+				//if (DocumentService.ReadPrompt(Doc: ActiveDocument.Doc, Sel: Selection, editRange: out range, systemPrompt: out systemPrompt, prompt: out prompt))
+				//{
+				//	ActiveDocument.Ai(range, systemPrompt, prompt);
+				//}
+			}
+			return SafeNativeMethods.CallNextHookEx(
+				hookIdKeyboard,
+				nCode,
+				wParam,
+				lParam);
+		}
+
+		#endregion
 
 		#region Код, автоматически созданный VSTO
 
@@ -42,12 +161,7 @@ namespace WordHiddenPowers
 			Application.DocumentBeforeClose += new Word.ApplicationEvents4_DocumentBeforeCloseEventHandler(Application_DocumentBeforeClose);
 			Application.WindowActivate += new Word.ApplicationEvents4_WindowActivateEventHandler(Application_WindowActivate);
 		}
-
-		private void Application_DocumentChange()
-		{
-			throw new NotImplementedException();
-		}
-
+		
 		private void Application_WindowActivate(Word.Document Doc, Word.Window Wn)
 		{
 			Documents.Activate(Doc, Wn);

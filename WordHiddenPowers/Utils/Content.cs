@@ -5,11 +5,22 @@ using System.Data;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using WordHiddenPowers.Repositories;
-using WordHiddenPowers.Repositories.Data;
+
+
 using Word = Microsoft.Office.Interop.Word;
 
+
+#if WORD
+using WordHiddenPowers.Repository;
+using WordHiddenPowers.Repository.Data;
+
 namespace WordHiddenPowers.Utils.WordDocuments
+
+#else
+using ProsecutorialSupervision.Repository;
+
+namespace ProsecutorialSupervision.Utils.WordDocuments
+#endif
 {
 	static class Content
 	{

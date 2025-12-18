@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using WordHiddenPowers.Repositories.Categories;
+using WordHiddenPowers.Repository.Categories;
 
 namespace WordHiddenPowers.Controls
 {
     public partial class CategoryBox: UserControl
     {
-        private object owner;
+        private object _owner;
 		private Size codeSize;
 		private Size textSize;
 
@@ -18,15 +18,15 @@ namespace WordHiddenPowers.Controls
 
         public object Owner
         {
-            get => owner;
+            get => _owner;
             set
             {
-				owner = value;
-				if (owner !=null && owner is Category category)
+				_owner = value;
+				if (_owner !=null && _owner is Category category)
 				{
 					descriptionTextBox.Text = category.Description;
 				}
-				else if (owner != null && owner is Subcategory subcategory)
+				else if (_owner != null && _owner is Subcategory subcategory)
 				{
 					descriptionTextBox.Text = subcategory.Description;
 				}
@@ -40,11 +40,11 @@ namespace WordHiddenPowers.Controls
 
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			if (owner is Category category)
+			if (_owner is Category category)
 			{
 				e.Graphics.DrawString(category.Text, Font, new SolidBrush(ForeColor), 0, 0);
 			}
-			else if (owner is Subcategory subcategory)
+			else if (_owner is Subcategory subcategory)
 			{
 				e.Graphics.DrawString(subcategory.Text, Font, new SolidBrush(ForeColor), 0, 0);
 			}

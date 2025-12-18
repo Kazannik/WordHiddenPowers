@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using WordHiddenPowers.Controls.ListControls.CategoriesListControl;
-using WordHiddenPowers.Repositories.Categories;
+using WordHiddenPowers.Repository.Categories;
 using WordHiddenPowers.Utils;
 using Content = WordHiddenPowers.Utils.WordDocuments.Content;
 

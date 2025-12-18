@@ -12,7 +12,7 @@ namespace WordHiddenPowers.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.13.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.14.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -44,6 +44,143 @@ namespace WordHiddenPowers.Properties {
             }
             set {
                 this["MLNetModelPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("mistral:latest")]
+        public string LLMName {
+            get {
+                return ((string)(this["LLMName"]));
+            }
+            set {
+                this["LLMName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:11434/v1")]
+        public global::System.Uri LLMHostUri {
+            get {
+                return ((global::System.Uri)(this["LLMHostUri"]));
+            }
+            set {
+                this["LLMHostUri"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Деловой стиль")]
+        public string LLMButton1 {
+            get {
+                return ((string)(this["LLMButton1"]));
+            }
+            set {
+                this["LLMButton1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Ты профессиональный юрист. Готовишь важный документ. Не фантазируй. Не добавляй с" +
+            "вои комментарии. Дай короткий ответ не более чем из пяти предложений в официальн" +
+            "ом стиле.")]
+        public string LLMSystemMessage1 {
+            get {
+                return ((string)(this["LLMSystemMessage1"]));
+            }
+            set {
+                this["LLMSystemMessage1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Развернутое изложение")]
+        public string LLMButton2 {
+            get {
+                return ((string)(this["LLMButton2"]));
+            }
+            set {
+                this["LLMButton2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Ты профессиональный юрист. Готовишь важный документ. Не фантазируй. Не добавляй с" +
+            "вои комментарии. Дай по существу темы подробный развернутый ответ в официальном " +
+            "стиле.")]
+        public string LLMSystemMessage2 {
+            get {
+                return ((string)(this["LLMSystemMessage2"]));
+            }
+            set {
+                this["LLMSystemMessage2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Дай свой ответ после внимательного изучения этого текста:")]
+        public string LLMPrefixUserMessage1 {
+            get {
+                return ((string)(this["LLMPrefixUserMessage1"]));
+            }
+            set {
+                this["LLMPrefixUserMessage1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Дай свой ответ после внимательного изучения этого текста:")]
+        public string LLMPrefixUserMessage2 {
+            get {
+                return ((string)(this["LLMPrefixUserMessage2"]));
+            }
+            set {
+                this["LLMPrefixUserMessage2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LLMPostfixUserMessage1 {
+            get {
+                return ((string)(this["LLMPostfixUserMessage1"]));
+            }
+            set {
+                this["LLMPostfixUserMessage1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LLMPostfixUserMessage2 {
+            get {
+                return ((string)(this["LLMPostfixUserMessage2"]));
+            }
+            set {
+                this["LLMPostfixUserMessage2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Твоя аудитория профессиональные юристы. При подготовке ответа не фантазируй и не " +
+            "добавляй свои комментарии.")]
+        public string MainSystemMessage {
+            get {
+                return ((string)(this["MainSystemMessage"]));
+            }
+            set {
+                this["MainSystemMessage"] = value;
             }
         }
     }

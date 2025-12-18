@@ -3,8 +3,8 @@
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-using WordHiddenPowers.Repositories;
-using WordHiddenPowers.Repositories.Categories;
+using WordHiddenPowers.Repository;
+using WordHiddenPowers.Repository.Categories;
 
 namespace WordHiddenPowers.Utils
 {

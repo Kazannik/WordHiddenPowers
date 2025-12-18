@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// Ignore Spelling: Dialogs Prosecutorial
+
 using System.Windows.Forms;
 
+#if WORD
 namespace WordHiddenPowers.Dialogs
+#else
+namespace ProsecutorialSupervision.Dialogs
+#endif
 {
 	public partial class ProgressDialog : Form
 	{

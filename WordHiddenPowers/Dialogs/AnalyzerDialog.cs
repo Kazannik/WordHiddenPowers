@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WordHiddenPowers.Repositories;
+using WordHiddenPowers.Repository;
 using WordHiddenPowers.Utils;
 using static System.Net.Mime.MediaTypeNames;
 using Content = WordHiddenPowers.Utils.WordDocuments.Content;

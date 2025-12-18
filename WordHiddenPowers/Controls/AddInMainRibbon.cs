@@ -1,9 +1,11 @@
 ﻿using Microsoft.Office.Tools.Ribbon;
+using System;
+using System.ComponentModel;
 using System.Windows.Forms;
-using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers
 {
+	[TypeDescriptionProvider(typeof(AbstractCommunicatorProvider))]
 	public partial class AddInMainRibbon
 	{
 		private void NewContent_Click(object sender, RibbonControlEventArgs e)
@@ -165,12 +167,64 @@ namespace WordHiddenPowers
 
 		private void AiService_Click(object sender, RibbonControlEventArgs e)
 		{
-			Globals.ThisAddIn.ActiveDocument.AiSearchService();
+			if (Globals.ThisAddIn.Selection != null)
+				Globals.ThisAddIn.Documents.Ai(systemMessage: "Ты юрист; изложи текст коротко, в официальном стиле.");
 		}
 
-		private void NotesGroup_DialogLauncherClick(object sender, RibbonControlEventArgs e)
+		private void Group_DialogLauncherClick(object sender, RibbonControlEventArgs e)
 		{
-			Globals.ThisAddIn.ActiveDocument.ShowNotesSettingDialog();
+			Services.OpenAIService.ShowSettingDialog(Globals.ThisAddIn.ActiveDocument);
+			
+			llmButton1.Label = Services.OpenAIService.CaptionButton1;
+			llmButton1.SuperTip = $"Системный промпт: {Services.OpenAIService.SystemMessageButton1}";
+
+			llmButton2.Label = Services.OpenAIService.CaptionButton2;
+			llmButton2.SuperTip = $"Системный промпт: {Services.OpenAIService.SystemMessageButton2}";
+		}
+
+		private void LLMButton1_Click(object sender, RibbonControlEventArgs e)
+		{
+			if (Globals.ThisAddIn.Selection != null)
+				Globals.ThisAddIn.Documents.AiShow(systemMessage: Properties.Settings.Default.LLMSystemMessage1, prefixUserMessage: Properties.Settings.Default.LLMPrefixUserMessage1);
+		}
+
+		private void LLMButton2_Click(object sender, RibbonControlEventArgs e)
+		{
+			if (Globals.ThisAddIn.Selection != null)
+				Globals.ThisAddIn.Documents.AiShow(systemMessage: Properties.Settings.Default.LLMSystemMessage2, prefixUserMessage: Properties.Settings.Default.LLMPrefixUserMessage2);
+		}
+
+		private void LLMReplaceButton_Click(object sender, RibbonControlEventArgs e)
+		{
+			if (Globals.ThisAddIn.Selection != null)
+				Globals.ThisAddIn.Documents.Ai();
+		}
+
+		private void LLMChatButton_Click(object sender, RibbonControlEventArgs e)
+		{
+			Dialogs.LLMChatDialog chatDialog = new Dialogs.LLMChatDialog();
+			if (Globals.ThisAddIn.Selection != null &&
+				Utils.Dialogs.ShowDialog(chatDialog) == DialogResult.OK)
+			{
+				Globals.ThisAddIn.Documents.Ai("Ты юрист; изложи текст развернуто, в официальном стиле.", chatDialog.UserMessage);
+			}
 		}
 	}
+
+	public class AbstractCommunicatorProvider : TypeDescriptionProvider
+	{
+		public AbstractCommunicatorProvider() : base(TypeDescriptor.GetProvider(typeof(UserControl)))
+		{
+		}
+		public override Type GetReflectionType(Type objectType, object instance)
+		{
+			return typeof(UserControl);
+		}
+		public override object CreateInstance(IServiceProvider provider, Type objectType, Type[] argTypes, object[] args)
+		{
+			objectType = typeof(UserControl);
+			return base.CreateInstance(provider, objectType, argTypes, args);
+		}
+	}
+
 }

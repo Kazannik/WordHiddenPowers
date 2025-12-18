@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 using WordHiddenPowers.Documents;
-using WordHiddenPowers.Repositories.Categories;
+using WordHiddenPowers.Repository.Categories;
 using WordHiddenPowers.Utils;
 using Word = Microsoft.Office.Interop.Word;
 
@@ -31,7 +31,7 @@ namespace WordHiddenPowers.Services
 				//};
 
 				IOrderedEnumerable<KeyValuePair<string, float>> result = MLModel.PredictAll(paragraph.Range.Text, mlNetModelPath);
-				IEnumerable<Subcategory> predictSubcategories = AI.GetSubcategories(document, result, levelPassage);
+				IEnumerable<Subcategory> predictSubcategories = MLService.GetSubcategories(document, result, levelPassage);
 				
 				if (predictSubcategories != null)
 				{

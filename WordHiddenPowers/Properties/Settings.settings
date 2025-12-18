@@ -8,5 +8,38 @@
     <Setting Name="MLNetModelPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">MLModel.mlnet</Value>
     </Setting>
+    <Setting Name="LLMName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">mistral:latest</Value>
+    </Setting>
+    <Setting Name="LLMHostUri" Type="System.Uri" Scope="User">
+      <Value Profile="(Default)">http://localhost:11434/v1</Value>
+    </Setting>
+    <Setting Name="LLMButton1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Деловой стиль</Value>
+    </Setting>
+    <Setting Name="LLMSystemMessage1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Ты профессиональный юрист. Готовишь важный документ. Не фантазируй. Не добавляй свои комментарии. Дай короткий ответ не более чем из пяти предложений в официальном стиле.</Value>
+    </Setting>
+    <Setting Name="LLMButton2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Развернутое изложение</Value>
+    </Setting>
+    <Setting Name="LLMSystemMessage2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Ты профессиональный юрист. Готовишь важный документ. Не фантазируй. Не добавляй свои комментарии. Дай по существу темы подробный развернутый ответ в официальном стиле.</Value>
+    </Setting>
+    <Setting Name="LLMPrefixUserMessage1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Дай свой ответ после внимательного изучения этого текста:</Value>
+    </Setting>
+    <Setting Name="LLMPrefixUserMessage2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Дай свой ответ после внимательного изучения этого текста:</Value>
+    </Setting>
+    <Setting Name="LLMPostfixUserMessage1" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LLMPostfixUserMessage2" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="MainSystemMessage" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Твоя аудитория профессиональные юристы. При подготовке ответа не фантазируй и не добавляй свои комментарии.</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

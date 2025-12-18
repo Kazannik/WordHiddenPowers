@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using WordHiddenPowers.Controls.ListControls.CategoriesCheckedListControl;
-using WordHiddenPowers.Repositories.Categories;
+using WordHiddenPowers.Repository.Categories;
 using WordHiddenPowers.Utils;
 
 namespace WordHiddenPowers.Dialogs

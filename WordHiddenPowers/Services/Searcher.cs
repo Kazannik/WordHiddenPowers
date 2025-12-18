@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using WordHiddenPowers.Documents;
-using WordHiddenPowers.Repositories.Categories;
+using WordHiddenPowers.Repository.Categories;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Services

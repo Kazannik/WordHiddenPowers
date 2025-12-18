@@ -74,8 +74,8 @@
             this.mnuView});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1036, 33);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(10, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(880, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -97,96 +97,96 @@
             this.toolStripMenuItem4,
             this.mnuFileExit});
             this.mnuFile.Name = "mnuFile";
-            this.mnuFile.Size = new System.Drawing.Size(65, 29);
+            this.mnuFile.Size = new System.Drawing.Size(57, 24);
             this.mnuFile.Text = "Файл";
             // 
             // mnuFileNew
             // 
             this.mnuFileNew.Name = "mnuFileNew";
-            this.mnuFileNew.Size = new System.Drawing.Size(371, 30);
+            this.mnuFileNew.Size = new System.Drawing.Size(323, 24);
             this.mnuFileNew.Text = "Создать";
             this.mnuFileNew.Click += new System.EventHandler(this.FileNew_Click);
             // 
             // mnuFileOpen
             // 
             this.mnuFileOpen.Name = "mnuFileOpen";
-            this.mnuFileOpen.Size = new System.Drawing.Size(371, 30);
+            this.mnuFileOpen.Size = new System.Drawing.Size(323, 24);
             this.mnuFileOpen.Text = "Открыть...";
             this.mnuFileOpen.Click += new System.EventHandler(this.FileOpen_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(368, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(320, 6);
             // 
             // mnuFileSave
             // 
             this.mnuFileSave.Name = "mnuFileSave";
-            this.mnuFileSave.Size = new System.Drawing.Size(371, 30);
+            this.mnuFileSave.Size = new System.Drawing.Size(323, 24);
             this.mnuFileSave.Text = "Сохранить";
             this.mnuFileSave.Click += new System.EventHandler(this.FileSave_Click);
             // 
             // mnuFileSaveAs
             // 
             this.mnuFileSaveAs.Name = "mnuFileSaveAs";
-            this.mnuFileSaveAs.Size = new System.Drawing.Size(371, 30);
+            this.mnuFileSaveAs.Size = new System.Drawing.Size(323, 24);
             this.mnuFileSaveAs.Text = "Сохранить как...";
             this.mnuFileSaveAs.Click += new System.EventHandler(this.FileSaveAs_Click);
             // 
             // mnuFileExportToCsv
             // 
             this.mnuFileExportToCsv.Name = "mnuFileExportToCsv";
-            this.mnuFileExportToCsv.Size = new System.Drawing.Size(371, 30);
+            this.mnuFileExportToCsv.Size = new System.Drawing.Size(323, 24);
             this.mnuFileExportToCsv.Text = "Экспорт данных...";
             this.mnuFileExportToCsv.Click += new System.EventHandler(this.FileExportTo_ClickAsync);
             // 
             // mnuFileExportDictionary
             // 
             this.mnuFileExportDictionary.Name = "mnuFileExportDictionary";
-            this.mnuFileExportDictionary.Size = new System.Drawing.Size(371, 30);
+            this.mnuFileExportDictionary.Size = new System.Drawing.Size(323, 24);
             this.mnuFileExportDictionary.Text = "Экспорт словаря...";
             this.mnuFileExportDictionary.Click += new System.EventHandler(this.FileExportDictionary_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(368, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(320, 6);
             // 
             // mnuFileImportFromFolder
             // 
             this.mnuFileImportFromFolder.Name = "mnuFileImportFromFolder";
-            this.mnuFileImportFromFolder.Size = new System.Drawing.Size(371, 30);
+            this.mnuFileImportFromFolder.Size = new System.Drawing.Size(323, 24);
             this.mnuFileImportFromFolder.Text = "Импортировать данные из папки...";
             this.mnuFileImportFromFolder.Click += new System.EventHandler(this.FileImportFromFolder_Click);
             // 
             // mnuFileImportFromFile
             // 
             this.mnuFileImportFromFile.Name = "mnuFileImportFromFile";
-            this.mnuFileImportFromFile.Size = new System.Drawing.Size(371, 30);
+            this.mnuFileImportFromFile.Size = new System.Drawing.Size(323, 24);
             this.mnuFileImportFromFile.Text = "Импортировать данные из файла...";
             this.mnuFileImportFromFile.Click += new System.EventHandler(this.FileImportFromFile_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(368, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(320, 6);
             // 
             // mnuFileInsertToWord
             // 
             this.mnuFileInsertToWord.Name = "mnuFileInsertToWord";
-            this.mnuFileInsertToWord.Size = new System.Drawing.Size(371, 30);
+            this.mnuFileInsertToWord.Size = new System.Drawing.Size(323, 24);
             this.mnuFileInsertToWord.Text = "Вставить в открытый документ";
             this.mnuFileInsertToWord.Click += new System.EventHandler(this.InsertToDocumentButton_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(368, 6);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(320, 6);
             // 
             // mnuFileExit
             // 
             this.mnuFileExit.Name = "mnuFileExit";
-            this.mnuFileExit.Size = new System.Drawing.Size(371, 30);
+            this.mnuFileExit.Size = new System.Drawing.Size(323, 24);
             this.mnuFileExit.Text = "Выход";
             this.mnuFileExit.Click += new System.EventHandler(this.FileExit_Click);
             // 
@@ -197,26 +197,26 @@
             this.toolStripMenuItem5,
             this.mnuViewRefresh});
             this.mnuView.Name = "mnuView";
-            this.mnuView.Size = new System.Drawing.Size(54, 29);
+            this.mnuView.Size = new System.Drawing.Size(47, 24);
             this.mnuView.Text = "Вид";
             // 
             // mnuViewHide
             // 
             this.mnuViewHide.CheckOnClick = true;
             this.mnuViewHide.Name = "mnuViewHide";
-            this.mnuViewHide.Size = new System.Drawing.Size(217, 30);
+            this.mnuViewHide.Size = new System.Drawing.Size(192, 24);
             this.mnuViewHide.Text = "Скрытые записи";
             this.mnuViewHide.Click += new System.EventHandler(this.ViewHide_Click);
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(214, 6);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(189, 6);
             // 
             // mnuViewRefresh
             // 
             this.mnuViewRefresh.Name = "mnuViewRefresh";
-            this.mnuViewRefresh.Size = new System.Drawing.Size(217, 30);
+            this.mnuViewRefresh.Size = new System.Drawing.Size(192, 24);
             this.mnuViewRefresh.Text = "Обновить";
             this.mnuViewRefresh.Click += new System.EventHandler(this.ViewRefresh_Click);
             // 
@@ -225,9 +225,9 @@
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.insertToDocumentButton});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 33);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 28);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1036, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(880, 27);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -246,24 +246,24 @@
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 562);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 289);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1036, 30);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 22, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(880, 25);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(179, 25);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(151, 20);
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 60);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 55);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(5);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -276,24 +276,27 @@
             this.splitContainer1.Panel2.Controls.Add(this.categoryBox1);
             this.splitContainer1.Panel2.Controls.Add(this.contentListBox);
             this.splitContainer1.Panel2.Resize += new System.EventHandler(this.SplitContainer1_Panel2_Resize);
-            this.splitContainer1.Size = new System.Drawing.Size(1036, 502);
-            this.splitContainer1.SplitterDistance = 423;
+            this.splitContainer1.Size = new System.Drawing.Size(880, 234);
+            this.splitContainer1.SplitterDistance = 359;
+            this.splitContainer1.SplitterWidth = 6;
             this.splitContainer1.TabIndex = 3;
             // 
             // statusListBox
             // 
             this.statusListBox.DataSet = null;
             this.statusListBox.Location = new System.Drawing.Point(0, 0);
+            this.statusListBox.Margin = new System.Windows.Forms.Padding(5, 2, 5, 2);
             this.statusListBox.Name = "statusListBox";
-            this.statusListBox.Size = new System.Drawing.Size(120, 96);
+            this.statusListBox.Size = new System.Drawing.Size(354, 228);
             this.statusListBox.TabIndex = 0;
             // 
             // categoryBox1
             // 
             this.categoryBox1.Location = new System.Drawing.Point(0, 0);
+            this.categoryBox1.Margin = new System.Windows.Forms.Padding(5, 2, 5, 2);
             this.categoryBox1.Name = "categoryBox1";
             this.categoryBox1.Owner = null;
-            this.categoryBox1.Size = new System.Drawing.Size(488, 175);
+            this.categoryBox1.Size = new System.Drawing.Size(501, 219);
             this.categoryBox1.TabIndex = 0;
             // 
             // contentListBox
@@ -302,21 +305,23 @@
             this.contentListBox.Filer = null;
             this.contentListBox.Hide = true;
             this.contentListBox.Location = new System.Drawing.Point(0, 0);
+            this.contentListBox.Margin = new System.Windows.Forms.Padding(5, 2, 5, 2);
             this.contentListBox.Name = "contentListBox";
-            this.contentListBox.Size = new System.Drawing.Size(120, 96);
+            this.contentListBox.Size = new System.Drawing.Size(159, 119);
             this.contentListBox.TabIndex = 1;
             // 
             // AnalyzerDialog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1036, 592);
+            this.ClientSize = new System.Drawing.Size(880, 314);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "AnalyzerDialog";
             this.Text = "Анализ данных";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AnalyzerDialog_FormClosing);

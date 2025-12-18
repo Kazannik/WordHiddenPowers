@@ -6,12 +6,12 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using WordHiddenPowers.Repositories.Categories;
-using WordHiddenPowers.Repositories.Notes;
-using static WordHiddenPowers.Repositories.Notes.Note;
-using static WordHiddenPowers.Repositories.RepositoryDataSet;
+using WordHiddenPowers.Repository.Categories;
+using WordHiddenPowers.Repository.Notes;
+using static WordHiddenPowers.Repository.Notes.Note;
+using static WordHiddenPowers.Repository.RepositoryDataSet;
 using static WordHiddenPowers.Utils.Gdi32;
-using Category = WordHiddenPowers.Repositories.Categories.Category;
+using Category = WordHiddenPowers.Repository.Categories.Category;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Utils
@@ -19,8 +19,28 @@ namespace WordHiddenPowers.Utils
 	static class WordDocument
 	{
 		private readonly static Regex spiceRegex = new Regex("\\s{2,}", RegexOptions.Compiled & RegexOptions.IgnoreCase & RegexOptions.Multiline);
+		private readonly static Regex percentRegex = new Regex("\\%{3}", RegexOptions.Compiled & RegexOptions.IgnoreCase & RegexOptions.Multiline);
 
-		public static void InsertToWordDocument(Documents.Document sourceDocument,
+		public static IEnumerable<(string userMessage, Word.Range range)> GetMessages(Word._Document document)
+		{
+			List<Match> separators = new List<Match> ();
+			List<(string userMessage, Word.Range range)> result = new List<(string userMessage, Word.Range range)> ();			
+			foreach (Match match in percentRegex.Matches(document.ActiveWindow.Selection.Text))
+			{
+				separators.Add(match);
+			}
+			
+			for (int i = 0; i < separators.Count; i += 2)
+			{
+				Word.Range range = document.Range(separators[i].Index, separators[i+1].Index + separators[i+1].Length);
+				string userMessage = range.Text.Substring(3, range.Text.Length - 6);
+				result.Add((userMessage, range));
+			}
+			return result;
+		}
+
+		public static void InsertToWordDocument(
+			Documents.Document sourceDocument,
 			int minRating = 0,
 			int maxRating = 0,
 			int maxCount = 3,
@@ -267,10 +287,7 @@ namespace WordHiddenPowers.Utils
 			paragraph.Range.Font.Italic = italic ? 1 : 0;
 			paragraph.Range.InsertParagraphAfter();
 		}
-
-	
-
-
+		
 		public static Icon GetIconMso(string idMso, int width, int height)
 		{
 			stdole.IPictureDisp img = Globals.ThisAddIn.Application.CommandBars.GetImageMso(idMso, width, height);

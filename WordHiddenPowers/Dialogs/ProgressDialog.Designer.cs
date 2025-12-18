@@ -1,4 +1,9 @@
-﻿namespace WordHiddenPowers.Dialogs
+﻿
+#if WORD
+namespace WordHiddenPowers.Dialogs
+#else
+namespace ProsecutorialSupervision.Dialogs
+#endif
 {
 	partial class ProgressDialog
 	{
@@ -34,9 +39,9 @@
 			// 
 			// ProgressBar
 			// 
-			this.ProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.ProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.ProgressBar.Location = new System.Drawing.Point(12, 34);
 			this.ProgressBar.Name = "ProgressBar";
 			this.ProgressBar.Size = new System.Drawing.Size(411, 28);

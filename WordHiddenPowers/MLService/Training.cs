@@ -1,11 +1,7 @@
-﻿using Microsoft.ML.Trainers;
-using Microsoft.ML;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.ML;
+using Microsoft.ML.Trainers;
 using System.IO;
+using System.Linq;
 
 namespace WordHiddenPowers.MLService
 {

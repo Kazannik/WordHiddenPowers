@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: ADDIN TSV DIC APP
+﻿// Ignore Spelling: ADDIN TSV DIC APP Globals
 
 using System.Drawing;
 
@@ -13,7 +13,7 @@ namespace WordHiddenPowers.Const
 		/// </summary>
 		public const float LEVEL_PASSAGE = 0.8f;
 
-		public const string ADDIN_TITLE = "Дополнительные данные";
+		public const string ADDIN_TITLE = "AI помощник и дополнительные данные";
 
 		private const string VARIABLES_NAME = "HiddenPower";
 
@@ -45,6 +45,8 @@ namespace WordHiddenPowers.Const
 		/// </summary>
 		public const string XML_OLD_AGGREGATED_VARIABLE_NAME = "6B0F57EE-BE9F-4C83-A660-2FCDBB1E6B34";
 
+		#region COLORS
+
 		public static readonly Color COLOR_STAR_ICON = Color.Red;
 
 		public static readonly Color COLOR_OK_ICON = Color.Green;
@@ -55,5 +57,7 @@ namespace WordHiddenPowers.Const
 
 		public static readonly Color COLOR_1_BACK = Color.Orange;
 		public static readonly Color COLOR_2_BACK = Color.LightPink;
+
+		#endregion
 	}
 }

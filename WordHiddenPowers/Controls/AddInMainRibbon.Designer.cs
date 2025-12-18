@@ -1,4 +1,7 @@
-﻿namespace WordHiddenPowers
+﻿using WordHiddenPowers.Dialogs;
+using WordHiddenPowers.Properties;
+
+namespace WordHiddenPowers
 {
     partial class AddInMainRibbon : Microsoft.Office.Tools.Ribbon.RibbonBase
     {
@@ -11,7 +14,7 @@
             : base(Globals.Factory.GetRibbonFactory())
         {
             InitializeComponent();
-
+						
 			addLastNoteTypeButton.Description = Const.Content.TEXT_NOTE_DESCRIPTION;
 			addLastNoteTypeButton.Label = Const.Content.TEXT_NOTE_LABEL;
 			addLastNoteTypeButton.OfficeImageId = Const.Content.TEXT_NOTE_OFFICE_IMAGE_ID;
@@ -132,6 +135,12 @@
 			aiServiceButton.OfficeImageId = Const.Content.AI_SERVICE_OFFICE_IMAGE_ID;
 			aiServiceButton.ScreenTip = Const.Content.AI_SERVICE_SCREEN_TIP;
 			aiServiceButton.SuperTip = Const.Content.AI_SERVICE_SUPER_TIP;
+
+			llmButton1.Label = Services.OpenAIService.CaptionButton1;
+			llmButton1.SuperTip = $"Системный промпт: {Services.OpenAIService.SystemMessageButton1}";
+
+			llmButton2.Label = Services.OpenAIService.CaptionButton2;
+			llmButton2.SuperTip = $"Системный промпт: {Services.OpenAIService.SystemMessageButton2}";
 		}
 
 		/// <summary> 
@@ -155,9 +164,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddInMainRibbon));
+
 			Microsoft.Office.Tools.Ribbon.RibbonDialogLauncher ribbonDialogLauncherImpl = this.Factory.CreateRibbonDialogLauncher();
 
 			this.wordHiddenPowersTab = this.Factory.CreateRibbonTab();
+
+			this.llmGroup = this.Factory.CreateRibbonGroup();
+			this.llmButton1 = this.Factory.CreateRibbonButton();
+			this.llmButton2 = this.Factory.CreateRibbonButton();
+			this.llmReplaceButton = this.Factory.CreateRibbonButton();
+			this.separator6 = this.Factory.CreateRibbonSeparator();
+			this.chatDialogButton = this.Factory.CreateRibbonButton();
+
 			this.maketGroup = this.Factory.CreateRibbonGroup();
 			this.newDataButton = this.Factory.CreateRibbonButton();
 			this.openDataButton = this.Factory.CreateRibbonButton();
@@ -190,6 +209,7 @@
 			this.maketGroup.SuspendLayout();
 			this.aggregatedGroup.SuspendLayout();
 			this.notesGroup.SuspendLayout();
+			this.llmGroup.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// WordHiddenPowersTab
@@ -197,6 +217,7 @@
 			this.wordHiddenPowersTab.Groups.Add(this.maketGroup);
 			this.wordHiddenPowersTab.Groups.Add(this.aggregatedGroup);
 			this.wordHiddenPowersTab.Groups.Add(this.notesGroup);
+			this.wordHiddenPowersTab.Groups.Add(this.llmGroup);
 			this.wordHiddenPowersTab.Label = "Дополнительные данные";
 			this.wordHiddenPowersTab.Name = "WordHiddenPowersTab";
 			this.wordHiddenPowersTab.Position = this.Factory.RibbonPosition.AfterOfficeId("TabReferences");
@@ -337,8 +358,6 @@
 			// 
 			// notesGroup
 			// 
-			this.notesGroup.DialogLauncher = ribbonDialogLauncherImpl;
-			this.notesGroup.DialogLauncherClick += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.NotesGroup_DialogLauncherClick);
 			this.notesGroup.Items.Add(this.addLastNoteTypeButton);
 			this.notesGroup.Items.Add(this.editTableButton);
 			this.notesGroup.Items.Add(this.separator3);
@@ -408,6 +427,60 @@
 			this.paneVisibleButton.Label = "";
 			this.paneVisibleButton.Name = "paneVisibleButton";
 			this.paneVisibleButton.ShowImage = true;
+
+			// 
+			// llmGroup
+			// 
+			this.llmGroup.DialogLauncher = ribbonDialogLauncherImpl;
+			this.llmGroup.DialogLauncherClick += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.Group_DialogLauncherClick);
+			this.llmGroup.Items.Add(this.llmButton1);
+			this.llmGroup.Items.Add(this.llmButton2);
+			this.llmGroup.Items.Add(this.llmReplaceButton);
+			this.llmGroup.Items.Add(this.separator6);
+			this.llmGroup.Items.Add(this.chatDialogButton);
+			this.llmGroup.Label = "Искусственный интеллект";
+			this.llmGroup.Name = "llmGroup";
+			// 
+			// llmButton1
+			// 
+			this.llmButton1.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+			this.llmButton1.Label = "#";
+			this.llmButton1.Name = "llmButton1";
+			this.llmButton1.OfficeImageId = "StylesPane";
+			this.llmButton1.Image = ((System.Drawing.Image)(resources.GetObject("LLMFormat")));
+			this.llmButton1.ShowImage = true;
+			this.llmButton1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.LLMButton1_Click);
+			// 
+			// llmButton2
+			// 
+			this.llmButton2.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+			this.llmButton2.Label = "#";
+			this.llmButton2.Name = "llmButton2";
+			this.llmButton2.OfficeImageId = "StylesPane";
+			this.llmButton2.Image = ((System.Drawing.Image)(resources.GetObject("LLMFormat")));
+			this.llmButton2.ShowImage = true;
+			this.llmButton2.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.LLMButton2_Click);
+			// 
+			// aiReplaceButton
+			// 
+			this.llmReplaceButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+			this.llmReplaceButton.Label = "Преобразовать шаблон";
+			this.llmReplaceButton.SuperTip = "Преобразование шаблона. Промпты в шаблоне заключены в теги: %%%Промпт%%%";
+			this.llmReplaceButton.Name = "llmReplaceButton";
+			this.llmReplaceButton.OfficeImageId = "StylesPane";
+			this.llmReplaceButton.Image = ((System.Drawing.Image)(resources.GetObject("LLM_48")));
+			this.llmReplaceButton.ShowImage = true;
+			this.llmReplaceButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.LLMReplaceButton_Click);
+			// 
+			// aiChatButton
+			// 
+			this.chatDialogButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+			this.chatDialogButton.Label = "Диалог";
+			this.chatDialogButton.Name = "chatDialogButton";
+			this.chatDialogButton.OfficeImageId = "SendNotesToBlog";
+			this.chatDialogButton.Image = ((System.Drawing.Image)(resources.GetObject("LLM_Dialog_48")));
+			this.chatDialogButton.ShowImage = true;
+			this.chatDialogButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.LLMChatButton_Click);
 			// 
 			// AddInMainRibbon
 			// 
@@ -422,8 +495,9 @@
 			this.aggregatedGroup.PerformLayout();
 			this.notesGroup.ResumeLayout(false);
 			this.notesGroup.PerformLayout();
+			this.llmGroup.ResumeLayout(false);
+			this.llmGroup.PerformLayout();
 			this.ResumeLayout(false);
-
 		}
 
         #endregion
@@ -457,12 +531,19 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton addDecimalNoteButton;
 		internal Microsoft.Office.Tools.Ribbon.RibbonButton searchServiceButton;
 		internal Microsoft.Office.Tools.Ribbon.RibbonButton aiServiceButton;
+
+		internal Microsoft.Office.Tools.Ribbon.RibbonGroup llmGroup;
+		internal Microsoft.Office.Tools.Ribbon.RibbonButton llmButton1;
+		internal Microsoft.Office.Tools.Ribbon.RibbonButton llmButton2;
+		internal Microsoft.Office.Tools.Ribbon.RibbonButton llmReplaceButton;
+		internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator6;
+		internal Microsoft.Office.Tools.Ribbon.RibbonButton chatDialogButton;
 	}
 
-    partial class ThisRibbonCollection
+	partial class ThisRibbonCollection
     {
-        internal AddInMainRibbon WordHiddenPowersRibbon
-        {
+        internal AddInMainRibbon AddInMainRibbon
+		{
             get { return this.GetRibbon<AddInMainRibbon>(); }
         }
     }
