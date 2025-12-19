@@ -1,5 +1,7 @@
 # Word Hidden Powers - надстройка к Microsoft Office Word (Скрытые возможности Word)
 
+Разарабатывается с помощью IDE Visual Studio 2022.
+
 Для локального запуска LLM я использовал [**Ollama**](https://ollama.com/download), а также модель [**gpt-oss-20b**](https://ollama.com/library/gpt-oss) и получил хорошие результаты.
 
 Советую изучить дополнительную информацию о модели [здесь](https://openai.com/ru-RU/index/introducing-gpt-oss/) и [здесь](https://cookbook.openai.com/articles/openai-harmony).
@@ -12,7 +14,9 @@
 ## Описание проекта
 
 Функции для обращения к **ollama** содержаться в классе `WordHiddenPowers\WordHiddenPowers\Services\OpenAIService.cs`;
-Функция `getCurrentWeatherTool` в данном классе имеет ссылку на файл ресурса `get_we.json`, который зармещен в папке: `WordHiddenPowers\WordHiddenPowers\Repository\Data\get_we.json`. Этот файл необходим для описания формата обращения к функции:
+Функция `getCurrentWeatherTool` в данном классе имеет ссылку на файл ресурса `get_we.json`,
+который размещен в папке: `WordHiddenPowers\WordHiddenPowers\Repository\Data\get_we.json`.
+Этот файл необходим для описания формата обращения к функции:
 
 ```json
 {
