@@ -1,10 +1,7 @@
-﻿using System;
+﻿using MyMicrosoft.Office.Hooks;
+using System;
 using System.Runtime.InteropServices;
-using System.Security.AccessControl;
-using WordHiddenPowers.Panes;
-using Tools = Microsoft.Office.Tools;
 using Word = Microsoft.Office.Interop.Word;
-using MyMicrosoft.Office.Hooks;
 
 namespace WordHiddenPowers
 {
@@ -18,11 +15,6 @@ namespace WordHiddenPowers
 		
 		private void ThisAddIn_Startup(object sender, EventArgs e)
 		{
-			//mouseProc = MouseHookCallback;
-			keyboardProc = KeyboardHookCallback;
-
-			SetWindowsHooks();
-
 			Properties.Settings.Default.Reload();
 
 			Services.OpenAIService.MainSystemMessage = Properties.Settings.Default.MainSystemMessage;
@@ -40,7 +32,18 @@ namespace WordHiddenPowers
 			Services.OpenAIService.PrefixUserMessageButton2 = Properties.Settings.Default.LLMPrefixUserMessage2;
 			Services.OpenAIService.PostfixUserMessageButton2 = Properties.Settings.Default.LLMPostfixUserMessage2;
 
+			//mouseProc = MouseHookCallback;
+			keyboardProc = KeyboardHookCallback;
+
+			SetWindowsHooks();
+
 			Documents = new Documents.DocumentCollection(paneVisibleButton: Globals.Ribbons.AddInMainRibbon.paneVisibleButton);
+
+			try
+			{
+				Globals.Ribbons.AddInMainRibbon.LLMButtonUpdate();
+			}
+			catch (Exception) { }
 		}
 
 		private void ThisAddIn_Shutdown(object sender, EventArgs e)
@@ -48,6 +51,7 @@ namespace WordHiddenPowers
 			UnhookWindowsHooks();
 
 			Utils.Dialogs.CloseAllDialogs();
+
 			Documents.Dispose();
 
 			Properties.Settings.Default.MainSystemMessage = Properties.Settings.Default.MainSystemMessage;

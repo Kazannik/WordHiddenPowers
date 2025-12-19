@@ -115,12 +115,13 @@
             this.toolStripButton4.Name = "toolStripButton4";
             this.toolStripButton4.Size = new System.Drawing.Size(52, 52);
             this.toolStripButton4.Text = "toolStripButton4";
+            this.toolStripButton4.Visible = false;
             this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
             // 
             // systemMessageEditButton
             // 
             this.systemMessageEditButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.systemMessageEditButton.Image = ((System.Drawing.Image)(resources.GetObject("systemMessageEditButton.Image")));
+            this.systemMessageEditButton.Image = global::WordHiddenPowers.Properties.Resources.DefinePrintStyles;
             this.systemMessageEditButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.systemMessageEditButton.Name = "systemMessageEditButton";
             this.systemMessageEditButton.Size = new System.Drawing.Size(52, 52);

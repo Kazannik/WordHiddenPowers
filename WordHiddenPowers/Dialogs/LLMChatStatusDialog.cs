@@ -9,7 +9,6 @@ namespace WordHiddenPowers.Dialogs
 	{
 		private bool isDragging = false;
 		private Point lastCursorPosition;
-		private Size textSize;
 
 		public string Status
 		{
@@ -51,21 +50,6 @@ namespace WordHiddenPowers.Dialogs
 				Opacity = 0.8;
 			}
 			base.OnMouseUp(e);
-		}
-
-		protected override void OnPaint(PaintEventArgs e)
-		{
-			Graphics graphics = e.Graphics;
-			graphics.DrawRectangle(SystemPens.ControlDark, new Rectangle(e.ClipRectangle.Location, Size.Subtract(e.ClipRectangle.Size, new Size(1, 1))));
-			Size size = graphics.MeasureString(Text, Font, Width).ToSize();
-			if (textSize != size)
-			{
-				textSize = size;
-				OnResize(e);
-			}
-			graphics.FillRectangle(SystemBrushes.ActiveCaption, new Rectangle(Point.Add(e.ClipRectangle.Location, new Size(2, 2)), new Size(e.ClipRectangle.Width - 4, textSize.Height + 4)));
-			graphics.DrawString(Text, Font, SystemBrushes.ActiveCaptionText, 4, 4);
-			base.OnPaint(e);
-		}
+		}		
 	}
 }

@@ -503,6 +503,16 @@ namespace WordHiddenPowers.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap DefinePrintStyles {
+            get {
+                object obj = ResourceManager.GetObject("DefinePrintStyles", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap FINDCOMP_00 {
             get {
                 object obj = ResourceManager.GetObject("FINDCOMP_00", resourceCulture);

@@ -3,9 +3,6 @@ using System;
 using System.Collections.Generic;
 using WordHiddenPowers.Dialogs;
 using Office = Microsoft.Office.Core;
-using Content = WordHiddenPowers.Utils.WordDocuments.Content;
-using DataTable = System.Data.DataTable;
-using Table = WordHiddenPowers.Repository.Data.Table;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Documents
@@ -107,8 +104,6 @@ namespace WordHiddenPowers.Documents
 			llmClient.Send(model: llmName, systemMessage: systemMessage, userMessage: userMessage, tag: tag);
 			aiRange.Shading.BackgroundPatternColor = Word.WdColor.wdColorYellow;
 		}
-
-
 
 		private void LLMClient_ChatProgress(object sender, LLMService.LLMClient.ChatProgressEventArgs e)
 		{

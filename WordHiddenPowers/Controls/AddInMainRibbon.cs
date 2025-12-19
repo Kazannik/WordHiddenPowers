@@ -174,7 +174,12 @@ namespace WordHiddenPowers
 		private void Group_DialogLauncherClick(object sender, RibbonControlEventArgs e)
 		{
 			Services.OpenAIService.ShowSettingDialog(Globals.ThisAddIn.ActiveDocument);
-			
+			LLMButtonUpdate();
+		}
+
+
+		public void LLMButtonUpdate()
+		{
 			llmButton1.Label = Services.OpenAIService.CaptionButton1;
 			llmButton1.SuperTip = $"Системный промпт: {Services.OpenAIService.SystemMessageButton1}";
 

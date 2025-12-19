@@ -48,6 +48,6 @@ namespace WordHiddenPowers.Panes.Components
 		private void toolStripButton4_Click(object sender, EventArgs e)
 		{
 			Services.OpenAIService.Example03_FunctionCalling();
-		}
+		}		
 	}
 }
