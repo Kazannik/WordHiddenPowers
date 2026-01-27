@@ -41,13 +41,28 @@ namespace WordHiddenPowers.Panes.Components
 			else if (Globals.ThisAddIn.Selection != null)
 			{
 				Globals.ThisAddIn.Selection.Text = "*";
-				Globals.ThisAddIn.Documents.AiShow(systemMessage: Services.OpenAIService.MainSystemMessage, userMessage: UserMessage, tag: null);
+				Globals.ThisAddIn.Documents.AiShow(systemMessage: Services.OpenAIService.MainSystemMessage, userMessages: new string[] { UserMessage }, tag: null);
 			}
 		}
 
 		private void toolStripButton4_Click(object sender, EventArgs e)
 		{
-			Services.OpenAIService.Example03_FunctionCalling();
-		}		
+			//Services.OpenAIService.Example03_FunctionCalling();
+
+			
+		}
+
+		private void toolStripButton3_Click(object sender, EventArgs e)
+		{
+			if (Globals.ThisAddIn.Selection != null && Globals.ThisAddIn.Selection.Text.Length > 1)
+			{
+				Globals.ThisAddIn.Documents.AiEmbed(input: UserMessage);
+			}
+			else if (Globals.ThisAddIn.Selection != null)
+			{
+				Globals.ThisAddIn.Selection.Text = "*";
+				Globals.ThisAddIn.Documents.AiEmbed(input: UserMessage);
+			}
+		}
 	}
 }

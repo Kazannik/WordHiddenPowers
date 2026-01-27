@@ -18,6 +18,15 @@ namespace WordHiddenPowers.Documents
 {
 	public partial class Document : IDisposable
 	{
+		public enum DocumentState
+		{
+			None = 0,
+			One = 1,
+			Aggregated = 2
+		}
+		
+		public DocumentState State { get; }
+
 		private readonly DocumentCollection parent;
 
 		/// <summary>
@@ -39,18 +48,20 @@ namespace WordHiddenPowers.Documents
 
 		public AddInPane Pane => CustomPane.Control as AddInPane;
 
-		private void NotesPane_PropertiesChanged(object sender, EventArgs e)
+		private void Pane_PropertiesChanged(object sender, EventArgs e)
 		{
 			if (Caption != Pane.NotesControl.Caption)
 			{
 				Caption = Pane.NotesControl.Caption;
 				Doc.Saved = false;
 			}
+
 			if (Date != Pane.NotesControl.Date)
 			{
 				Date = Pane.NotesControl.Date;
 				Doc.Saved = false;
 			}
+
 			if (Description != Pane.NotesControl.Description)
 			{
 				Description = Pane.NotesControl.Description;
@@ -201,18 +212,31 @@ namespace WordHiddenPowers.Documents
 			ContentHide = false;
 			Doc = doc;
 
+			if (!Content.ExistsContent(Doc: Doc))
+			{
+				State = DocumentState.None;
+			}
+			else if (Content.ExistsVariable(Doc.Variables, Const.Globals.XML_AGGREGATED_VARIABLE_NAME))
+			{
+				State = DocumentState.Aggregated;
+			}
+			else
+			{
+				State = DocumentState.One;
+			}
+
 			bool oldState = this.parent.PaneVisibleButton.Checked;
+
 			this.parent.PaneVisibleButton.Checked = false;
 
 			CustomPane = Globals.ThisAddIn.CustomTaskPanes.Add(new AddInPane(this), Const.Panes.PANE_TITLE, Doc.Windows[1]);
 			CustomPane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
 			CustomPane.Width = 600;
-
+			CustomPane.Visible = oldState;
 			CustomPane.VisibleChanged += new EventHandler(Pane_VisibleChanged);
 			
-			Pane.PropertiesChanged += new EventHandler<EventArgs>(NotesPane_PropertiesChanged);
+			Pane.PropertiesChanged += new EventHandler<EventArgs>(Pane_PropertiesChanged);
 
-			CustomPane.Visible = oldState;
 			this.parent.PaneVisibleButton.Checked = oldState;
 		}
 

@@ -23,8 +23,8 @@ namespace WordHiddenPowers.Panes.Components
 		public event EventHandler<EventArgs> PropertiesChanged;
 
 		protected virtual void OnPropertiesChanged(EventArgs e)
-		{
-			notesListBox.ReadData();
+		{		
+			notesListBox.ReadData();		
 			PropertiesChanged?.Invoke(this, e);
 		}
 

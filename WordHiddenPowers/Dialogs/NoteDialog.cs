@@ -106,25 +106,25 @@ namespace WordHiddenPowers.Dialogs
 
 		protected virtual void ControlsResize()
 		{
-			okButton.Size = BUTTON_SIZE;
-			cancelButton.Size = BUTTON_SIZE;
+			//okButton.Size = BUTTON_SIZE;
+			//cancelButton.Size = BUTTON_SIZE;
 			
-			categoriesComboBox.Location = new Point(12, 12);
-			categoriesComboBox.Size = new Size(ClientSize.Width - 24, BUTTON_SIZE.Height);
-			categoriesComboBox.BringToFront();
+			//categoriesComboBox.Location = new Point(12, 12);
+			//categoriesComboBox.Size = new Size(ClientSize.Width - 24, BUTTON_SIZE.Height);
+			//categoriesComboBox.BringToFront();
 
-			subcategoriesComboBox.Location = new Point(12, categoriesComboBox.Top + categoriesComboBox.Height + 12);
-			subcategoriesComboBox.Size = new Size(ClientSize.Width - 24, BUTTON_SIZE.Height);
-			subcategoriesComboBox.BringToFront();
+			//subcategoriesComboBox.Location = new Point(12, categoriesComboBox.Top + categoriesComboBox.Height + 12);
+			//subcategoriesComboBox.Size = new Size(ClientSize.Width - 24, BUTTON_SIZE.Height);
+			//subcategoriesComboBox.BringToFront();
 
-			cancelButton.Location = new Point(ClientSize.Width - cancelButton.Width - 12, ClientSize.Height - cancelButton.Height - 12);
-			okButton.Location = new Point(cancelButton.Left - okButton.Width - 12, cancelButton.Top);
-			wizardButton.Location = new Point(12, cancelButton.Top);
-			wizardButton.Size = SMALL_BUTTON_SIZE;
+			//cancelButton.Location = new Point(ClientSize.Width - cancelButton.Width - 12, ClientSize.Height - cancelButton.Height - 12);
+			//okButton.Location = new Point(cancelButton.Left - okButton.Width - 12, cancelButton.Top);
+			//wizardButton.Location = new Point(12, cancelButton.Top);
+			//wizardButton.Size = SMALL_BUTTON_SIZE;
 
-			ratingBox.Location = new Point(12 + wizardButton.Left + wizardButton.Width, cancelButton.Top);
-			descriptionTextBox.Location = new Point(12, ClientSize.Height / 2);
-			descriptionTextBox.Size = new Size(ClientSize.Width - 24, ClientSize.Height - descriptionTextBox.Top - cancelButton.Height - 24);
+			//ratingBox.Location = new Point(12 + wizardButton.Left + wizardButton.Width, cancelButton.Top);
+			//descriptionTextBox.Location = new Point(12, ClientSize.Height / 2);
+			//descriptionTextBox.Size = new Size(ClientSize.Width - 24, ClientSize.Height - descriptionTextBox.Top - cancelButton.Height - 24);
 		}
 				
 		protected int ControlTop => subcategoriesComboBox.Top + subcategoriesComboBox.Height + 12;

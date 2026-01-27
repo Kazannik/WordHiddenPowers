@@ -6,7 +6,14 @@ using System.Linq;
 using Office = Microsoft.Office.Core;
 using Tools = Microsoft.Office.Tools;
 using Word = Microsoft.Office.Interop.Word;
-using WordHiddenPowers.LLMService;
+using WordHiddenPowers.Services;
+using LLMConnectorLibrary;
+using LLMConnectorLibrary.EventArgs;
+
+
+
+
+
 
 
 
@@ -22,7 +29,7 @@ namespace ProsecutorialSupervision.Documents
 {
 	public partial class DocumentCollection : IEnumerable<Document>, IDisposable
 	{
-		internal RibbonToggleButton PaneVisibleButton;
+		internal readonly RibbonToggleButton PaneVisibleButton;
 
 		private readonly Office.CommandBarButton buttonSelectDecimalCategory;
 		private readonly Office.CommandBarButton buttonSelectTextCategory;
@@ -51,13 +58,15 @@ namespace ProsecutorialSupervision.Documents
 			buttonLMMChat1 = AddButtons(Globals.ThisAddIn.Application, Globals.ThisAddIn.Application.CommandBars["Text"], Properties.Settings.Default.LLMButton1, Const.Content.LLM_BUTTON_IMAGE_ID, $"Системный промпт: {Properties.Settings.Default.LLMSystemMessage1}", true, AiButton1_Click);
 			buttonLMMChat2 = AddButtons(Globals.ThisAddIn.Application, Globals.ThisAddIn.Application.CommandBars["Text"], Properties.Settings.Default.LLMButton2, Const.Content.LLM_BUTTON_IMAGE_ID, $"Системный промпт: {Properties.Settings.Default.LLMSystemMessage2}", false, AiButton2_Click);
 
-			llmClient = new LLMClient();
+			llmClient = new LLMClient(OpenAIService.Uri);
 
-			llmClient.ChatCompleted += new EventHandler<LLMClient.ChatCompletedEventArgs>(LLMClient_ChatCompleted);
-			llmClient.ChatProgress += new EventHandler<LLMClient.ChatProgressEventArgs>(LLMClient_ChatProgress);
+			llmClient.ChatCompleted += new EventHandler<ChatCompletedEventArgs>(LLMClient_ChatCompleted);
+			llmClient.ChatProgress += new EventHandler<ChatProgressEventArgs>(LLMClient_ChatProgress);
+			llmClient.ChatCanceled += new EventHandler<ChatCanceledEventArgs>(LlmClient_ChatCanceled);
 
-			llmClient.EmbedCompleted += new EventHandler<LLMClient.EmbedCompletedEventArgs>(LLMClient_EmbedCompleted);
-			llmClient.EmbedProgress += new EventHandler<LLMClient.EmbedProgressEventArgs>(LLMClient_EmbedProgress);
+			llmClient.EmbedCompleted += new EventHandler<EmbedCompletedEventArgs>(LLMClient_EmbedCompleted);
+			llmClient.EmbedProgress += new EventHandler<EmbedProgressEventArgs>(LLMClient_EmbedProgress);
+			llmClient.EmbedCanceled += new EventHandler<EmbedCanceledEventArgs>(LlmClient_EmbedCanceled);
 
 			//if (!string.IsNullOrEmpty(aiClient.SelectedModel))
 			//{
@@ -69,6 +78,8 @@ namespace ProsecutorialSupervision.Documents
 			//	AiUrl = aiClient.Url;
 			//}
 		}
+
+		
 
 		public Document ActiveDocument => GetDocument(Globals.ThisAddIn.Application, Globals.ThisAddIn.Application.ActiveDocument);
 		
@@ -144,8 +155,7 @@ namespace ProsecutorialSupervision.Documents
 			List<Tools.CustomTaskPane> panes = new List<Tools.CustomTaskPane>(Globals.ThisAddIn.CustomTaskPanes
 				.Where(pane => pane.Window == Wn && ((Panes.WordHiddenPowersPane)pane.Control).Document.Doc != Doc));
 
-			panes.ForEach(x => Globals.ThisAddIn.CustomTaskPanes.Remove(x));
-			
+			panes.ForEach(x => Globals.ThisAddIn.CustomTaskPanes.Remove(x));			
 			
 
 			HashSet<Word._Document> seen = new HashSet<Word._Document>();
@@ -204,16 +214,12 @@ namespace ProsecutorialSupervision.Documents
 		public void Add(Word._Document Doc)
 		{
 			string guid = Content.GetGuidOrDefault(Doc);
+
 			if (!documents.ContainsKey(guid))
 			{
 				documents.Add(guid, Document.Create(this, Doc.FullName, Doc));
 			}
-
-			foreach (Tools.CustomTaskPane pane in Globals.ThisAddIn.CustomTaskPanes)
-			{
-				pane.Visible = true;
-			}
-
+						
 			foreach (Tools.CustomTaskPane pane in Globals.ThisAddIn.CustomTaskPanes)
 			{
 				pane.Visible = PaneVisibleButton.Checked;

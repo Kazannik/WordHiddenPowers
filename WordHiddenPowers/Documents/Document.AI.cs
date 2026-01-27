@@ -1,27 +1,8 @@
 ﻿// Ignore Spelling: dest
 
-using Microsoft.Extensions.AI;
-using Microsoft.Office.Tools;
-using OpenAI;
-using OpenAI.Chat;
-using OpenAI.Embeddings;
-using OpenAI.Models;
+
 using System;
-using System.ClientModel;
-using System.Collections.Generic;
-using System.Data;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using Tensorboard;
-using WordHiddenPowers.Dialogs;
-using WordHiddenPowers.Panes;
-using WordHiddenPowers.Repository;
-using WordHiddenPowers.Utils;
-using static WordHiddenPowers.Dialogs.LLMChatDialog;
-using Content = WordHiddenPowers.Utils.WordDocuments.Content;
-using DataTable = System.Data.DataTable;
-using Office = Microsoft.Office.Core;
-using Table = WordHiddenPowers.Repository.Data.Table;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Documents
@@ -70,24 +51,24 @@ namespace WordHiddenPowers.Documents
 		//	aiRange.Shading.BackgroundPatternColor = Word.WdColor.wdColorYellow;
 		//}
 
-		internal void Ai(Word.Selection selection, string systemMessage, string prefixUserMessage)
+		internal void Ai(Word.Selection selection, string systemMessage, string userMessage)
 		{
-			Ai(selection: selection, systemMessage: systemMessage, prefixUserMessage: prefixUserMessage, userMessage: selection.Text);			
+			Ai(selection: selection, systemMessage: systemMessage, userMessages: new string[] { userMessage, selection.Text });			
 		}
 
-		internal void Ai(Word.Selection selection, string systemMessage, string prefixUserMessage, string userMessage)
+		internal void Ai(Word.Selection selection, string systemMessage, string[] userMessages)
 		{
-			_ = Ai(range: selection.Range, systemMessage: systemMessage, userMessage: prefixUserMessage + userMessage);
+			_ = Ai(range: selection.Range, systemMessage: systemMessage, userMessages: userMessages);
 		}
 
 		internal void Ai(Word.Selection selection)
 		{
-			_ = Ai(range: selection.Range, systemMessage: string.Empty, userMessage: selection.Text);
+			_ = Ai(range: selection.Range, systemMessage: string.Empty, userMessages: new string[] { selection.Text });
 		}
 
-		internal async Task Ai(Word.Range range, string systemMessage, string userMessage)
+		internal async Task Ai(Word.Range range, string systemMessage, string[] userMessages)
 		{
-			bool isAvailable = await Services.NetService.CheckHostByHttpAsync(new Uri(baseUri: Services.OpenAIService.Uri, relativeUri: Services.OpenAIService.Uri.AbsolutePath + "/models"));
+			bool isAvailable = await LLMConnectorLibrary.Utils.Net.CheckHostByHttpAsync(new Uri(baseUri: Services.OpenAIService.Uri, relativeUri: Services.OpenAIService.Uri.AbsolutePath + "/models"));
 
 			if (isAvailable)
 			{
@@ -95,7 +76,7 @@ namespace WordHiddenPowers.Documents
 				{
 					range.Text = DocumentCollection.AI_STATUS_TEXT + " ...";
 					range.Shading.BackgroundPatternColor = Word.WdColor.wdColorYellow;
-					range.Text = await Services.OpenAIService.SendMessageAsync(model: Services.OpenAIService.LLMName, systemMessage: systemMessage, userMessage: userMessage);
+					range.Text = await LLMConnectorLibrary.LLMOpenAI.SendMessageAsync(uri: Services.OpenAIService.Uri, model: Services.OpenAIService.LLMName, systemMessage: systemMessage, userMessages: userMessages);
 					range.Shading.BackgroundPatternColor = Word.WdColor.wdColorLightGreen;
 				}
 				catch (Exception ex)
@@ -165,42 +146,7 @@ namespace WordHiddenPowers.Documents
 		//#endregion
 
 
-		#region OpenAi
-
-		public void CreateMultipleClients()
-
-		{
-			OpenAIClientOptions options = new OpenAIClientOptions
-			{
-				Endpoint = Services.OpenAIService.Uri
-			};
-
-
-			OpenAIClient client = new OpenAIClient(
-				new ApiKeyCredential("ollama"),
-				options); // new(Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
-
-			OpenAI.Models.OpenAIModelClient openAIModelClient = client.GetOpenAIModelClient();
-			 openAIModelClient.GetModels();
-
-			EmbeddingClient embeddingClient = client.GetEmbeddingClient("mistral");
-			ChatClient chatClient = client.GetChatClient("mistral");
-
-			ClientResult<ChatCompletion> creativeWriterResult = chatClient.CompleteChat(
-			new OpenAI.Chat.ChatMessage[] {
-				new SystemChatMessage("Ты профессиональный юрист. Проводишь консультацию клиента. Не фантазируй. Давай короткий ответ."),
-				new UserChatMessage("Ответь на вопрос: Какой суд будет рассматривать иск к представителям из другой галактики?"),
-			},
-			new ChatCompletionOptions()
-			{
-				MaxOutputTokenCount = 2048,
-			});
-
-			string description = creativeWriterResult.Value.Content[0].Text;
-			Console.WriteLine($"Creative helper's creature description:\n{description}");
-		}
-
-		#endregion
+		
 
 		
 	}

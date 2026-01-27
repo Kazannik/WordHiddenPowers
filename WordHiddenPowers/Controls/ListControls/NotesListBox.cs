@@ -76,10 +76,7 @@ namespace WordHiddenPowers.Controls.ListControls
 					if (e.Item.Rating > -5) e.Item.Rating--;
 				}
 			}
-			else
-			{
-				base.OnItemMouseClick(e);
-			}
+			base.OnItemMouseClick(e);
 		}
 		
 		private Rectangle additionButtonRectage = Rectangle.Empty;
@@ -190,11 +187,8 @@ namespace WordHiddenPowers.Controls.ListControls
 			base.OnItemContentChanged(e);
 		}
 				
-		private void WordFiles_TableCleared(object sender, DataTableClearEventArgs e)
-		{
-			ReadData();
-		}
-
+		private void WordFiles_TableCleared(object sender, DataTableClearEventArgs e) => ReadData();
+		
 		private void WordFiles_RowChanged(object sender, WordFilesRowChangeEvent e)
 		{
 			//ReadData();
@@ -278,11 +272,8 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 		}
 
-		private void TablesPowers_TableCleared(object sender, DataTableClearEventArgs e)
-		{
-			Items.Clear();
-		}
-
+		private void TablesPowers_TableCleared(object sender, DataTableClearEventArgs e) => Items.Clear();
+		
 		private void SuspendEvents()
 		{
 			if (DataSet != null)
@@ -342,6 +333,8 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			BeginUpdate();
 
+			int selectedIndex = SelectedIndex;
+
 			Items.Clear();
 
 			if (DataSet.TextPowers.Rows.Count > 0 ||
@@ -352,25 +345,22 @@ namespace WordHiddenPowers.Controls.ListControls
 					AddNote(note);
 				}
 			}
+
+			if (selectedIndex < Items.Count)
+			{
+				SelectedIndex = selectedIndex;
+			}
+
 			EndUpdate();
 			ResumeEvents();
 		}
 
-		private void AddNote(Note note)
-		{
-			Items.Add(new Control.ListItem(note: note, showButtons: showButtons));
-		}
-
-		private void RemoveNote(Note note)
-		{
-			Items.Remove(GetListItem(note.DataRow as DataRow));
-		}
-
-		private Note GetNote(DataRow dataRow)
-		{
-			return GetListItem(dataRow: dataRow).Note;
-		}
-
+		private void AddNote(Note note) => Items.Add(new Control.ListItem(note: note, showButtons: showButtons));
+		
+		private void RemoveNote(Note note) => Items.Remove(GetListItem(note.DataRow as DataRow));
+		
+		private Note GetNote(DataRow dataRow) => GetListItem(dataRow: dataRow).Note;
+		
 		private Control.ListItem GetListItem(DataRow dataRow)
 		{
 			return (from Control.ListItem item in Items
@@ -447,17 +437,11 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			private string text;
 
-			public ListItemNote(string text)
-			{
-				this.text = text;
-			}
-
+			public ListItemNote(string text) => this.text = text;
+			
 			public string Text
 			{
-				get
-				{
-					return text;
-				}
+				get => text;
 				set
 				{
 					if (text != value)
@@ -484,10 +468,7 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			public Version Code
 			{
-				get
-				{
-					return code;
-				}
+				get => code;
 				set
 				{
 					if (code != value)
@@ -628,7 +609,7 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			public Rating Rating
 			{
-				get => (Rating)(note.Rating);
+				get => (Rating)note.Rating;
 				set
 				{
 					if (note.Rating != value.Value)

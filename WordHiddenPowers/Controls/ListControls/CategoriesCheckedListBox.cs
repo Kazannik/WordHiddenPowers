@@ -29,10 +29,7 @@ namespace WordHiddenPowers.Controls.ListControls
 
 		public RepositoryDataSet DataSet
 		{
-			get
-			{
-				return source;
-			}
+			get => source;
 			set
 			{
 				if (source != value)
@@ -48,22 +45,12 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 		}
 
-		public bool IsAnyChecked
-		{
-			get
-			{
-				return Items.Any(i => i.IsChecked);
-			}
-		}
-
-		public IEnumerable<Subcategory> CheckedSubcategories
-		{
-			get
-			{
-				return Items.Where(i => !i.IsCategory && i.IsChecked).Select(i => (Subcategory)i.owner);
-			}
-		}
-
+		public bool IsAnyChecked => Items.Any(i => i.IsChecked);
+				
+		public IEnumerable<Subcategory> CheckedSubcategories => Items
+			.Where(i => !i.IsCategory && i.IsChecked)
+			.Select(i => (Subcategory)i.owner);
+		
 		protected override void OnItemMouseClick(ItemMouseEventArgs<ListItem, Control.ListItemNote> e)
 		{
 			if (e.Button == MouseButtons.Left && !e.Item.IsCategory)
@@ -74,22 +61,16 @@ namespace WordHiddenPowers.Controls.ListControls
 
 		protected override void OnKeyPress(KeyPressEventArgs e)
 		{
-			if (e.KeyChar == 32 && SelectedItem != null && !((ListItem)SelectedItem).IsCategory)
+			if (e.KeyChar == 32 && SelectedItem != null && !SelectedItem.IsCategory)
 			{
-				((ListItem)SelectedItem).IsChecked = !((ListItem)SelectedItem).IsChecked;
+				SelectedItem.IsChecked = !SelectedItem.IsChecked;
 			}
 			base.OnKeyPress(e);
 		}
 
-		private void Categories_TableCleared(object sender, DataTableClearEventArgs e)
-		{
-			ReadData();
-		}
+		private void Categories_TableCleared(object sender, DataTableClearEventArgs e) => ReadData();
 
-		private void Subcategories_TableCleared(object sender, DataTableClearEventArgs e)
-		{
-			ReadData();
-		}
+		private void Subcategories_TableCleared(object sender, DataTableClearEventArgs e) => ReadData();
 
 		private void Categories_RowDeleting(object sender, DataRowChangeEventArgs e)
 		{
@@ -238,15 +219,9 @@ namespace WordHiddenPowers.Controls.ListControls
 			return index;
 		}
 
-		private void Add(ICategoriesListItem item)
-		{
-			Items.Add(new ListItem(item));
-		}
-
-		private void Insert(int index, ICategoriesListItem item)
-		{
-			Items.Insert(index, new ListItem(item));
-		}
+		private void Add(ICategoriesListItem item) => Items.Add(new ListItem(item));
+		
+		private void Insert(int index, ICategoriesListItem item) => Items.Insert(index, new ListItem(item));
 
 		private void Remove(Category category)
 		{
@@ -266,18 +241,15 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 		}
 
-		public bool ExistsListItem(string guid)
-		{
-			return Items.AsEnumerable()
-				.Where(x => x.owner.Code.Guid == guid).Any();
-		}
+		public bool ExistsListItem(string guid) => Items.AsEnumerable()
+			.Where(x => x.owner.Code.Guid == guid)
+			.Any();
+		
 
-		public ListItem GetListItem(string guid)
-		{
-			return Items.AsEnumerable()
-				.Where(x => x.owner.Code.Guid == guid).First();
-		}
-
+		public ListItem GetListItem(string guid) => Items.AsEnumerable()
+			.Where(x => x.owner.Code.Guid == guid)
+			.First();
+		
 		public int CategoryNextIndexOf(int index)
 		{
 			for (int i = index; i < Items.Count; i++)
@@ -289,52 +261,39 @@ namespace WordHiddenPowers.Controls.ListControls
 			return -1;
 		}
 
-		private bool ExistsListItem(Category category)
-		{
-			return Items.AsEnumerable()
-				.Where(x => x.owner.Code.Guid == category.Guid).Any();
-		}
-
-		private ListItem GetListItem(Category category)
-		{
-			return Items.AsEnumerable()
-				.Where(x => x.owner.Code.Guid == category.Guid).First();
-		}
-
-		private bool ExistsListItem(Subcategory subcategory)
-		{
-			return Items.AsEnumerable()
-				.Where(x => x.owner.Code.Guid == subcategory.Guid).Any();
-		}
-
-		private ListItem GetListItem(Subcategory subcategory)
-		{
-			return Items.AsEnumerable()
-				.Where(x => x.owner.Code.Guid == subcategory.Guid).First();
-		}
-
-		private bool ExistsListItem(CategoriesRow row)
-		{
-			return Items.AsEnumerable()
-				.Where(x => x.owner.Code.Guid == row.key_guid).Any();
-		}
-
-		private ListItem GetListItem(CategoriesRow row)
-		{
-			return Items.AsEnumerable()
-				.Where(x => x.owner.Code.Guid == row.key_guid).First();
-		}
-
-		private bool ExistsListItem(SubcategoriesRow row)
-		{
-			return Items.AsEnumerable()
-				.Where(x => x.owner.Code.Guid == row.key_guid).Any();
-		}
-
+		private bool ExistsListItem(Category category) => Items.AsEnumerable()
+			.Where(x => x.owner.Code.Guid == category.Guid)
+			.Any();
+		
+		private ListItem GetListItem(Category category) => Items.AsEnumerable()
+			.Where(x => x.owner.Code.Guid == category.Guid)
+			.First();
+		
+		private bool ExistsListItem(Subcategory subcategory) => Items.AsEnumerable()
+			.Where(x => x.owner.Code.Guid == subcategory.Guid)
+			.Any();
+		
+		private ListItem GetListItem(Subcategory subcategory) => Items.AsEnumerable()
+				.Where(x => x.owner.Code.Guid == subcategory.Guid)
+			.First();
+		
+		private bool ExistsListItem(CategoriesRow row) => Items.AsEnumerable()
+			.Where(x => x.owner.Code.Guid == row.key_guid)
+			.Any();
+		
+		private ListItem GetListItem(CategoriesRow row) => Items.AsEnumerable()
+			.Where(x => x.owner.Code.Guid == row.key_guid)
+			.First();
+		
+		private bool ExistsListItem(SubcategoriesRow row) => Items.AsEnumerable()
+				.Where(x => x.owner.Code.Guid == row.key_guid)
+			.Any();
+		
 		private ListItem GetListItem(SubcategoriesRow row)
 		{
 			return Items.AsEnumerable()
-				.Where(x => x.owner.Code.Guid == row.key_guid).First();
+				.Where(x => x.owner.Code.Guid == row.key_guid)
+				.First();
 		}
 
 		private bool ExistsListItem(DataRow row)
@@ -461,17 +420,11 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			private string text;
 
-			public ListItemNote(string text)
-			{
-				this.text = text;
-			}
+			public ListItemNote(string text) => this.text = text;
 
 			public string Text
 			{
-				get
-				{
-					return text;
-				}
+				get => text;
 				set
 				{
 					if (text != value)
@@ -506,10 +459,7 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			public Version Code
 			{
-				get
-				{
-					return code;
-				}
+				get => code;
 				set
 				{
 					if (code != value)
@@ -629,12 +579,6 @@ namespace WordHiddenPowers.Controls.ListControls
 				e.Graphics.FillRectangle(brush, e.Bounds);
 
 				base.OnDraw(e);
-			}
-
-			public override bool IsChecked
-			{
-				get => false;
-				set { }
 			}
 		}
 

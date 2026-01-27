@@ -28,10 +28,7 @@ namespace WordHiddenPowers.Controls.ListControls
 
 		public RepositoryDataSet DataSet
 		{
-			get
-			{
-				return source;
-			}
+			get => source;
 			set
 			{
 				if (source != value)
@@ -105,17 +102,18 @@ namespace WordHiddenPowers.Controls.ListControls
 		private Rectangle checkBoxRectage = Rectangle.Empty;
 		private Rectangle additionButtonRectage = Rectangle.Empty;
 		private Rectangle subtractionButtonRectage = Rectangle.Empty;
+
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
 			if (checkBoxRectage.Contains(e.Location))
 			{
-				Cursor = System.Windows.Forms.Cursors.Hand;
+				Cursor = Cursors.Hand;
 				additionButtonRectage = Rectangle.Empty;
 				subtractionButtonRectage = Rectangle.Empty;
 			}
 			else if (additionButtonRectage.Contains(e.Location))
 			{
-				Cursor = System.Windows.Forms.Cursors.Hand;
+				Cursor = Cursors.Hand;
 				checkBoxRectage = Rectangle.Empty;
 				subtractionButtonRectage = Rectangle.Empty;
 			}
@@ -123,14 +121,14 @@ namespace WordHiddenPowers.Controls.ListControls
 			{
 				checkBoxRectage = Rectangle.Empty;
 				additionButtonRectage = Rectangle.Empty;
-				Cursor = System.Windows.Forms.Cursors.Hand;
+				Cursor = Cursors.Hand;
 			}
 			else
 			{
 				checkBoxRectage = Rectangle.Empty;
 				additionButtonRectage = Rectangle.Empty;
 				subtractionButtonRectage = Rectangle.Empty;
-				Cursor = System.Windows.Forms.Cursors.Default;
+				Cursor = Cursors.Default;
 			}
 			base.OnMouseMove(e);
 		}
@@ -144,28 +142,28 @@ namespace WordHiddenPowers.Controls.ListControls
 					checkBoxRectage = note.CheckButtonRectangle;
 					additionButtonRectage = Rectangle.Empty;
 					subtractionButtonRectage = Rectangle.Empty;
-					Cursor = System.Windows.Forms.Cursors.Hand;
+					Cursor = Cursors.Hand;
 				}
 				else if (note.AdditionButtonRectangle.Contains(e.Location))
 				{
 					checkBoxRectage = Rectangle.Empty;
 					additionButtonRectage = note.AdditionButtonRectangle;
 					subtractionButtonRectage = Rectangle.Empty;
-					Cursor = System.Windows.Forms.Cursors.Hand;
+					Cursor = Cursors.Hand;
 				}
 				else if (note.SubtractionButtonRectangle.Contains(e.Location))
 				{
 					checkBoxRectage = Rectangle.Empty;
 					additionButtonRectage = Rectangle.Empty;
 					subtractionButtonRectage = note.SubtractionButtonRectangle;
-					Cursor = System.Windows.Forms.Cursors.Hand;
+					Cursor = Cursors.Hand;
 				}
 				else
 				{
 					checkBoxRectage = Rectangle.Empty;
 					additionButtonRectage = Rectangle.Empty;
 					subtractionButtonRectage = Rectangle.Empty;
-					Cursor = System.Windows.Forms.Cursors.Default;
+					Cursor = Cursors.Default;
 				}
 			}
 			else
@@ -173,7 +171,7 @@ namespace WordHiddenPowers.Controls.ListControls
 				checkBoxRectage = Rectangle.Empty;
 				additionButtonRectage = Rectangle.Empty;
 				subtractionButtonRectage = Rectangle.Empty;
-				Cursor = System.Windows.Forms.Cursors.Default;
+				Cursor = Cursors.Default;
 			}
 			base.OnItemMouseMove(e);
 		}
@@ -188,19 +186,19 @@ namespace WordHiddenPowers.Controls.ListControls
 		{
 			if (e.KeyData == Keys.Space && SelectedItem != null)
 			{
-				((ListItem)SelectedItem).Hide = !((ListItem)SelectedItem).Hide;
+				SelectedItem.Hide = !(SelectedItem).Hide;
 				e.SuppressKeyPress = false;
 			}
 			else if (e.KeyData == Keys.Left && SelectedItem != null)
 			{
-				if (((ListItem)SelectedItem).Rating > -5)
-					((ListItem)SelectedItem).Rating--;
+				if ((SelectedItem).Rating > -5)
+					(SelectedItem).Rating--;
 				e.SuppressKeyPress = true;
 			}
 			else if (e.KeyData == Keys.Right && SelectedItem != null)
 			{
-				if (((ListItem)SelectedItem).Rating < 5) 
-					((ListItem)SelectedItem).Rating++;
+				if ((SelectedItem).Rating < 5) 
+					(SelectedItem).Rating++;
 				e.SuppressKeyPress = true;
 			}
 			else
@@ -209,11 +207,8 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 		}
 		
-		private void WordFiles_TableCleared(object sender, DataTableClearEventArgs e)
-		{
-			ReadData();
-		}
-
+		private void WordFiles_TableCleared(object sender, DataTableClearEventArgs e) => ReadData();
+		
 		private void WordFiles_RowChanged(object sender, WordFilesRowChangeEvent e)
 		{
 			//ReadData();
@@ -295,11 +290,8 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 		}
 
-		private void TablesPowers_TableCleared(object sender, DataTableClearEventArgs e)
-		{
-			Items.Clear();
-		}
-
+		private void TablesPowers_TableCleared(object sender, DataTableClearEventArgs e) => Items.Clear();
+		
 		private void SuspendEvents()
 		{
 			if (DataSet != null)
@@ -392,17 +384,14 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 		}
 
-		private Note GetNote(DataRow dataRow)
-		{
-			return GetListItem(dataRow: dataRow).Note;
-		}
-
-		private ListItem GetListItem(DataRow dataRow)
-		{
-			return (from ListItem item in Items
-					where item.Note.DataRow.Equals(dataRow)
-					select item).First();
-		}
+		private Note GetNote(DataRow dataRow) => GetListItem(dataRow: dataRow).Note;
+		
+		private ListItem GetListItem(DataRow dataRow) =>
+			(from ListItem item in Items
+			 where item.Note.DataRow.Equals(dataRow)
+			 select item)
+			.First();
+		
 	}
 
 	namespace ContentListControl
@@ -485,10 +474,7 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			public string Text
 			{
-				get
-				{
-					return text;
-				}
+				get => text;
 				set
 				{
 					if (text != value)

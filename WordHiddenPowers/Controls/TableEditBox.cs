@@ -25,10 +25,7 @@ namespace WordHiddenPowers.Controls
 
 		public RepositoryDataSet DataSet
 		{
-			get
-			{
-				return _source;
-			}
+			get => _source;
 			set
 			{
 				_source = value;
@@ -38,10 +35,7 @@ namespace WordHiddenPowers.Controls
 
 		public RepositoryDataSet OldDataSet
 		{
-			get
-			{
-				return _old;
-			}
+			get => _old;
 			set
 			{
 				_old = value;
@@ -51,10 +45,7 @@ namespace WordHiddenPowers.Controls
 
 		public Table Table
 		{
-			get
-			{
-				return _table;
-			}
+			get => _table;
 			set
 			{
 				_table = value;

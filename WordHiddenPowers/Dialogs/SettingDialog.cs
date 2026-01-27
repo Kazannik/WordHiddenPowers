@@ -1,6 +1,5 @@
 ﻿// Ignore Spelling: Dialogs uri
 
-using OpenAI.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,7 +12,7 @@ namespace WordHiddenPowers.Dialogs
 {
 	public partial class SettingDialog : Form
 	{
-		public IEnumerable<OpenAIModel> LargeLanguageModels { get; private set; }
+		public IEnumerable<string> LargeLanguageModels { get; private set; }
 
 		public string SelectedLLMName => llmNameComboBox.SelectedItem?.ToString();
 
@@ -99,9 +98,9 @@ namespace WordHiddenPowers.Dialogs
 			llmNameComboBox.Items.Clear();
 			if (LargeLanguageModels is null) return;
 
-			foreach (OpenAIModel item in LargeLanguageModels)
+			foreach (string item in LargeLanguageModels)
 			{
-				llmNameComboBox.Items.Add(item.Id);
+				llmNameComboBox.Items.Add(item);
 			}
 
 			if (!string.IsNullOrWhiteSpace(selectedLLMName) &&
@@ -129,7 +128,7 @@ namespace WordHiddenPowers.Dialogs
 			{
 				hostErrorProvider.SetError(uriTextBox, "Выбранный хост не доступен.");
 			}
-			LargeLanguageModels = await OpenAIService.GetModelsAsync(SelectedUri);
+			LargeLanguageModels = OpenAIService.GetModelsName(SelectedUri);
 
 			ModelNameComboBoxUpdate(selectedLLMName: selectedLLMName);
 

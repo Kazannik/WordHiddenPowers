@@ -303,7 +303,7 @@ namespace WordHiddenPowers.Repository
 					row.category_guid = categoryGuid;
 					row.subcategory_guid = subcategoryGuid;
 					row.Description = description;
-					row.Value = value as string;
+					row.Value = value;
 					row.Rating = rating;
 					row.WordSelectionEnd = wordSelectionEnd;
 					row.WordSelectionStart = wordSelectionStart;

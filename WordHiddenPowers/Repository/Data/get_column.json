@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "properties": {
+    "columnName": {
+      "type": "string",
+      "description": "номер графы таблицы"
+    }    
+  },
+  "required": [ "locationId", "rowId", "columnId" ]
+}
+

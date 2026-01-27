@@ -24,9 +24,8 @@ namespace WordHiddenPowers.Dialogs
 		protected override void ControlsResize()
 		{
 			base.ControlsResize();
-
-			valueTextBox.Location = new Point(12, ControlTop);
-			valueTextBox.Size = new Size(ClientSize.Width - 24, ControlHeight);
+			valueTextBox.Location = new Point(6, ControlTop);
+			valueTextBox.Size = new Size(ClientSize.Width - 12, ControlHeight);
 			MinimumSize = new Size(500, MinHeight);
 		}		
 	}

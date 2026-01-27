@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 
 namespace WordHiddenPowers.Repository.Data
 {
@@ -74,15 +73,7 @@ namespace WordHiddenPowers.Repository.Data
 			}
 			return result;
 		}
-
-		protected void OnValidate(object value)
-		{
-			if (!typeof(Table).IsAssignableFrom(value.GetType()))
-			{
-				throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Не удалось привести тип Value: {0} к поддерживаемому типу: {1}.", value.GetType().ToString(), typeof(Table).ToString()));
-			}
-		}
-
+		
 		public static Table Create(string text) => Create(text: text, caption: string.Empty, fileName: string.Empty);
 
 		/// <summary>
