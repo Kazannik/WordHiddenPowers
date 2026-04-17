@@ -46,11 +46,11 @@ namespace WordHiddenPowers.Controls.ListControls
 		}
 
 		public bool IsAnyChecked => Items.Any(i => i.IsChecked);
-				
+
 		public IEnumerable<Subcategory> CheckedSubcategories => Items
 			.Where(i => !i.IsCategory && i.IsChecked)
 			.Select(i => (Subcategory)i.owner);
-		
+
 		protected override void OnItemMouseClick(ItemMouseEventArgs<ListItem, Control.ListItemNote> e)
 		{
 			if (e.Button == MouseButtons.Left && !e.Item.IsCategory)
@@ -220,7 +220,7 @@ namespace WordHiddenPowers.Controls.ListControls
 		}
 
 		private void Add(ICategoriesListItem item) => Items.Add(new ListItem(item));
-		
+
 		private void Insert(int index, ICategoriesListItem item) => Items.Insert(index, new ListItem(item));
 
 		private void Remove(Category category)
@@ -244,12 +244,12 @@ namespace WordHiddenPowers.Controls.ListControls
 		public bool ExistsListItem(string guid) => Items.AsEnumerable()
 			.Where(x => x.owner.Code.Guid == guid)
 			.Any();
-		
+
 
 		public ListItem GetListItem(string guid) => Items.AsEnumerable()
 			.Where(x => x.owner.Code.Guid == guid)
 			.First();
-		
+
 		public int CategoryNextIndexOf(int index)
 		{
 			for (int i = index; i < Items.Count; i++)
@@ -264,31 +264,31 @@ namespace WordHiddenPowers.Controls.ListControls
 		private bool ExistsListItem(Category category) => Items.AsEnumerable()
 			.Where(x => x.owner.Code.Guid == category.Guid)
 			.Any();
-		
+
 		private ListItem GetListItem(Category category) => Items.AsEnumerable()
 			.Where(x => x.owner.Code.Guid == category.Guid)
 			.First();
-		
+
 		private bool ExistsListItem(Subcategory subcategory) => Items.AsEnumerable()
 			.Where(x => x.owner.Code.Guid == subcategory.Guid)
 			.Any();
-		
+
 		private ListItem GetListItem(Subcategory subcategory) => Items.AsEnumerable()
 				.Where(x => x.owner.Code.Guid == subcategory.Guid)
 			.First();
-		
+
 		private bool ExistsListItem(CategoriesRow row) => Items.AsEnumerable()
 			.Where(x => x.owner.Code.Guid == row.key_guid)
 			.Any();
-		
+
 		private ListItem GetListItem(CategoriesRow row) => Items.AsEnumerable()
 			.Where(x => x.owner.Code.Guid == row.key_guid)
 			.First();
-		
+
 		private bool ExistsListItem(SubcategoriesRow row) => Items.AsEnumerable()
 				.Where(x => x.owner.Code.Guid == row.key_guid)
 			.Any();
-		
+
 		private ListItem GetListItem(SubcategoriesRow row)
 		{
 			return Items.AsEnumerable()
@@ -357,10 +357,7 @@ namespace WordHiddenPowers.Controls.ListControls
 				if (notes.Length > 2 && (!notes[1].Size.IsEmpty || !notes[2].Size.IsEmpty))
 				{
 					// Рисование линии после титульной части
-					Pen linePen = arg.State == (arg.State | DrawItemState.Selected) ? new Pen(arg.ForeColor) : SystemPens.InactiveCaption;
-					arg.Graphics.DrawLine(linePen,
-					arg.Bounds.X + 7, notes[0].Size.Height - 2,
-					arg.Bounds.X + e.Bounds.Width - 15, notes[0].Size.Height - 2);
+					Utils.Drawing.DrawLine(e, notes[0]);
 				}
 				arg.DrawFocusRectangle();
 			}
@@ -549,7 +546,7 @@ namespace WordHiddenPowers.Controls.ListControls
 				{
 					ControlLibrary.Utils.Drawing.DrawUncheckedIcon(e.Graphics, Const.Globals.COLOR_OK_ICON, e.BackColor, CheckButton);
 				}
-			}			
+			}
 		}
 
 		public class CategoryTitleListItemNote : SubcategoryTitleListItemNote

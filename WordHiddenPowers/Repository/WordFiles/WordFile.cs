@@ -75,10 +75,7 @@ namespace WordHiddenPowers.Repository.WordFiles
 				Date };
 		}
 
-		public int CompareTo(WordFile value)
-		{
-			return Compare(this, value);
-		}
+		public int CompareTo(WordFile value) => Compare(this, value);
 
 		public int CompareTo(object value)
 		{
@@ -120,10 +117,7 @@ namespace WordHiddenPowers.Repository.WordFiles
 
 		public class WordFileComparer : IComparer<WordFile>
 		{
-			public int Compare(WordFile x, WordFile y)
-			{
-				return WordFile.Compare(x, y);
-			}
+			public int Compare(WordFile x, WordFile y) => WordFile.Compare(x, y);
 		}
 	}
 }

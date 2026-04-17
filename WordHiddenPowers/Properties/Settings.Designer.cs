@@ -73,6 +73,18 @@ namespace WordHiddenPowers.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("00:00:00")]
+        public global::System.TimeSpan LLMTimeout {
+            get {
+                return ((global::System.TimeSpan)(this["LLMTimeout"]));
+            }
+            set {
+                this["LLMTimeout"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Деловой стиль")]
         public string LLMButton1 {
             get {

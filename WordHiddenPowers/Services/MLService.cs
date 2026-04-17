@@ -9,8 +9,11 @@ using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers.Services
 {
+	/// <summary>
+	/// Разметка текста с помощью обучения нейронных сетей.
+	/// </summary>
 	static class MLService
-    {
+	{
 		private const string NOTE_DESCRIPTION = "Добавлено с помощью ИИ ({0} %)";
 
 		public static void Search(Document document, float levelPassage)
@@ -36,7 +39,7 @@ namespace WordHiddenPowers.Services
 				string paragraphText = paragraph.Range.Text;
 
 				if (paragraphText.Split(' ').Length < 15) continue;
-								
+
 				IOrderedEnumerable<KeyValuePair<string, float>> result = MLModel.PredictAll(paragraph.Range.Text, mlNetModelPath);
 				IEnumerable<Subcategory> subcategories = GetSubcategories(document, result, levelPassage);
 				if (subcategories != null)
@@ -56,7 +59,7 @@ namespace WordHiddenPowers.Services
 			}
 			dialog.Close();
 		}
-		
+
 		internal static IEnumerable<Subcategory> GetSubcategories(Document document, IOrderedEnumerable<KeyValuePair<string, float>> result, float levelPassage)
 		{
 			if (result == null) return null;

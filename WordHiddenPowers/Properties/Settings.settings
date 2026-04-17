@@ -14,6 +14,9 @@
     <Setting Name="LLMHostUri" Type="System.Uri" Scope="User">
       <Value Profile="(Default)">http://localhost:11434/v1</Value>
     </Setting>
+    <Setting Name="LLMTimeout" Type="System.TimeSpan" Scope="User">
+      <Value Profile="(Default)">00:00:00</Value>
+    </Setting>
     <Setting Name="LLMButton1" Type="System.String" Scope="User">
       <Value Profile="(Default)">Деловой стиль</Value>
     </Setting>

@@ -6,10 +6,7 @@ namespace WordHiddenPowers.Utils
 {
 	public static class Json
 	{
-		private static string GetIndent(int count)
-		{
-			return new string('\x0020', count);
-		}
+		private static string GetIndent(int count) => new string('\x0020', count);
 
 		public static string Serialize(IEnumerable<(string name, string type, string description, string parameters, bool strict)> attributes)
 		{
@@ -18,7 +15,8 @@ namespace WordHiddenPowers.Utils
 			stringBuilder.Append(GetIndent(2) + "\"type\":\"object\",\n");
 			stringBuilder.Append(GetIndent(2) + "\"properties\":\"{\n");
 
-			foreach (var item in attributes) {
+			foreach (var item in attributes)
+			{
 				stringBuilder.Append(GetIndent(4) + "\"" + item.name + "\": {\n");
 				stringBuilder.Append(GetIndent(6) + "\"type\": \"" + item.type + "\",\n");
 				stringBuilder.Append(GetIndent(6) + "\"description\": \"" + item.description + "\"\n");
@@ -28,7 +26,7 @@ namespace WordHiddenPowers.Utils
 			}
 
 			stringBuilder.Append(GetIndent(2) + "},\n");
-			stringBuilder.Append(GetIndent(2) + "\"required\": [ " + " ]");			
+			stringBuilder.Append(GetIndent(2) + "\"required\": [ " + " ]");
 			stringBuilder.Append("}\n");
 			return stringBuilder.ToString();
 		}
@@ -36,6 +34,6 @@ namespace WordHiddenPowers.Utils
 		public static byte[] SerializeToBytes(IEnumerable<(string name, string type, string description, string parameters, bool strict)> attributes)
 		{
 			return Encoding.UTF8.GetBytes(Serialize(attributes: attributes));
-		}		
+		}
 	}
 }

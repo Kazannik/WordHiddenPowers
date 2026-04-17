@@ -23,37 +23,34 @@ namespace WordHiddenPowers.Utils
 
 		public static IEnumerable<(string userMessage, Word.Range range)> GetMessages(Word._Document document)
 		{
-			List<Match> separators = new List<Match> ();
-			List<(string userMessage, Word.Range range)> result = new List<(string userMessage, Word.Range range)> ();			
+			List<Match> separators = new List<Match>();
+			List<(string userMessage, Word.Range range)> result = new List<(string userMessage, Word.Range range)>();
 			foreach (Match match in percentRegex.Matches(document.ActiveWindow.Selection.Text))
 			{
 				separators.Add(match);
 			}
-			
+
 			for (int i = 0; i < separators.Count; i += 2)
 			{
-				Word.Range range = document.Range(separators[i].Index, separators[i+1].Index + separators[i+1].Length);
+				Word.Range range = document.Range(separators[i].Index, separators[i + 1].Index + separators[i + 1].Length);
 				string userMessage = range.Text.Substring(3, range.Text.Length - 6);
 				result.Add((userMessage, range));
 			}
 			return result;
 		}
 
-		public static void InsertToWordDocument(
-			Documents.Document sourceDocument,
-			int minRating = 0,
-			int maxRating = 0,
-			int maxCount = 3,
-			bool viewHide = true)
+		/// <summary>
+		/// Вставка в текущий документ структуры анализа.
+		/// </summary>
+		/// <param name="sourceDocument"></param>
+		public static void InsertContentToWordDocument(Documents.Document sourceDocument)
 		{
 			Word._Application application = Globals.ThisAddIn.Application;
 			Word._Document destDocument = application.ActiveDocument;
 			application.Visible = true;
-			
-			IEnumerable<string> allCaptions = sourceDocument.AggregatedDataSet.GetFilesCaption();
-		    
+
 			string categoryGuid = string.Empty;
-			foreach (SubcategoriesRow row in sourceDocument.AggregatedDataSet.Subcategories.GetSubcategoriesRows())
+			foreach (SubcategoriesRow row in sourceDocument.CurrentDataSet.Subcategories.GetSubcategoriesRows())
 			{
 				if (categoryGuid != row.category_guid)
 				{
@@ -64,7 +61,54 @@ namespace WordHiddenPowers.Utils
 					categoryGuid = row.category_guid;
 					InsertCategoryFirstParagraph(sourceDocument, destDocument, categoryGuid);
 				}
-				
+
+				if (row.IsText)
+				{
+					//InsertTextSubcategoryContent(
+					//	sourceDocument: sourceDocument,
+					//	destDocument: destDocument,
+					//	subcategoryGuid: row.key_guid,
+					//	allCaptions: allCaptions,
+					//	minRating: minRating,
+					//	maxRating: maxRating,
+					//	maxCount: maxCount,
+					//	viewHide: viewHide);
+				}
+				else if (row.IsDecimal)
+				{
+					//InsertDecimalSubcategoryContent(sourceDocument, destDocument, row.key_guid, allCaptions);
+				}
+			}
+		}
+
+
+		public static void InsertToWordDocument(
+			Documents.Document sourceDocument,
+			int minRating = 0,
+			int maxRating = 0,
+			int maxCount = 3,
+			bool allRating = false,
+			bool viewHide = true)
+		{
+			Word._Application application = Globals.ThisAddIn.Application;
+			Word._Document destDocument = application.ActiveDocument;
+			application.Visible = true;
+
+			IEnumerable<string> allCaptions = sourceDocument.NowAggregatedDataSet.GetFilesCaption();
+
+			string categoryGuid = string.Empty;
+			foreach (SubcategoriesRow row in sourceDocument.NowAggregatedDataSet.Subcategories.GetSubcategoriesRows())
+			{
+				if (categoryGuid != row.category_guid)
+				{
+					if (!string.IsNullOrEmpty(categoryGuid))
+					{
+						InsertCategoryLastParagraph(sourceDocument, destDocument, categoryGuid);
+					}
+					categoryGuid = row.category_guid;
+					InsertCategoryFirstParagraph(sourceDocument, destDocument, categoryGuid);
+				}
+
 				if (row.IsText)
 				{
 					InsertTextSubcategoryContent(
@@ -75,6 +119,7 @@ namespace WordHiddenPowers.Utils
 						minRating: minRating,
 						maxRating: maxRating,
 						maxCount: maxCount,
+						allRating: allRating,
 						viewHide: viewHide);
 				}
 				else if (row.IsDecimal)
@@ -89,7 +134,7 @@ namespace WordHiddenPowers.Utils
 			Word._Document destDocument,
 			string categoryGuid)
 		{
-			Category category = sourceDocument.AggregatedDataSet.GetCategory(guid: categoryGuid);
+			Category category = sourceDocument.NowAggregatedDataSet.GetCategory(guid: categoryGuid);
 			InsertParagraph(destDocument, string.Format("{0}) {1}", category.Code, category.Caption), true);
 			if (!string.IsNullOrEmpty(category.BeforeText))
 			{
@@ -102,7 +147,7 @@ namespace WordHiddenPowers.Utils
 			Word._Document destDocument,
 			string categoryGuid)
 		{
-			Category category = sourceDocument.AggregatedDataSet.GetCategory(guid: categoryGuid);
+			Category category = sourceDocument.NowAggregatedDataSet.GetCategory(guid: categoryGuid);
 			if (!string.IsNullOrEmpty(category.AfterText))
 			{
 				InsertParagraph(destDocument, category.AfterText);
@@ -139,19 +184,20 @@ namespace WordHiddenPowers.Utils
 			int minRating = 0,
 			int maxRating = 0,
 			int maxCount = 3,
+			bool allRating = false,
 			bool viewHide = true)
 		{
-			Subcategory subcategory = sourceDocument.AggregatedDataSet.GetSubcategory(guid: subcategoryGuid);
-			
+			Subcategory subcategory = sourceDocument.NowAggregatedDataSet.GetSubcategory(guid: subcategoryGuid);
+
 			InsertSubcategoryFirstParagraph(sourceDocument, destDocument, subcategory);
 
-			IEnumerable<string> captions = sourceDocument.AggregatedDataSet.GetFilesCaption(subcategoryGuid : subcategoryGuid);
+			IEnumerable<string> captions = sourceDocument.NowAggregatedDataSet.GetFilesCaption(subcategoryGuid: subcategoryGuid);
 
-			if (captions.Any()) 
+			if (captions.Any())
 			{
 				InsertParagraph(
-					document: destDocument, 
-					text: string.Format("Информация представлена ({0}): {1}", captions.Count(), string.Join(", ", captions)), 
+					document: destDocument,
+					text: string.Format("Информация представлена ({0}): {1}", captions.Count(), string.Join(", ", captions)),
 					bold: false, italic: true);
 			}
 			if (subcategory.IsObligatory)
@@ -165,9 +211,10 @@ namespace WordHiddenPowers.Utils
 					bold: false, italic: true);
 				}
 			}
-			
-			IEnumerable<Note> allNotes = sourceDocument.AggregatedDataSet.GetTextNotes(subcategoryGuid: subcategoryGuid, viewHide: viewHide);
-			if (minRating != 0 || maxRating != 0)
+
+			IEnumerable<Note> allNotes = sourceDocument.NowAggregatedDataSet.GetTextNotes(subcategoryGuid: subcategoryGuid, viewHide: viewHide);
+
+			if (!allRating && (minRating != 0 || maxRating != 0))
 			{
 				if (maxRating != 0)
 				{
@@ -209,12 +256,48 @@ namespace WordHiddenPowers.Utils
 					}
 				}
 			}
+			else if (allRating)
+			{
+				IEnumerable<Note> ratingNotes = allNotes.Where(note => note.Rating > 0).OrderByDescending(note => note.Rating);
+				IEnumerable<Note> notes = ratingNotes.Select(note => note);
+				if (notes.Count() < maxCount)
+				{
+					IEnumerable<Note> defaultNotes = allNotes.Where(note => note.Rating == 0).OrderBy(note => note.FileCaption);
+					notes = notes
+						.Union(defaultNotes, new NoteComparer())
+						.Take(maxCount);
+				}
+				foreach (Note note in notes)
+				{
+					InsertParagraph(
+						document: destDocument,
+						text: string.Format("{0}: {1}", note.FileCaption, note.Value),
+						bold: false, italic: true);
+				}
+
+				IEnumerable<Note> minNotes = allNotes.Where(note => note.Rating < 0).OrderBy(note => note.FileCaption);
+				if (minNotes.Any())
+				{
+					InsertParagraph(
+					document: destDocument,
+					text: string.Format("Внимание! С отрицательны рейтингом имеется {0} заметок:", minNotes.Count()),
+					bold: true, italic: true);
+
+					foreach (Note note in minNotes)
+					{
+						InsertParagraph(
+							document: destDocument,
+							text: string.Format("{0}: {1}", note.FileCaption, note.Value),
+							bold: false, italic: true);
+					}
+				}
+			}
 			else
 			{
 				foreach (Note note in (
-					maxCount == 0 
-					? allNotes 
-					: allNotes.OrderByDescending(note => note.Rating).Take(maxCount)).OrderBy(note=> note.FileCaption))
+					maxCount == 0
+					? allNotes
+					: allNotes.OrderByDescending(note => note.Rating).Take(maxCount)).OrderBy(note => note.FileCaption))
 				{
 					InsertParagraph(
 						document: destDocument,
@@ -231,27 +314,32 @@ namespace WordHiddenPowers.Utils
 			string subcategoryGuid,
 			IEnumerable<string> allCaptions)
 		{
-			Subcategory subcategory = sourceDocument.AggregatedDataSet.GetSubcategory(guid: subcategoryGuid);
+			Subcategory subcategory = sourceDocument.NowAggregatedDataSet.GetSubcategory(guid: subcategoryGuid);
 
 			InsertSubcategoryFirstParagraph(sourceDocument, destDocument, subcategory);
 
-			IEnumerable<string> captions = sourceDocument.AggregatedDataSet.GetFilesCaption(subcategoryGuid: subcategoryGuid);
+			IEnumerable<string> captions = sourceDocument.NowAggregatedDataSet.GetFilesCaption(subcategoryGuid: subcategoryGuid);
 			if (captions.Any())
 			{
-				double sum = sourceDocument.AggregatedDataSet.SumDecimalNote(subcategoryGuid: subcategoryGuid);
-				
-				InsertParagraph(
-					document: destDocument,
-					text: string.Format("Общее количество: {0}", sum),
-					bold: false, italic: true);
+				double nowSum = sourceDocument.NowAggregatedDataSet.GetNotesSum(subcategoryGuid: subcategoryGuid);
+				double lastSum = sourceDocument.LastAggregatedDataSet.GetNotesSum(subcategoryGuid: subcategoryGuid);
 
-				IEnumerable<Note> notes = sourceDocument.AggregatedDataSet.GetDecimalNotes(subcategoryGuid: subcategoryGuid);
-				
+				string growth = ((nowSum - lastSum) > 0 ? "+" : "") + (nowSum - lastSum).ToString("N0");
+				string growthPercent = lastSum != 0 ? ((nowSum - lastSum) > 0 ? "+" : "") + (((double)(nowSum - lastSum)) * 100 / lastSum).ToString("F2") + " %" : "-";
+
+
+				InsertParagraph(
+							document: destDocument,
+							text: string.Format("Общее количество: {0}({1}) / {2}({3})", nowSum, lastSum, growth, growthPercent),
+							bold: false, italic: true);
+
+				IEnumerable<Note> notes = sourceDocument.NowAggregatedDataSet.GetDecimalNotes(subcategoryGuid: subcategoryGuid);
+
 				IEnumerable<string> values = notes
 					.Where(note => (double)note.Value != 0)
 					.Select(note => new { note.FileCaption, note.Value })
 					.GroupBy(note => note.FileCaption)
-					.Select(note => string.Format("{0} ({1} - {2})", note.First().FileCaption, note.Sum(n => (double)n.Value), string.Format("{0:0.0} %", note.Sum(n => (double)n.Value) * 100 / sum)));
+					.Select(note => string.Format("{0} ({1} - {2})", note.First().FileCaption, note.Sum(n => (double)n.Value), string.Format("{0:F1} %", note.Sum(n => (double)n.Value) * 100 / nowSum)));
 
 				InsertParagraph(
 					document: destDocument,
@@ -287,7 +375,7 @@ namespace WordHiddenPowers.Utils
 			paragraph.Range.Font.Italic = italic ? 1 : 0;
 			paragraph.Range.InsertParagraphAfter();
 		}
-		
+
 		public static Icon GetIconMso(string idMso, int width, int height)
 		{
 			stdole.IPictureDisp img = Globals.ThisAddIn.Application.CommandBars.GetImageMso(idMso, width, height);

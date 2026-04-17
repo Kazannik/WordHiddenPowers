@@ -1,6 +1,8 @@
 ﻿using MyMicrosoft.Office.Hooks;
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
+using WordHiddenPowers.Properties;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordHiddenPowers
@@ -12,25 +14,26 @@ namespace WordHiddenPowers
 		public Documents.Document ActiveDocument => Documents.ActiveDocument;
 
 		public Word.Selection Selection => Globals.ThisAddIn.Application.ActiveWindow?.Selection;
-		
+
 		private void ThisAddIn_Startup(object sender, EventArgs e)
 		{
-			Properties.Settings.Default.Reload();
+			Settings.Default.Reload();
 
-			Services.OpenAIService.MainSystemMessage = Properties.Settings.Default.MainSystemMessage;
+			Services.OpenAIService.SystemMessage = Settings.Default.MainSystemMessage;
 
-			Services.OpenAIService.Uri = Properties.Settings.Default.LLMHostUri;
-			Services.OpenAIService.LLMName = Properties.Settings.Default.LLMName;
+			Services.OpenAIService.Uri = Settings.Default.LLMHostUri;
+			Services.OpenAIService.Timeout = Settings.Default.LLMTimeout;
+			Services.OpenAIService.LLMName = Settings.Default.LLMName;
 
-			Services.OpenAIService.CaptionButton1 = Properties.Settings.Default.LLMButton1;
-			Services.OpenAIService.SystemMessageButton1 = Properties.Settings.Default.LLMSystemMessage1;
-			Services.OpenAIService.PrefixUserMessageButton1 = Properties.Settings.Default.LLMPrefixUserMessage1;
-			Services.OpenAIService.PostfixUserMessageButton1 = Properties.Settings.Default.LLMPostfixUserMessage1;
+			Services.OpenAIService.CaptionButton1 = Settings.Default.LLMButton1;
+			Services.OpenAIService.SystemMessageButton1 = Settings.Default.LLMSystemMessage1;
+			Services.OpenAIService.PrefixUserMessageButton1 = Settings.Default.LLMPrefixUserMessage1;
+			Services.OpenAIService.PostfixUserMessageButton1 = Settings.Default.LLMPostfixUserMessage1;
 
-			Services.OpenAIService.CaptionButton2 = Properties.Settings.Default.LLMButton2;
-			Services.OpenAIService.SystemMessageButton2 = Properties.Settings.Default.LLMSystemMessage2;
-			Services.OpenAIService.PrefixUserMessageButton2 = Properties.Settings.Default.LLMPrefixUserMessage2;
-			Services.OpenAIService.PostfixUserMessageButton2 = Properties.Settings.Default.LLMPostfixUserMessage2;
+			Services.OpenAIService.CaptionButton2 = Settings.Default.LLMButton2;
+			Services.OpenAIService.SystemMessageButton2 = Settings.Default.LLMSystemMessage2;
+			Services.OpenAIService.PrefixUserMessageButton2 = Settings.Default.LLMPrefixUserMessage2;
+			Services.OpenAIService.PostfixUserMessageButton2 = Settings.Default.LLMPostfixUserMessage2;
 
 			//mouseProc = MouseHookCallback;
 			keyboardProc = KeyboardHookCallback;
@@ -54,22 +57,25 @@ namespace WordHiddenPowers
 
 			Documents.Dispose();
 
-			Properties.Settings.Default.MainSystemMessage = Properties.Settings.Default.MainSystemMessage;
+			Settings.Default.MainSystemMessage = Settings.Default.MainSystemMessage;
 
-			Properties.Settings.Default.LLMHostUri = Services.OpenAIService.Uri;
-			Properties.Settings.Default.LLMName = Services.OpenAIService.LLMName;
+			Settings.Default.LLMHostUri = Services.OpenAIService.Uri;
+			Settings.Default.LLMTimeout = Services.OpenAIService.Timeout;
+			Settings.Default.LLMName = Services.OpenAIService.LLMName;
 
-			Properties.Settings.Default.LLMButton1 = Services.OpenAIService.CaptionButton1;
-			Properties.Settings.Default.LLMSystemMessage1 = Services.OpenAIService.SystemMessageButton1;
-			Properties.Settings.Default.LLMPrefixUserMessage1 = Services.OpenAIService.PrefixUserMessageButton1;
-			Properties.Settings.Default.LLMPostfixUserMessage1 = Services.OpenAIService.PostfixUserMessageButton1;
+			Settings.Default.LLMButton1 = Services.OpenAIService.CaptionButton1;
+			Settings.Default.LLMSystemMessage1 = Services.OpenAIService.SystemMessageButton1;
+			Settings.Default.LLMPrefixUserMessage1 = Services.OpenAIService.PrefixUserMessageButton1;
+			Settings.Default.LLMPostfixUserMessage1 = Services.OpenAIService.PostfixUserMessageButton1;
 
-			Properties.Settings.Default.LLMButton2 = Services.OpenAIService.CaptionButton2;
-			Properties.Settings.Default.LLMSystemMessage2 = Services.OpenAIService.SystemMessageButton2;
-			Properties.Settings.Default.LLMPrefixUserMessage2 = Services.OpenAIService.PrefixUserMessageButton2;
-			Properties.Settings.Default.LLMPostfixUserMessage2 = Services.OpenAIService.PostfixUserMessageButton2;
+			Settings.Default.LLMButton2 = Services.OpenAIService.CaptionButton2;
+			Settings.Default.LLMSystemMessage2 = Services.OpenAIService.SystemMessageButton2;
+			Settings.Default.LLMPrefixUserMessage2 = Services.OpenAIService.PrefixUserMessageButton2;
+			Settings.Default.LLMPostfixUserMessage2 = Services.OpenAIService.PostfixUserMessageButton2;
 
-			Properties.Settings.Default.Save();
+			Settings.Default.Save();
+
+			Settings.Default.Reload();
 		}
 
 		#region Hooks
@@ -131,7 +137,7 @@ namespace WordHiddenPowers
 		private IntPtr KeyboardHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
 		{
 			if (nCode >= 0)
-			{				
+			{
 				Word.Range range;
 				string systemPrompt, prompt;
 
@@ -165,24 +171,28 @@ namespace WordHiddenPowers
 			Application.DocumentBeforeClose += new Word.ApplicationEvents4_DocumentBeforeCloseEventHandler(Application_DocumentBeforeClose);
 			Application.WindowActivate += new Word.ApplicationEvents4_WindowActivateEventHandler(Application_WindowActivate);
 		}
-		
+
 		private void Application_WindowActivate(Word.Document Doc, Word.Window Wn)
 		{
+			Debug.WriteLine("event activate: " + Globals.ThisAddIn.Application.Windows.Count.ToString());
 			Documents.Activate(Doc, Wn);
 		}
 
 		private void Application_NewDocument(Word.Document Doc)
 		{
+			Debug.WriteLine("event new: " + Globals.ThisAddIn.Application.Windows.Count.ToString());
 			Documents.Add(Doc);
 		}
 
 		private void Application_DocumentOpen(Word.Document Doc)
 		{
+			Debug.WriteLine("event open: " + Globals.ThisAddIn.Application.Windows.Count.ToString());
 			Documents.Add(Doc);
 		}
 
 		private void Application_DocumentBeforeClose(Word.Document Doc, ref bool Cancel)
 		{
+			Debug.WriteLine("event close: " + Globals.ThisAddIn.Application.Windows.Count.ToString());
 			Documents.Remove(Doc);
 		}
 

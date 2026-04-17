@@ -19,7 +19,7 @@
             }
 
             Table = null;
-            DataSet = null;
+            NowDataSet = null;
             base.Dispose(disposing);
         }
 
@@ -32,6 +32,7 @@
         private void InitializeComponent()
         {
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TableEditBox));
 			this.dataGridView = new System.Windows.Forms.DataGridView();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
 			this.SuspendLayout();
@@ -51,10 +52,8 @@
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
 			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
 			this.dataGridView.DefaultCellStyle = dataGridViewCellStyle1;
-			this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+			resources.ApplyResources(this.dataGridView, "dataGridView");
 			this.dataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-			this.dataGridView.Location = new System.Drawing.Point(0, 0);
-			this.dataGridView.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.dataGridView.MultiSelect = false;
 			this.dataGridView.Name = "dataGridView";
 			this.dataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
@@ -63,19 +62,15 @@
 			this.dataGridView.ShowCellToolTips = false;
 			this.dataGridView.ShowEditingIcon = false;
 			this.dataGridView.ShowRowErrors = false;
-			this.dataGridView.Size = new System.Drawing.Size(462, 520);
-			this.dataGridView.TabIndex = 2;
 			this.dataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.Data_CellValueChanged);
 			this.dataGridView.SelectionChanged += new System.EventHandler(this.DataGridView_SelectionChanged);
 			// 
 			// TableEditBox
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.dataGridView);
-			this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.Name = "TableEditBox";
-			this.Size = new System.Drawing.Size(462, 520);
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
 			this.ResumeLayout(false);
 

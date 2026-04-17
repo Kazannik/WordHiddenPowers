@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ControlLibrary.Structures;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using WordHiddenPowers.Repository;
@@ -14,21 +15,21 @@ namespace WordHiddenPowers.Dialogs
 		private static readonly Size SMALL_BUTTON_SIZE = new Size((int)(SystemInformation.MenuHeight * 1.2), (int)(SystemInformation.MenuHeight * 1.2));
 
 		private readonly RepositoryDataSet dataSet;
-				
+
 		public string SelectionText { get; }
 
 		public int SelectionStart { get; }
 
 		public int SelectionEnd { get; }
 
-		public int Rating => ratingBox.Value;
-		
+		public int Rating => ratingControl1.Rating.Value;
+
 		public Category Category => categoriesComboBox.SelectedItem;
-		
+
 		public Subcategory Subcategory => subcategoriesComboBox.SelectedItem;
-		
+
 		public string Description => descriptionTextBox.Text;
-		
+
 		public bool IsText { get; }
 
 		public NoteDialog()
@@ -39,7 +40,7 @@ namespace WordHiddenPowers.Dialogs
 
 		public NoteDialog(RepositoryDataSet dataSet, Word.Selection selection, bool isText)
 		{
-			IsText = isText;			
+			IsText = isText;
 			this.dataSet = dataSet;
 
 			InitializeComponent();
@@ -47,10 +48,10 @@ namespace WordHiddenPowers.Dialogs
 			this.Visible = false;
 
 			categoriesComboBox.InitializeSource(this.dataSet, IsText);
-			
+
 			SelectionText = selection.Text;
 			SelectionStart = selection.Start;
-			SelectionEnd = selection.End;	
+			SelectionEnd = selection.End;
 
 			okButton.Enabled = false;
 		}
@@ -62,14 +63,14 @@ namespace WordHiddenPowers.Dialogs
 			InitializeComponent();
 
 			this.Visible = false;
-			
+
 			categoriesComboBox.InitializeSource(this.dataSet, IsText);
-			
+
 			SelectionText = note.WordSelectionText;
 			SelectionStart = note.WordSelectionStart;
 			SelectionEnd = note.WordSelectionEnd;
 
-			ratingBox.Value = note.Rating;
+			ratingControl1.Rating = (Rating)note.Rating;
 			descriptionTextBox.Text = note.Description;
 
 			okButton.Enabled = false;
@@ -81,6 +82,9 @@ namespace WordHiddenPowers.Dialogs
 		private void CategoriesComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			subcategoriesComboBox.InitializeSource(dataSet, categoriesComboBox.SelectedItem, IsText);
+			if (subcategoriesComboBox.Items.Count == 1)
+				subcategoriesComboBox.SelectedIndex = 0;
+
 			okButton.Enabled = categoriesComboBox.SelectedIndex >= 0 && subcategoriesComboBox.SelectedIndex >= 0;
 		}
 
@@ -92,10 +96,10 @@ namespace WordHiddenPowers.Dialogs
 
 		private void WizardButton_Click(object sender, EventArgs e)
 		{
-			PatternsWizardDialog dialog = new PatternsWizardDialog(subcategory: Subcategory, text: SelectionText);			
+			PatternsWizardDialog dialog = new PatternsWizardDialog(subcategory: Subcategory, text: SelectionText);
 			if (Utils.Dialogs.ShowDialog(dialog) == DialogResult.OK)
 			{
-				Subcategory.Keywords = string.Join(Environment.NewLine, dialog.Keywords);			
+				Subcategory.Keywords = string.Join(Environment.NewLine, dialog.Keywords);
 			}
 		}
 
@@ -106,27 +110,11 @@ namespace WordHiddenPowers.Dialogs
 
 		protected virtual void ControlsResize()
 		{
-			//okButton.Size = BUTTON_SIZE;
-			//cancelButton.Size = BUTTON_SIZE;
-			
-			//categoriesComboBox.Location = new Point(12, 12);
-			//categoriesComboBox.Size = new Size(ClientSize.Width - 24, BUTTON_SIZE.Height);
-			//categoriesComboBox.BringToFront();
-
-			//subcategoriesComboBox.Location = new Point(12, categoriesComboBox.Top + categoriesComboBox.Height + 12);
-			//subcategoriesComboBox.Size = new Size(ClientSize.Width - 24, BUTTON_SIZE.Height);
-			//subcategoriesComboBox.BringToFront();
-
-			//cancelButton.Location = new Point(ClientSize.Width - cancelButton.Width - 12, ClientSize.Height - cancelButton.Height - 12);
-			//okButton.Location = new Point(cancelButton.Left - okButton.Width - 12, cancelButton.Top);
-			//wizardButton.Location = new Point(12, cancelButton.Top);
-			//wizardButton.Size = SMALL_BUTTON_SIZE;
-
-			//ratingBox.Location = new Point(12 + wizardButton.Left + wizardButton.Width, cancelButton.Top);
-			//descriptionTextBox.Location = new Point(12, ClientSize.Height / 2);
-			//descriptionTextBox.Size = new Size(ClientSize.Width - 24, ClientSize.Height - descriptionTextBox.Top - cancelButton.Height - 24);
+			okButton.Size = BUTTON_SIZE;
+			cancelButton.Size = BUTTON_SIZE;
+			wizardButton.Size = SMALL_BUTTON_SIZE;
 		}
-				
+
 		protected int ControlTop => subcategoriesComboBox.Top + subcategoriesComboBox.Height + 12;
 		protected int ControlHeight => descriptionTextBox.Top - ControlTop - 12;
 		protected int MinHeight => ControlTop + descriptionTextBox.Height + 200;
@@ -136,6 +124,14 @@ namespace WordHiddenPowers.Dialogs
 			ControlsResize();
 			//wizardButton.Image = WordUtil.GetImageMso("GanttChartWizard", SystemInformation.IconSize.Width, SystemInformation.IconSize.Height);
 			this.Visible = true;
+		}
+
+		private void ratingControl1_RatingChanged(object sender, ControlLibrary.Controls.RatingControls.RatingEventArgs e)
+		{
+			if (ratingControl1.Rating.Value < 0)
+				ratingControl1.StarsColor1 = Const.Globals.COLOR_NEGATIVE_STAR_ICON;
+			if (ratingControl1.Rating.Value > 0)
+				ratingControl1.StarsColor1 = Const.Globals.COLOR_STAR_ICON;
 		}
 	}
 }

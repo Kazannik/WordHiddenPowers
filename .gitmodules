@@ -4,3 +4,6 @@
 [submodule "NeuronetLibrary"]
 	path = NeuronetLibrary
 	url = https://github.com/Kazannik/NeuronetLibrary.git
+[submodule "LLMConnectorLibrary"]
+	path = LLMConnectorLibrary
+	url = https://github.com/Kazannik/LLMConnectorLibrary.git

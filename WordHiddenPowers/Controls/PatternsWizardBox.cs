@@ -21,7 +21,7 @@ namespace WordHiddenPowers.Controls
 		private static readonly Size BUTTON_SIZE = new Size((int)(SystemInformation.MenuHeight * 3.2), (int)(SystemInformation.MenuHeight * 1.2));
 		private static readonly Size SMALL_BUTTON_SIZE = new Size(SystemInformation.MenuHeight, SystemInformation.MenuHeight);
 		private static readonly Regex regexDecimal = new Regex("\\d+([,]\\d+)?", RegexOptions.IgnoreCase & RegexOptions.Multiline);
-		
+
 		private string text;
 		private bool isCorrect;
 
@@ -72,7 +72,7 @@ namespace WordHiddenPowers.Controls
 
 		public new string Text
 		{
-			get => text;			
+			get => text;
 			set
 			{
 				if (text != value)
@@ -96,10 +96,8 @@ namespace WordHiddenPowers.Controls
 			}
 		}
 
-		protected virtual void OnIsCorrectChanged(EventArgs e)
-		{
-			IsCorrectChanged?.Invoke(this, e);
-		}
+		protected virtual void OnIsCorrectChanged(EventArgs e) => IsCorrectChanged?.Invoke(this, e);
+
 		private void SetText()
 		{
 			if (patternsListBox.SelectedIndex == 0)
@@ -156,10 +154,7 @@ namespace WordHiddenPowers.Controls
 		/// Получить коллекцию ключевых слов.
 		/// </summary>
 		/// <returns></returns>
-		public IEnumerable<string> GetKeywords()
-		{
-			return from string item in keywordsListBox.Items select item;
-		}
+		public IEnumerable<string> GetKeywords() => from string item in keywordsListBox.Items select item;
 
 		/// <summary>
 		/// Задать построчную коллекцию ключевых слов.
@@ -170,7 +165,7 @@ namespace WordHiddenPowers.Controls
 			keywordsListBox.BeginUpdate();
 			keywordsListBox.Items.Clear();
 			string[] keywords = keyword.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-			
+
 			if (keywords.Any())
 			{
 				foreach (string item in keywords)
@@ -242,7 +237,7 @@ namespace WordHiddenPowers.Controls
 			expressionTextBox.TextChanged -= ExpressionTextBox_TextChanged;
 			patternsListBox.SelectedIndexChanged -= PatternsListBox_SelectedIndexChanged;
 			keywordsListBox.SelectedIndexChanged += new EventHandler(KeywordsListBox_SelectedIndexChanged);
-			RemoveSelectedItem(keywordsListBox);			
+			RemoveSelectedItem(keywordsListBox);
 		}
 
 		/// <summary>
@@ -292,7 +287,7 @@ namespace WordHiddenPowers.Controls
 			if (keywordsListBox.SelectedIndex >= 0)
 			{
 				SetKeyword(keywordsListBox.SelectedItem as string);
-			}			
+			}
 		}
 
 		private void PatternsListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -316,7 +311,7 @@ namespace WordHiddenPowers.Controls
 			patternsListBox.SelectedIndex = tmp;
 			patternsListBox.EndUpdate();
 		}
-		
+
 		/// <summary>
 		/// Копировать паттерны в коллекцию ключевых слов.
 		/// </summary>
@@ -325,16 +320,16 @@ namespace WordHiddenPowers.Controls
 			IEnumerable<string> patterns = GetPatterns().Select(s => "'" + s + "'");
 			// if (IsDecimal) patterns = patterns.Union(new string[] { "'\\d+([,]\\d+)?'" });
 			keywordsListBox.BeginUpdate();
-			
+
 			if (patterns.Any() && keywordsListBox.Items.Count == 0)
 			{
 				keywordsListBox.Items.Add(string.Empty);
 				keywordsListBox.SelectedIndex = 0;
 			}
-			
-			if (keywordsListBox.Items.Count > 0) 
+
+			if (keywordsListBox.Items.Count > 0)
 				keywordsListBox.Items[keywordsListBox.SelectedIndex] = string.Join(";", patterns);
-			
+
 			keywordsListBox.EndUpdate();
 		}
 
@@ -343,10 +338,7 @@ namespace WordHiddenPowers.Controls
 		/// Получить коллекцию паттернов из <see cref="ListBox"/> 
 		/// </summary>
 		/// <returns></returns>
-		private IEnumerable<string> GetPatterns()
-		{
-			return from string item in patternsListBox.Items select item;
-		}
+		private IEnumerable<string> GetPatterns() => from string item in patternsListBox.Items select item;
 
 		/// <summary>
 		/// Проверка на последовательное соответствие коллекции регулярных выражений. 
@@ -390,7 +382,7 @@ namespace WordHiddenPowers.Controls
 				return false;
 			}
 		}
-				
+
 		/// <summary>
 		/// Удалить выделенную позицию.
 		/// </summary>
@@ -420,10 +412,7 @@ namespace WordHiddenPowers.Controls
 
 		#region Resize Controls
 
-		private void PatternsWizardBox_Load(object sender, EventArgs e)
-		{
-			splitContainer1.SplitterDistance += 1;
-		}
+		private void PatternsWizardBox_Load(object sender, EventArgs e) => splitContainer1.SplitterDistance += 1;
 
 		private void SplitContainer1_Panel1_Resize(object sender, EventArgs e)
 		{
@@ -436,16 +425,16 @@ namespace WordHiddenPowers.Controls
 			keywordsLabel.Location = new Point(0, 0);
 			keywordsListBox.Location = new Point(0, keywordsLabel.Top + keywordsLabel.Height);
 			keywordsListBox.Size = new Size(splitContainer1.Panel1.Width, SystemInformation.MenuHeight * 4);
-			
+
 			removeKeywordButton.Location = new Point(splitContainer1.Panel1.Width - removeKeywordButton.Width - 2, keywordsListBox.Top + keywordsListBox.Height + 2);
 			addKeywordButton.Location = new Point(removeKeywordButton.Left - addKeywordButton.Width - 2, keywordsListBox.Top + keywordsListBox.Height + 2);
 
 			patternsLabel.Location = new Point(0, addKeywordButton.Top + addKeywordButton.Height + 2);
 			patternsListBox.Location = new Point(0, patternsLabel.Top + patternsLabel.Height);
-			
+
 			removePatternButton.Location = new Point(splitContainer1.Panel1.Width - removePatternButton.Width - 2, splitContainer1.Panel1.Height - removePatternButton.Height - 2);
 			addPatternButton.Location = new Point(removePatternButton.Left - addPatternButton.Width - 2, splitContainer1.Panel1.Height - addPatternButton.Height - 2);
-			
+
 			decimalResultTextBox.Location = new Point(0, addPatternButton.Top + 2);
 			patternsListBox.Size = new Size(splitContainer1.Panel1.Width, splitContainer1.Panel1.Height - patternsListBox.Top - addPatternButton.Height - 2);
 
@@ -755,7 +744,7 @@ namespace WordHiddenPowers.Controls
 			splitContainer2.Panel2.ResumeLayout(false);
 			splitContainer2.Panel2.PerformLayout();
 			(splitContainer2 as ISupportInitialize).EndInit();
-			splitContainer2.ResumeLayout(false);			
+			splitContainer2.ResumeLayout(false);
 			ResumeLayout(false);
 		}
 
@@ -764,12 +753,12 @@ namespace WordHiddenPowers.Controls
 		private SplitContainer splitContainer1;
 		private Label keywordsLabel;
 		private ListBox keywordsListBox;
-		private	Button addKeywordButton;
+		private Button addKeywordButton;
 		private Button removeKeywordButton;
 		private Label patternsLabel;
-		private	ListBox patternsListBox;
+		private ListBox patternsListBox;
 		private Button addPatternButton;
-		private	Button removePatternButton;
+		private Button removePatternButton;
 		private TextBox decimalResultTextBox;
 
 		private SplitContainer splitContainer2;

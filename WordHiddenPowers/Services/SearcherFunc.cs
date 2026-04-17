@@ -7,7 +7,7 @@ namespace WordHiddenPowers.Services
 #endif
 {
 	static partial class Searcher
-    {
+	{
 		internal static string[] GetPatterns(string keyword)
 		{
 			string[] patterns = keyword.Split(new string[] { "';'" }, StringSplitOptions.RemoveEmptyEntries);

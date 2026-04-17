@@ -8,7 +8,7 @@ namespace WordHiddenPowers.Dialogs
 	public partial class TextNoteDialog : NoteDialog
 	{
 		public string Value => valueTextBox.Text;
-		
+
 		public TextNoteDialog(RepositoryDataSet dataSet, Word.Selection selection) : base(dataSet, selection, true)
 		{
 			InitializeComponent();
@@ -18,15 +18,16 @@ namespace WordHiddenPowers.Dialogs
 		public TextNoteDialog(RepositoryDataSet dataSet, Note note) : base(dataSet, note, true)
 		{
 			InitializeComponent();
-			valueTextBox.Text = note.Value as string;
+			if (note.IsText)
+				valueTextBox.Text = note.Value as string;
 		}
-				
+
 		protected override void ControlsResize()
 		{
 			base.ControlsResize();
 			valueTextBox.Location = new Point(6, ControlTop);
 			valueTextBox.Size = new Size(ClientSize.Width - 12, ControlHeight);
 			MinimumSize = new Size(500, MinHeight);
-		}		
+		}
 	}
 }

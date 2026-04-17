@@ -14,17 +14,22 @@ namespace WordHiddenPowers.Utils
 	{
 		public static RepositoryDataSet GetCurrentDataSet(Word._Document Doc, out bool isCorrect)
 		{
-			return GetDataSet(Doc: Doc, variableName: Const.Globals.XML_CURRENT_VARIABLE_NAME, out isCorrect);
+			return (RepositoryDataSet)GetDataSet(Doc: Doc, variableName: Const.Globals.XML_CURRENT_VARIABLE_NAME, out isCorrect);
 		}
 
-		public static RepositoryDataSet GetAggregatedDataSet(Word._Document Doc, out bool isCorrect)
+		public static RepositoryDataSet GetNowAggregatedDataSet(Word._Document Doc, out bool isCorrect)
 		{
-			return GetDataSet(Doc: Doc, variableName: Const.Globals.XML_AGGREGATED_VARIABLE_NAME, out isCorrect);
+			return (RepositoryDataSet)GetDataSet(Doc: Doc, variableName: Const.Globals.XML_NOW_AGGREGATED_VARIABLE_NAME, out isCorrect);
 		}
 
-		public static RepositoryDataSet GetOldAggregatedDataSet(Word._Document Doc, out bool isCorrect)
+		public static RepositoryDataSet GetLastAggregatedDataSet(Word._Document Doc, out bool isCorrect)
 		{
-			return GetDataSet(Doc: Doc, variableName: Const.Globals.XML_OLD_AGGREGATED_VARIABLE_NAME, out isCorrect);
+			return (RepositoryDataSet)GetDataSet(Doc: Doc, variableName: Const.Globals.XML_LAST_AGGREGATED_VARIABLE_NAME, out isCorrect);
+		}
+
+		public static VectorDataSet GetVectorDataSet(Word._Document Doc, out bool isCorrect)
+		{
+			return (VectorDataSet)GetDataSet(Doc: Doc, variableName: Const.Globals.XML_LAST_AGGREGATED_VARIABLE_NAME, out isCorrect, true);
 		}
 
 		/// <summary>
@@ -34,11 +39,16 @@ namespace WordHiddenPowers.Utils
 		/// <param name="variableName">Имя хранилища данных.</param>
 		/// <param name="isCorrect">Признак корректного получения данных их хранилища.</param>
 		/// <returns>Хранилище данных.</returns>
-		public static RepositoryDataSet GetDataSet(Word._Document Doc, string variableName, out bool isCorrect) 
-		{			
+		public static DataSet GetDataSet(Word._Document Doc, string variableName, out bool isCorrect, bool isVector = false)
+		{
 			isCorrect = false;
-			RepositoryDataSet dataSet = new RepositoryDataSet();
-		
+
+			DataSet dataSet;
+			if (isVector)
+				dataSet = new VectorDataSet();
+			else
+				dataSet = new RepositoryDataSet();
+
 			if (Content.ExistsVariable(array: Doc.Variables, variableName: variableName + "_0"))
 			{
 				int i = 0;
@@ -59,7 +69,7 @@ namespace WordHiddenPowers.Utils
 				{
 					isCorrect = SetXml(dataSet, content.Value);
 				}
-			}			
+			}
 			dataSet.AcceptChanges();
 			return dataSet;
 		}
@@ -72,7 +82,7 @@ namespace WordHiddenPowers.Utils
 		public static void CopyModel(RepositoryDataSet sourceDataSet, Word._Document destDocument)
 		{
 			RepositoryDataSet destDataSet = new RepositoryDataSet();
-			CopyModel(sourceDataSet, destDataSet);			
+			CopyModel(sourceDataSet, destDataSet);
 			Content.CommitVariable(destDocument.Variables, Const.Globals.XML_CURRENT_VARIABLE_NAME, destDataSet);
 		}
 
@@ -84,8 +94,8 @@ namespace WordHiddenPowers.Utils
 		public static void CopyModel(RepositoryDataSet sourceDataSet, RepositoryDataSet destDataSet)
 		{
 			CopyData(sourceDataSet, destDataSet);
-			destDataSet.DecimalPowers.Clear();
-			destDataSet.TextPowers.Clear();
+			destDataSet.DecimalNotes.Clear();
+			destDataSet.TextNotes.Clear();
 			destDataSet.DocumentKeys.Clear();
 			destDataSet.WordFiles.Clear();
 			destDataSet.AcceptChanges();
@@ -102,15 +112,15 @@ namespace WordHiddenPowers.Utils
 			string sourceXml = GetXml(sourceDataSet);
 			if (!SetXml(destDataSet, sourceXml))
 			{
-				foreach (var row in sourceDataSet.DecimalPowers)
+				foreach (var row in sourceDataSet.DecimalNotes)
 				{
-					destDataSet.DecimalPowers.ImportRow(row);
+					destDataSet.DecimalNotes.ImportRow(row);
 				}
-				foreach (var row in sourceDataSet.TextPowers)
+				foreach (var row in sourceDataSet.TextNotes)
 				{
-					destDataSet.TextPowers.ImportRow(row);
+					destDataSet.TextNotes.ImportRow(row);
 				}
-			}			
+			}
 		}
 
 		/// <summary>
@@ -118,22 +128,48 @@ namespace WordHiddenPowers.Utils
 		/// </summary>
 		/// <param name="dataSet">Хранилище данных.</param>
 		/// <param name="fileName">Имя файла (включая путь) в который производится запись.</param>
-		public static void SaveDataSchema(RepositoryDataSet dataSet, string fileName)
+		public static void SaveSchema(RepositoryDataSet dataSet, string fileName)
 		{
 			try
 			{
 				string xml = GetXml(dataSet);
 				RepositoryDataSet outDataSet = new RepositoryDataSet();
-				SetXml(outDataSet, xml);
-				outDataSet.DecimalPowers.Clear();
-				outDataSet.TextPowers.Clear();
-				outDataSet.WriteXml(fileName, XmlWriteMode.WriteSchema);
+				if (SetXml(outDataSet, xml))
+				{
+					outDataSet.WriteXmlSchema(fileName);
+				}
 			}
 			catch (Exception ex)
 			{
 				Dialogs.ShowErrorDialog(ex.Message);
 			}
 		}
+
+		/// <summary>
+		/// Сохранить данные из хранилища в файл в формате XML.
+		/// </summary>
+		/// <param name="dataSet">Хранилище данных.</param>
+		/// <param name="fileName">Имя файла (включая путь) в который производится запись.</param>
+		public static void SaveClearData(RepositoryDataSet dataSet, string fileName)
+		{
+			try
+			{
+				string xml = GetXml(dataSet);
+				RepositoryDataSet outDataSet = new RepositoryDataSet();
+				if (SetXml(outDataSet, xml))
+				{
+					outDataSet.DecimalNotes.Clear();
+					outDataSet.TextNotes.Clear();
+					outDataSet.WordFiles.Clear();
+					outDataSet.WriteXml(fileName, XmlWriteMode.WriteSchema);
+				}
+			}
+			catch (Exception ex)
+			{
+				Dialogs.ShowErrorDialog(ex.Message);
+			}
+		}
+
 
 		/// <summary>
 		/// Сохранить данные из хранилища в файл в формате XML.
@@ -155,12 +191,33 @@ namespace WordHiddenPowers.Utils
 			}
 		}
 
+
+		/// <summary>
+		/// Сохранить данные из хранилища векторов в файл в формате XML.
+		/// </summary>
+		/// <param name="dataSet">Хранилище данных.</param>
+		/// <param name="fileName">Имя файла (включая путь) в который производится запись.</param>
+		public static void SaveVectorData(VectorDataSet dataSet, string fileName)
+		{
+			try
+			{
+				string xml = GetXml(dataSet);
+				VectorDataSet outDataSet = new VectorDataSet();
+				if (SetXml(outDataSet, xml))
+					outDataSet.WriteXml(fileName, XmlWriteMode.WriteSchema);
+			}
+			catch (Exception ex)
+			{
+				Dialogs.ShowErrorDialog(ex.Message);
+			}
+		}
+
 		/// <summary>
 		/// Получить из хранилища данные в формате XML.
 		/// </summary>
 		/// <param name="dataSet">Хранилище данных.</param>
 		/// <returns>Данные в формате XML.</returns>
-		private static string GetXml(RepositoryDataSet dataSet)
+		private static string GetXml(DataSet dataSet)
 		{
 			StringBuilder builder = new StringBuilder();
 			StringWriter writer = new StringWriter(builder);
@@ -175,8 +232,10 @@ namespace WordHiddenPowers.Utils
 		/// <param name="dataSet">Хранилище данных.</param>
 		/// <param name="xml">Данные в формате XML</param>
 		/// <returns></returns>
-		private static bool SetXml(RepositoryDataSet dataSet, string xml)
+		private static bool SetXml(DataSet dataSet, string xml)
 		{
+			xml = FixXml(xml);
+			
 			StringReader reader = new StringReader(xml);
 			bool result = false;
 			try
@@ -191,9 +250,16 @@ namespace WordHiddenPowers.Utils
 			}
 			finally
 			{
-				reader.Close();				
+				reader.Close();
 			}
 			return result;
+		}
+
+		private static string FixXml(string xml)
+		{
+			return xml
+				.Replace("TextPowers", "TextNotes")
+				.Replace("DecimalPowers", "DecimalNotes");
 		}
 	}
 }

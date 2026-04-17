@@ -28,33 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.valueTextBox = new System.Windows.Forms.TextBox();
-            this.SuspendLayout();
-            // 
-            // valueTextBox
-            // 
-            this.valueTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.valueTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.valueTextBox.Location = new System.Drawing.Point(11, 76);
-            this.valueTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.valueTextBox.Multiline = true;
-            this.valueTextBox.Name = "valueTextBox";
-            this.valueTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.valueTextBox.Size = new System.Drawing.Size(639, 92);
-            this.valueTextBox.TabIndex = 29;
-            // 
-            // TextNoteDialog
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
-            this.ClientSize = new System.Drawing.Size(660, 402);
-            this.Controls.Add(this.valueTextBox);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.Name = "TextNoteDialog";
-            this.Controls.SetChildIndex(this.valueTextBox, 0);
-            this.ResumeLayout(false);
-            this.PerformLayout();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TextNoteDialog));
+			this.valueTextBox = new System.Windows.Forms.TextBox();
+			this.SuspendLayout();
+			// 
+			// valueTextBox
+			// 
+			resources.ApplyResources(this.valueTextBox, "valueTextBox");
+			this.valueTextBox.Name = "valueTextBox";
+			// 
+			// TextNoteDialog
+			// 
+			resources.ApplyResources(this, "$this");
+			this.Controls.Add(this.valueTextBox);
+			this.Name = "TextNoteDialog";
+			this.Controls.SetChildIndex(this.valueTextBox, 0);
+			this.ResumeLayout(false);
+			this.PerformLayout();
 
         }
 

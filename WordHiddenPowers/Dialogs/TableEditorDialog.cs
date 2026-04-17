@@ -17,7 +17,7 @@ namespace WordHiddenPowers.Dialogs
 
 			nameLabel.Text = this.document.Doc.Name;
 
-			tableEditBox.DataSet = this.document.CurrentDataSet;
+			tableEditBox.NowDataSet = this.document.CurrentDataSet;
 
 			deleteButton.Enabled = Content.ExistsVariable(array: document.Doc.Variables, variableName: Const.Globals.TABLE_VARIABLE_NAME);
 
@@ -29,7 +29,7 @@ namespace WordHiddenPowers.Dialogs
 			string tableContext = Content.GetVariableValueOrDefault(document.Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
 			if (string.IsNullOrWhiteSpace(tableContext))
 			{
-				tableEditBox.Table = new Table(tableEditBox.DataSet.RowsHeaders.Count, tableEditBox.DataSet.ColumnsHeaders.Count);
+				tableEditBox.Table = new Table(tableEditBox.NowDataSet.RowsHeaders.Count, tableEditBox.NowDataSet.ColumnsHeaders.Count);
 			}
 			else
 			{
@@ -82,7 +82,7 @@ namespace WordHiddenPowers.Dialogs
 			if (e.CloseReason == CloseReason.UserClosing)
 			{
 				tableEditBox.EndEdit();
-				
+
 				if (tableEditBox.IsChanged)
 				{
 					DialogResult result = MessageBox.Show(this, "Зафиксировать табличные данные?", "Табличные данные", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);

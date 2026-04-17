@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Windows.Forms;
 
 namespace WordHiddenPowers.Dialogs
@@ -96,10 +95,5 @@ namespace WordHiddenPowers.Dialogs
 			}
 		}
 		#endregion
-
-		private void BackgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-		{
-
-		}
 	}
 }

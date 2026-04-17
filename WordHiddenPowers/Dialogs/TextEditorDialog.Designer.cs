@@ -30,7 +30,16 @@
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TextEditorDialog));
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-			this.mnuFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuFile = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuFileNew = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuFileOpen = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnuFileSave = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuFileSaveAs = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnuFileExit = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuEdit = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
@@ -42,72 +51,108 @@
 			// 
 			// menuStrip1
 			// 
+			this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuFileToolStripMenuItem});
-			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.mnuFile,
+            this.mnuEdit,
+            this.mnuViewToolStripMenuItem});
+			resources.ApplyResources(this.menuStrip1, "menuStrip1");
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(800, 28);
-			this.menuStrip1.TabIndex = 0;
-			this.menuStrip1.Text = "menuStrip1";
 			// 
-			// mnuFileToolStripMenuItem
+			// mnuFile
 			// 
-			this.mnuFileToolStripMenuItem.Name = "mnuFileToolStripMenuItem";
-			this.mnuFileToolStripMenuItem.Size = new System.Drawing.Size(73, 24);
-			this.mnuFileToolStripMenuItem.Text = "mnuFile";
+			this.mnuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuFileNew,
+            this.mnuFileOpen,
+            this.toolStripMenuItem1,
+            this.mnuFileSave,
+            this.mnuFileSaveAs,
+            this.toolStripMenuItem2,
+            this.mnuFileExit});
+			this.mnuFile.Name = "mnuFile";
+			resources.ApplyResources(this.mnuFile, "mnuFile");
+			// 
+			// mnuFileNew
+			// 
+			this.mnuFileNew.Name = "mnuFileNew";
+			resources.ApplyResources(this.mnuFileNew, "mnuFileNew");
+			// 
+			// mnuFileOpen
+			// 
+			this.mnuFileOpen.Name = "mnuFileOpen";
+			resources.ApplyResources(this.mnuFileOpen, "mnuFileOpen");
+			// 
+			// toolStripMenuItem1
+			// 
+			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+			resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
+			// 
+			// mnuFileSave
+			// 
+			this.mnuFileSave.Name = "mnuFileSave";
+			resources.ApplyResources(this.mnuFileSave, "mnuFileSave");
+			// 
+			// mnuFileSaveAs
+			// 
+			this.mnuFileSaveAs.Name = "mnuFileSaveAs";
+			resources.ApplyResources(this.mnuFileSaveAs, "mnuFileSaveAs");
+			// 
+			// toolStripMenuItem2
+			// 
+			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+			resources.ApplyResources(this.toolStripMenuItem2, "toolStripMenuItem2");
+			// 
+			// mnuFileExit
+			// 
+			this.mnuFileExit.Name = "mnuFileExit";
+			resources.ApplyResources(this.mnuFileExit, "mnuFileExit");
+			// 
+			// mnuEdit
+			// 
+			this.mnuEdit.Name = "mnuEdit";
+			resources.ApplyResources(this.mnuEdit, "mnuEdit");
+			// 
+			// mnuViewToolStripMenuItem
+			// 
+			this.mnuViewToolStripMenuItem.Name = "mnuViewToolStripMenuItem";
+			resources.ApplyResources(this.mnuViewToolStripMenuItem, "mnuViewToolStripMenuItem");
 			// 
 			// toolStrip1
 			// 
+			this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton1,
             this.toolStripButton2});
-			this.toolStrip1.Location = new System.Drawing.Point(0, 28);
+			resources.ApplyResources(this.toolStrip1, "toolStrip1");
 			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(800, 25);
-			this.toolStrip1.TabIndex = 1;
-			this.toolStrip1.Text = "toolStrip1";
 			// 
 			// toolStripButton1
 			// 
 			this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-			this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+			resources.ApplyResources(this.toolStripButton1, "toolStripButton1");
 			this.toolStripButton1.Name = "toolStripButton1";
-			this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton1.Text = "toolStripButton1";
 			// 
 			// toolStripButton2
 			// 
 			this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-			this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+			resources.ApplyResources(this.toolStripButton2, "toolStripButton2");
 			this.toolStripButton2.Name = "toolStripButton2";
-			this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton2.Text = "toolStripButton2";
 			// 
 			// statusStrip1
 			// 
-			this.statusStrip1.Location = new System.Drawing.Point(0, 428);
+			this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+			resources.ApplyResources(this.statusStrip1, "statusStrip1");
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(800, 22);
-			this.statusStrip1.TabIndex = 2;
-			this.statusStrip1.Text = "statusStrip1";
 			// 
 			// textBox
 			// 
-			this.textBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBox.Location = new System.Drawing.Point(0, 53);
-			this.textBox.Multiline = true;
+			resources.ApplyResources(this.textBox, "textBox");
 			this.textBox.Name = "textBox";
-			this.textBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.textBox.Size = new System.Drawing.Size(800, 375);
-			this.textBox.TabIndex = 3;
 			// 
 			// TextEditorDialog
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(800, 450);
 			this.Controls.Add(this.textBox);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.toolStrip1);
@@ -126,11 +171,20 @@
 		#endregion
 
 		private System.Windows.Forms.MenuStrip menuStrip1;
-		private System.Windows.Forms.ToolStripMenuItem mnuFileToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem mnuFile;
 		private System.Windows.Forms.ToolStrip toolStrip1;
 		private System.Windows.Forms.ToolStripButton toolStripButton1;
 		private System.Windows.Forms.ToolStripButton toolStripButton2;
 		private System.Windows.Forms.StatusStrip statusStrip1;
 		private System.Windows.Forms.TextBox textBox;
+		private System.Windows.Forms.ToolStripMenuItem mnuFileNew;
+		private System.Windows.Forms.ToolStripMenuItem mnuFileOpen;
+		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem mnuFileSave;
+		private System.Windows.Forms.ToolStripMenuItem mnuFileSaveAs;
+		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+		private System.Windows.Forms.ToolStripMenuItem mnuFileExit;
+		private System.Windows.Forms.ToolStripMenuItem mnuEdit;
+		private System.Windows.Forms.ToolStripMenuItem mnuViewToolStripMenuItem;
 	}
 }

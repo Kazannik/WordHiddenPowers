@@ -8,25 +8,25 @@ namespace WordHiddenPowers.Repository.Data
 		internal Cell(Row row)
 		{
 			Row = row;
-			Value = 0;
-			OldValue = 0;
+			NowValue = 0;
+			LastValue = 0;
 		}
 
 		public int Index => Row.IndexOf(this);
 
 		public Row Row { get; internal set; }
 
-		public int Value { get; set; }
+		public int NowValue { get; set; }
 
-		public int OldValue { get; set; }
+		public int LastValue { get; set; }
 
-		public string Growth => ((Value - OldValue) > 0 ? "+":"") + (Value - OldValue).ToString("### ### ###");
+		public string Growth => ((NowValue - LastValue) > 0 ? "+" : "") + (NowValue - LastValue).ToString("### ### ###");
 
-		public string GrowthPercent => OldValue != 0 ? ((Value - OldValue) > 0 ? "+" : "") +(((double)(Value - OldValue)) * 100 / OldValue).ToString("### ### ##0.00") + " %" : "-";
+		public string GrowthPercent => LastValue != 0 ? ((NowValue - LastValue) > 0 ? "+" : "") + (((double)(NowValue - LastValue)) * 100 / LastValue).ToString("### ### ##0.00") + " %" : "-";
 
-		public int ToInt() => Value;
+		public int ToInt() => NowValue;
 
-		public static explicit operator int(Cell cell) => cell.Value;
+		public static explicit operator int(Cell cell) => cell.NowValue;
 
 		public override bool Equals(object obj)
 		{
@@ -35,35 +35,47 @@ namespace WordHiddenPowers.Repository.Data
 			else
 			{
 				Cell c = (Cell)obj;
-				return Value == c.Value;
+				return NowValue == c.NowValue;
 			}
 		}
 
-		public override int GetHashCode() => Value.GetHashCode();
+		public override int GetHashCode() => NowValue.GetHashCode();
 
 		public static Cell operator +(Cell a, Cell b)
 		{
-			a.Value += b.Value;
-			a.OldValue += b.OldValue;
+			a.NowValue += b.NowValue;
+			a.LastValue += b.LastValue;
 			return a;
 		}
 
 		public static Cell operator -(Cell a, Cell b)
 		{
-			a.Value -= b.Value;
-			a.OldValue -= b.OldValue;
+			a.NowValue -= b.NowValue;
+			a.LastValue -= b.LastValue;
 			return a;
 		}
 
 		public static Cell operator +(Cell cell, int value)
 		{
-			cell.Value += value;
+			cell.NowValue += value;
 			return cell;
 		}
 
 		public static Cell operator -(Cell cell, int value)
 		{
-			cell.Value -= value;
+			cell.NowValue -= value;
+			return cell;
+		}
+
+		public static Cell operator *(Cell cell, int value)
+		{
+			cell.NowValue *= value;
+			return cell;
+		}
+
+		public static Cell operator /(Cell cell, int value)
+		{
+			cell.NowValue /= value;
 			return cell;
 		}
 
@@ -114,7 +126,7 @@ namespace WordHiddenPowers.Repository.Data
 			{
 				try
 				{
-					return decimal.Compare(cell.Value, value);
+					return decimal.Compare(cell.NowValue, value);
 				}
 				catch (Exception)
 				{
@@ -141,7 +153,7 @@ namespace WordHiddenPowers.Repository.Data
 			{
 				try
 				{
-					return decimal.Compare(x.Value, y.Value);
+					return decimal.Compare(x.NowValue, y.NowValue);
 				}
 				catch (Exception)
 				{
@@ -150,13 +162,13 @@ namespace WordHiddenPowers.Repository.Data
 			}
 			else if (!Equals(x, null) && Equals(y, null))
 			{
-				return 1; 
+				return 1;
 			}
 			else if (Equals(x, null) && !Equals(y, null))
 			{
 				return -1;
 			}
-			else 
+			else
 			{
 				return 0;
 			}

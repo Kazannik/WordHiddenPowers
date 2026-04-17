@@ -28,28 +28,24 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-            this.descriptionTextBox = new System.Windows.Forms.TextBox();
-            this.SuspendLayout();
-            // 
-            // descriptionTextBox
-            // 
-            this.descriptionTextBox.Location = new System.Drawing.Point(3, 114);
-            this.descriptionTextBox.Multiline = true;
-            this.descriptionTextBox.Name = "descriptionTextBox";
-            this.descriptionTextBox.ReadOnly = true;
-            this.descriptionTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.descriptionTextBox.Size = new System.Drawing.Size(482, 57);
-            this.descriptionTextBox.TabIndex = 0;
-            // 
-            // CategoryBox
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.descriptionTextBox);
-            this.Name = "CategoryBox";
-            this.Size = new System.Drawing.Size(488, 175);
-            this.ResumeLayout(false);
-            this.PerformLayout();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CategoryBox));
+			this.descriptionTextBox = new System.Windows.Forms.TextBox();
+			this.SuspendLayout();
+			// 
+			// descriptionTextBox
+			// 
+			resources.ApplyResources(this.descriptionTextBox, "descriptionTextBox");
+			this.descriptionTextBox.Name = "descriptionTextBox";
+			this.descriptionTextBox.ReadOnly = true;
+			// 
+			// CategoryBox
+			// 
+			resources.ApplyResources(this, "$this");
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.descriptionTextBox);
+			this.Name = "CategoryBox";
+			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 

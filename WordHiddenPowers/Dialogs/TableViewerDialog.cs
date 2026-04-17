@@ -2,7 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using WordHiddenPowers.Controls;
 using WordHiddenPowers.Repository;
 using WordHiddenPowers.Repository.Data;
 using Word = Microsoft.Office.Interop.Word;
@@ -11,35 +14,35 @@ namespace WordHiddenPowers.Dialogs
 {
 	public partial class TableViewerDialog : Form
 	{
-		private readonly RepositoryDataSet dataSet;
-		private readonly RepositoryDataSet oldDataSet;
+		private readonly RepositoryDataSet nowDataSet;
+		private readonly RepositoryDataSet lastDataSet;
 
-		private List<Table> dataBase;
-		private List<Table> oldDataBase;
+		private List<Table> nowDataBase;
+		private List<Table> lastDataBase;
 
 		private Table summTable;
-		private double maxValue;
-		private double maxOldValue;
+		private double maxNowValue;
+		private double maxLastValue;
 
-		public TableViewerDialog(RepositoryDataSet dataSet) : this(dataSet: dataSet, oldDataSet: null) { }
-		
-		public TableViewerDialog(RepositoryDataSet dataSet, RepositoryDataSet oldDataSet)
+		public TableViewerDialog(RepositoryDataSet nowDataSet) : this(nowDataSet: nowDataSet, lastDataSet: null) { }
+
+		public TableViewerDialog(RepositoryDataSet nowDataSet, RepositoryDataSet lastDataSet)
 		{
-			this.dataSet = dataSet;
-			this.oldDataSet = oldDataSet;
+			this.nowDataSet = nowDataSet;
+			this.lastDataSet = lastDataSet;
 
 			InitializeComponent();
 
 			nameLabel.Text = "";
 
-			tableEditBox.DataSet = this.dataSet;
-			tableEditBox.OldDataSet = this.oldDataSet;
+			tableEditBox.NowDataSet = this.nowDataSet;
+			tableEditBox.LastDataSet = this.lastDataSet;
 
 			listView1.Columns[1].Width = 120;
 			listView1.Columns[2].Width = 100;
 
-			if (tableEditBox.OldDataSet != null &&
-				tableEditBox.OldDataSet.IsTables)
+			if (tableEditBox.LastDataSet != null &&
+				tableEditBox.LastDataSet.IsTables)
 			{
 				listView1.Columns.Add("АППГ").Width = 120;
 				listView1.Columns.Add("%").Width = 100;
@@ -58,43 +61,43 @@ namespace WordHiddenPowers.Dialogs
 
 		private void InitializeDatabase()
 		{
-			if (dataSet == null) return;
+			if (nowDataSet == null) return;
 
-			dataBase = new List<Table>();
-			foreach (RepositoryDataSet.DocumentKeysRow row in dataSet.DocumentKeys)
+			nowDataBase = new List<Table>();
+			foreach (RepositoryDataSet.DocumentKeysRow row in nowDataSet.DocumentKeys)
 			{
 				Table table = Table.Create(row.Description2, row.Caption, row.Description1);
-				if (!table.IsEmpty) dataBase.Add(table);
+				if (!table.IsEmpty) nowDataBase.Add(table);
 			}
-			
-			oldDataBase = new List<Table>();
-			if (oldDataBase !=null && oldDataSet.IsTables)
-			{				
-				foreach (RepositoryDataSet.DocumentKeysRow row in oldDataSet.DocumentKeys)
+
+			lastDataBase = new List<Table>();
+			if (lastDataBase != null && lastDataSet.IsTables)
+			{
+				foreach (RepositoryDataSet.DocumentKeysRow row in lastDataSet.DocumentKeys)
 				{
 					Table table = Table.Create(row.Description2, row.Caption, row.Description1);
-					if (!table.IsEmpty) oldDataBase.Add(table);
+					if (!table.IsEmpty) lastDataBase.Add(table);
 				}
 			}
 
-			if (dataBase.Count > 0)
+			if (nowDataBase.Count > 0)
 			{
-				summTable = dataBase[0].Clone();
-				Table oldTable = GetOldTable(dataBase[0].Caption);
-				if (oldTable != null) 
-					summTable.AddOldData(oldTable);
+				summTable = nowDataBase[0].Clone();
+				Table lastTable = GetLastTable(nowDataBase[0].Caption);
+				if (lastTable != null)
+					summTable.AddLastData(lastTable);
 
 				listView1.Items.Clear();
-				foreach (Table table in dataBase)
+				foreach (Table table in nowDataBase)
 				{
-					oldTable = GetOldTable(table.Caption);
-					if (oldTable != null)
-						table.AddOldData(oldTable);
+					lastTable = GetLastTable(table.Caption);
+					if (lastTable != null)
+						table.AddLastData(lastTable);
 
 					ListViewItem item = listView1.Items.Add(table.Caption);
 					item.SubItems.Add("0");
 					item.SubItems.Add("0");
-					if (oldTable != null)
+					if (lastTable != null)
 					{
 						item.SubItems.Add("0");
 						item.SubItems.Add("0");
@@ -105,12 +108,12 @@ namespace WordHiddenPowers.Dialogs
 					summTable += table;
 				}
 
-				dataBase.Add(summTable);
+				nowDataBase.Add(summTable);
 
 				ListViewItem summItem = listView1.Items.Add("Итого:");
 				summItem.SubItems.Add("0");
 				summItem.SubItems.Add("0");
-				if (oldTable != null)
+				if (lastTable != null)
 				{
 					summItem.SubItems.Add("0");
 					summItem.SubItems.Add("0");
@@ -122,14 +125,16 @@ namespace WordHiddenPowers.Dialogs
 				summItem.Selected = true;
 
 				listView1.Refresh();
+
+				IEnumerable<string> exceptTables = lastDataBase.Select(x => x.Caption).Except(nowDataBase.Select(x => x.Caption));
 			}
 		}
 
-		private Table GetOldTable(string caption)
+		private Table GetLastTable(string caption)
 		{
-			if (oldDataBase.Any(t => t.Caption == caption))
+			if (lastDataBase.Any(t => t.Caption == caption))
 			{
-				return oldDataBase.Where(t=> t.Caption == caption).FirstOrDefault();
+				return lastDataBase.Where(t => t.Caption == caption).FirstOrDefault();
 			}
 			else
 			{
@@ -144,26 +149,26 @@ namespace WordHiddenPowers.Dialogs
 				Table table = (Table)item.Tag;
 
 				int columnIndex = e.Cell.ColumnIndex;
-				if (summTable.IsOld)
+				if (summTable.IsLast)
 				{
 					columnIndex = Math.DivRem(e.Cell.ColumnIndex, 4, out _);
-				}	
+				}
 
 				Cell cell = table.Rows[e.Cell.RowIndex][columnIndex];
 				Cell summCell = summTable.Rows[e.Cell.RowIndex][columnIndex];
 
-				item.SubItems[1].Text = cell.Value.ToString("### ### ###");
-				item.SubItems[2].Text = (((double)cell.Value) * 100 / summCell.Value).ToString("### ### ##0.00");
-				
-				if (table.IsOld)
+				item.SubItems[1].Text = cell.NowValue.ToString("### ### ###");
+				item.SubItems[2].Text = (((double)cell.NowValue) * 100 / summCell.NowValue).ToString("### ### ##0.00") + " %";
+
+				if (table.IsLast)
 				{
-					item.SubItems[3].Text = cell.OldValue.ToString("### ### ###");
-					item.SubItems[4].Text = (((double)cell.OldValue) * 100 / summCell.OldValue).ToString("### ### ##0.00");
+					item.SubItems[3].Text = cell.LastValue.ToString("### ### ###");
+					item.SubItems[4].Text = (((double)cell.LastValue) * 100 / summCell.LastValue).ToString("### ### ##0.00") + " %";
 					item.SubItems[5].Text = cell.Growth;
 					item.SubItems[6].Text = cell.GrowthPercent;
 				}
-				maxValue = summCell.Value;
-				maxOldValue = summCell.OldValue;
+				maxNowValue = summCell.NowValue;
+				maxLastValue = summCell.LastValue;
 			}
 		}
 
@@ -221,7 +226,7 @@ namespace WordHiddenPowers.Dialogs
 
 		private void ListView1_ColumnClick(object sender, ColumnClickEventArgs e)
 		{
-			ListViewItemComparer sorter = GetListViewSorter(e.Column, dataBase);
+			ListViewItemComparer sorter = GetListViewSorter(e.Column, nowDataBase);
 
 			listView1.ListViewItemSorter = sorter;
 			listView1.Sort();
@@ -231,7 +236,7 @@ namespace WordHiddenPowers.Dialogs
 		{
 			ListViewItemComparer sorter = (ListViewItemComparer)listView1.ListViewItemSorter ?? new ListViewItemComparer(dataBase);
 			sorter.ColumnIndex = columnIndex;
-			sorter.MaxValue = (columnIndex == 1 || columnIndex == 3 || columnIndex == 5) ? maxValue : 100;
+			sorter.MaxValue = (columnIndex == 1 || columnIndex == 3 || columnIndex == 5) ? maxNowValue : 100;
 
 			if (sorter.SortDirection == SortOrder.Ascending)
 			{
@@ -266,7 +271,7 @@ namespace WordHiddenPowers.Dialogs
 				ListViewItem lviY = y as ListViewItem;
 				int xInt, yInt;
 				double xDbl, yDbl;
-				int result;				
+				int result;
 
 				switch (ColumnIndex)
 				{
@@ -279,27 +284,24 @@ namespace WordHiddenPowers.Dialogs
 					case 2:
 					case 3:
 					case 4:
-						xDbl = ColumnIndex < lviX.SubItems.Count ? double.Parse(lviX.SubItems[ColumnIndex].Text) : 0;
+						xDbl = ColumnIndex < lviX.SubItems.Count ? double.Parse(GetText(lviX.SubItems[ColumnIndex].Text)) : 0;
 						if (xDbl == MaxValue && SortDirection == SortOrder.Descending)
 							xDbl = -1;
-						yDbl = ColumnIndex < lviY.SubItems.Count ? double.Parse(lviY.SubItems[ColumnIndex].Text) : 0;
+						yDbl = ColumnIndex < lviY.SubItems.Count ? double.Parse(GetText(lviY.SubItems[ColumnIndex].Text)) : 0;
 						if (yDbl == MaxValue && SortDirection == SortOrder.Descending)
 							yDbl = -1;
 						result = xDbl.CompareTo(yDbl);
 						break;
 					case 5:
 					case 6:
-						xDbl = (ColumnIndex < lviX.SubItems.Count &&
-							!string.IsNullOrWhiteSpace(lviX.SubItems[ColumnIndex].Text)) ? double.Parse(lviX.SubItems[ColumnIndex].Text.Replace("%", "").Replace(" ", "").Replace("+","")) : 0;
+						xDbl = ColumnIndex < lviX.SubItems.Count ? double.Parse(GetText(lviX.SubItems[ColumnIndex].Text)) : 0;
 						if (xDbl == MaxValue && SortDirection == SortOrder.Descending)
 							xDbl = -1;
-						yDbl = (ColumnIndex < lviY.SubItems.Count &&
-							!string.IsNullOrWhiteSpace(lviY.SubItems[ColumnIndex].Text)) ? double.Parse(lviY.SubItems[ColumnIndex].Text.Replace("%","").Replace(" ","").Replace("+", "")) : 0;
+						yDbl = ColumnIndex < lviY.SubItems.Count ? double.Parse(GetText(lviY.SubItems[ColumnIndex].Text)) : 0;
 						if (yDbl == MaxValue && SortDirection == SortOrder.Descending)
 							yDbl = -1;
 						result = xDbl.CompareTo(yDbl);
 						break;
-
 					default:
 						result = string.Compare(
 							lviX.SubItems[ColumnIndex].Text,
@@ -319,6 +321,15 @@ namespace WordHiddenPowers.Dialogs
 				}
 			}
 
+
+			private readonly static Regex replaceRegex = new Regex("(\\s|[%]|[+])", RegexOptions.Compiled & RegexOptions.IgnoreCase & RegexOptions.Multiline);
+
+			private string GetText(string value)
+			{
+				value = replaceRegex.Replace(value, "");
+				return string.IsNullOrWhiteSpace(value) || value == "-" || value == "нечисло" ? "0" : value;
+			}
+
 			private int GetIndex(string Caption, SortOrder sortOrder)
 			{
 				for (int i = 0; i < dataBase.Count; i++)
@@ -336,6 +347,40 @@ namespace WordHiddenPowers.Dialogs
 					return -1;
 				}
 			}
+		}
+
+		private void Copy_Click(object sender, EventArgs e)
+		{
+			ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
+			ContextMenuStrip context = menuItem.Owner as ContextMenuStrip;
+			if (context.SourceControl is TableEditBox tableBox)
+			{
+				tableBox.Copy();
+			}
+			else if (context.SourceControl is ListView)
+			{
+				Copy();
+			}
+		}
+
+
+		public void Copy()
+		{
+			string[,] array = new string[listView1.Items.Count + 1, listView1.Columns.Count];
+
+			foreach (ColumnHeader column in listView1.Columns)
+			{
+				array[0, column.Index] = column.Text;
+			}
+
+			foreach (ListViewItem row in listView1.Items)
+			{
+				for (int i = 0; i < row.SubItems.Count; i++)
+				{
+					array[row.Index + 1, i] = row.SubItems[i].Text;
+				}
+			}
+			Utils.HTMLClipboard.Copy(array, Encoding.Default, 2);
 		}
 	}
 }

@@ -29,7 +29,7 @@ namespace ProsecutorialSupervision.Utils
 		public static DirectoryInfo CurrentDirectory => Directory.GetParent(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location));
 
 		public static DirectoryInfo UserDirectory
-		{ 
+		{
 			get
 			{
 				string userDirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Const.Globals.APP_FOLDER_NAME);
@@ -38,7 +38,7 @@ namespace ProsecutorialSupervision.Utils
 					Directory.CreateDirectory(userDirectoryPath);
 				}
 				return new DirectoryInfo(userDirectoryPath);
-			}		
+			}
 		}
 
 		public static void GetDataSetFromWordFiles(string path, ref RepositoryDataSet destDataSet)
@@ -48,11 +48,11 @@ namespace ProsecutorialSupervision.Utils
 				Word._Application application = Globals.ThisAddIn.Application;
 				application.Visible = true;
 				application.ChangeFileOpenDirectory(path);
-				
+
 				if (destDataSet == null) destDataSet = new RepositoryDataSet();
 
 				FileInfo[] files = new DirectoryInfo(path).GetFiles("*.doc*");
-				
+
 				ProgressDialog dialog = new ProgressDialog
 				{
 					Text = "Импорт данных из документов Word",
@@ -79,7 +79,7 @@ namespace ProsecutorialSupervision.Utils
 							if (ex.ErrorCode == -2146824090)
 							{
 								string tmpFile = GetTempFileName(file.Name);
-								File.Copy(file.FullName, tmpFile);								
+								File.Copy(file.FullName, tmpFile);
 								CopyWordDocument(fileName: tmpFile, application: application, destDataSet: ref destDataSet);
 								File.Delete(tmpFile);
 							}
@@ -89,7 +89,7 @@ namespace ProsecutorialSupervision.Utils
 							Application.DoEvents();
 						}
 					}
-				}				
+				}
 				dialog.Close();
 			}
 			else
@@ -148,7 +148,7 @@ namespace ProsecutorialSupervision.Utils
 				throw new ArgumentException();
 			}
 		}
-		
+
 		public static void GetContentFromTextFile(RepositoryDataSet sourceDataSet, string fileName)
 		{
 			if (File.Exists(fileName))
@@ -222,7 +222,7 @@ namespace ProsecutorialSupervision.Utils
 			}
 			return isCorrect;
 		}
-				
+
 		/// <summary>
 		/// Копирование данных из документа Word в хранилище.
 		/// </summary>
@@ -268,17 +268,18 @@ namespace ProsecutorialSupervision.Utils
 			if (isCorrect)
 			{
 				Xml.CopyData(sourceDataSet, destDataSet);
-				destDataSet.DecimalPowers.Clear();
-				destDataSet.TextPowers.Clear();
+				destDataSet.DecimalNotes.Clear();
+				destDataSet.TextNotes.Clear();
 				destDataSet.DocumentKeys.Clear();
 				destDataSet.WordFiles.Clear();
+				destDataSet.DecimalTable.Clear();
 				destDataSet.AcceptChanges();
 			}
-		}	
-	
+		}
+
 		public static string GetTempFileName(string fileName)
 		{
 			return Path.Combine(Path.GetTempPath(), fileName);
-		}	
+		}
 	}
 }

@@ -7,8 +7,8 @@ using WordHiddenPowers.Utils;
 
 namespace WordHiddenPowers.Dialogs
 {
-    public partial class SelectCategoriesDialog: Form
-    {
+	public partial class SelectCategoriesDialog : Form
+	{
 		private readonly Documents.Document document;
 
 		public SelectCategoriesDialog(Documents.Document document)
@@ -20,7 +20,7 @@ namespace WordHiddenPowers.Dialogs
 			InitializeComponent();
 
 			checkedListBox1.DataSet = this.document.CurrentDataSet;
-			
+
 			foreach (ListItem item in checkedListBox1.Items)
 			{
 				item.IsChecked = true;
@@ -29,9 +29,9 @@ namespace WordHiddenPowers.Dialogs
 		}
 
 		public SelectCategoriesDialog()
-        {
-            InitializeComponent();
-        }
+		{
+			InitializeComponent();
+		}
 
 		private void CheckButton_Click(object sender, EventArgs e)
 		{
@@ -59,7 +59,7 @@ namespace WordHiddenPowers.Dialogs
 			}
 			okButton.Enabled = checkedListBox1.IsAnyChecked;
 		}
-		
+
 		private void CheckedListBox1_ItemContentChanged(object sender, DrawItemEventArgs e)
 		{
 			okButton.Enabled = checkedListBox1.IsAnyChecked;

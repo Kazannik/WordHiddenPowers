@@ -80,7 +80,7 @@ namespace WordHiddenPowers.Services
 				}
 			}
 		}
-				
+
 		private static bool IsCompliance(Word.Paragraph paragraph, string pattern)
 		{
 			Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);

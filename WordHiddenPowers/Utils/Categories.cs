@@ -37,7 +37,7 @@ namespace WordHiddenPowers.Utils
 
 			string[] arrayLines = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 			ReadMode mode = ReadMode.Default;
-			
+
 			Category addingCategory = null;
 			Subcategory addingSubcategory = null;
 
@@ -71,10 +71,10 @@ namespace WordHiddenPowers.Utils
 											description: string.Empty,
 											isObligatory: attr.Contains("!"),
 											beforeText: string.Empty,
-											afterText: string.Empty); 
+											afterText: string.Empty);
 					addingCategory = dataSet.Add(addingCategory);
 					addingSubcategory = null;
-				}				
+				}
 				else if (mode == ReadMode.Default &&
 					regexSubcategory.IsMatch(line))
 				{

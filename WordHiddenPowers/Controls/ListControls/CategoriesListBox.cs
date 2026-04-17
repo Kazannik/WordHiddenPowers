@@ -46,9 +46,9 @@ namespace WordHiddenPowers.Controls.ListControls
 		}
 
 		private void Categories_TableCleared(object sender, DataTableClearEventArgs e) => ReadData();
-		
+
 		private void Subcategories_TableCleared(object sender, DataTableClearEventArgs e) => ReadData();
-		
+
 		private void Categories_RowDeleting(object sender, DataRowChangeEventArgs e)
 		{
 			CategoriesRow row = e.Row as CategoriesRow;
@@ -197,9 +197,9 @@ namespace WordHiddenPowers.Controls.ListControls
 		}
 
 		private void Add(ICategoriesListItem item) => Items.Add(new ListItem(item));
-		
+
 		private void Insert(int index, ICategoriesListItem item) => Items.Insert(index, new ListItem(item));
-		
+
 		private void Remove(Category category)
 		{
 			if (ExistsListItem(category))
@@ -219,13 +219,13 @@ namespace WordHiddenPowers.Controls.ListControls
 		}
 
 		public bool ExistsListItem(string guid) => Items.AsEnumerable()
-				.Where(x => x.owner.Code.Guid == guid)
+			.Where(x => x.owner.Code.Guid == guid)
 			.Any();
-		
+
 		public ListItem GetListItem(string guid) => Items.AsEnumerable()
-				.Where(x => x.owner.Code.Guid == guid)
+			.Where(x => x.owner.Code.Guid == guid)
 			.First();
-		
+
 		public int CategoryNextIndexOf(int index)
 		{
 			for (int i = index; i < Items.Count; i++)
@@ -240,36 +240,36 @@ namespace WordHiddenPowers.Controls.ListControls
 		private bool ExistsListItem(Category category) => Items.AsEnumerable()
 			.Where(x => x.owner.Code.Guid == category.Guid)
 			.Any();
-		
+
 		private ListItem GetListItem(Category category) => Items.AsEnumerable()
 			.Where(x => x.owner.Code.Guid == category.Guid)
 			.First();
-		
+
 		private bool ExistsListItem(Subcategory subcategory) => Items.AsEnumerable()
 			.Where(x => x.owner.Code.Guid == subcategory.Guid)
 			.Any();
-		
+
 		private ListItem GetListItem(Subcategory subcategory) => Items.AsEnumerable()
 			.Where(x => x.owner.Code.Guid == subcategory.Guid)
 			.First();
-		
+
 		private bool ExistsListItem(CategoriesRow row) => Items.AsEnumerable()
 			.Where(x => x.owner.Code.Guid == row.key_guid)
 			.Any();
-		
+
 
 		private ListItem GetListItem(CategoriesRow row) => Items.AsEnumerable()
 			.Where(x => x.owner.Code.Guid == row.key_guid)
 			.First();
-		
+
 		private bool ExistsListItem(SubcategoriesRow row) => Items.AsEnumerable()
 			.Where(x => x.owner.Code.Guid == row.key_guid)
 			.Any();
-		
+
 		private ListItem GetListItem(SubcategoriesRow row) => Items.AsEnumerable()
 			.Where(x => x.owner.Code.Guid == row.key_guid)
 			.First();
-		
+
 		private bool ExistsListItem(DataRow row)
 		{
 			if (row.Table is CategoriesDataTable)
@@ -329,10 +329,7 @@ namespace WordHiddenPowers.Controls.ListControls
 				if (notes.Length > 2 && (!notes[1].Size.IsEmpty || !notes[2].Size.IsEmpty))
 				{
 					// Рисование линии после титульной части
-					Pen linePen = e.State == (e.State | DrawItemState.Selected) ? new Pen(e.ForeColor) : SystemPens.InactiveCaption;
-					e.Graphics.DrawLine(linePen,
-					e.Bounds.X + 7, notes[0].Size.Height - 2,
-					e.Bounds.X + e.Bounds.Width - 15, notes[0].Size.Height - 2);
+					Utils.Drawing.DrawLine(e, notes[0]);
 				}
 				e.DrawFocusRectangle();
 			}
@@ -385,7 +382,7 @@ namespace WordHiddenPowers.Controls.ListControls
 			private string text;
 
 			public ListItemNote(string text) => this.text = text;
-			
+
 			public string Text
 			{
 				get => text;

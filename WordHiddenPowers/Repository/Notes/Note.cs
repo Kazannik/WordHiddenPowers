@@ -8,7 +8,7 @@ namespace WordHiddenPowers.Repository.Notes
 {
 	public class Note : INotifyPropertyChanged, IComparable<Note>
 	{
-		internal static Note Create(RepositoryDataSet.DecimalPowersRow dataRow, RepositoryDataSet.WordFilesRow fileRow, Subcategory subcategory, string wordSelectionText = "")
+		internal static Note Create(RepositoryDataSet.DecimalNotesRow dataRow, Subcategory subcategory, string wordSelectionText = "", string vector = "")
 		{
 			return new Note(
 				id: dataRow.id,
@@ -21,14 +21,16 @@ namespace WordHiddenPowers.Repository.Notes
 				wordSelectionEnd: dataRow.WordSelectionEnd,
 				hide: dataRow.Hide,
 				dataRow: dataRow,
-				fileName: fileRow.FileName,
-				fileCaption: fileRow.Caption,
-				fileDescription: !fileRow.IsDescriptionNull() ? fileRow.Description : string.Empty,
-				fileDate: fileRow.Date
+				fileName: dataRow.WordFilesRow.FileName,
+				fileCaption: dataRow.WordFilesRow.Caption,
+				fileDescription: !dataRow.WordFilesRow.IsDescriptionNull() ? dataRow.WordFilesRow.Description : string.Empty,
+				fileDate: dataRow.WordFilesRow.Date,
+				fileId: dataRow.file_id,
+				vector: vector
 				);
 		}
 
-		internal static Note Create(RepositoryDataSet.TextPowersRow dataRow, RepositoryDataSet.WordFilesRow fileRow, Subcategory subcategory, string wordSelectionText = "")
+		internal static Note Create(RepositoryDataSet.TextNotesRow dataRow, Subcategory subcategory, string wordSelectionText = "", string vector = "")
 		{
 			return new Note(
 				id: dataRow.id,
@@ -41,10 +43,12 @@ namespace WordHiddenPowers.Repository.Notes
 				wordSelectionEnd: dataRow.WordSelectionEnd,
 				hide: dataRow.Hide,
 				dataRow: dataRow,
-				fileName: fileRow.FileName,
-				fileCaption: fileRow.Caption,
-				fileDescription: !fileRow.IsDescriptionNull() ? fileRow.Description : string.Empty,
-				fileDate: fileRow.Date
+				fileName: dataRow.WordFilesRow.FileName,
+				fileCaption: dataRow.WordFilesRow.Caption,
+				fileDescription: !dataRow.WordFilesRow.IsDescriptionNull() ? dataRow.WordFilesRow.Description : string.Empty,
+				fileDate: dataRow.WordFilesRow.Date,
+				fileId: dataRow.file_id,
+				vector: vector
 				);
 		}
 
@@ -62,7 +66,9 @@ namespace WordHiddenPowers.Repository.Notes
 			string fileName,
 			string fileCaption,
 			string fileDescription,
-			DateTime fileDate)
+			DateTime fileDate,
+			int fileId,
+			string vector)
 		{
 			Subcategory = subcategory;
 			Id = id;
@@ -79,6 +85,8 @@ namespace WordHiddenPowers.Repository.Notes
 			FileCaption = fileCaption;
 			FileDescription = fileDescription;
 			FileDate = fileDate;
+			FileId = fileId;
+			Vector = vector;
 		}
 
 		protected Note(
@@ -95,7 +103,9 @@ namespace WordHiddenPowers.Repository.Notes
 			string fileName,
 			string fileCaption,
 			string fileDescription,
-			DateTime fileDate)
+			DateTime fileDate,
+			int fileId,
+			string vector)
 		{
 			Subcategory = subcategory;
 			Id = id;
@@ -112,6 +122,8 @@ namespace WordHiddenPowers.Repository.Notes
 			FileCaption = fileCaption;
 			FileDescription = fileDescription;
 			FileDate = fileDate;
+			FileId = fileId;
+			Vector = vector;
 		}
 
 		public Category Category { get { return Subcategory.Category; } }
@@ -146,13 +158,17 @@ namespace WordHiddenPowers.Repository.Notes
 
 		public DateTime FileDate { get; }
 
+		public int FileId { get; }
+
+		public string Vector { get; internal set; }
+
 		public void SetWordSelectionText(string text) => WordSelectionText = text;
 
 		#region INotifyPropertyChanged Members
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		private void OnPropertyChanged(string propertyName) => 
+		private void OnPropertyChanged(string propertyName) =>
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
 		#endregion
@@ -204,7 +220,7 @@ namespace WordHiddenPowers.Repository.Notes
 
 			public bool Equals(Note x, Note y) => GetHashCode(x) == GetHashCode(y);
 
-			public int GetHashCode(Note obj) => 
+			public int GetHashCode(Note obj) =>
 				unchecked((87 * obj.Value.GetHashCode()) ^ obj.WordSelectionStart.GetHashCode() ^ obj.WordSelectionEnd.GetHashCode());
 		}
 

@@ -16,11 +16,11 @@ namespace WordHiddenPowers.Utils
 
 			if (stream != null)
 			{
-				return stream.ReadToEnd();				
+				return stream.ReadToEnd();
 			}
 			else
 			{
-				throw new ArgumentException ($"Ресурс '{resourceName}' не найден.");
+				throw new ArgumentException($"Ресурс '{resourceName}' не найден.");
 			}
 		}
 

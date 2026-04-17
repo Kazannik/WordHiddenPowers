@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Drawing;
+using System.Text;
 using System.Windows.Forms;
 using WordHiddenPowers.Repository;
 using WordHiddenPowers.Repository.Data;
@@ -10,8 +11,8 @@ namespace WordHiddenPowers.Controls
 {
 	public partial class TableEditBox : UserControl
 	{
-		private RepositoryDataSet _source;
-		private RepositoryDataSet _old;
+		private RepositoryDataSet _nowDataSet;
+		private RepositoryDataSet _lastDataSet;
 		private Table _table;
 
 		public TableEditBox()
@@ -21,24 +22,24 @@ namespace WordHiddenPowers.Controls
 
 		public bool ReadOnly { get; set; }
 
-		public bool IsOld { get; private set; }
+		public bool IsLast { get; private set; }
 
-		public RepositoryDataSet DataSet
+		public RepositoryDataSet NowDataSet
 		{
-			get => _source;
+			get => _nowDataSet;
 			set
 			{
-				_source = value;
+				_nowDataSet = value;
 				ReadStructure();
 			}
 		}
 
-		public RepositoryDataSet OldDataSet
+		public RepositoryDataSet LastDataSet
 		{
-			get => _old;
+			get => _lastDataSet;
 			set
 			{
-				_old = value;
+				_lastDataSet = value;
 				ReadStructure();
 			}
 		}
@@ -65,19 +66,19 @@ namespace WordHiddenPowers.Controls
 				return;
 			}
 
-			IsOld = false;
+			IsLast = false;
 
-			if (_source == null) return;
-			IsOld = _old != null && _old.IsTables;
+			if (_nowDataSet == null) return;
+			IsLast = _lastDataSet != null && _lastDataSet.IsTables;
 
-			if (_source.ColumnsHeaders.Rows.Count > 0)
+			if (_nowDataSet.ColumnsHeaders.Rows.Count > 0)
 			{
-				for (int i = 0; i < _source.ColumnsHeaders.Rows.Count; i++)
+				for (int i = 0; i < _nowDataSet.ColumnsHeaders.Rows.Count; i++)
 				{
-					string text = _source.ColumnsHeaders.Rows[i]["Header"].ToString();
+					string text = _nowDataSet.ColumnsHeaders.Rows[i]["Header"].ToString();
 					int columnIndex = dataGridView.Columns.Add(text, text);
 					dataGridView.Columns[columnIndex].SortMode = DataGridViewColumnSortMode.NotSortable;
-					if (IsOld)
+					if (IsLast)
 					{
 						columnIndex = dataGridView.Columns.Add(text + "_old", "АППГ");
 						dataGridView.Columns[columnIndex].CellTemplate = new DataGridViewTextCell();
@@ -96,22 +97,22 @@ namespace WordHiddenPowers.Controls
 					}
 				}
 
-					foreach (DataRow item in _source.RowsHeaders.Rows)
-					{
-						int rowIndex = dataGridView.Rows.Add();
-						dataGridView.Rows[rowIndex].HeaderCell.Value = (rowIndex + 1).ToString() + ".   " + item["Header"].ToString();
-					}
-
-				for (int r = 0; r < _source.RowsHeaders.Rows.Count; r++)
+				foreach (DataRow item in _nowDataSet.RowsHeaders.Rows)
 				{
-					bool rowBold = bool.Parse(_source.RowsHeaders.Rows[r]["Bold"].ToString());
-					int rowColor = int.Parse(_source.RowsHeaders.Rows[r]["Color"].ToString());
-					int rowBackColor = int.Parse(_source.RowsHeaders.Rows[r]["BackColor"].ToString());
-					for (int c = 0; c < _source.ColumnsHeaders.Rows.Count; c++)
+					int rowIndex = dataGridView.Rows.Add();
+					dataGridView.Rows[rowIndex].HeaderCell.Value = (rowIndex + 1).ToString() + ".   " + item["Header"].ToString();
+				}
+
+				for (int r = 0; r < _nowDataSet.RowsHeaders.Rows.Count; r++)
+				{
+					bool rowBold = bool.Parse(_nowDataSet.RowsHeaders.Rows[r]["Bold"].ToString());
+					int rowColor = int.Parse(_nowDataSet.RowsHeaders.Rows[r]["Color"].ToString());
+					int rowBackColor = int.Parse(_nowDataSet.RowsHeaders.Rows[r]["BackColor"].ToString());
+					for (int c = 0; c < _nowDataSet.ColumnsHeaders.Rows.Count; c++)
 					{
-						bool columnBold = bool.Parse(_source.ColumnsHeaders.Rows[c]["Bold"].ToString());
-						int columnColor = int.Parse(_source.ColumnsHeaders.Rows[c]["Color"].ToString());
-						int columnBackColor = int.Parse(_source.ColumnsHeaders.Rows[c]["BackColor"].ToString());
+						bool columnBold = bool.Parse(_nowDataSet.ColumnsHeaders.Rows[c]["Bold"].ToString());
+						int columnColor = int.Parse(_nowDataSet.ColumnsHeaders.Rows[c]["Color"].ToString());
+						int columnBackColor = int.Parse(_nowDataSet.ColumnsHeaders.Rows[c]["BackColor"].ToString());
 
 						dataGridView.Rows[r].Cells[c].ReadOnly = ReadOnly;
 
@@ -146,21 +147,21 @@ namespace WordHiddenPowers.Controls
 		{
 			if (_table == null) return;
 			dataGridView.CancelEdit();
-			int step = IsOld ? 4 : 1;
+			int step = IsLast ? 4 : 1;
 			for (int r = 0; r < dataGridView.RowCount; r++)
 			{
 				for (int c = 0; c < dataGridView.ColumnCount; c = c + step)
 				{
 					if (_table.RowCount > r && _table.ColumnCount > c / step)
 					{
-						dataGridView.Rows[r].Cells[c / step].Value = _table.Rows[r][c / step].Value;
-						if (IsOld && _table.IsOld)
+						dataGridView.Rows[r].Cells[c / step].Value = _table.Rows[r][c / step].NowValue;
+						if (IsLast && _table.IsLast)
 						{
-							((DataGridViewTextCell)dataGridView.Rows[r].Cells[c / step + 1]).Text = _table.Rows[r][c / step].OldValue.ToString("### ### ###");
+							((DataGridViewTextCell)dataGridView.Rows[r].Cells[c / step + 1]).Text = _table.Rows[r][c / step].LastValue.ToString("### ### ###");
 							((DataGridViewTextCell)dataGridView.Rows[r].Cells[c / step + 2]).Text = _table.Rows[r][c / step].Growth;
 							((DataGridViewTextCell)dataGridView.Rows[r].Cells[c / step + 3]).Text = _table.Rows[r][c / step].GrowthPercent;
 						}
-						else if (IsOld && !_table.IsOld)
+						else if (IsLast && !_table.IsLast)
 						{
 							((DataGridViewTextCell)dataGridView.Rows[r].Cells[c / step + 1]).Text = "-";
 							((DataGridViewTextCell)dataGridView.Rows[r].Cells[c / step + 2]).Text = "-";
@@ -189,7 +190,7 @@ namespace WordHiddenPowers.Controls
 					{
 						if (_table.RowCount > r && _table.ColumnCount > c)
 						{
-							_table.Rows[r][c].Value = int.Parse(dataGridView.Rows[r].Cells[c].Value.ToString());
+							_table.Rows[r][c].NowValue = int.Parse(dataGridView.Rows[r].Cells[c].Value.ToString());
 						}
 					}
 				}
@@ -205,6 +206,34 @@ namespace WordHiddenPowers.Controls
 		public void EndEdit() => dataGridView.EndEdit();
 
 		public bool IsChanged { get; private set; }
+
+		public void Copy()
+		{
+			string[,] array = new string[dataGridView.Rows.Count + 1, dataGridView.ColumnCount + 1];
+
+			foreach (DataGridViewColumn column in dataGridView.Columns)
+			{
+				array[0, column.Index + 1] = column.HeaderText;
+			}
+
+			foreach (DataGridViewRow row in dataGridView.Rows)
+			{
+				array[row.Index + 1, 0] = row.HeaderCell.Value.ToString();
+
+				foreach (DataGridViewCell cell in row.Cells)
+				{
+					if (cell is DataGridViewTextBoxCell textBoxCell && textBoxCell.Value != null)
+					{
+						array[row.Index + 1, cell.ColumnIndex + 1] = ((int)textBoxCell.Value).ToString("### ### ###");
+					}
+					else if (cell is DataGridViewTextCell textCell)
+					{
+						array[row.Index + 1, cell.ColumnIndex + 1] = textCell.Text;
+					}
+				}
+			}
+			WordHiddenPowers.Utils.HTMLClipboard.Copy(array, Encoding.Default, 1);
+		}
 
 		private void Data_CellValueChanged(object sender, DataGridViewCellEventArgs e)
 		{
@@ -225,7 +254,7 @@ namespace WordHiddenPowers.Controls
 						{
 							if (_table.RowCount > r && _table.ColumnCount > c)
 							{
-								if (_table.Rows[r][c].Value != int.Parse(dataGridView.Rows[r].Cells[c].Value.ToString()))
+								if (_table.Rows[r][c].NowValue != int.Parse(dataGridView.Rows[r].Cells[c].Value.ToString()))
 								{
 									changed = true;
 									break;
@@ -318,10 +347,8 @@ namespace WordHiddenPowers.Controls
 			//	owningColumn.ContextMenuStrip?.Show(DataGridView, position);
 			//}
 
-			private int GetTextWidth()
-			{
-				return TextRenderer.MeasureText(Text, OwningColumn.DefaultCellStyle.Font).Width;
-			}
+			private int GetTextWidth() => TextRenderer.MeasureText(Text, OwningColumn.DefaultCellStyle.Font).Width;
+
 		}
 	}
 }

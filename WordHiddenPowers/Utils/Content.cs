@@ -11,7 +11,6 @@ using Word = Microsoft.Office.Interop.Word;
 
 
 #if WORD
-using WordHiddenPowers.Repository;
 using WordHiddenPowers.Repository.Data;
 
 namespace WordHiddenPowers.Utils.WordDocuments
@@ -24,13 +23,14 @@ namespace ProsecutorialSupervision.Utils.WordDocuments
 {
 	static class Content
 	{
+		private const int BUFFER_SIZE = 65280;
+
 		public static bool ExistsVariable(Word.Variables array, string variableName)
 		{
 			Regex regex = new Regex("^" + variableName + "(_\\d+)*$");
 			for (int i = 1; i <= array.Count; i++)
 			{
-				if (regex.IsMatch(array[i].Name))
-					return true;
+				if (regex.IsMatch(array[i].Name)) return true;
 			}
 			return false;
 		}
@@ -40,12 +40,11 @@ namespace ProsecutorialSupervision.Utils.WordDocuments
 			Regex regex = new Regex("^" + variableName + "(_\\d+)*$");
 			for (int i = 1; i <= array.Count; i++)
 			{
-				if (regex.IsMatch(array[i].Name)) 
-					return array[i];
+				if (regex.IsMatch(array[i].Name)) return array[i];
 			}
-			return null;
+			return default;
 		}
-	
+
 		public static string GetVariableValueOrDefault(Word.Variables array, string variableName)
 		{
 			if (ExistsVariable(array: array, variableName: variableName))
@@ -61,7 +60,7 @@ namespace ProsecutorialSupervision.Utils.WordDocuments
 
 		public static void CommitVariable(Word.Variables array, string variableName, string value)
 		{
-			if (!string.IsNullOrEmpty(value) && value.Length > 65280)
+			if (!string.IsNullOrEmpty(value) && value.Length > BUFFER_SIZE)
 			{
 				Dialogs.ShowErrorDialog("Длина значения сохраняемой переменной не может превышать 65 280 знаков!");
 				return;
@@ -75,10 +74,10 @@ namespace ProsecutorialSupervision.Utils.WordDocuments
 			else if (!string.IsNullOrWhiteSpace(value))
 			{
 				array.Add(variableName, value);
-			}				
+			}
 		}
-		
-		public static void CommitVariable(Word.Variables array, string variableName, RepositoryDataSet dataSet)
+
+		public static void CommitVariable(Word.Variables array, string variableName, DataSet dataSet)
 		{
 			StringBuilder builder = new StringBuilder();
 			StringWriter writer = new StringWriter(builder);
@@ -90,10 +89,10 @@ namespace ProsecutorialSupervision.Utils.WordDocuments
 
 			string xml = builder.ToString();
 
-			if (xml.Length <= 65280)
+			if (xml.Length <= BUFFER_SIZE)
 			{
 				CommitVariable(
-					array: array, 
+					array: array,
 					variableName: variableName,
 					value: xml);
 			}
@@ -103,13 +102,13 @@ namespace ProsecutorialSupervision.Utils.WordDocuments
 				do
 				{
 					CommitVariable(
-						array: array, 
+						array: array,
 						variableName: variableName + "_" + i.ToString(),
-						value: xml.Substring(0, 65280));
+						value: xml.Substring(0, BUFFER_SIZE));
 					i += 1;
-					xml = xml.Substring(65280);
-				} while (xml.Length >= 65280);
-				
+					xml = xml.Substring(BUFFER_SIZE);
+				} while (xml.Length >= BUFFER_SIZE);
+
 				if (xml.Length > 0)
 					CommitVariable(
 						array: array,
@@ -121,54 +120,22 @@ namespace ProsecutorialSupervision.Utils.WordDocuments
 		public static void DeleteVariable(Word.Variables array, string variableName)
 		{
 			Word.Variable variable = GetVariable(
-				array: array, 
+				array: array,
 				variableName: variableName);
 			variable?.Delete();
 		}
-		
-		public static string NewGuid(Word._Document Doc)
-		{
-			bool oldSaved = Doc.Saved;
-			CommitVariable(
-				array: Doc.Variables,
-				variableName: Const.Globals.DOC_ID_VARIABLE_NAME,
-				value: Guid.NewGuid().ToString());
-			
-			Doc.Saved = oldSaved;
-			return GetGuid(Doc);
-		}
-		
-		public static string GetGuid(Word._Document Doc)
-		{
-			return GetVariableValueOrDefault(
-				array: Doc.Variables,
-				variableName: Const.Globals.DOC_ID_VARIABLE_NAME);
-		}
 
-		public static string GetGuidOrDefault(Word._Document Doc)
-		{ 
-			string guid = GetGuid(Doc);
-			if (!string.IsNullOrEmpty(guid))
-			{
-				return guid;
-			}
-			else
-			{
-				return NewGuid(Doc);
-			}
-		}
-		
 		public static string GetCaption(Word._Document Doc)
 		{
 			return GetVariableValueOrDefault(
-				array: Doc.Variables, 
+				array: Doc.Variables,
 				variableName: Const.Globals.CAPTION_VARIABLE_NAME);
 		}
 
 		public static string GetDescription(Word._Document Doc)
 		{
 			return GetVariableValueOrDefault(
-				array: Doc.Variables, 
+				array: Doc.Variables,
 				variableName: Const.Globals.DESCRIPTION_VARIABLE_NAME);
 		}
 
@@ -182,7 +149,7 @@ namespace ProsecutorialSupervision.Utils.WordDocuments
 		public static DateTime GetDate(Word._Document Doc)
 		{
 			string value = GetVariableValueOrDefault(
-				array: Doc.Variables, 
+				array: Doc.Variables,
 				variableName: Const.Globals.DATE_VARIABLE_NAME);
 			if (DateTime.TryParse(value, out DateTime result))
 			{
@@ -197,7 +164,7 @@ namespace ProsecutorialSupervision.Utils.WordDocuments
 		public static Table GetTable(Word._Document Doc)
 		{
 			string value = GetVariableValueOrDefault(
-				array: Doc.Variables, 
+				array: Doc.Variables,
 				variableName: Const.Globals.TABLE_VARIABLE_NAME);
 			return Table.Create(value);
 		}
@@ -214,9 +181,18 @@ namespace ProsecutorialSupervision.Utils.WordDocuments
 			else
 			{
 				return ExistsVariable(
-				array: Doc.Variables,
-				variableName: Const.Globals.XML_CURRENT_VARIABLE_NAME + "_0");
-			}				
-		}		
+					array: Doc.Variables,
+					variableName: Const.Globals.XML_CURRENT_VARIABLE_NAME + "_0");
+			}
+		}
+
+		///// <summary>
+		///// 
+		///// </summary>
+		///// <param name="Doc"></param>
+		///// <returns></returns>
+		//public static bool ExistsGuid(Word._Document Doc) => ExistsVariable(
+		//	array: Doc.Variables,
+		//	variableName: Const.Globals.DOC_ID_VARIABLE_NAME);
 	}
 }

@@ -13,15 +13,17 @@ namespace WordHiddenPowers.Panes
 
 		public readonly Document Document;
 
+		public readonly int Hwnd;
+
 		protected WordHiddenPowersPane()
 		{
 			InitializeComponent();
 		}
 
-		public WordHiddenPowersPane(Document document)
+		public WordHiddenPowersPane(Document document, int hwnd)
 		{
 			Document = document;
-
+			Hwnd = hwnd;
 			InitializeComponent();
 		}
 

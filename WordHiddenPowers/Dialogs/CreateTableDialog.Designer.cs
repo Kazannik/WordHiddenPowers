@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
 			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateTableDialog));
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.mnuFile = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuFileNew = new System.Windows.Forms.ToolStripMenuItem();
@@ -91,16 +92,12 @@
 			// 
 			// menuStrip1
 			// 
-			this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
 			this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuFile,
             this.mnuTable});
-			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+			resources.ApplyResources(this.menuStrip1, "menuStrip1");
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(505, 36);
-			this.menuStrip1.TabIndex = 0;
-			this.menuStrip1.Text = "menuStrip1";
 			// 
 			// mnuFile
 			// 
@@ -113,55 +110,49 @@
             this.toolStripMenuItem4,
             this.mnuFileExit});
 			this.mnuFile.Name = "mnuFile";
-			this.mnuFile.Size = new System.Drawing.Size(69, 30);
-			this.mnuFile.Text = "Файл";
+			resources.ApplyResources(this.mnuFile, "mnuFile");
 			// 
 			// mnuFileNew
 			// 
 			this.mnuFileNew.Image = global::WordHiddenPowers.Properties.Resources.CreateTable_24;
 			this.mnuFileNew.Name = "mnuFileNew";
-			this.mnuFileNew.Size = new System.Drawing.Size(249, 34);
-			this.mnuFileNew.Text = "Создать таблицу";
+			resources.ApplyResources(this.mnuFileNew, "mnuFileNew");
 			this.mnuFileNew.Click += new System.EventHandler(this.FileNew_Click);
 			// 
 			// mnuFileOpen
 			// 
 			this.mnuFileOpen.Name = "mnuFileOpen";
-			this.mnuFileOpen.Size = new System.Drawing.Size(249, 34);
-			this.mnuFileOpen.Text = "Открыть файл...";
+			resources.ApplyResources(this.mnuFileOpen, "mnuFileOpen");
 			this.mnuFileOpen.Click += new System.EventHandler(this.FileOpen_Click);
 			// 
 			// toolStripMenuItem1
 			// 
 			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(246, 6);
+			resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
 			// 
 			// mnuFileSave
 			// 
 			this.mnuFileSave.Image = global::WordHiddenPowers.Properties.Resources.Save_24;
 			this.mnuFileSave.Name = "mnuFileSave";
-			this.mnuFileSave.Size = new System.Drawing.Size(249, 34);
-			this.mnuFileSave.Text = "Сохранить";
+			resources.ApplyResources(this.mnuFileSave, "mnuFileSave");
 			this.mnuFileSave.Click += new System.EventHandler(this.FileSave_Click);
 			// 
 			// mnuFileSaveAsToolStripMenuItem
 			// 
 			this.mnuFileSaveAsToolStripMenuItem.Name = "mnuFileSaveAsToolStripMenuItem";
-			this.mnuFileSaveAsToolStripMenuItem.Size = new System.Drawing.Size(249, 34);
-			this.mnuFileSaveAsToolStripMenuItem.Text = "Сохранить как...";
+			resources.ApplyResources(this.mnuFileSaveAsToolStripMenuItem, "mnuFileSaveAsToolStripMenuItem");
 			this.mnuFileSaveAsToolStripMenuItem.Click += new System.EventHandler(this.FileSaveAs_Click);
 			// 
 			// toolStripMenuItem4
 			// 
 			this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-			this.toolStripMenuItem4.Size = new System.Drawing.Size(246, 6);
+			resources.ApplyResources(this.toolStripMenuItem4, "toolStripMenuItem4");
 			// 
 			// mnuFileExit
 			// 
 			this.mnuFileExit.Image = global::WordHiddenPowers.Properties.Resources.WindowClose_24;
 			this.mnuFileExit.Name = "mnuFileExit";
-			this.mnuFileExit.Size = new System.Drawing.Size(249, 34);
-			this.mnuFileExit.Text = "Закрыть";
+			resources.ApplyResources(this.mnuFileExit, "mnuFileExit");
 			// 
 			// mnuTable
 			// 
@@ -171,8 +162,7 @@
             this.toolStripMenuItem2,
             this.mnuTableDelete});
 			this.mnuTable.Name = "mnuTable";
-			this.mnuTable.Size = new System.Drawing.Size(95, 30);
-			this.mnuTable.Text = "Таблица";
+			resources.ApplyResources(this.mnuTable, "mnuTable");
 			// 
 			// mnuTableAdd
 			// 
@@ -180,23 +170,20 @@
             this.mnuTableAddRow,
             this.mnuTableAddColumn});
 			this.mnuTableAdd.Name = "mnuTableAdd";
-			this.mnuTableAdd.Size = new System.Drawing.Size(192, 34);
-			this.mnuTableAdd.Text = "Добавить";
+			resources.ApplyResources(this.mnuTableAdd, "mnuTableAdd");
 			// 
 			// mnuTableAddRow
 			// 
 			this.mnuTableAddRow.Image = global::WordHiddenPowers.Properties.Resources.TableInsertRowsAbove_24;
 			this.mnuTableAddRow.Name = "mnuTableAddRow";
-			this.mnuTableAddRow.Size = new System.Drawing.Size(172, 34);
-			this.mnuTableAddRow.Text = "Строку";
+			resources.ApplyResources(this.mnuTableAddRow, "mnuTableAddRow");
 			this.mnuTableAddRow.Click += new System.EventHandler(this.InserRowAbove_Click);
 			// 
 			// mnuTableAddColumn
 			// 
 			this.mnuTableAddColumn.Image = global::WordHiddenPowers.Properties.Resources.TableInsertColumnsLeft_24;
 			this.mnuTableAddColumn.Name = "mnuTableAddColumn";
-			this.mnuTableAddColumn.Size = new System.Drawing.Size(172, 34);
-			this.mnuTableAddColumn.Text = "Графу";
+			resources.ApplyResources(this.mnuTableAddColumn, "mnuTableAddColumn");
 			this.mnuTableAddColumn.Click += new System.EventHandler(this.InsertColumnRight_Click);
 			// 
 			// mnuTableInsert
@@ -205,27 +192,24 @@
             this.mnuTableInsertRow,
             this.mnuTableInsertColumn});
 			this.mnuTableInsert.Name = "mnuTableInsert";
-			this.mnuTableInsert.Size = new System.Drawing.Size(192, 34);
-			this.mnuTableInsert.Text = "Вставить";
+			resources.ApplyResources(this.mnuTableInsert, "mnuTableInsert");
 			// 
 			// mnuTableInsertRow
 			// 
 			this.mnuTableInsertRow.Image = global::WordHiddenPowers.Properties.Resources.TableInsertRowsAbove_24;
 			this.mnuTableInsertRow.Name = "mnuTableInsertRow";
-			this.mnuTableInsertRow.Size = new System.Drawing.Size(172, 34);
-			this.mnuTableInsertRow.Text = "Строку";
+			resources.ApplyResources(this.mnuTableInsertRow, "mnuTableInsertRow");
 			// 
 			// mnuTableInsertColumn
 			// 
 			this.mnuTableInsertColumn.Image = global::WordHiddenPowers.Properties.Resources.TableInsertColumnsLeft_24;
 			this.mnuTableInsertColumn.Name = "mnuTableInsertColumn";
-			this.mnuTableInsertColumn.Size = new System.Drawing.Size(172, 34);
-			this.mnuTableInsertColumn.Text = "Графу";
+			resources.ApplyResources(this.mnuTableInsertColumn, "mnuTableInsertColumn");
 			// 
 			// toolStripMenuItem2
 			// 
 			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-			this.toolStripMenuItem2.Size = new System.Drawing.Size(189, 6);
+			resources.ApplyResources(this.toolStripMenuItem2, "toolStripMenuItem2");
 			// 
 			// mnuTableDelete
 			// 
@@ -234,24 +218,21 @@
             this.mnuTableDeleteRows});
 			this.mnuTableDelete.Image = global::WordHiddenPowers.Properties.Resources.TableDelete_24;
 			this.mnuTableDelete.Name = "mnuTableDelete";
-			this.mnuTableDelete.Size = new System.Drawing.Size(192, 34);
-			this.mnuTableDelete.Text = "Удалить";
+			resources.ApplyResources(this.mnuTableDelete, "mnuTableDelete");
 			this.mnuTableDelete.Click += new System.EventHandler(this.Delete_Click);
 			// 
 			// mnuTableDeleteColumns
 			// 
 			this.mnuTableDeleteColumns.Image = global::WordHiddenPowers.Properties.Resources.TableDeleteColumns_24;
 			this.mnuTableDeleteColumns.Name = "mnuTableDeleteColumns";
-			this.mnuTableDeleteColumns.Size = new System.Drawing.Size(186, 34);
-			this.mnuTableDeleteColumns.Text = "Столбцы";
+			resources.ApplyResources(this.mnuTableDeleteColumns, "mnuTableDeleteColumns");
 			this.mnuTableDeleteColumns.Click += new System.EventHandler(this.TableDeleteColumns_Click);
 			// 
 			// mnuTableDeleteRows
 			// 
 			this.mnuTableDeleteRows.Image = global::WordHiddenPowers.Properties.Resources.TableDeleteRows_24;
 			this.mnuTableDeleteRows.Name = "mnuTableDeleteRows";
-			this.mnuTableDeleteRows.Size = new System.Drawing.Size(186, 34);
-			this.mnuTableDeleteRows.Text = "Строки";
+			resources.ApplyResources(this.mnuTableDeleteRows, "mnuTableDeleteRows");
 			this.mnuTableDeleteRows.Click += new System.EventHandler(this.TableDeleteRows_Click);
 			// 
 			// toolStrip1
@@ -271,51 +252,42 @@
             this.mnuInsertColumnRight,
             this.toolStripSeparator4,
             this.mnuDeleteTable});
-			this.toolStrip1.Location = new System.Drawing.Point(0, 36);
+			resources.ApplyResources(this.toolStrip1, "toolStrip1");
 			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(505, 38);
-			this.toolStrip1.TabIndex = 1;
-			this.toolStrip1.Text = "toolStrip1";
 			// 
 			// buttonNewTable
 			// 
 			this.buttonNewTable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.buttonNewTable.Image = global::WordHiddenPowers.Properties.Resources.CreateTable_24;
-			this.buttonNewTable.ImageTransparentColor = System.Drawing.Color.Magenta;
+			resources.ApplyResources(this.buttonNewTable, "buttonNewTable");
 			this.buttonNewTable.Name = "buttonNewTable";
-			this.buttonNewTable.Size = new System.Drawing.Size(34, 33);
-			this.buttonNewTable.Text = "Создать таблицу";
 			this.buttonNewTable.Click += new System.EventHandler(this.FileNew_Click);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 38);
+			resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
 			// 
 			// buttonSave
 			// 
 			this.buttonSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.buttonSave.Image = global::WordHiddenPowers.Properties.Resources.Save_24;
-			this.buttonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+			resources.ApplyResources(this.buttonSave, "buttonSave");
 			this.buttonSave.Name = "buttonSave";
-			this.buttonSave.Size = new System.Drawing.Size(34, 33);
-			this.buttonSave.Text = "Сохранить";
 			this.buttonSave.Click += new System.EventHandler(this.FileSave_Click);
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 38);
+			resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
 			// 
 			// buttonBold
 			// 
 			this.buttonBold.CheckOnClick = true;
 			this.buttonBold.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.buttonBold.Image = global::WordHiddenPowers.Properties.Resources.Bold_24;
-			this.buttonBold.ImageTransparentColor = System.Drawing.Color.Magenta;
+			resources.ApplyResources(this.buttonBold, "buttonBold");
 			this.buttonBold.Name = "buttonBold";
-			this.buttonBold.Size = new System.Drawing.Size(34, 33);
-			this.buttonBold.Text = "Полужирный";
 			this.buttonBold.Click += new System.EventHandler(this.Bold_Click);
 			// 
 			// backColorButton
@@ -334,139 +306,118 @@
             this.toolStripMenuItem14,
             this.toolStripMenuItem15});
 			this.backColorButton.Image = global::WordHiddenPowers.Properties.Resources.BackColor_24;
-			this.backColorButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			resources.ApplyResources(this.backColorButton, "backColorButton");
 			this.backColorButton.Name = "backColorButton";
-			this.backColorButton.Size = new System.Drawing.Size(45, 33);
-			this.backColorButton.Text = "Цвет заливки";
 			// 
 			// toolStripMenuItem5
 			// 
 			this.toolStripMenuItem5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.toolStripMenuItem5.Image = global::WordHiddenPowers.Properties.Resources.ColorAqua_24;
 			this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-			this.toolStripMenuItem5.Size = new System.Drawing.Size(134, 34);
-			this.toolStripMenuItem5.Text = "1";
+			resources.ApplyResources(this.toolStripMenuItem5, "toolStripMenuItem5");
 			// 
 			// toolStripMenuItem6
 			// 
 			this.toolStripMenuItem6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.toolStripMenuItem6.Image = global::WordHiddenPowers.Properties.Resources.ColorBlack_24;
 			this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-			this.toolStripMenuItem6.Size = new System.Drawing.Size(134, 34);
-			this.toolStripMenuItem6.Text = "2";
+			resources.ApplyResources(this.toolStripMenuItem6, "toolStripMenuItem6");
 			// 
 			// toolStripMenuItem7
 			// 
 			this.toolStripMenuItem7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.toolStripMenuItem7.Image = global::WordHiddenPowers.Properties.Resources.ColorBlue_24;
 			this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-			this.toolStripMenuItem7.Size = new System.Drawing.Size(134, 34);
-			this.toolStripMenuItem7.Text = "3";
+			resources.ApplyResources(this.toolStripMenuItem7, "toolStripMenuItem7");
 			// 
 			// toolStripMenuItem8
 			// 
 			this.toolStripMenuItem8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.toolStripMenuItem8.Image = global::WordHiddenPowers.Properties.Resources.ColorFuchsia_24;
 			this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-			this.toolStripMenuItem8.Size = new System.Drawing.Size(134, 34);
-			this.toolStripMenuItem8.Text = "4";
+			resources.ApplyResources(this.toolStripMenuItem8, "toolStripMenuItem8");
 			// 
 			// toolStripMenuItem9
 			// 
 			this.toolStripMenuItem9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.toolStripMenuItem9.Image = global::WordHiddenPowers.Properties.Resources.ColorGray_24;
 			this.toolStripMenuItem9.Name = "toolStripMenuItem9";
-			this.toolStripMenuItem9.Size = new System.Drawing.Size(134, 34);
-			this.toolStripMenuItem9.Text = "5";
+			resources.ApplyResources(this.toolStripMenuItem9, "toolStripMenuItem9");
 			// 
 			// toolStripMenuItem10
 			// 
 			this.toolStripMenuItem10.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.toolStripMenuItem10.Image = global::WordHiddenPowers.Properties.Resources.ColorGreen_24;
 			this.toolStripMenuItem10.Name = "toolStripMenuItem10";
-			this.toolStripMenuItem10.Size = new System.Drawing.Size(134, 34);
-			this.toolStripMenuItem10.Text = "6";
+			resources.ApplyResources(this.toolStripMenuItem10, "toolStripMenuItem10");
 			// 
 			// toolStripMenuItem11
 			// 
 			this.toolStripMenuItem11.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.toolStripMenuItem11.Image = global::WordHiddenPowers.Properties.Resources.ColorLime_24;
 			this.toolStripMenuItem11.Name = "toolStripMenuItem11";
-			this.toolStripMenuItem11.Size = new System.Drawing.Size(134, 34);
-			this.toolStripMenuItem11.Text = "7";
+			resources.ApplyResources(this.toolStripMenuItem11, "toolStripMenuItem11");
 			// 
 			// toolStripMenuItem12
 			// 
 			this.toolStripMenuItem12.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.toolStripMenuItem12.Image = global::WordHiddenPowers.Properties.Resources.ColorMaroon_24;
 			this.toolStripMenuItem12.Name = "toolStripMenuItem12";
-			this.toolStripMenuItem12.Size = new System.Drawing.Size(134, 34);
-			this.toolStripMenuItem12.Text = "8";
+			resources.ApplyResources(this.toolStripMenuItem12, "toolStripMenuItem12");
 			// 
 			// toolStripMenuItem13
 			// 
 			this.toolStripMenuItem13.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.toolStripMenuItem13.Image = global::WordHiddenPowers.Properties.Resources.ColorNavy_24;
 			this.toolStripMenuItem13.Name = "toolStripMenuItem13";
-			this.toolStripMenuItem13.Size = new System.Drawing.Size(134, 34);
-			this.toolStripMenuItem13.Text = "9";
+			resources.ApplyResources(this.toolStripMenuItem13, "toolStripMenuItem13");
 			// 
 			// toolStripMenuItem14
 			// 
 			this.toolStripMenuItem14.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.toolStripMenuItem14.Image = global::WordHiddenPowers.Properties.Resources.ColorOlive_24;
 			this.toolStripMenuItem14.Name = "toolStripMenuItem14";
-			this.toolStripMenuItem14.Size = new System.Drawing.Size(134, 34);
-			this.toolStripMenuItem14.Text = "10";
+			resources.ApplyResources(this.toolStripMenuItem14, "toolStripMenuItem14");
 			// 
 			// toolStripMenuItem15
 			// 
 			this.toolStripMenuItem15.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.toolStripMenuItem15.Image = global::WordHiddenPowers.Properties.Resources.ColorPalette_24;
 			this.toolStripMenuItem15.Name = "toolStripMenuItem15";
-			this.toolStripMenuItem15.Size = new System.Drawing.Size(134, 34);
-			this.toolStripMenuItem15.Text = "11";
+			resources.ApplyResources(this.toolStripMenuItem15, "toolStripMenuItem15");
 			// 
 			// fontColorButton
 			// 
 			this.fontColorButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.fontColorButton.Image = global::WordHiddenPowers.Properties.Resources.ColorMenu_24;
-			this.fontColorButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			resources.ApplyResources(this.fontColorButton, "fontColorButton");
 			this.fontColorButton.Name = "fontColorButton";
-			this.fontColorButton.Size = new System.Drawing.Size(45, 33);
-			this.fontColorButton.Text = "Цвет шрифта";
 			// 
 			// toolStripSeparator3
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 38);
+			resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
 			// 
 			// mnuInserRowAbove
 			// 
 			this.mnuInserRowAbove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.mnuInserRowAbove.Image = global::WordHiddenPowers.Properties.Resources.TableInsertRowsAbove_24;
-			this.mnuInserRowAbove.ImageTransparentColor = System.Drawing.Color.Magenta;
+			resources.ApplyResources(this.mnuInserRowAbove, "mnuInserRowAbove");
 			this.mnuInserRowAbove.Name = "mnuInserRowAbove";
-			this.mnuInserRowAbove.Size = new System.Drawing.Size(34, 33);
-			this.mnuInserRowAbove.Text = "Вставить сверху";
-			this.mnuInserRowAbove.ToolTipText = "Вставить строку сверху";
 			this.mnuInserRowAbove.Click += new System.EventHandler(this.InserRowAbove_Click);
 			// 
 			// mnuInsertColumnRight
 			// 
 			this.mnuInsertColumnRight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.mnuInsertColumnRight.Image = global::WordHiddenPowers.Properties.Resources.TableInsertColumnsRight_24;
-			this.mnuInsertColumnRight.ImageTransparentColor = System.Drawing.Color.Magenta;
+			resources.ApplyResources(this.mnuInsertColumnRight, "mnuInsertColumnRight");
 			this.mnuInsertColumnRight.Name = "mnuInsertColumnRight";
-			this.mnuInsertColumnRight.Size = new System.Drawing.Size(34, 33);
-			this.mnuInsertColumnRight.Text = "Вставить справа";
-			this.mnuInsertColumnRight.ToolTipText = "Вставить столбец справа";
 			this.mnuInsertColumnRight.Click += new System.EventHandler(this.InsertColumnRight_Click);
 			// 
 			// toolStripSeparator4
 			// 
 			this.toolStripSeparator4.Name = "toolStripSeparator4";
-			this.toolStripSeparator4.Size = new System.Drawing.Size(6, 38);
+			resources.ApplyResources(this.toolStripSeparator4, "toolStripSeparator4");
 			// 
 			// mnuDeleteTable
 			// 
@@ -475,37 +426,29 @@
             this.mnuDeleteColumns,
             this.mnuDeleteRows});
 			this.mnuDeleteTable.Image = global::WordHiddenPowers.Properties.Resources.TableDelete_24;
-			this.mnuDeleteTable.ImageTransparentColor = System.Drawing.Color.Magenta;
+			resources.ApplyResources(this.mnuDeleteTable, "mnuDeleteTable");
 			this.mnuDeleteTable.Name = "mnuDeleteTable";
-			this.mnuDeleteTable.Size = new System.Drawing.Size(45, 33);
-			this.mnuDeleteTable.Text = "Удалить";
 			this.mnuDeleteTable.ButtonClick += new System.EventHandler(this.DeleteTable_ButtonClick);
 			// 
 			// mnuDeleteColumns
 			// 
 			this.mnuDeleteColumns.Image = global::WordHiddenPowers.Properties.Resources.TableDeleteColumns_24;
 			this.mnuDeleteColumns.Name = "mnuDeleteColumns";
-			this.mnuDeleteColumns.Size = new System.Drawing.Size(252, 34);
-			this.mnuDeleteColumns.Text = "Удалить столбцы";
+			resources.ApplyResources(this.mnuDeleteColumns, "mnuDeleteColumns");
 			this.mnuDeleteColumns.Click += new System.EventHandler(this.TableDeleteColumns_Click);
 			// 
 			// mnuDeleteRows
 			// 
 			this.mnuDeleteRows.Image = global::WordHiddenPowers.Properties.Resources.TableDeleteRows_24;
 			this.mnuDeleteRows.Name = "mnuDeleteRows";
-			this.mnuDeleteRows.Size = new System.Drawing.Size(252, 34);
-			this.mnuDeleteRows.Text = "Удалить строки";
+			resources.ApplyResources(this.mnuDeleteRows, "mnuDeleteRows");
 			this.mnuDeleteRows.Click += new System.EventHandler(this.TableDeleteRows_Click);
 			// 
 			// statusStrip1
 			// 
 			this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-			this.statusStrip1.Location = new System.Drawing.Point(0, 524);
+			resources.ApplyResources(this.statusStrip1, "statusStrip1");
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 15, 0);
-			this.statusStrip1.Size = new System.Drawing.Size(505, 22);
-			this.statusStrip1.TabIndex = 2;
-			this.statusStrip1.Text = "statusStrip1";
 			// 
 			// dataGridView
 			// 
@@ -513,17 +456,12 @@
 			this.dataGridView.AllowUserToDeleteRows = false;
 			this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridView.ColumnHeadersVisible = false;
-			this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+			resources.ApplyResources(this.dataGridView, "dataGridView");
 			this.dataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-			this.dataGridView.Location = new System.Drawing.Point(0, 74);
-			this.dataGridView.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.dataGridView.MultiSelect = false;
 			this.dataGridView.Name = "dataGridView";
 			this.dataGridView.RowHeadersVisible = false;
-			this.dataGridView.RowHeadersWidth = 62;
 			this.dataGridView.RowTemplate.Height = 24;
-			this.dataGridView.Size = new System.Drawing.Size(505, 450);
-			this.dataGridView.TabIndex = 3;
 			this.dataGridView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_CellMouseDown);
 			// 
 			// contextMenuStrip1
@@ -534,7 +472,7 @@
             this.toolStripMenuItem3,
             this.cmnuTableDelete});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(223, 74);
+			resources.ApplyResources(this.contextMenuStrip1, "contextMenuStrip1");
 			// 
 			// cmnuTableInsert
 			// 
@@ -542,55 +480,47 @@
             this.cmnuTableInsertRow,
             this.cmnuTableInserColumn});
 			this.cmnuTableInsert.Name = "cmnuTableInsert";
-			this.cmnuTableInsert.Size = new System.Drawing.Size(222, 32);
-			this.cmnuTableInsert.Text = "cmnuTableInsert";
+			resources.ApplyResources(this.cmnuTableInsert, "cmnuTableInsert");
 			// 
 			// cmnuTableInsertRow
 			// 
 			this.cmnuTableInsertRow.Image = global::WordHiddenPowers.Properties.Resources.TableInsertRowsAbove_16;
 			this.cmnuTableInsertRow.Name = "cmnuTableInsertRow";
-			this.cmnuTableInsertRow.Size = new System.Drawing.Size(298, 34);
-			this.cmnuTableInsertRow.Text = "cmnuTableInsertRow";
+			resources.ApplyResources(this.cmnuTableInsertRow, "cmnuTableInsertRow");
 			// 
 			// cmnuTableInserColumn
 			// 
 			this.cmnuTableInserColumn.Image = global::WordHiddenPowers.Properties.Resources.TableInsertColumnsLeft_16;
 			this.cmnuTableInserColumn.Name = "cmnuTableInserColumn";
-			this.cmnuTableInserColumn.Size = new System.Drawing.Size(298, 34);
-			this.cmnuTableInserColumn.Text = "cmnuTableInserColumn";
+			resources.ApplyResources(this.cmnuTableInserColumn, "cmnuTableInserColumn");
 			// 
 			// toolStripMenuItem3
 			// 
 			this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-			this.toolStripMenuItem3.Size = new System.Drawing.Size(219, 6);
+			resources.ApplyResources(this.toolStripMenuItem3, "toolStripMenuItem3");
 			// 
 			// cmnuTableDelete
 			// 
 			this.cmnuTableDelete.Image = global::WordHiddenPowers.Properties.Resources.TableDelete_16;
 			this.cmnuTableDelete.Name = "cmnuTableDelete";
-			this.cmnuTableDelete.Size = new System.Drawing.Size(222, 32);
-			this.cmnuTableDelete.Text = "cmnuTableDelete";
+			resources.ApplyResources(this.cmnuTableDelete, "cmnuTableDelete");
 			this.cmnuTableDelete.Click += new System.EventHandler(this.Delete_Click);
 			// 
 			// CreateTableDialog
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(505, 546);
 			this.Controls.Add(this.dataGridView);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.toolStrip1);
 			this.Controls.Add(this.menuStrip1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
 			this.MainMenuStrip = this.menuStrip1;
-			this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "CreateTableDialog";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "Макет таблицы";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Dialog_FormClosing);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();

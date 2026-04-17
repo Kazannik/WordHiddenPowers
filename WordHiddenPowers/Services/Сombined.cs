@@ -13,8 +13,8 @@ namespace WordHiddenPowers.Services
 	// Если соответствует только Поиску -> отражаем как Поиск
 	// Если соответствует только АИ -> Пока пропускаем
 
-    static class Сombined
-    {
+	static class Сombined
+	{
 		public static void Search(Document document, float levelPassage)
 		{
 			string mlNetModelName = document.MLModelName;
@@ -32,7 +32,7 @@ namespace WordHiddenPowers.Services
 
 				IOrderedEnumerable<KeyValuePair<string, float>> result = MLModel.PredictAll(paragraph.Range.Text, mlNetModelPath);
 				IEnumerable<Subcategory> predictSubcategories = MLService.GetSubcategories(document, result, levelPassage);
-				
+
 				if (predictSubcategories != null)
 				{
 					foreach (Subcategory subcategory in predictSubcategories)
@@ -49,7 +49,7 @@ namespace WordHiddenPowers.Services
 				}
 			}
 		}
-	
+
 		private static bool IsCompliance(Word.Paragraph paragraph, IEnumerable<Subcategory> subcategories, IEnumerable<Subcategory> predictSubcategories)
 		{
 			return true;

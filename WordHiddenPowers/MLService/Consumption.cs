@@ -53,7 +53,7 @@ namespace WordHiddenPowers.MLService
 		public static Lazy<PredictionEngine<ModelInput, ModelOutput>> PredictEngine(string mlNetModelPath)
 		{
 			return new Lazy<PredictionEngine<ModelInput, ModelOutput>>(() => CreatePredictEngine(mlNetModelPath), true);
-		} 
+		}
 
 		private static PredictionEngine<ModelInput, ModelOutput> CreatePredictEngine(string mlNetModelPath)
 		{

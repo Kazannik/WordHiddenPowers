@@ -64,7 +64,7 @@ namespace WordHiddenPowers.Repository.Categories
 			isObligatory: false,
 			beforeText: string.Empty,
 			afterText: string.Empty);
-		
+
 
 		private Category(string guid, int position, string caption, string description, bool isObligatory, string beforeText, string afterText)
 		{
@@ -94,7 +94,7 @@ namespace WordHiddenPowers.Repository.Categories
 		public string BeforeText { get; set; }
 
 		public string AfterText { get; set; }
-				
+
 		long IComboItem.Id => Position;
 
 		string IComboItem.Code => Code;
@@ -113,10 +113,7 @@ namespace WordHiddenPowers.Repository.Categories
 				AfterText};
 		}
 
-		public int CompareTo(Category value)
-		{
-			return Compare(this, value);
-		}
+		public int CompareTo(Category value) => Compare(this, value);
 
 		public int CompareTo(object value)
 		{
@@ -138,7 +135,7 @@ namespace WordHiddenPowers.Repository.Categories
 			if (Caption != dataRow.Caption) return false;
 			if (!string.IsNullOrEmpty(Description) && !dataRow.IsDescriptionNull() && Description != dataRow.Description) return false;
 			if (IsObligatory != dataRow.IsObligatory) return false;
-			if (!string.IsNullOrEmpty(BeforeText) && !dataRow.IsBeforeTextNull() &&	BeforeText != dataRow.BeforeText) return false;
+			if (!string.IsNullOrEmpty(BeforeText) && !dataRow.IsBeforeTextNull() && BeforeText != dataRow.BeforeText) return false;
 			if (!string.IsNullOrEmpty(AfterText) && !dataRow.IsAfterTextNull() && AfterText != dataRow.AfterText) return false;
 			return true;
 		}
@@ -163,10 +160,7 @@ namespace WordHiddenPowers.Repository.Categories
 
 		public class CategoryComparer : IComparer<Category>
 		{
-			public int Compare(Category x, Category y)
-			{
-				return Category.Compare(x, y);
-			}
+			public int Compare(Category x, Category y) => Category.Compare(x, y);
 		}
 	}
 }

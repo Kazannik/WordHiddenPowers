@@ -33,41 +33,29 @@ namespace ProsecutorialSupervision.Dialogs
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProgressDialog));
 			this.ProgressBar = new System.Windows.Forms.ProgressBar();
 			this.ProgressLabel = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// ProgressBar
 			// 
-			this.ProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
-			this.ProgressBar.Location = new System.Drawing.Point(12, 34);
+			resources.ApplyResources(this.ProgressBar, "ProgressBar");
 			this.ProgressBar.Name = "ProgressBar";
-			this.ProgressBar.Size = new System.Drawing.Size(411, 28);
-			this.ProgressBar.TabIndex = 0;
 			// 
 			// ProgressLabel
 			// 
-			this.ProgressLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.ProgressLabel.Location = new System.Drawing.Point(170, 9);
+			resources.ApplyResources(this.ProgressLabel, "ProgressLabel");
 			this.ProgressLabel.Name = "ProgressLabel";
-			this.ProgressLabel.Size = new System.Drawing.Size(94, 19);
-			this.ProgressLabel.TabIndex = 1;
-			this.ProgressLabel.Text = "## %";
-			this.ProgressLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// ProgressDialog
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(435, 104);
 			this.Controls.Add(this.ProgressLabel);
 			this.Controls.Add(this.ProgressBar);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.Name = "ProgressDialog";
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "ProgressDialog";
 			this.ResumeLayout(false);
 
 		}

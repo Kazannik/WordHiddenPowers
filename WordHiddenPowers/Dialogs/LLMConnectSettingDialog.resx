@@ -1,0 +1,1098 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <metadata name="mlNetModelNameComboBox.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="mlNetModelNameComboBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="mlNetModelNameComboBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>14, 44</value>
+  </data>
+  <data name="mlNetModelNameComboBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="mlNetModelNameComboBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>509, 24</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="mlNetModelNameComboBox.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;mlNetModelNameComboBox.Name" xml:space="preserve">
+    <value>mlNetModelNameComboBox</value>
+  </data>
+  <data name="&gt;&gt;mlNetModelNameComboBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;mlNetModelNameComboBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;mlNetModelNameComboBox.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <metadata name="label1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 15</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 16</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Выбрать нейросеть:</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <metadata name="cancelButton.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="cancelButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="cancelButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>433, 365</value>
+  </data>
+  <data name="cancelButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="cancelButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 27</value>
+  </data>
+  <data name="cancelButton.TabIndex" type="System.Int32, mscorlib">
+    <value>30</value>
+  </data>
+  <data name="cancelButton.Text" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="&gt;&gt;cancelButton.Name" xml:space="preserve">
+    <value>cancelButton</value>
+  </data>
+  <data name="&gt;&gt;cancelButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cancelButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;cancelButton.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <metadata name="okButton.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="okButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="okButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>332, 365</value>
+  </data>
+  <data name="okButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="okButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 27</value>
+  </data>
+  <data name="okButton.TabIndex" type="System.Int32, mscorlib">
+    <value>29</value>
+  </data>
+  <data name="okButton.Text" xml:space="preserve">
+    <value>&amp;ОК</value>
+  </data>
+  <data name="&gt;&gt;okButton.Name" xml:space="preserve">
+    <value>okButton</value>
+  </data>
+  <data name="&gt;&gt;okButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;okButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;okButton.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <metadata name="label2.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="label2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 133</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>213, 16</value>
+  </data>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>32</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Выбрать основную модель LLM:</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>llmGroupBox</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <metadata name="llmNameComboBox.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="llmNameComboBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
+  </data>
+  <data name="llmNameComboBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 153</value>
+  </data>
+  <data name="llmNameComboBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="llmNameComboBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>491, 24</value>
+  </data>
+  <data name="llmNameComboBox.TabIndex" type="System.Int32, mscorlib">
+    <value>31</value>
+  </data>
+  <data name="&gt;&gt;llmNameComboBox.Name" xml:space="preserve">
+    <value>llmNameComboBox</value>
+  </data>
+  <data name="&gt;&gt;llmNameComboBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;llmNameComboBox.Parent" xml:space="preserve">
+    <value>llmGroupBox</value>
+  </data>
+  <data name="&gt;&gt;llmNameComboBox.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <metadata name="updateLLMArrayButton.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="updateLLMArrayButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="updateLLMArrayButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>408, 22</value>
+  </data>
+  <data name="updateLLMArrayButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 27</value>
+  </data>
+  <data name="updateLLMArrayButton.TabIndex" type="System.Int32, mscorlib">
+    <value>35</value>
+  </data>
+  <data name="updateLLMArrayButton.Text" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
+  <data name="&gt;&gt;updateLLMArrayButton.Name" xml:space="preserve">
+    <value>updateLLMArrayButton</value>
+  </data>
+  <data name="&gt;&gt;updateLLMArrayButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;updateLLMArrayButton.Parent" xml:space="preserve">
+    <value>llmGroupBox</value>
+  </data>
+  <data name="&gt;&gt;updateLLMArrayButton.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <metadata name="button1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="button1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="button1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 317</value>
+  </data>
+  <data name="button1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="button1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 27</value>
+  </data>
+  <data name="button1.TabIndex" type="System.Int32, mscorlib">
+    <value>37</value>
+  </data>
+  <data name="button1.Text" xml:space="preserve">
+    <value>Кнопка 1</value>
+  </data>
+  <data name="&gt;&gt;button1.Name" xml:space="preserve">
+    <value>button1</value>
+  </data>
+  <data name="&gt;&gt;button1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;button1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;button1.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <metadata name="button2.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="button2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="button2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>120, 317</value>
+  </data>
+  <data name="button2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="button2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 27</value>
+  </data>
+  <data name="button2.TabIndex" type="System.Int32, mscorlib">
+    <value>38</value>
+  </data>
+  <data name="button2.Text" xml:space="preserve">
+    <value>Кнопка 2</value>
+  </data>
+  <data name="&gt;&gt;button2.Name" xml:space="preserve">
+    <value>button2</value>
+  </data>
+  <data name="&gt;&gt;button2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;button2.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;button2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <metadata name="llmGroupBox.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="llmConnectionControlBox.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="testModelButton.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="timeoutGroupBox.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="embeddingLlmNameComboBox.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="label4.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="llmGroupBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;llmConnectionControlBox.Name" xml:space="preserve">
+    <value>llmConnectionControlBox</value>
+  </data>
+  <data name="&gt;&gt;llmConnectionControlBox.Type" xml:space="preserve">
+    <value>WordHiddenPowers.Controls.LLMConnectionControlBox, WordHiddenPowers, Version=4.2.0.4, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;llmConnectionControlBox.Parent" xml:space="preserve">
+    <value>llmGroupBox</value>
+  </data>
+  <data name="&gt;&gt;llmConnectionControlBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;testModelButton.Name" xml:space="preserve">
+    <value>testModelButton</value>
+  </data>
+  <data name="&gt;&gt;testModelButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;testModelButton.Parent" xml:space="preserve">
+    <value>llmGroupBox</value>
+  </data>
+  <data name="&gt;&gt;testModelButton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;timeoutGroupBox.Name" xml:space="preserve">
+    <value>timeoutGroupBox</value>
+  </data>
+  <data name="&gt;&gt;timeoutGroupBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;timeoutGroupBox.Parent" xml:space="preserve">
+    <value>llmGroupBox</value>
+  </data>
+  <data name="&gt;&gt;timeoutGroupBox.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;embeddingLlmNameComboBox.Name" xml:space="preserve">
+    <value>embeddingLlmNameComboBox</value>
+  </data>
+  <data name="&gt;&gt;embeddingLlmNameComboBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;embeddingLlmNameComboBox.Parent" xml:space="preserve">
+    <value>llmGroupBox</value>
+  </data>
+  <data name="&gt;&gt;embeddingLlmNameComboBox.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>llmGroupBox</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="llmGroupBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>14, 84</value>
+  </data>
+  <data name="llmGroupBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="llmGroupBox.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="llmGroupBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>508, 229</value>
+  </data>
+  <data name="llmGroupBox.TabIndex" type="System.Int32, mscorlib">
+    <value>39</value>
+  </data>
+  <data name="llmGroupBox.Text" xml:space="preserve">
+    <value>Большие языковые модели</value>
+  </data>
+  <data name="&gt;&gt;llmGroupBox.Name" xml:space="preserve">
+    <value>llmGroupBox</value>
+  </data>
+  <data name="&gt;&gt;llmGroupBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;llmGroupBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;llmGroupBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="llmConnectionControlBox.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="llmConnectionControlBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="llmConnectionControlBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 24</value>
+  </data>
+  <data name="llmConnectionControlBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>384, 48</value>
+  </data>
+  <data name="llmConnectionControlBox.TabIndex" type="System.Int32, mscorlib">
+    <value>41</value>
+  </data>
+  <data name="&gt;&gt;llmConnectionControlBox.Name" xml:space="preserve">
+    <value>llmConnectionControlBox</value>
+  </data>
+  <data name="&gt;&gt;llmConnectionControlBox.Type" xml:space="preserve">
+    <value>WordHiddenPowers.Controls.LLMConnectionControlBox, WordHiddenPowers, Version=4.2.0.4, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;llmConnectionControlBox.Parent" xml:space="preserve">
+    <value>llmGroupBox</value>
+  </data>
+  <data name="&gt;&gt;llmConnectionControlBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="testModelButton.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="testModelButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="testModelButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>408, 197</value>
+  </data>
+  <data name="testModelButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 27</value>
+  </data>
+  <data name="testModelButton.TabIndex" type="System.Int32, mscorlib">
+    <value>40</value>
+  </data>
+  <data name="testModelButton.Text" xml:space="preserve">
+    <value>Тест</value>
+  </data>
+  <data name="&gt;&gt;testModelButton.Name" xml:space="preserve">
+    <value>testModelButton</value>
+  </data>
+  <data name="&gt;&gt;testModelButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;testModelButton.Parent" xml:space="preserve">
+    <value>llmGroupBox</value>
+  </data>
+  <data name="&gt;&gt;testModelButton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <metadata name="timeoutGroupBox.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="secondsLabel.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="secondsNumericUpDown.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="minutesNumericUpDown.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="minutesLabel.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="&gt;&gt;secondsLabel.Name" xml:space="preserve">
+    <value>secondsLabel</value>
+  </data>
+  <data name="&gt;&gt;secondsLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;secondsLabel.Parent" xml:space="preserve">
+    <value>timeoutGroupBox</value>
+  </data>
+  <data name="&gt;&gt;secondsLabel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;secondsNumericUpDown.Name" xml:space="preserve">
+    <value>secondsNumericUpDown</value>
+  </data>
+  <data name="&gt;&gt;secondsNumericUpDown.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;secondsNumericUpDown.Parent" xml:space="preserve">
+    <value>timeoutGroupBox</value>
+  </data>
+  <data name="&gt;&gt;secondsNumericUpDown.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;minutesNumericUpDown.Name" xml:space="preserve">
+    <value>minutesNumericUpDown</value>
+  </data>
+  <data name="&gt;&gt;minutesNumericUpDown.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;minutesNumericUpDown.Parent" xml:space="preserve">
+    <value>timeoutGroupBox</value>
+  </data>
+  <data name="&gt;&gt;minutesNumericUpDown.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;minutesLabel.Name" xml:space="preserve">
+    <value>minutesLabel</value>
+  </data>
+  <data name="&gt;&gt;minutesLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;minutesLabel.Parent" xml:space="preserve">
+    <value>timeoutGroupBox</value>
+  </data>
+  <data name="&gt;&gt;minutesLabel.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="timeoutGroupBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 72</value>
+  </data>
+  <data name="timeoutGroupBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>255, 55</value>
+  </data>
+  <data name="timeoutGroupBox.TabIndex" type="System.Int32, mscorlib">
+    <value>39</value>
+  </data>
+  <data name="timeoutGroupBox.Text" xml:space="preserve">
+    <value>Таймаут запроса</value>
+  </data>
+  <data name="&gt;&gt;timeoutGroupBox.Name" xml:space="preserve">
+    <value>timeoutGroupBox</value>
+  </data>
+  <data name="&gt;&gt;timeoutGroupBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;timeoutGroupBox.Parent" xml:space="preserve">
+    <value>llmGroupBox</value>
+  </data>
+  <data name="&gt;&gt;timeoutGroupBox.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <metadata name="secondsLabel.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="secondsLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="secondsLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>221, 23</value>
+  </data>
+  <data name="secondsLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>32, 16</value>
+  </data>
+  <data name="secondsLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="secondsLabel.Text" xml:space="preserve">
+    <value>сек.</value>
+  </data>
+  <data name="&gt;&gt;secondsLabel.Name" xml:space="preserve">
+    <value>secondsLabel</value>
+  </data>
+  <data name="&gt;&gt;secondsLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;secondsLabel.Parent" xml:space="preserve">
+    <value>timeoutGroupBox</value>
+  </data>
+  <data name="&gt;&gt;secondsLabel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="secondsNumericUpDown.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="secondsNumericUpDown.Location" type="System.Drawing.Point, System.Drawing">
+    <value>142, 21</value>
+  </data>
+  <data name="secondsNumericUpDown.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 22</value>
+  </data>
+  <data name="secondsNumericUpDown.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;secondsNumericUpDown.Name" xml:space="preserve">
+    <value>secondsNumericUpDown</value>
+  </data>
+  <data name="&gt;&gt;secondsNumericUpDown.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;secondsNumericUpDown.Parent" xml:space="preserve">
+    <value>timeoutGroupBox</value>
+  </data>
+  <data name="&gt;&gt;secondsNumericUpDown.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <metadata name="minutesNumericUpDown.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="minutesNumericUpDown.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 21</value>
+  </data>
+  <data name="minutesNumericUpDown.Size" type="System.Drawing.Size, System.Drawing">
+    <value>89, 22</value>
+  </data>
+  <data name="minutesNumericUpDown.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;minutesNumericUpDown.Name" xml:space="preserve">
+    <value>minutesNumericUpDown</value>
+  </data>
+  <data name="&gt;&gt;minutesNumericUpDown.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;minutesNumericUpDown.Parent" xml:space="preserve">
+    <value>timeoutGroupBox</value>
+  </data>
+  <data name="&gt;&gt;minutesNumericUpDown.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <metadata name="minutesLabel.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="minutesLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="minutesLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>101, 23</value>
+  </data>
+  <data name="minutesLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 16</value>
+  </data>
+  <data name="minutesLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="minutesLabel.Text" xml:space="preserve">
+    <value>мин.</value>
+  </data>
+  <data name="&gt;&gt;minutesLabel.Name" xml:space="preserve">
+    <value>minutesLabel</value>
+  </data>
+  <data name="&gt;&gt;minutesLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;minutesLabel.Parent" xml:space="preserve">
+    <value>timeoutGroupBox</value>
+  </data>
+  <data name="&gt;&gt;minutesLabel.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <metadata name="embeddingLlmNameComboBox.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="embeddingLlmNameComboBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
+  </data>
+  <data name="embeddingLlmNameComboBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 199</value>
+  </data>
+  <data name="embeddingLlmNameComboBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="embeddingLlmNameComboBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>389, 24</value>
+  </data>
+  <data name="embeddingLlmNameComboBox.TabIndex" type="System.Int32, mscorlib">
+    <value>37</value>
+  </data>
+  <data name="&gt;&gt;embeddingLlmNameComboBox.Name" xml:space="preserve">
+    <value>embeddingLlmNameComboBox</value>
+  </data>
+  <data name="&gt;&gt;embeddingLlmNameComboBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;embeddingLlmNameComboBox.Parent" xml:space="preserve">
+    <value>llmGroupBox</value>
+  </data>
+  <data name="&gt;&gt;embeddingLlmNameComboBox.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <metadata name="label4.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="label4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 179</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>253, 16</value>
+  </data>
+  <data name="label4.TabIndex" type="System.Int32, mscorlib">
+    <value>38</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Выбрать модель LLM для ембеддинга:</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>llmGroupBox</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>8, 16</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>537, 401</value>
+  </data>
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
+        CP+IRAT/fEQE/5RcBP+kXAT/lFAE/6RcBP+kXAT/pFwE/7yAEP+UXAT/+PT0/5h4RP+gUAT/xJhc/8Cs
+        nP+0fET/tKCE/7SghP/EoGz/tKCE/7SghP/UzMT/+PT0//j09P/49PT/+PT0//j09P/49PT/+PT0//j0
+        9P/s9PT/+PT0/4hEBP+kXAT/lFAE/5RQBP+URAD/lEQA/woCAv+kiYP/xWgQ/8xmAIIAAAAAAAAAAMtl
+        Bf9QR0f/s2UW/yQQAP+kaAj/pGgI/7B0BP+URAD/yJgQ/5RQBP+kXAT/pFwE/6RcBP/MtJz/+PT0/7B0
+        JP+4dAz/vHw0/7SghP+8fDT/tKCE/7SghP+0mGz/wKCA/7SghP+kgET/+PT0//j09P/49PT/+PT0//j0
+        9P/49PT/+PT0//j09P/49PT/+PT0/3xEBP+kXAT/lFAE/5RQBP+URAD/pFwE/zAMAP8eHiD/y2cX/8xm
+        APQAAAAAulwtLLldFf+EZEv/flIn/zQMAP+IUAT/lFAE/6RcBP+kXAT/pGgI/6RcBP+waAj/pFwE/7SY
+        bP/49PT/1MzE/6RcBP+UXBT/pHxc/6iMbP+kfFz/tKCE/7SghP/MrIT/pHxc/8y0kP+UcFT/+PT0//j0
+        9P/49PT/+PT0//j09P/49PT/+PT0//j09P/49PT/+PT0/6RwKP+8gBD/uIAY/6x0FP+4dAz/yJgg/3xE
+        BP8LCAf/znxQ/8xmAs7MZgAUhE8y/39BG/+bbjv/QzAe/0QgBP+IRAT/iEQE/5RQBP+kcAT/pGgI/6x0
+        FP+kXAT/sHg0/+z09P/k3OT/sHQk/7SghP/k3OT/7PT0/+Tc5P+0oJT/wKiE/8CskP+kdDT/xLSs/5Rc
+        FP/YxLT/zLSQ//j09P/49PT/+PT0//j09P/49PT/+PT0//j09P/49PT/+PT0/2QwAP98RAT/iFAE/6Rc
+        BP+kXAT/uHQM/5REAP8VDAL/v45+/8xmDMnMZgBMr1kc/001Kv+sZR3/LhUA/3xEBP+UXAT/lFwE/6Rc
+        BP+kXAT/pFwE/6RcBP+0jEz/+PT0/8zAqP+kcAT/5NTE//j09P+kaBT/tIxc/8zEtP/49PT/lHBU/5RE
+        AP/kzLT/lHBU/8CMXP+0qIT/xLSs//j09P/49PT/+PT0//j09P/49PT/+PT0//j09P/49PT/+PT0//j0
+        9P/49PT/wKyc/5RQBP+kXBD/lFwE/5RQBP8cBAD/a11Y/8ZsH//MZgCavF4X/01DPv+9Ywv/LRgE/6Ro
+        FP+sdBT/rHQU/6x0FP+sdBT/uHQM/7h0DP/YxLT/7PT0/6RoJP/MrIT/+PT0/6RcEP/YxLT/tJSE/8S0
+        rP+UZDT/7PT0/4RkRP+kXAT/2MS0/6iMbP/AoID/wKyc//j09P/49PT/+PT0//j09P/49PT/+PT0//j0
+        9P/49PT/+PT0//j09P/k3OT/lFwk/6RcBP+UXAT/lFwE/5RcBP8wDAD/OTIw/8tpEP/MZgC2xmMP/0dC
+        Qf/IZQP/LBgE/5RcBP+UXAT/lFwE/6RcBP+kXBD/pFwQ/7yMNP/49PT/zLSc/6RwKP/49PT/tKys/7SM
+        XP+0rJz/qIxs/7SglP+0lHj/zMS0/+z09P98TCj/vHw0/9TMxP/EtKz/1MzE//j09P/49PT/+PT0//j0
+        9P/49PT/+PT0//j09P/49PT/+PT0//j09P+0pHj/pFwE/6RcEP+sdBT/tIwk/5RQBP9CFAD/Hhsb/8tn
+        BP/MZgDUy2UG/0RERP/LZQH/RCAE/6x0FP+sdBT/rHQU/6x0FP+4gBj/wIwk/8SgbP/49PT/pIBE/9jE
+        pP/Y2Nz/lHxk/6RwKP/MwKj/pJiE/8zEtP+kdDT/pFwQ/8zEtP/k3OT/mHxU/8S0rP/k3NT/5NzU//j0
+        9P/49PT/+PT0//j09P/49PT/+PT0//j09P/49PT/+PT0/+Tc1P+kaBT/pGgU/6x0FP+8jDT/sGgU/7x8
+        JP9ULAT/DAsL/8tnAf/MZgDwy2UG/1BQSP/HZAP/OBgE/5RcFP+UXBT/pFwQ/6RcEP+kXBD/sGgU/+TM
+        tP/k6OT/pHQ0//j09P/EtKz/lHBE/5RkNP+UXCT/xJhc/6R0NP+kaBT/pHRE/5yMeP/k3OT/7PT0/7SU
+        hP/UzMT/5NTE//j09P/49PT/+PT0//j09P/49PT/+PT0//j09P/49PT/+PT0/7SMXP+kaAj/rHQU/7yM
+        NP+sdBT/yJQ0/8CMJP9EFAD/AQEB/8tnBP/MZgDwxmMP/1NQR/+8Ygv/RSAE/6x0FP+sdBT/pGgU/6Ro
+        FP+sdBT/sGgU//Tw5P/MxLT/tIxc/+z09P+0oJT/pIxU/7SglP+UcFT/iFAE/5RcFP+UXCT/tKCE/7Sg
+        lP+wjGj/8ODQ/9TU0P+kmIT/1Kx4/8SobP/49PT/+PT0//j09P/49PT/+PT0//j09P/49PT/+PT0/6Ro
+        FP+wdCT/rHQU/7yMNP+8fCT/vHwk/7BgFP9UHAD/ExAM/8tpD//MZgDUvV8X/1pQRP+sYBj/QRwE/5Rc
+        FP+sdBT/pGgU/6RoFP+kaBT/rHQU/+z09P/AoID/5NTE/7SsrP9sPAT/lFwk/6R8XP+omJD/iHBg/5Rw
+        VP+UcFT/pJiE/5RsJP+0jFz/tKCE/7SghP/49PT/7PT0/+Tc5P+cjGz/tKiQ//Tw5P/49PT/+PT0//j0
+        9P/49PT/+PT0/6RcEP+8fCT/sHQk/6RoFP+wdCT/vIw0/6R0NP9CFAD/Nykh/8psIv/MZgC2tVoZ8mdN
+        RP+TXCv/UCkR/4RYGP+8fCT/sIAo/7CAKP+8fCT/vHwk//j09P+0lHj/5My0/8zU2P+0qJD/lHxk/6SM
+        VP+0qJD/tKyc/8C4uP/AuLj/pJiE/5RsJP/AqIT/pHxc/8CohP/AoID/zLSQ/+z09P/49PT/5Nzk/7Ss
+        nP/49PT/+PT0//j09P/s9PT/+PT0/7B0JP/IlDT/vIw0/7yMNP+8fCT/sIAo/5RcJP8/EwD/aUc0/8Ny
+        OP/MZgCaj0ceu5NUL/94WD//dUUV/3BIEP+8jDT/vIw0/7yMNP+8jDT/vIw0//j09P+omHj/zMCo/9jY
+        3P+0oIT/qIxs/6SMVP+0oIT/5NzU/9TU0P/U1ND/nIxs/5RkNP+wdCT/zKyE/7R8RP/ErHj/wKCA/8y0
+        nP+0pHj/8ODI//j09P+0jFz/6Ny4/+z09P/49PT/+PT0/7SMJP/AmDj/vIw0/7yMNP+8jDT/sIA0/4RY
+        GP9AIgT/rWs+/7Z0Ov/MZgBMZzMZTr1gGP9hZF//rlsM/1QsBP+8jDT/vHw0/7x8NP+8jDT/vHw0/+z0
+        9P+0qJD/wKyQ/9jg4P+EXCT/pHRE/5h4RP+0qJD/2Njc//j09P/U1ND/mIhg/5RcJP+UXBT/lFwU/6Ro
+        FP/EnHj/wKyc/8y0nP+0jFz/vHw0/+z09P+kfFD/yJxA/+zs2P/49PT/+PT0/7B0JP+8fDT/sHQk/6Rw
+        KP+kaCT/pGgk/2w8BP8yIhH/yWwc/7dqIP/MZgAUAAAABMtlBf9cZGT/sl8N/0ojBP/InED/wJg4/8CY
+        QP/AmED/xKRM/+Tc1P/IxMT/pIxU//j09P/s9PT/qIxg/5yMhP+0qJD/wLi4/9TU0P/U1ND/qJh4/5yM
+        bP+0oJT/mHxU/6RcEP/MtJz/pHQ0/8SkXP/EmEz/vIxA/+z09P/ArJz/xKRM/+zs2P/49PT/+PT0/8iU
+        NP/InED/wJhA/7yMQP+8jED/xIxM/1QsBP8cFA3/y2cU/8xmAPMAAAAAAAAAAKZTHPKWalD/g2RB/3ZI
+        If/EpFz/1KRc/8SkXP/UpFz/vIxA/9i4hP/49PT/lHxk/8SseP/s9PT/lHxk/7igbP+0oIT/tJxc/7SM
+        XP+kjFT/tKCE/6R8XP+0jFz/sHg0/7yMQP/MtJz/sIA0/8SgbP+0oIT/tIxM/+z09P/MxLT/zLiE/+z0
+        9P/49PT/zMS0/7yMNP+wgDT/sHg0/6R0NP+kdDT/pHRE/2RDIv99Sib/wHI9/8xmAIIAAAAAAAAAAF4u
+        GWPCYhX/fnRx/8BjCP98WDT/tIxM/7yMQP+8jED/1Kxs/7yMNP/w6OT/1NTQ/5RsJP/s7Nj/1NTQ/7So
+        kP+0pHj/tIxc/7SMXP+kjFT/tKCE/7SglP+kdET/vHw0/7CAKP/MrIT/vIw0/8zAqP/MtJz/tJhs/+z0
+        9P/AqIT/2MSk//j09P/s9PT/tKR4/8SkXP/EmEz/xJhM/8SMTP/AjFz/pHRE/0pAOv/KaAv/vm4g/8xm
+        ABUAAAAAAAAAAAAAAAC7XRj/mINv/5NkM/92PAP/pIBE/8SMTP+8jED/xIxM/7yMQP/ErHj/+PT0/5yM
+        eP+oiED/+PT0/5yMbP+0jFz/xIxM/7SMTP+0jEz/tJR4/8CsnP+0jEz/vIxA/7yMNP/MrIT/vHw0/9i4
+        kP/MtJz/tIxc//Tw5P+0jFz/5Ojk//j09P/UzMT/xIxM/8SkTP/EmEz/xJhc/8SYTP+0jFz/e0sc/0wo
+        Df/IbzX/zGYArQAAAAAAAAAAAAAAAAAAAAB2Ox2jv2Qd/398f//EYgH/fEwo/7SMTP+0jEz/vIxA/9S8
+        bP+8jED/5NTE/+z09P/MxLT/tJxc/8jExP/MxLT/pIA4/7R8RP+kdDT/sIA0/6R0NP+wgDT/xIxM/7yM
+        QP/MtJD/xKRM/9SwXP/EqGz/5NzU/8zEtP/YxKT/+PT0/+To5P+0jFz/vIxA/7SMTP+0jEz/tHxE/7CA
+        UP+UZDT/QR8A/8lnCP/DdSz/zGYALwAAAAAAAAAAAAAAAAAAAAAAAAABrFYd+6x7XP9+SiL/jkgD/5Rw
+        RP+0jEz/tIxM/9SkXP/EpFz/xJhM//Tw5P/k6OT/nIx4/9jEpP/k6PT/7PT0/6iYeP+kmIT/tJhs/7Ss
+        nP+kfFD/vIxA/7yMNP/MrIT/pIBE/8y0nP/s9PT/zMS0/9S8eP/s9PT/7PT0/8y4hP/UpFz/1LBc/8Sk
+        XP/EpFz/xKRc/8SYXP9wQA//gEAN/8d0Pv/MZgCMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAORwURctl
+        A/9hVFH/q1YG/4BEDf+kfFD/tIxM/8SgbP/EpFz/xJhM/9SsbP/w6OT/5Oj0/5yMeP/YxKT/2MSk/9TU
+        0P/Y2Nz/1NTQ/9TU0P/U1ND/1NTQ/9TU0P/U1ND/5Oj0/8zEtP/kzLT/2MSk/+Tc1P/49PT/zLSc/7yM
+        QP/EmEz/xIxM/7SMTP+0jEz/tIxc/4RcJP9JJgP/ymcd/8xmAPjMZgAGAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAIFAIM7CaB7/cHRv/8hlAv9tKQD/fFg0/8SgbP/EmFz/xJhM/9SsbP+8jED/2MSk/+z0
+        9P/MxLT/nIx4/5yMeP+cjHj/2MSk/9jEpP/YxKT/2MSk/9jEpP/YxKT/2MSk/7SohP/k3OT/+PT0/+Tc
+        1P/EjEz/xKRc/9SkXP/UpFz/1Kxs/7SMXP+UcET/fDgA/2RAIP/KZQP/yHcr/8xmAEEAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGRSCHrvm0v/2xkVv/CYwX/ajMA/7SYbP/EmFz/1Lxs/+DU
+        eP/EmEz/xJhM/9S8eP/s9PT/+PT0/8zEtP+cjHj/wKyc/7SghP+0lHj/tKR4/8CohP/MxLT/5Oj0//j0
+        9P/08OT/1MSU/8SkXP/EmEz/1KRc/9i4hP/UrGz/xJhc/5RwRP98RAT/Zj0V/8RiB//IdzP/zGYAXAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKo1Eh+rd2Rf9wZFL/wmMF/45c
+        MP+0jFz/1KRc/9SsbP/EmEz/xIxM/9SwXP/InED/6Ny4/+z09P/49PT/+PT0//j09P/49PT/+PT0//j0
+        9P/s9PT/6Ny4/+DQmP/UvGz/0JhI/8SYTP/EjEz/xKRc/9i4hP/EpFz/tIxc/3xEBP9zRBb/wGAF/8d1
+        Of/MZgB2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGKRS
+        IfrAayn/bWRV/8lkAP+MURf/pHxQ/7SMXP/EjEz/xIxM/9SsbP/EmEz/1KRM/9i4YP/UsEj/4NRs/+DU
+        eP/g1Hj/4NRs/+DUbP/gyHD/3LxU/+DAcP/UrGz/xJhc/8SYXP/EjEz/tIxM/7SMXP+kfFz/lGQ0/3xM
+        IP/JZAL/x3Ao/8xmAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAiIRCLjx2cQ/2xPPP+0XAX/o1QD/5RwRP+0jFz/wIxc/9SkXP/EmEz/1KRc/+DA
+        cP/UpEz/3LxU/+DUbP/cvFT/3LxU/9y8VP/gyHD/1Kxs/9S8eP/UrGz/xJhc/8CMXP+0jFz/tIxc/5h8
+        VP+EUBD/i0cD/75gFv/Lbhf/zGYASwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbDYhuMtlDf+0e1L/jXBM/8RkBf+SUxT/fEQE/9Sw
+        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
+        E//gcg3w1G4T+4hSHv9vOAD9n2kT/6RmEf+sag7/u4Qy/+3o4/+9nm7/7ejj/5RyTf+shlP/uqqP/6+C
+        Rv+oeEH/7ejj/7iijP/Txr//7unk//z5/P/38/T/9/Pz//by8v/59fb/7+no/6x8NP+nbAz/tIEo/8mH
+        JP5TMAv8UCgB/uByDvnPbRX5h1Uj/243Af6jbRX/omIU/59cA//Dj1D/7ejj/8aujv/t6OP/nXxP/5px
+        U/+VXRb/llwW/6aLbv+8pJD/7ejj/7ywo//WvJX/49jK//bz8//59PP/9O/t//7+///Ywab/oWAG/7N+
+        I/+2fib/yIUl/1EjBf1WLAf/4XIN8sdpGfaAVC7/ZDMI/ahwGP+pdB3/pGUH/8egYP/t6OP/1cW4/+rr
+        7v+Wazv/qpmG/5N+a/+hiHr/n4tm/6mETP+xmX7/7ejj/+3o4//Mxbr/x72v//Ty8f/59fj/+v7+/9e7
+        n/+ybxP/s30r/7J3Iv+3gDD+SyMN/HhGJf/fchDjt14a3o9aM/9oPxX8n28i/r6MN/+0fCD/06tx/+3o
+        4//NwrH/6uvu/52AVP+vnHH/2dXP/9HT0/+Yf1n/pnMw/7uQYP+5lWL/yrWe/+3o4//t6OP/zbec/+jf
+        yf/4/v7/28el/7aFH/+8jTf/uYUu/6BuJP9ULQz7rWg0/tVyF7bOXgl/sGwt/3xED/qQYx3/yJA7/7WB
+        KP/Pr3j/7ejj/8S5oP/q6+7/mnJB/6eXf//e3eH/3+Lh/5qCXP+abj3/mWQe/7mKWf+/p4r/tYZC/+3o
+        4//BrJH/yath//7//v/iyqn/uHwg/7OBMv+yfDP+klwe/jggBvvObBX/z2wPacVSATvMbh3/elEt+6J3
+        N/7PqVf+xJxN/8miWf/t6OP/rZZz/+3o4/+ol37/saGB/7afef+1oXz/qZZ3/6yMb/+seTj/wJxu/7aQ
+        Tv+6mWL/ybaP/+3o4//RwZT/9/z//8+6kf+5hy3/sYE7/7SCP/+OZTn8YToa/dpxFffUbAgktWIkB8hk
+        E9upc0T+jVQZ+qyFSv/DkUj/wI1A/9rBmf/Euq3/s5xp/+3o4/+pjmH/uYlP/6qIS/+1oo//sotk/7d/
+        K//Cm1//yJ9n/8Wulv/Lt5v/7ejj/+LWxf/q6+7/uZxf/8OZS//AkUz+wY1U/mtONPquXhz/2nIQw9d2
+        FgCSQxgArGM0cshxKP+TXSr7mWQp/riOTf7Ak0n+xJ1R/+3o4//Gvqf/vq2H/+3o4/+0i07/qHc3/6uC
+        SP+ugUL/u4Mv/8KcYf/Fm03/z7SC/+3o4//Rvp3/8fX3/8uylP+9jUD/uZNO/sCOUf+acED9azUF/dVx
+        GfzffTI70XxGAP+OAAD/1p0AxWca2qpmLP+IRgn7n3pG/8ObWf/Gn1b/zahm/+/v7P+1q57/182+/+3o
+        4//Pyr3/z8q9/8/Kvf/Pyr3/z8q9/8/Kvf/q6+7/08Si/+3u5v/Yzrr/xZhK/8abUv++nFj+v5lb/mlA
+        Ffm6Xxb/2m4LtN+JXgDBfm8AtV4TAZ1DAAGBNgw1zGoX/55qNf2PQwn9k3BI/sijZv7GnVD+z6lr/+3o
+        4//Pyr3/tKOP/+rr7v/q6+7/6uvu/+rr7v/q6+7/6uvu/9nNxP/t6OP/6uvu/8WbV//Pn1X+xZpg/qB2
+        Q/9zRRn6nlYQ/91xD+/y0asLxVYAAdBaAAD//wAAf0IuAp1IGwCdSRRq1XEa/5pmK/yRUhL8tpFi/9zA
+        cf/Jo1D/xJZI/+3o4//t6OP/w7u2/9HCuv/Ou63/0MCq/9fRyP/t6OP/7ejj/86wcP++jT7/0qxq/tq3
+        ef+vhk7/bkEO+qFTDv/ecxT4z35GMcuOcADQbhMA0FgAAAEB/wBwNigApVMhApZIHwCbQBmA0Wwa/6dp
+        KP6eWhX7r4JO/r+SW/7Omlr+yJlF/tm2bP/q6+7/7ejj/+3o4//t6OP/7ejj/9/Ecv/UsGL/xpRP/sSU
+        Vv69mF7+q4ld/oVYKfmsWQz/3nIT985wHUDGjosAxHE3AsxmAADMZgAAAAAAAJFIIQCjUB8AjUYiBNCW
+        DQDIkAdjw2IW+7ZlHf+fYiH9oGoy+rKDRP7LoVb/0Klk/tKoVf/XtlP/2btY/9GpSv/Ysln/0LFz/9Cw
+        ff66kWP/pnM+/JhyQPqWWx7/vl4N/9twEejSagUozmgBANBCAAG4ndQAzGYAAAAAAAAAAAAAAAAAAKRS
+        IQCORiEA//8AAv//PwDoywcsx2gf0NVxGv+0ayj/qmIK/aFnF/updCv9r4FE/b+WX/7AmWP9r4RX/bSI
+        Vf66mFv9pYNA/I1WF/qWURD/ul0K/9pvEPvbbw6jzmcACctlAgDLZQQC2BAAALii5AAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAIhEIgD//wAA//8AAv/CKQDffjkAcTUcXspoFczUbxf/ymgP/7xjDv+iXhL/rmwM/7Vn
+        DP+yXAX/sV8D/7FoCP+1Xwr/zmgM/9twEvbVche4yW8dIcVjEADMZg0AzGUAActlBADMZgAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/yAAD/9/8A/8cmAv//6AD//wAA/70cAJM/FzTabA1mtF4fycpq
+        G/TZbhH53G8N+txvDfnZbxH5z2sY7NNoFJ+9WhJZq1gdFLaATAC/cy0AzGYSAc1mDQDMZgAAzGYEAAAA
+        AAAAAAAAAAAAAAAAAAD/+B///4AB//8AAP/8AAA/+AAAH/AAAA/gAAAHwAAAA8AAAAOAAAABgAAAAQAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAYAAAAHAAAADwAAAA+AA
+        AAfwAAAP+AAAH/4AAH//AAD//+AH/w==
+</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Настройки подключения</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>LLMConnectSettingDialog</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>

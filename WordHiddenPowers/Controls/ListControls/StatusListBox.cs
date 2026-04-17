@@ -23,36 +23,54 @@ namespace WordHiddenPowers.Controls.ListControls
 	[ComVisible(false)]
 	public class StatusListBox : ListControl<ListItem, Control.ListItemNote>
 	{
-		private RepositoryDataSet source;
+		private RepositoryDataSet nowSource;
+		private RepositoryDataSet lastSource;
 
 		public StatusListBox() : base() { }
 
-		public RepositoryDataSet DataSet
+		public RepositoryDataSet NowDataSet
 		{
-			get => source;
+			get => nowSource;
 			set
 			{
-				if (source != value)
+				if (nowSource != value)
 				{
-					if (source != null)
+					if (nowSource != null)
 					{
 						SuspendEvents();
 					}
 
-					source = value;
+					nowSource = value;
 					ReadData();
 				}
 			}
 		}
-				
+
+		public RepositoryDataSet LastDataSet
+		{
+			get => lastSource;
+			set
+			{
+				if (lastSource != value)
+				{
+					if (lastSource != null)
+					{
+						SuspendEvents();
+					}
+					lastSource = value;
+					ReadData();
+				}
+			}
+		}
+
 		private void Categories_TableCleared(object sender, DataTableClearEventArgs e) => ReadData();
-		
+
 		private void Subcategories_TableCleared(object sender, DataTableClearEventArgs e) => ReadData();
-		
+
 		private void Categories_RowDeleting(object sender, DataRowChangeEventArgs e)
 		{
 			CategoriesRow row = e.Row as CategoriesRow;
-			IEnumerable<SubcategoriesRow> subcategories = DataSet.Subcategories.GetSubcategoriesRows(row.key_guid);
+			IEnumerable<SubcategoriesRow> subcategories = NowDataSet.Subcategories.GetSubcategoriesRows(row.key_guid);
 			if (subcategories.Any())
 			{
 				foreach (SubcategoriesRow refRow in subcategories)
@@ -100,9 +118,9 @@ namespace WordHiddenPowers.Controls.ListControls
 		{
 			if (e.Action == DataRowAction.Add)
 			{
-				if (DataSet.Categories.Exists(e.Row.category_guid))
+				if (NowDataSet.Categories.Exists(e.Row.category_guid))
 				{
-					Category category = DataSet.GetCategory(e.Row.category_guid);
+					Category category = NowDataSet.GetCategory(e.Row.category_guid);
 					Add(Subcategory.Create(category, e.Row));
 				}
 			}
@@ -122,35 +140,35 @@ namespace WordHiddenPowers.Controls.ListControls
 
 		private void SuspendEvents()
 		{
-			if (DataSet != null)
+			if (NowDataSet != null)
 			{
-				DataSet.Categories.CategoriesRowChanged -= Categories_RowChanged;
-				DataSet.Categories.TableCleared -= Categories_TableCleared;
-				DataSet.Categories.RowDeleting -= Categories_RowDeleting;
+				NowDataSet.Categories.CategoriesRowChanged -= Categories_RowChanged;
+				NowDataSet.Categories.TableCleared -= Categories_TableCleared;
+				NowDataSet.Categories.RowDeleting -= Categories_RowDeleting;
 
-				DataSet.Subcategories.SubcategoriesRowChanged -= Subcategories_RowChanged;
-				DataSet.Subcategories.TableCleared -= Subcategories_TableCleared;
-				DataSet.Subcategories.RowDeleting -= Subcategories_RowDeleting;
+				NowDataSet.Subcategories.SubcategoriesRowChanged -= Subcategories_RowChanged;
+				NowDataSet.Subcategories.TableCleared -= Subcategories_TableCleared;
+				NowDataSet.Subcategories.RowDeleting -= Subcategories_RowDeleting;
 			}
 		}
 
 		private void ResumeEvents()
 		{
-			if (DataSet != null)
+			if (NowDataSet != null)
 			{
-				DataSet.Categories.CategoriesRowChanged += new CategoriesRowChangeEventHandler(Categories_RowChanged);
-				DataSet.Categories.TableCleared += new DataTableClearEventHandler(Categories_TableCleared);
-				DataSet.Categories.RowDeleting += new DataRowChangeEventHandler(Categories_RowDeleting);
+				NowDataSet.Categories.CategoriesRowChanged += new CategoriesRowChangeEventHandler(Categories_RowChanged);
+				NowDataSet.Categories.TableCleared += new DataTableClearEventHandler(Categories_TableCleared);
+				NowDataSet.Categories.RowDeleting += new DataRowChangeEventHandler(Categories_RowDeleting);
 
-				DataSet.Subcategories.SubcategoriesRowChanged += new SubcategoriesRowChangeEventHandler(Subcategories_RowChanged);
-				DataSet.Subcategories.TableCleared += new DataTableClearEventHandler(Subcategories_TableCleared);
-				DataSet.Subcategories.RowDeleting += new DataRowChangeEventHandler(Subcategories_RowDeleting);
+				NowDataSet.Subcategories.SubcategoriesRowChanged += new SubcategoriesRowChangeEventHandler(Subcategories_RowChanged);
+				NowDataSet.Subcategories.TableCleared += new DataTableClearEventHandler(Subcategories_TableCleared);
+				NowDataSet.Subcategories.RowDeleting += new DataRowChangeEventHandler(Subcategories_RowDeleting);
 			}
 		}
 
 		public void ReadData()
 		{
-			if (DesignMode || DataSet == null) return;
+			if (DesignMode || NowDataSet == null) return;
 
 			SuspendEvents();
 
@@ -158,20 +176,20 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			Items.Clear();
 
-			if (DataSet.Categories.Rows.Count > 0)
+			if (NowDataSet.Categories.Rows.Count > 0)
 			{
-				foreach (DataRow row in DataSet.Categories.Rows)
+				foreach (DataRow row in NowDataSet.Categories.Rows)
 				{
 					Category category = Category.Create(row);
 					Add(category);
 				}
 			}
 
-			if (Items.Count > 0 && DataSet.Subcategories.Rows.Count > 0)
+			if (Items.Count > 0 && NowDataSet.Subcategories.Rows.Count > 0)
 			{
-				foreach (DataRow row in DataSet.Subcategories.Rows)
+				foreach (DataRow row in NowDataSet.Subcategories.Rows)
 				{
-					Category category = DataSet.GetCategory(row["category_guid"] as string);
+					Category category = NowDataSet.GetCategory(row["category_guid"] as string);
 					Subcategory subcategory = Subcategory.Create(category: category, dataRow: row);
 					ListItem item = GetListItem(category);
 					int index = GetLastItemIndex(item);
@@ -196,10 +214,10 @@ namespace WordHiddenPowers.Controls.ListControls
 			return index;
 		}
 
-		private void Add(ICategoriesListItem item) => Items.Add(new ListItem(item, DataSet));
-		
-		private void Insert(int index, ICategoriesListItem item) => Items.Insert(index, new ListItem(item, DataSet));
-		
+		private void Add(ICategoriesListItem item) => Items.Add(new ListItem(item, NowDataSet, LastDataSet));
+
+		private void Insert(int index, ICategoriesListItem item) => Items.Insert(index, new ListItem(item, NowDataSet, LastDataSet));
+
 		private void Remove(Category category)
 		{
 			if (ExistsListItem(category))
@@ -221,11 +239,11 @@ namespace WordHiddenPowers.Controls.ListControls
 		public bool ExistsListItem(string guid) => Items.AsEnumerable()
 			.Where(x => x.owner.Code.Guid == guid)
 			.Any();
-		
+
 		public ListItem GetListItem(string guid) => Items.AsEnumerable()
 			.Where(x => x.owner.Code.Guid == guid)
 			.First();
-		
+
 		public int CategoryNextIndexOf(int index)
 		{
 			for (int i = index; i < Items.Count; i++)
@@ -240,35 +258,35 @@ namespace WordHiddenPowers.Controls.ListControls
 		private bool ExistsListItem(Category category) => Items.AsEnumerable()
 			.Where(x => x.owner.Code.Guid == category.Guid)
 			.Any();
-		
+
 		private ListItem GetListItem(Category category) => Items.AsEnumerable()
 			.Where(x => x.owner.Code.Guid == category.Guid)
 			.First();
-		
+
 		private bool ExistsListItem(Subcategory subcategory) => Items.AsEnumerable()
 			.Where(x => x.owner.Code.Guid == subcategory.Guid)
 			.Any();
-		
+
 		private ListItem GetListItem(Subcategory subcategory) => Items.AsEnumerable()
 			.Where(x => x.owner.Code.Guid == subcategory.Guid)
 			.First();
-		
+
 		private bool ExistsListItem(CategoriesRow row) => Items.AsEnumerable()
 			.Where(x => x.owner.Code.Guid == row.key_guid)
 			.Any();
-		
+
 		private ListItem GetListItem(CategoriesRow row) => Items.AsEnumerable()
 			.Where(x => x.owner.Code.Guid == row.key_guid)
 			.First();
-		
+
 		private bool ExistsListItem(SubcategoriesRow row) => Items.AsEnumerable()
 			.Where(x => x.owner.Code.Guid == row.key_guid)
 			.Any();
-		
+
 		private ListItem GetListItem(SubcategoriesRow row) => Items.AsEnumerable()
 			.Where(x => x.owner.Code.Guid == row.key_guid)
 			.First();
-		
+
 		private bool ExistsListItem(DataRow row)
 		{
 			if (row.Table is CategoriesDataTable)
@@ -299,19 +317,21 @@ namespace WordHiddenPowers.Controls.ListControls
 		public class ListItem : ControlLibrary.Controls.ListControls.ListItem
 		{
 			protected internal ICategoriesListItem owner;
-			protected internal RepositoryDataSet dataSet;
+			protected internal RepositoryDataSet nowDataSet;
+			protected internal RepositoryDataSet lastDataSet;
 			public ListItem() : base()
 			{
 				owner = default;
 			}
 
-			public ListItem(ICategoriesListItem owner, RepositoryDataSet dataSet) : base(
+			public ListItem(ICategoriesListItem owner, RepositoryDataSet nowDataSet, RepositoryDataSet lastDataSet) : base(
 				CreateNotesArray(owner))
 			{
-				this.dataSet = dataSet;
+				this.nowDataSet = nowDataSet;
+				this.lastDataSet = lastDataSet;
 				this.owner = owner;
 				((SubcategoryTitleListItemNote)notes[0]).owner = this;
-				if (notes.Length== 3)
+				if (notes.Length == 3)
 					((StatusListItemNote)notes[2]).owner = this;
 			}
 
@@ -335,23 +355,39 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 
 			protected override void OnDraw(DrawItemEventArgs e)
-			{				
+			{
 				e.DrawBackground();
 				base.OnDraw(e);
 				if (notes.Length > 2 && (!notes[1].Size.IsEmpty || !notes[2].Size.IsEmpty))
 				{
 					// Рисование линии после титульной части
-					Pen linePen = e.State == (e.State | DrawItemState.Selected) ? new Pen(e.ForeColor) : SystemPens.InactiveCaption;
-					e.Graphics.DrawLine(linePen,
-					e.Bounds.X + 7, notes[0].Size.Height - 2,
-					e.Bounds.X + e.Bounds.Width - 15, notes[0].Size.Height - 2);
+					Utils.Drawing.DrawLine(e, notes[0]);
 				}
 				e.DrawFocusRectangle();
 			}
 
 			public bool IsCategory => owner is Category;
 
-			public int NoteCount => dataSet.GetNotesCount(owner.Guid);
+			public int NowNotesCount => nowDataSet.GetNotesCount(owner.Guid);
+
+			public int NowGroupNotesCount => nowDataSet.GetGroupByFileCaptionNotesCount(owner.Guid);
+
+			public bool IsDecimal => !IsCategory && ((Subcategory)owner).IsDecimal;
+
+			public double NowNotesSum => nowDataSet.GetNotesSum(owner.Guid);
+
+			public bool IsLast => lastDataSet != null;
+
+			public int LastNotesCount => IsLast ? lastDataSet.GetNotesCount(owner.Guid) : 0;
+
+			public int LastGroupNotesCount => IsLast ? lastDataSet.GetGroupByFileCaptionNotesCount(owner.Guid) : 0;
+
+			public double LastNotesSum => IsLast ? lastDataSet.GetNotesSum(owner.Guid) : 0;
+
+			public string Growth => ((NowNotesSum - LastNotesSum) > 0 ? "+" : "") + (NowNotesSum - LastNotesSum).ToString("N0");
+
+			public string GrowthPercent => LastNotesSum != 0 ? ((NowNotesSum - LastNotesSum) > 0 ? "+" : "") + (((double)(NowNotesSum - LastNotesSum)) * 100 / LastNotesSum).ToString("F2") + " %" : "-";
+
 		}
 
 		public class CategoryListItem : ListItem
@@ -361,7 +397,7 @@ namespace WordHiddenPowers.Controls.ListControls
 				owner = default;
 			}
 
-			public CategoryListItem(Category category, RepositoryDataSet dataSet) : base(owner: category, dataSet: dataSet)
+			public CategoryListItem(Category category, RepositoryDataSet nowDataSet, RepositoryDataSet lastDataSet) : base(owner: category, nowDataSet: nowDataSet, lastDataSet: lastDataSet)
 			{
 				owner = category;
 			}
@@ -376,7 +412,7 @@ namespace WordHiddenPowers.Controls.ListControls
 				owner = default;
 			}
 
-			public SubcategoryListItem(Subcategory subcategory, RepositoryDataSet dataSet) : base(owner: subcategory, dataSet: dataSet)
+			public SubcategoryListItem(Subcategory subcategory, RepositoryDataSet nowDataSet, RepositoryDataSet lastDataSet) : base(owner: subcategory, nowDataSet: nowDataSet, lastDataSet: lastDataSet)
 			{
 				owner = subcategory;
 			}
@@ -401,7 +437,7 @@ namespace WordHiddenPowers.Controls.ListControls
 			private string text;
 
 			public ListItemNote(string text) => this.text = text;
-			
+
 			public string Text
 			{
 				get => text;
@@ -445,33 +481,37 @@ namespace WordHiddenPowers.Controls.ListControls
 					}
 				}
 			}
-			
+
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
 				Font boldFont = new Font(e.Font.FontFamily, e.Font.Size, FontStyle.Bold);
-				Rectangle codeRectangle = new Rectangle(e.Bounds.X + 2, e.Bounds.Y + 2, codeSize.Width, codeSize.Height);
+				Rectangle codeRect = new Rectangle(e.Bounds.X + 2, e.Bounds.Y + 2, codeSize.Width, codeSize.Height);
 
 				Color backColor = Color.Gray;
 				if (owner.IsCategory)
 				{
-					backColor= Color.Orange;
-				} 
-				else if (owner.NoteCount > 0)
+					backColor = Color.Orange;
+				}
+				else if (owner.NowNotesCount > 0 && owner.IsDecimal)
 				{
 					backColor = Color.Green;
 				}
+				else if (owner.NowNotesCount > 0)
+				{
+					backColor = Color.ForestGreen;
+				}
 
-				Utils.Drawing.DrawCode(Code, new DrawItemEventArgs(e.Graphics, boldFont, codeRectangle, e.Index, e.State, backColor, Color.White));
+				Utils.Drawing.DrawCode(Code, new DrawItemEventArgs(e.Graphics, boldFont, codeRect, e.Index, e.State, backColor, Color.White));
 
 				if (!textSize.IsEmpty)
 				{
 					Brush brush = new SolidBrush(e.ForeColor);
-					Rectangle rectangle = new Rectangle(
+					Rectangle textRect = new Rectangle(
 						e.Bounds.Width - textSize.Width - 1,
 						e.Bounds.Y,
 						textSize.Width,
 						textSize.Height);
-					e.Graphics.DrawString(Text, boldFont, brush, rectangle, LEFT_STRING_FORMAT);
+					e.Graphics.DrawString(Text, boldFont, brush, textRect, LEFT_STRING_FORMAT);
 				}
 			}
 
@@ -489,7 +529,7 @@ namespace WordHiddenPowers.Controls.ListControls
 				{
 					return new Size(itemWidth, codeSize.Height + 8);
 				}
-			}		
+			}
 		}
 
 		public class CategoryTitleListItemNote : SubcategoryTitleListItemNote
@@ -497,9 +537,11 @@ namespace WordHiddenPowers.Controls.ListControls
 			public CategoryTitleListItemNote(int major, int minor, string guid, string text) : base(major: major, minor: minor, guid: guid, text: text) { }
 
 			public CategoryTitleListItemNote(Version code, string text) : base(code: code, text: text) { }
-			
+
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
+				if (e.Bounds.Width == 0 || e.Bounds.Height == 0) { return; }
+				
 				LinearGradientBrush brush;
 				if (e.State == (e.State | DrawItemState.Selected))
 				{
@@ -512,7 +554,7 @@ namespace WordHiddenPowers.Controls.ListControls
 				e.Graphics.FillRectangle(brush, e.Bounds);
 
 				base.OnDraw(e);
-			}			
+			}
 		}
 
 		public class DescriptionListItemNote : ListItemNote
@@ -529,10 +571,10 @@ namespace WordHiddenPowers.Controls.ListControls
 			protected override Size OnMeasureBound(Graphics graphics, Font font, int itemWidth, int itemHeight)
 			{
 				Size result = GetTextSize(graphics: graphics, Text, font: font, width: itemWidth, LEFT_STRING_FORMAT);
-				return new Size(result.Width, result.Height + 2);
+				return new Size(itemWidth, result.Height + 2);				
 			}
 		}
-		
+
 		public class StatusListItemNote : ListItemNote
 		{
 			internal ListItem owner;
@@ -542,13 +584,18 @@ namespace WordHiddenPowers.Controls.ListControls
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
 				Brush brush = new SolidBrush(e.ForeColor);
-				e.Graphics.DrawString(string.Format("Число записей: {0}", owner.NoteCount), e.Font, brush, e.Bounds, LEFT_STRING_FORMAT);
+				if (owner.IsDecimal && owner.IsLast)
+					e.Graphics.DrawString(string.Format("Число записей: {0}({2}), сумма: {1}({3}) / {4}({5})", owner.NowGroupNotesCount, owner.NowNotesSum, owner.LastGroupNotesCount, owner.LastNotesSum, owner.Growth, owner.GrowthPercent), e.Font, brush, e.Bounds, LEFT_STRING_FORMAT);
+				else if (owner.IsDecimal)
+					e.Graphics.DrawString(string.Format("Число записей: {0}, сумма: {1}", owner.NowGroupNotesCount, owner.NowNotesSum), e.Font, brush, e.Bounds, LEFT_STRING_FORMAT);
+				else
+					e.Graphics.DrawString(string.Format("Число записей: {0}", owner.NowGroupNotesCount), e.Font, brush, e.Bounds, LEFT_STRING_FORMAT);
 				brush.Dispose();
 			}
 
 			protected override Size OnMeasureBound(Graphics graphics, Font font, int itemWidth, int itemHeight)
 			{
-				Size result = GetTextSize(graphics: graphics, "Число записей: 000000", font: font, width: itemWidth, LEFT_STRING_FORMAT);
+				Size result = GetTextSize(graphics: graphics, "Число записей: 000 000, сумма: 000 000", font: font, width: itemWidth, LEFT_STRING_FORMAT);
 				return new Size(result.Width, result.Height + 10);
 			}
 		}

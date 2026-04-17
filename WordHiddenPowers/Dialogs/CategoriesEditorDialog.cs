@@ -16,7 +16,7 @@ namespace WordHiddenPowers.Dialogs
 		private readonly Documents.Document document;
 
 		public CategoriesEditorDialog(Documents.Document document)
-		{			
+		{
 			this.document = document;
 
 			this.Icon = WordDocument.GetIconMso("MindMapExportWord", SystemInformation.IconSize.Width, SystemInformation.IconSize.Height);
@@ -73,7 +73,7 @@ namespace WordHiddenPowers.Dialogs
 				captionTextBox.Text = item.Caption;
 				descriptionTextBox.Text = item.Description;
 				obligatoryСheckBox.Checked = item.IsObligatory;
-				
+
 				isDecimalRadioButton.Checked = item.IsDecimal;
 				isTextRadioButton.Checked = item.IsText;
 				keywordsTextBox.Text = item.Keywords;
@@ -91,7 +91,7 @@ namespace WordHiddenPowers.Dialogs
 				keywordsTextBox.TextChanged += new EventHandler(this.Controls_ValuesChanged);
 			}
 		}
-		
+
 		private void FileOpen_Click(object sender, EventArgs e)
 		{
 			OpenFileDialog dialog = new OpenFileDialog
@@ -101,7 +101,7 @@ namespace WordHiddenPowers.Dialogs
 			};
 			if (dialog.ShowDialog(this) == DialogResult.OK)
 			{
-				string content = File.ReadAllText(dialog.FileName, Encoding.GetEncoding(1251));				
+				string content = File.ReadAllText(dialog.FileName, Encoding.GetEncoding(1251));
 				Cursor.Current = Cursors.WaitCursor;
 				listBox.BeginUpdate();
 				Categories.CreateFromText(document.CurrentDataSet, content);
@@ -137,7 +137,7 @@ namespace WordHiddenPowers.Dialogs
 						document.CurrentDataSet.Write(subcategory);
 					}
 				}
-								
+
 				if (document.CurrentDataSet.HasChanges())
 				{
 					DialogResult result = MessageBox.Show("Зафиксировать все изменения?", "Категории данные", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
@@ -161,11 +161,11 @@ namespace WordHiddenPowers.Dialogs
 					else if (result == DialogResult.Cancel)
 					{
 						e.Cancel = true;
-					}					
+					}
 				}
 			}
 		}
-		
+
 		private void Controls_ValuesChanged(object sender, EventArgs e)
 		{
 			ListItem item = (ListItem)listBox.SelectedItem;
@@ -187,7 +187,7 @@ namespace WordHiddenPowers.Dialogs
 				listBox.Invalidate(rectangle);
 			}
 			if (item != null && item.owner is Subcategory)
-			{				
+			{
 				Subcategory subcategory = item.owner as Subcategory;
 
 				subcategory.Caption = captionTextBox.Text;
@@ -209,17 +209,17 @@ namespace WordHiddenPowers.Dialogs
 			}
 		}
 
-		
+
 		private void AddCategory_Click(object sender, EventArgs e)
 		{
 			if (listBox.SelectedIndices.Count == 0)
 			{
 				string guid = this.document.CurrentDataSet.Add(Category.Create(
 					position: 0,
-					caption: "Новая категория", 
-					description: "Пояснение", 
+					caption: "Новая категория",
+					description: "Пояснение",
 					isObligatory: false,
-					beforeText: "Текст до...", 
+					beforeText: "Текст до...",
 					afterText: "Текст после...")).Guid;
 				listBox.SelectedItem = listBox.GetListItem(guid: guid);
 			}
@@ -242,7 +242,7 @@ namespace WordHiddenPowers.Dialogs
 			}
 		}
 
-		
+
 		private void AddSubcategory_Click(object sender, EventArgs e)
 		{
 			if (listBox.SelectedItem is ListItem item && item.owner is Category category)
@@ -268,7 +268,7 @@ namespace WordHiddenPowers.Dialogs
 				this.document.CurrentDataSet.Remove(item.owner.Code.Guid);
 			}
 		}
-			
+
 
 		private void RemoveSubcategory_Click(object sender, EventArgs e)
 		{
@@ -323,6 +323,6 @@ namespace WordHiddenPowers.Dialogs
 			afterTextBox.Size = new Size(tabPage3.Width, tabPage3.Height - afterTextBox.Top);
 		}
 
-		
+
 	}
 }

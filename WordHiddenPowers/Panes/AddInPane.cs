@@ -1,146 +1,195 @@
-﻿using ControlLibrary.Controls.ListControls;
-using System;
+﻿using System;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
-using WordHiddenPowers.Controls.ListControls;
-using WordHiddenPowers.Dialogs;
+using WordHiddenPowers.Controls;
 using WordHiddenPowers.Documents;
-using WordHiddenPowers.Properties;
-using WordHiddenPowers.Repository;
-using WordHiddenPowers.Utils;
-using Content = WordHiddenPowers.Utils.WordDocuments.Content;
-using ListItem = WordHiddenPowers.Controls.ListControls.NotesListControl.ListItem;
-using ListItemNote = WordHiddenPowers.Controls.ListControls.NotesListControl.ListItemNote;
-using Word = Microsoft.Office.Interop.Word;
 
 
 namespace WordHiddenPowers.Panes
 {
-    [DesignerCategory("UserControl")]
-    public class AddInPane : WordHiddenPowersPane
-    {
-        private IContainer components;
-		private TabControl tabControl1;
-		private TabPage tabPage1;
-		private TabPage tabPage2;
-		private Components.NotesControl notesControl1;
-		private Components.LLMControl llmControl1;
-		
-		public Components.NotesControl NotesControl => this.notesControl1;
+	[DesignerCategory("UserControl")]
+	public class AddInPane : WordHiddenPowersPane
+	{
+		private readonly IContainer components;
 
-        public AddInPane() : base()
-        {
-            InitializeComponent();
-        }
+		private TabControl mainTabControl;
+		private TabPage llmTabPage;
+		private TabPage notesTabPage;
+		private Components.LLMControl llmControl;
+		private Components.NotesControl notesControl;
 
-        public AddInPane(Document document) : base(document)
-        {
-            InitializeComponent();
-        }
-     
-        
-		        
-        private void InitializeComponent()
-        {
-			this.tabControl1 = new System.Windows.Forms.TabControl();
-			this.tabPage1 = new System.Windows.Forms.TabPage();
-			this.llmControl1 = new WordHiddenPowers.Panes.Components.LLMControl(Document);
-			this.tabPage2 = new System.Windows.Forms.TabPage();
-			this.notesControl1 = new WordHiddenPowers.Panes.Components.NotesControl(Document);
-			this.tabControl1.SuspendLayout();
-			this.tabPage1.SuspendLayout();
-			this.tabPage2.SuspendLayout();
-			this.SuspendLayout();
+		public Components.NotesControl NotesControl => notesControl;
+
+		private bool notesControlVisible;
+
+
+		public Documents.DocumentCollection.ChartMessageMode MessageMode
+		{
+			get => llmControl.MessageMode;
+			set => llmControl.MessageMode = value;
+		}
+
+		public bool NotesControlVisible
+		{
+			get
+			{
+				SetNotesControlVisible(notesControlVisible);
+				return notesControlVisible;
+			}
+
+			set
+			{
+				notesControlVisible = value;
+				SetNotesControlVisible(value);
+			}
+		}
+
+		private void SetNotesControlVisible(bool visible)
+		{
+			if (visible)
+			{
+				if (notesTabPage == null)
+					CreateNotesControls();
+			}
+			else
+			{
+				if (notesTabPage != null)
+					RemoveNotesControls();
+			}
+		}
+
+		public AddInPane() : base()
+		{
+			InitializeComponent();
+		}
+
+		public AddInPane(Document document, int hwnd) : base(document, hwnd)
+		{
+			InitializeComponent();
+		}
+
+		private void InitializeComponent()
+		{
+			mainTabControl = new TabControl();
+			llmTabPage = new TabPage();
+			llmControl = new Components.LLMControl(Document);
+			mainTabControl.SuspendLayout();
+			llmTabPage.SuspendLayout();
+			SuspendLayout();
 			// 
-			// tabControl1
+			// mainTabControl
 			// 
-			this.tabControl1.Alignment = System.Windows.Forms.TabAlignment.Bottom;
-			this.tabControl1.Controls.Add(this.tabPage1);
-			this.tabControl1.Controls.Add(this.tabPage2);
-			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabControl1.Location = new System.Drawing.Point(0, 0);
-			this.tabControl1.Name = "tabControl1";
-			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(366, 427);
-			this.tabControl1.TabIndex = 1;
+			mainTabControl.Alignment = TabAlignment.Bottom;
+			mainTabControl.Controls.Add(llmTabPage);
+			mainTabControl.Dock = DockStyle.Fill;
+			mainTabControl.Location = new Point(0, 0);
+			mainTabControl.Name = "tabControl1";
+			mainTabControl.SelectedIndex = 0;
+			mainTabControl.Size = new Size(366, 427);
+			mainTabControl.TabIndex = 1;
 			// 
 			// tabPage1
 			// 
-			this.tabPage1.Controls.Add(this.llmControl1);
-			this.tabPage1.Location = new System.Drawing.Point(4, 4);
-			this.tabPage1.Name = "tabPage1";
-			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(358, 396);
-			this.tabPage1.TabIndex = 0;
-			this.tabPage1.Text = "AI помощник";
-			this.tabPage1.UseVisualStyleBackColor = true;
+			llmTabPage.Controls.Add(llmControl);
+			llmTabPage.Location = new Point(4, 4);
+			llmTabPage.Name = "llmTabPage";
+			llmTabPage.Padding = new Padding(3);
+			llmTabPage.Size = new Size(358, 396);
+			llmTabPage.TabIndex = 0;
+			llmTabPage.Text = "AI помощник";
+			llmTabPage.UseVisualStyleBackColor = true;
 			// 
-			// llmControl1
+			// llmControl
 			// 
-			this.llmControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.llmControl1.Location = new System.Drawing.Point(3, 3);
-			this.llmControl1.Name = "llmControl1";
-			this.llmControl1.Size = new System.Drawing.Size(352, 390);
-			this.llmControl1.TabIndex = 0;
-			this.llmControl1.Load += new System.EventHandler(this.llmControl1_Load);
-			// 
-			// tabPage2
-			// 
-			this.tabPage2.Controls.Add(this.notesControl1);
-			this.tabPage2.Location = new System.Drawing.Point(4, 4);
-			this.tabPage2.Name = "tabPage2";
-			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(358, 396);
-			this.tabPage2.TabIndex = 1;
-			this.tabPage2.Text = "Разметка документа";
-			this.tabPage2.UseVisualStyleBackColor = true;
-			// 
-			// notesControl1
-			// 
-			this.notesControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.notesControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.notesControl1.Location = new System.Drawing.Point(3, 3);
-			this.notesControl1.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
-			this.notesControl1.Name = "notesControl1";
-			this.notesControl1.ShowButtons = false;
-			this.notesControl1.Size = new System.Drawing.Size(352, 390);
-			this.notesControl1.TabIndex = 0;
+			llmControl.Dock = DockStyle.Fill;
+			llmControl.Location = new Point(3, 3);
+			llmControl.Name = "llmControl";
+			llmControl.Size = new Size(352, 390);
+			llmControl.TabIndex = 0;
 			// 
 			// AddInPane
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.tabControl1);
-			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
-			this.Name = "AddInPane";
-			this.Size = new System.Drawing.Size(366, 427);
-			this.tabControl1.ResumeLayout(false);
-			this.tabPage1.ResumeLayout(false);
-			this.tabPage2.ResumeLayout(false);
-			this.ResumeLayout(false);
-        }
-				
+			AutoScaleDimensions = new SizeF(9F, 18F);
+			AutoScaleMode = AutoScaleMode.Font;
+			Controls.Add(mainTabControl);
+			Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
+			Margin = new Padding(4, 2, 4, 2);
+			Name = "AddInPane";
+			Size = new Size(366, 427);
+			mainTabControl.ResumeLayout(false);
+			llmTabPage.ResumeLayout(false);
+			ResumeLayout(false);
+		}
+
+		private void CreateNotesControls()
+		{
+			notesTabPage = new TabPage();
+			notesControl = new Components.NotesControl(Document);
+			mainTabControl.Controls.Add(notesTabPage);
+
+			mainTabControl.SuspendLayout();
+			notesTabPage.SuspendLayout();
+			SuspendLayout();
+			// 
+			// notesTabPage
+			// 
+			notesTabPage.Controls.Add(notesControl);
+			notesTabPage.Location = new Point(4, 4);
+			notesTabPage.Name = "notesTabPage";
+			notesTabPage.Padding = new Padding(3);
+			notesTabPage.Size = new Size(358, 396);
+			notesTabPage.TabIndex = 1;
+			notesTabPage.Text = "Разметка документа";
+			notesTabPage.UseVisualStyleBackColor = true;
+			// 
+			// notesControl
+			// 
+			notesControl.Dock = DockStyle.Fill;
+			notesControl.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
+			notesControl.Location = new Point(3, 3);
+			notesControl.Margin = new Padding(4, 2, 4, 2);
+			notesControl.Name = "notesControl";
+			notesControl.ShowButtons = false;
+			notesControl.Size = new Size(352, 390);
+			notesControl.TabIndex = 0;
+			notesControl.PropertiesChanged += new EventHandler<EventArgs>(NotesControl_PropertiesChanged);
+
+			mainTabControl.ResumeLayout(false);
+			notesTabPage.ResumeLayout(false);
+			ResumeLayout(false);
+		}
+
+		private void RemoveNotesControls()
+		{
+			mainTabControl.SuspendLayout();
+			notesTabPage.SuspendLayout();
+			SuspendLayout();
+
+			notesTabPage.Controls.Remove(notesControl);
+			notesControl.Dispose();
+			notesControl = null;
+
+			mainTabControl.Controls.Remove(notesTabPage);
+			notesTabPage.Dispose();
+			notesTabPage = null;
+
+			mainTabControl.ResumeLayout(false);
+			ResumeLayout(false);
+		}
+
 		protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+		{
+			if (disposing && (components != null))
+			{
+				components.Dispose();
+			}
+			base.Dispose(disposing);
+		}
 
 		private void NotesControl_PropertiesChanged(object sender, EventArgs e)
 		{
 			OnPropertiesChanged(e);
-		}
-
-		private void llmControl1_Load(object sender, EventArgs e)
-		{
-
 		}
 	}
 }

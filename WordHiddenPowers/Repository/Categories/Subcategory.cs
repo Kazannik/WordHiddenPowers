@@ -72,7 +72,7 @@ namespace WordHiddenPowers.Repository.Categories
 				keywords: string.Empty);
 		}
 
-		public static readonly Subcategory Dafault =
+		public static readonly Subcategory Default =
 			new Subcategory(
 				category: Category.Default,
 				guid: string.Empty,
@@ -100,7 +100,7 @@ namespace WordHiddenPowers.Repository.Categories
 			AfterText = afterText;
 			Keywords = keywords;
 		}
-		
+
 		public Category Category { get; }
 
 		public string Guid { get; }
@@ -154,7 +154,7 @@ namespace WordHiddenPowers.Repository.Categories
 			if (Guid != dataRow.key_guid) return false;
 			if (Category.Guid != dataRow.category_guid) return false;
 			if (Position != dataRow.position)
-			if (Caption != dataRow.Caption) return false;
+				if (Caption != dataRow.Caption) return false;
 			if (!string.IsNullOrEmpty(Description) && !dataRow.IsDescriptionNull() && Description != dataRow.Description) return false;
 			if (IsDecimal != dataRow.IsDecimal) return false;
 			if (IsText != dataRow.IsText) return false;
@@ -165,12 +165,9 @@ namespace WordHiddenPowers.Repository.Categories
 			return true;
 		}
 
-		public int CompareTo(Subcategory value)
-		{
-			return Compare(this, value);
-		}
+		public int CompareTo(Subcategory value) => Compare(this, value);
 
-		public int CompareTo(Object value)
+		public int CompareTo(object value)
 		{
 			if (value == null)
 			{
@@ -204,13 +201,10 @@ namespace WordHiddenPowers.Repository.Categories
 
 		public class SubcategoryComparer : IComparer<Subcategory>
 		{
-			public int Compare(Subcategory x, Subcategory y)
-			{
-				return Subcategory.Compare(x, y);
-			}
+			public int Compare(Subcategory x, Subcategory y) => Subcategory.Compare(x, y);
 		}
-	
-	    public object Tag { get; set; }
-	
+
+		public object Tag { get; set; }
+
 	}
 }

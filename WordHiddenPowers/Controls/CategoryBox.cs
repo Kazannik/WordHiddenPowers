@@ -5,24 +5,24 @@ using WordHiddenPowers.Repository.Categories;
 
 namespace WordHiddenPowers.Controls
 {
-    public partial class CategoryBox: UserControl
-    {
-        private object _owner;
+	public partial class CategoryBox : UserControl
+	{
+		private object _owner;
 		private Size codeSize;
 		private Size textSize;
 
 		public CategoryBox()
-        {
-            InitializeComponent();
-        }
+		{
+			InitializeComponent();
+		}
 
-        public object Owner
-        {
-            get => _owner;
-            set
-            {
+		public object Owner
+		{
+			get => _owner;
+			set
+			{
 				_owner = value;
-				if (_owner !=null && _owner is Category category)
+				if (_owner != null && _owner is Category category)
 				{
 					descriptionTextBox.Text = category.Description;
 				}
@@ -34,9 +34,9 @@ namespace WordHiddenPowers.Controls
 				{
 					descriptionTextBox.Text = string.Empty;
 				}
-					Invalidate();
-            }
-        }
+				Invalidate();
+			}
+		}
 
 		protected override void OnPaint(PaintEventArgs e)
 		{

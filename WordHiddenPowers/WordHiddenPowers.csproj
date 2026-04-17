@@ -35,17 +35,17 @@
     </NuGetPackageImportStamp>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <BootstrapperComponentsLocation>Relative</BootstrapperComponentsLocation>
-    <PublishUrl>publish\WordHiddenPowers_embedd\4.0.0.0\</PublishUrl>
-    <InstallUrl />
+    <PublishUrl>..\publish\WordHiddenPowers_IT\4.2.0.4\</PublishUrl>
+    <InstallUrl>\\fsgpgvc01\Groups\IT\Отдел НСИ\Soft\MSWordAddins\WordHiddenPowers\</InstallUrl>
     <TargetCulture>ru</TargetCulture>
-    <ApplicationVersion>4.0.0.0</ApplicationVersion>
+    <ApplicationVersion>4.2.0.4</ApplicationVersion>
     <AutoIncrementApplicationRevision>false</AutoIncrementApplicationRevision>
     <UpdateEnabled>false</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
     <UpdateIntervalUnits>days</UpdateIntervalUnits>
     <ProductName>WordHiddenPowers</ProductName>
     <PublisherName>Генеральная прокуратура Российской Федерации</PublisherName>
-    <SupportUrl />
+    <SupportUrl>\\fsgpgvc01\Groups\IT\Отдел НСИ\Soft\MSWordAddins\WordHiddenPowers</SupportUrl>
     <FriendlyName>WordHiddenPowers</FriendlyName>
     <OfficeApplicationDescription>Автоматизированный  анализ документов</OfficeApplicationDescription>
     <LoadBehavior>3</LoadBehavior>
@@ -104,7 +104,6 @@
     <DefineConstants>TRACE;DEBUG;VSTO40;UseOfficeInterop;WORD</DefineConstants>
     <WarningLevel>1</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <!--
@@ -130,7 +129,6 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
     <DefineConstants>TRACE;VSTO40;WORD</DefineConstants>
     <WarningLevel>4</WarningLevel>
-    <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
@@ -220,18 +218,25 @@
     <Compile Include="Controls\ListControls\CategoriesListBox.cs" />
     <Compile Include="Controls\CategoriesPicker.cs" />
     <Compile Include="Controls\ListControls\ContentListBox.cs" />
+    <Compile Include="Controls\ListControls\ListItems.cs" />
     <Compile Include="Controls\ListControls\NotesListBox.cs" />
     <Compile Include="Controls\ListControls\StatusListBox.cs" />
+    <Compile Include="Controls\LLMConnectionControlBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\LLMConnectionControlBox.Designer.cs">
+      <DependentUpon>LLMConnectionControlBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PatternsWizardBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\RatingBox.cs">
+    <Compile Include="Controls\ComboControls\SubcategoriesComboBox.cs" />
+    <Compile Include="Controls\SendMessageButtonsBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ReitingBox.Designer.cs">
-      <DependentUpon>RatingBox.cs</DependentUpon>
+    <Compile Include="Controls\SendMessageButtonsBox.Designer.cs">
+      <DependentUpon>SendMessageButtonsBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ComboControls\SubcategoriesComboBox.cs" />
     <Compile Include="Controls\TableEditBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -251,18 +256,6 @@
     <Compile Include="Dialogs\AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\LLMChatDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\LLMChatDialog.Designer.cs">
-      <DependentUpon>LLMChatDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\LLMChatStatusDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\LLMChatStatusDialog.Designer.cs">
-      <DependentUpon>LLMChatStatusDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Dialogs\AnalyzerDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -281,17 +274,29 @@
     <Compile Include="Dialogs\LLMDialog.Designer.cs">
       <DependentUpon>LLMDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\LLMProcessDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\LLMProcessDialog.Designer.cs">
+      <DependentUpon>LLMProcessDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ContentPrintDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ContentPrintDialog.Designer.cs">
+      <DependentUpon>ContentPrintDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\PromptEditorDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dialogs\PromptEditorDialog.Designer.cs">
       <DependentUpon>PromptEditorDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\SettingDialog.cs">
+    <Compile Include="Dialogs\LLMConnectSettingDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\SettingDialog.Designer.cs">
-      <DependentUpon>SettingDialog.cs</DependentUpon>
+    <Compile Include="Dialogs\LLMConnectSettingDialog.Designer.cs">
+      <DependentUpon>LLMConnectSettingDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\PatternsWizardDialog.cs">
       <SubType>Form</SubType>
@@ -317,7 +322,6 @@
     <Compile Include="Dialogs\TextEditorDialog.Designer.cs">
       <DependentUpon>TextEditorDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Documents\DocumentCollectionImpl.cs" />
     <Compile Include="hooks\SafeNativeMethods.cs" />
     <Compile Include="MLService\Consumption.cs" />
     <Compile Include="MLService\Evaluate.cs" />
@@ -396,7 +400,13 @@
       <DependentUpon>TableSettingDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Documents\Document.cs" />
+    <Compile Include="Documents\Document.AI.cs">
+      <DependentUpon>Document.cs</DependentUpon>
+    </Compile>
     <Compile Include="Documents\DocumentCollection.cs" />
+    <Compile Include="Documents\DocumentCollection.AI.cs">
+      <DependentUpon>DocumentCollection.cs</DependentUpon>
+    </Compile>
     <Compile Include="Panes\WordHiddenPowersPane.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -405,16 +415,24 @@
     <Compile Include="Repository\Data\TableCollection.cs" />
     <Compile Include="Repository\Notes\Note.cs" />
     <Compile Include="Repository\Categories\Subcategory.cs" />
+    <Compile Include="Repository\VectorDataSet.cs">
+      <DependentUpon>VectorDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\VectorDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VectorDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Repository\WordFiles\WordFile.cs" />
     <Compile Include="Services\MLService.cs" />
     <Compile Include="Services\MainService.cs" />
-    <Compile Include="Services\NetService.cs" />
     <Compile Include="Services\OpenAIService.cs" />
     <Compile Include="Services\RegistryManager.cs" />
     <Compile Include="Services\Searcher.cs" />
     <Compile Include="Services\SearcherFunc.cs" />
     <Compile Include="Services\Сombined.cs" />
     <Compile Include="Utils\Categories.cs" />
+    <Compile Include="Utils\HTMLClipboard.cs" />
     <Compile Include="Utils\FileSystem.cs" />
     <Compile Include="Utils\Content.cs" />
     <Compile Include="Utils\Json.cs" />
@@ -423,22 +441,17 @@
     <Compile Include="Utils\Resource.cs" />
     <Compile Include="Utils\WordDocument.cs" />
     <Compile Include="Utils\Xml.cs" />
-    <Compile Include="VectorStore\XMLVectorStore.cs">
-      <DependentUpon>XMLVectorStore.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="VectorStore\XMLVectorStore.Designer.cs">
-      <DependentUpon>XMLVectorStore.xsd</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="Controls\CategoryBox.resx">
       <DependentUpon>CategoryBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LLMConnectionControlBox.resx">
+      <DependentUpon>LLMConnectionControlBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PatternsWizardBox.resx">
       <DependentUpon>PatternsWizardBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\RatingBox.resx">
-      <DependentUpon>RatingBox.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\SendMessageButtonsBox.resx">
+      <DependentUpon>SendMessageButtonsBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TableEditBox.resx">
       <DependentUpon>TableEditBox.cs</DependentUpon>
@@ -450,11 +463,8 @@
       <DependentUpon>AboutBox.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\LLMChatDialog.resx">
-      <DependentUpon>LLMChatDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\LLMChatStatusDialog.resx">
-      <DependentUpon>LLMChatStatusDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\ContentPrintDialog.resx">
+      <DependentUpon>ContentPrintDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\AnalyzerDialog.resx">
       <DependentUpon>AnalyzerDialog.cs</DependentUpon>
@@ -475,6 +485,9 @@
     <EmbeddedResource Include="Dialogs\LLMDialog.resx">
       <DependentUpon>LLMDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\LLMProcessDialog.resx">
+      <DependentUpon>LLMProcessDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\NoteDialog.resx">
       <DependentUpon>NoteDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -484,8 +497,8 @@
     <EmbeddedResource Include="Dialogs\PromptEditorDialog.resx">
       <DependentUpon>PromptEditorDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\SettingDialog.resx">
-      <DependentUpon>SettingDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\LLMConnectSettingDialog.resx">
+      <DependentUpon>LLMConnectSettingDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\PatternsWizardDialog.resx">
       <DependentUpon>PatternsWizardDialog.cs</DependentUpon>
@@ -531,7 +544,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
-    <Compile Include="Documents\Document.AI.cs" />
+    <None Include="Kazannik Test Software CA.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -541,32 +554,42 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Repository\HiddenPowerSchema.cs">
-      <DependentUpon>HiddenPowerSchema.xsd</DependentUpon>
+    <Compile Include="Repository\RepositoryDataSet.cs">
+      <DependentUpon>RepositoryDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Repository\HiddenPowerSchema.Designer.cs">
+    <Compile Include="Repository\RepositoryDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>HiddenPowerSchema.xsd</DependentUpon>
+      <DependentUpon>RepositoryDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="ThisAddIn.cs">
       <SubType>Code</SubType>
     </Compile>
     <None Include="README.md" />
-    <EmbeddedResource Include="Repository\Data\get_we.json" />
-    <EmbeddedResource Include="Repository\Data\get_value.json" />
-    <EmbeddedResource Include="Repository\Data\get_column.json" />
-    <EmbeddedResource Include="Repository\Data\get_row.json" />
-    <None Include="Repository\HiddenPowerSchema.xsc">
-      <DependentUpon>HiddenPowerSchema.xsd</DependentUpon>
+    <None Include="Repository\RepositoryDataSet.xsc">
+      <DependentUpon>RepositoryDataSet.xsd</DependentUpon>
     </None>
-    <None Include="Repository\HiddenPowerSchema.xsd">
+    <None Include="Repository\RepositoryDataSet.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>HiddenPowerSchema.Designer.cs</LastGenOutput>
+      <LastGenOutput>RepositoryDataSet.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Repository\HiddenPowerSchema.xss">
-      <DependentUpon>HiddenPowerSchema.xsd</DependentUpon>
+    <None Include="Repository\RepositoryDataSet.xss">
+      <DependentUpon>RepositoryDataSet.xsd</DependentUpon>
+    </None>
+    <Compile Include="Repository\VectorDataSet.Setting.cs">
+      <DependentUpon>VectorDataSet.xsd</DependentUpon>
+    </Compile>
+    <None Include="Repository\VectorDataSet.xsc">
+      <DependentUpon>VectorDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Repository\VectorDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>VectorDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Repository\VectorDataSet.xss">
+      <DependentUpon>VectorDataSet.xsd</DependentUpon>
     </None>
     <None Include="ThisAddIn.Designer.xml">
       <DependentUpon>ThisAddIn.cs</DependentUpon>
@@ -575,17 +598,6 @@
       <DependentUpon>ThisAddIn.Designer.xml</DependentUpon>
     </Compile>
     <AppDesigner Include="Properties\" />
-    <None Include="VectorStore\XMLVectorStore.xsc">
-      <DependentUpon>XMLVectorStore.xsd</DependentUpon>
-    </None>
-    <None Include="VectorStore\XMLVectorStore.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>XMLVectorStore.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="VectorStore\XMLVectorStore.xss">
-      <DependentUpon>XMLVectorStore.xsd</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TableEdit.ico" />
@@ -803,37 +815,37 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces">
-      <Version>10.0.2</Version>
+      <Version>10.0.5</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Bcl.Memory">
-      <Version>10.0.2</Version>
+      <Version>10.0.5</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Bcl.Numerics">
-      <Version>10.0.2</Version>
+      <Version>10.0.5</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.AI">
-      <Version>10.2.0</Version>
+      <Version>10.4.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.AI.Abstractions">
-      <Version>10.2.0</Version>
+      <Version>10.4.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.AI.OpenAI">
-      <Version>10.2.0-preview.1.26063.2</Version>
+      <Version>10.4.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions">
-      <Version>10.0.2</Version>
+      <Version>10.0.5</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
-      <Version>10.0.2</Version>
+      <Version>10.0.5</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions">
-      <Version>10.0.2</Version>
+      <Version>10.0.5</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Primitives">
-      <Version>10.0.2</Version>
+      <Version>10.0.5</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.VectorData.Abstractions">
-      <Version>9.7.0</Version>
+      <Version>10.0.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.ML">
       <Version>5.0.0</Version>
@@ -854,40 +866,40 @@
       <Version>13.0.4</Version>
     </PackageReference>
     <PackageReference Include="OpenAI">
-      <Version>2.8.0</Version>
+      <Version>2.9.1</Version>
     </PackageReference>
     <PackageReference Include="System.Buffers">
       <Version>4.6.1</Version>
     </PackageReference>
     <PackageReference Include="System.ClientModel">
-      <Version>1.8.1</Version>
+      <Version>1.10.0</Version>
     </PackageReference>
     <PackageReference Include="System.CodeDom">
-      <Version>10.0.2</Version>
+      <Version>10.0.5</Version>
     </PackageReference>
     <PackageReference Include="System.Collections.Immutable">
-      <Version>10.0.2</Version>
+      <Version>10.0.5</Version>
     </PackageReference>
     <PackageReference Include="System.Diagnostics.DiagnosticSource">
-      <Version>10.0.2</Version>
+      <Version>10.0.5</Version>
     </PackageReference>
     <PackageReference Include="System.IO.Pipelines">
-      <Version>10.0.2</Version>
+      <Version>10.0.5</Version>
     </PackageReference>
     <PackageReference Include="System.Linq.AsyncEnumerable">
-      <Version>10.0.2</Version>
+      <Version>10.0.5</Version>
     </PackageReference>
     <PackageReference Include="System.Memory">
       <Version>4.6.3</Version>
     </PackageReference>
     <PackageReference Include="System.Memory.Data">
-      <Version>10.0.2</Version>
+      <Version>10.0.5</Version>
     </PackageReference>
     <PackageReference Include="System.Net.ServerSentEvents">
-      <Version>10.0.2</Version>
+      <Version>10.0.5</Version>
     </PackageReference>
     <PackageReference Include="System.Numerics.Tensors">
-      <Version>10.0.2</Version>
+      <Version>10.0.5</Version>
     </PackageReference>
     <PackageReference Include="System.Numerics.Vectors">
       <Version>4.6.1</Version>
@@ -899,20 +911,56 @@
       <Version>6.1.2</Version>
     </PackageReference>
     <PackageReference Include="System.Text.Encodings.Web">
-      <Version>10.0.2</Version>
+      <Version>10.0.5</Version>
     </PackageReference>
     <PackageReference Include="System.Text.Json">
-      <Version>10.0.2</Version>
+      <Version>10.0.5</Version>
     </PackageReference>
     <PackageReference Include="System.Threading.Channels">
-      <Version>10.0.2</Version>
+      <Version>10.0.5</Version>
     </PackageReference>
     <PackageReference Include="System.Threading.Tasks.Extensions">
       <Version>4.6.3</Version>
     </PackageReference>
     <PackageReference Include="System.ValueTuple">
-      <Version>4.6.1</Version>
+      <Version>4.6.2</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AI_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AI_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ChartType01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ChartType02.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ChartType03.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ChartType04.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ChartType05.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="WordHiddenPowers_ml.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Connecting.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ConnectionError.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ConnectionOk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UncorrectedAddress.png" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -926,7 +974,7 @@
     </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>621114F6FD186ADF11B6C9A3F479A971987ACE6E</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>07066D49CFDDCE7CC8DAE6C58EF3D65710F6AB30</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Resources\App.ico</ApplicationIcon>
@@ -935,8 +983,16 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>Kazannik Test Software CA.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestTimestampUrl>http://timestamp.digicert.com</ManifestTimestampUrl>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

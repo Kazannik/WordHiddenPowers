@@ -8,8 +8,8 @@ using static WordHiddenPowers.MLService.MLModel;
 
 namespace WordHiddenPowers.Utils
 {
-    static class MLModel
-    {
+	static class MLModel
+	{
 		private static readonly string MLNetModelFilterPath = Path.Combine(FileSystem.UserDirectory.FullName, "MLModel.filters");
 
 		private static Filters filters = null;
@@ -38,7 +38,7 @@ namespace WordHiddenPowers.Utils
 
 			return filters.ConvertToCompliance(text);
 		}
-		
+
 		private class Filters
 		{
 			private static readonly Regex regexWords = new Regex("\\w+");
@@ -76,14 +76,14 @@ namespace WordHiddenPowers.Utils
 							{
 								mode = line;
 							}
-							else if (!string.IsNullOrWhiteSpace(line) 
+							else if (!string.IsNullOrWhiteSpace(line)
 								&& mode == "[excluded_patterns]")
 							{
 								excludedPatterns.Add(line.Trim());
 							}
-							else if (!string.IsNullOrWhiteSpace(line) 
+							else if (!string.IsNullOrWhiteSpace(line)
 								&& mode == "[excluded_words]")
-							{							
+							{
 								excludedWords.Add(line.Trim());
 							}
 							else if (!string.IsNullOrWhiteSpace(line)
@@ -128,7 +128,7 @@ namespace WordHiddenPowers.Utils
 					foreach (Match item in words)
 					{
 						text += IsRecommendWords(item.Value);
-					}					
+					}
 				}
 				text = regexSpace.Replace(text, " ");
 				return text.Trim();
@@ -170,7 +170,7 @@ namespace WordHiddenPowers.Utils
 			{
 				text = text.ToLower();
 				text = text.Replace("ё", "е");
-				
+
 				if (IsInitialize)
 				{
 					foreach (string pattern in ExcludedPattersn)
@@ -178,11 +178,11 @@ namespace WordHiddenPowers.Utils
 						text = Regex.Replace(text, pattern, " ");
 					}
 				}
-				
+
 				text = regexDecimal.Replace(text, " [число] ");
 				text = regexSpace.Replace(text, " ");
 				return text.Trim();
 			}
-		}	
+		}
 	}
 }

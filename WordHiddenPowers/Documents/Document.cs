@@ -18,14 +18,19 @@ namespace WordHiddenPowers.Documents
 {
 	public partial class Document : IDisposable
 	{
-		public enum DocumentState
+		private WordDocumentMode state = WordDocumentMode.Default;
+
+		internal WordDocumentMode State
 		{
-			None = 0,
-			One = 1,
-			Aggregated = 2
+			get => state;
+			private set
+			{
+				state = value;
+				Pane.NotesControlVisible = state == WordDocumentMode.Separate;
+			}
 		}
-		
-		public DocumentState State { get; }
+
+		internal bool IsTableSchema => currentDataSet != null && currentDataSet.IsTableSchema;
 
 		private readonly DocumentCollection parent;
 
@@ -37,35 +42,48 @@ namespace WordHiddenPowers.Documents
 		/// <summary>
 		/// Агрегированные данные из нескольких документов.
 		/// </summary>
-		private RepositoryDataSet aggregatedDataSet;
+		private RepositoryDataSet nowAggregatedDataSet;
 
 		/// <summary>
 		/// Сопоставимые агрегированные данные из нескольких документов (например, за прошлый период).
 		/// </summary>
-		private RepositoryDataSet oldAggregatedDataSet;
+		private RepositoryDataSet lastAggregatedDataSet;
 
+		/// <summary>
+		/// Хранилище векторов.
+		/// </summary>
+		private VectorDataSet vectorDataSet;
+
+		/// <summary>
+		/// Связанная с документом боковая панель.
+		/// </summary>
 		public CustomTaskPane CustomPane { get; }
 
 		public AddInPane Pane => CustomPane.Control as AddInPane;
 
+		public int Hwnd { get; }
+
 		private void Pane_PropertiesChanged(object sender, EventArgs e)
 		{
-			if (Caption != Pane.NotesControl.Caption)
+			if (Pane.NotesControlVisible)
 			{
-				Caption = Pane.NotesControl.Caption;
-				Doc.Saved = false;
-			}
+				if (Caption != Pane.NotesControl.Caption)
+				{
+					Caption = Pane.NotesControl.Caption;
+					Doc.Saved = false;
+				}
 
-			if (Date != Pane.NotesControl.Date)
-			{
-				Date = Pane.NotesControl.Date;
-				Doc.Saved = false;
-			}
+				if (Date != Pane.NotesControl.Date)
+				{
+					Date = Pane.NotesControl.Date;
+					Doc.Saved = false;
+				}
 
-			if (Description != Pane.NotesControl.Description)
-			{
-				Description = Pane.NotesControl.Description;
-				Doc.Saved = false;
+				if (Description != Pane.NotesControl.Description)
+				{
+					Description = Pane.NotesControl.Description;
+					Doc.Saved = false;
+				}
 			}
 
 			if (CurrentDataSet.HasChanges())
@@ -77,21 +95,30 @@ namespace WordHiddenPowers.Documents
 				Doc.Saved = false;
 			}
 
-			if (AggregatedDataSet.HasChanges())
+			if (NowAggregatedDataSet.HasChanges())
 			{
 				Content.CommitVariable(
 					array: Doc.Variables,
-					variableName: Const.Globals.XML_AGGREGATED_VARIABLE_NAME,
-					dataSet: AggregatedDataSet);
+					variableName: Const.Globals.XML_NOW_AGGREGATED_VARIABLE_NAME,
+					dataSet: NowAggregatedDataSet);
 				Doc.Saved = false;
 			}
 
-			if (OldAggregatedDataSet.HasChanges())
+			if (LastAggregatedDataSet.HasChanges())
 			{
 				Content.CommitVariable(
 					array: Doc.Variables,
-					variableName: Const.Globals.XML_OLD_AGGREGATED_VARIABLE_NAME,
-					dataSet: OldAggregatedDataSet);
+					variableName: Const.Globals.XML_LAST_AGGREGATED_VARIABLE_NAME,
+					dataSet: LastAggregatedDataSet);
+				Doc.Saved = false;
+			}
+
+			if (VectorDataSet.HasChanges())
+			{
+				Content.CommitVariable(
+					array: Doc.Variables,
+					variableName: Const.Globals.XML_VECTOR_VARIABLE_NAME,
+					dataSet: VectorDataSet);
 				Doc.Saved = false;
 			}
 		}
@@ -148,8 +175,14 @@ namespace WordHiddenPowers.Documents
 
 		public string MLModelName
 		{
-			get => CurrentDataSet.GetValue(key: Const.Globals.ML_MODEL_VARIABLE_NAME);
-			set => CurrentDataSet.SetValue(key: Const.Globals.ML_MODEL_VARIABLE_NAME, value: value);
+			get => CurrentDataSet.MLModelName;
+			set => CurrentDataSet.MLModelName = value;
+		}
+
+		public string EmbedLLModelName
+		{
+			get => CurrentDataSet.EmbedLLModelName;
+			set => CurrentDataSet.EmbedLLModelName = value;
 		}
 
 		public bool ContentHide { get; set; }
@@ -170,35 +203,51 @@ namespace WordHiddenPowers.Documents
 			}
 		}
 
-		public RepositoryDataSet AggregatedDataSet
+		public RepositoryDataSet NowAggregatedDataSet
 		{
 			get
 			{
-				if (aggregatedDataSet == null)
+				if (nowAggregatedDataSet == null)
 				{
-					aggregatedDataSet = Xml.GetAggregatedDataSet(Doc: Doc, out bool isCorrect);
+					nowAggregatedDataSet = Xml.GetNowAggregatedDataSet(Doc: Doc, out bool isCorrect);
 					if (!isCorrect)
 					{
-						aggregatedDataSet = new RepositoryDataSet();
+						nowAggregatedDataSet = new RepositoryDataSet();
 					}
 				}
-				return aggregatedDataSet;
+				return nowAggregatedDataSet;
 			}
 		}
 
-		public RepositoryDataSet OldAggregatedDataSet
+		public RepositoryDataSet LastAggregatedDataSet
 		{
 			get
 			{
-				if (oldAggregatedDataSet == null)
+				if (lastAggregatedDataSet == null)
 				{
-					oldAggregatedDataSet = Xml.GetOldAggregatedDataSet(Doc: Doc, out bool isCorrect);
+					lastAggregatedDataSet = Xml.GetLastAggregatedDataSet(Doc: Doc, out bool isCorrect);
 					if (!isCorrect)
 					{
-						oldAggregatedDataSet = new RepositoryDataSet();
+						lastAggregatedDataSet = new RepositoryDataSet();
 					}
 				}
-				return oldAggregatedDataSet;
+				return lastAggregatedDataSet;
+			}
+		}
+
+		public VectorDataSet VectorDataSet
+		{
+			get
+			{
+				if (vectorDataSet == null)
+				{
+					vectorDataSet = Xml.GetVectorDataSet(Doc: Doc, out bool isCorrect);
+					if (!isCorrect)
+					{
+						vectorDataSet = new VectorDataSet();
+					}
+				}
+				return vectorDataSet;
 			}
 		}
 
@@ -211,39 +260,39 @@ namespace WordHiddenPowers.Documents
 			FileName = fileName;
 			ContentHide = false;
 			Doc = doc;
+			Hwnd = Doc.Windows[1].Hwnd;
 
-			if (!Content.ExistsContent(Doc: Doc))
-			{
-				State = DocumentState.None;
-			}
-			else if (Content.ExistsVariable(Doc.Variables, Const.Globals.XML_AGGREGATED_VARIABLE_NAME))
-			{
-				State = DocumentState.Aggregated;
-			}
-			else
-			{
-				State = DocumentState.One;
-			}
 
-			bool oldState = this.parent.PaneVisibleButton.Checked;
+			bool oldState = this.parent.paneVisibleButton.Checked;
 
-			this.parent.PaneVisibleButton.Checked = false;
+			this.parent.paneVisibleButton.Checked = false;
 
-			CustomPane = Globals.ThisAddIn.CustomTaskPanes.Add(new AddInPane(this), Const.Panes.PANE_TITLE, Doc.Windows[1]);
+			CustomPane = Globals.ThisAddIn.CustomTaskPanes.Add(new AddInPane(this, Hwnd), Const.Panes.PANE_TITLE, Doc.Windows[1]);
 			CustomPane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
 			CustomPane.Width = 600;
 			CustomPane.Visible = oldState;
 			CustomPane.VisibleChanged += new EventHandler(Pane_VisibleChanged);
-			
 			Pane.PropertiesChanged += new EventHandler<EventArgs>(Pane_PropertiesChanged);
 
-			this.parent.PaneVisibleButton.Checked = oldState;
+			if (Content.ExistsVariable(Doc.Variables, Const.Globals.XML_NOW_AGGREGATED_VARIABLE_NAME))
+			{
+				State = WordDocumentMode.Combine;
+			}
+			else if (Content.ExistsVariable(Doc.Variables, Const.Globals.XML_CURRENT_VARIABLE_NAME))
+			{
+				State = WordDocumentMode.Separate;
+			}
+			else
+			{
+				State = WordDocumentMode.Default;
+			}
+			this.parent.paneVisibleButton.Checked = oldState;
 		}
 
 		private void Pane_VisibleChanged(object sender, EventArgs e)
 		{
 			CustomTaskPane pane = (CustomTaskPane)sender;
-			if (parent != null) parent.PaneVisibleButton.Checked = pane.Visible;
+			if (parent != null) parent.paneVisibleButton.Checked = pane.Visible;
 		}
 
 		public static Document Create(DocumentCollection parent, string fileName, Word._Document Doc)
@@ -255,78 +304,93 @@ namespace WordHiddenPowers.Documents
 			return document;
 		}
 
+
+		/// <summary>
+		/// Создать чистую структуру данных.
+		/// </summary>
 		public void NewData()
 		{
-			CurrentDataSet.RowsHeaders.Clear();
-			CurrentDataSet.ColumnsHeaders.Clear();
+			if (Doc.Variables.Count > 0)
+			{
+				Content.DeleteVariable(Doc.Variables, Const.Globals.CAPTION_VARIABLE_NAME);
+				Content.DeleteVariable(Doc.Variables, Const.Globals.DATE_VARIABLE_NAME);
+				Content.DeleteVariable(Doc.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME);
+				Content.DeleteVariable(Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+				Content.DeleteVariable(Doc.Variables, Const.Globals.XML_NOW_AGGREGATED_VARIABLE_NAME);
+				Content.DeleteVariable(Doc.Variables, Const.Globals.XML_LAST_AGGREGATED_VARIABLE_NAME);
+				Content.DeleteVariable(Doc.Variables, Const.Globals.XML_VECTOR_VARIABLE_NAME);
+			}
+			ClearDataSet(CurrentDataSet);
+			CurrentDataSet.AcceptChanges();
+			CommitVariables();
+			State = WordDocumentMode.Separate;
+		}
 
-			CurrentDataSet.Subcategories.Clear();
-			CurrentDataSet.Categories.Clear();
+		/// <summary>
+		/// Загрузить чистую структуру основных данных.
+		/// </summary>
+		/// <param name="fileName"></param>
+		public void LoadClearData(string fileName)
+		{
+			if (Doc.Variables.Count > 0)
+			{
+				Content.DeleteVariable(Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
+				Content.DeleteVariable(Doc.Variables, Const.Globals.XML_NOW_AGGREGATED_VARIABLE_NAME);
+				Content.DeleteVariable(Doc.Variables, Const.Globals.XML_LAST_AGGREGATED_VARIABLE_NAME);
+			}
 
-			CurrentDataSet.DecimalPowers.Clear();
-			CurrentDataSet.TextPowers.Clear();
+			LoadDataSet(CurrentDataSet, fileName);
 
-			CurrentDataSet.DocumentKeys.Clear();
+			CurrentDataSet.DecimalNotes.Clear();
+			CurrentDataSet.TextNotes.Clear();
 			CurrentDataSet.WordFiles.Clear();
-
-			CurrentDataSet.Setting.Clear();
+			CurrentDataSet.DecimalTable.Clear();
 
 			CurrentDataSet.AcceptChanges();
-
 			CommitVariables();
+			State = WordDocumentMode.Separate;
 		}
 
+		/// <summary>
+		/// Загрузить основные данные.
+		/// </summary>
+		/// <param name="fileName"></param>
 		public void LoadCurrentData(string fileName)
 		{
-			try
-			{
-				CurrentDataSet.RowsHeaders.Clear();
-				CurrentDataSet.ColumnsHeaders.Clear();
-
-				CurrentDataSet.Subcategories.Clear();
-				CurrentDataSet.Categories.Clear();
-
-				CurrentDataSet.DocumentKeys.Clear();
-				CurrentDataSet.WordFiles.Clear();
-
-				CurrentDataSet.DecimalPowers.Clear();
-				CurrentDataSet.TextPowers.Clear();
-
-				CurrentDataSet.Setting.Clear();
-
-				CurrentDataSet.ReadXml(fileName, XmlReadMode.IgnoreSchema);
-
-				CurrentDataSet.AcceptChanges();
-
-				CommitVariables();
-			}
-			catch (Exception ex)
-			{
-				Utils.Dialogs.ShowErrorDialog(ex.Message);
-			}
+			LoadDataSet(CurrentDataSet, fileName);
+			Content.CommitVariable(Doc.Variables, Const.Globals.XML_CURRENT_VARIABLE_NAME, CurrentDataSet);
+			State = WordDocumentMode.Separate;
 		}
 
-		public void LoadAggregatedData(string fileName)
+		/// <summary>
+		/// Загрузить агрегированные данные текущего периода.
+		/// </summary>
+		/// <param name="fileName"></param>
+		public void LoadNowAggregatedData(string fileName)
+		{
+			LoadDataSet(NowAggregatedDataSet, fileName);
+			Content.CommitVariable(Doc.Variables, Const.Globals.XML_NOW_AGGREGATED_VARIABLE_NAME, NowAggregatedDataSet);
+			State = WordDocumentMode.Combine;
+		}
+
+		/// <summary>
+		/// Загрузить агрегированные данные прошлого периода.
+		/// </summary>
+		/// <param name="fileName"></param>
+		public void LoadLastAggregatedData(string fileName)
+		{
+			LoadDataSet(LastAggregatedDataSet, fileName);
+			Content.CommitVariable(Doc.Variables, Const.Globals.XML_LAST_AGGREGATED_VARIABLE_NAME, LastAggregatedDataSet);
+			State = WordDocumentMode.Combine;
+		}
+
+		private void LoadDataSet(RepositoryDataSet dataSet, string fileName)
 		{
 			try
 			{
-				AggregatedDataSet.RowsHeaders.Clear();
-				AggregatedDataSet.ColumnsHeaders.Clear();
-
-				AggregatedDataSet.Subcategories.Clear();
-				AggregatedDataSet.Categories.Clear();
-
-				AggregatedDataSet.DocumentKeys.Clear();
-				AggregatedDataSet.WordFiles.Clear();
-
-				AggregatedDataSet.DecimalPowers.Clear();
-				AggregatedDataSet.TextPowers.Clear();
-
-				AggregatedDataSet.ReadXml(fileName, XmlReadMode.IgnoreSchema);
-
-				AggregatedDataSet.AcceptChanges();
-
-				CommitVariables();
+				ClearDataSet(dataSet);
+				dataSet.ReadXml(fileName, XmlReadMode.IgnoreSchema);
+				dataSet.AcceptChanges();
 			}
 			catch (Exception ex)
 			{
@@ -334,29 +398,24 @@ namespace WordHiddenPowers.Documents
 			}
 		}
 
-		public void LoadOldAggregatedData(string fileName)
+		private void ClearDataSet(RepositoryDataSet dataSet)
 		{
 			try
 			{
-				OldAggregatedDataSet.RowsHeaders.Clear();
-				OldAggregatedDataSet.ColumnsHeaders.Clear();
+				dataSet.RowsHeaders.Clear();
+				dataSet.ColumnsHeaders.Clear();
 
-				OldAggregatedDataSet.Subcategories.Clear();
-				OldAggregatedDataSet.Categories.Clear();
+				dataSet.Subcategories.Clear();
+				dataSet.Categories.Clear();
 
-				OldAggregatedDataSet.DocumentKeys.Clear();
-				OldAggregatedDataSet.WordFiles.Clear();
+				dataSet.DocumentKeys.Clear();
+				dataSet.WordFiles.Clear();
+				dataSet.DecimalTable.Clear();
 
-				OldAggregatedDataSet.DecimalPowers.Clear();
-				OldAggregatedDataSet.TextPowers.Clear();
+				dataSet.DecimalNotes.Clear();
+				dataSet.TextNotes.Clear();
 
-				OldAggregatedDataSet.Setting.Clear();
-
-				OldAggregatedDataSet.ReadXml(fileName, XmlReadMode.IgnoreSchema);
-
-				OldAggregatedDataSet.AcceptChanges();
-
-				CommitVariables();
+				dataSet.Setting.Clear();
 			}
 			catch (Exception ex)
 			{
@@ -364,9 +423,51 @@ namespace WordHiddenPowers.Documents
 			}
 		}
 
-		public void SaveData(string fileName) =>
-			Xml.SaveDataSchema(Globals.ThisAddIn.Documents.ActiveDocument.CurrentDataSet, fileName);
+		/// <summary>
+		/// Загрузить векторную базу дааных.
+		/// </summary>
+		/// <param name="fileName"></param>
+		public void LoadVectorData(string fileName)
+		{
+			try
+			{
+				VectorDataSet.ParagraphVectorStore.Clear();
 
+				VectorDataSet.WordFiles.Clear();
+
+				VectorDataSet.ReadXml(fileName, XmlReadMode.IgnoreSchema);
+
+				VectorDataSet.AcceptChanges();
+
+				Content.CommitVariable(Doc.Variables, Const.Globals.XML_VECTOR_VARIABLE_NAME, VectorDataSet);
+			}
+			catch (Exception ex)
+			{
+				Utils.Dialogs.ShowErrorDialog(ex.Message);
+			}
+		}
+
+		public void SaveSchema(string fileName) =>
+			Xml.SaveSchema(Globals.ThisAddIn.Documents.ActiveDocument.CurrentDataSet, fileName);
+
+		public void SaveClearData(string fileName) =>
+			Xml.SaveClearData(Globals.ThisAddIn.Documents.ActiveDocument.CurrentDataSet, fileName);
+
+		public void SaveCurrentData(string fileName) =>
+			Xml.SaveData(Globals.ThisAddIn.Documents.ActiveDocument.CurrentDataSet, fileName);
+
+		public void SaveNowAggregatedData(string fileName) =>
+			Xml.SaveData(Globals.ThisAddIn.Documents.ActiveDocument.NowAggregatedDataSet, fileName);
+
+		public void SaveLastAggregatedData(string fileName) =>
+			Xml.SaveData(Globals.ThisAddIn.Documents.ActiveDocument.LastAggregatedDataSet, fileName);
+
+		public void SaveVectorData(string fileName) =>
+			Xml.SaveVectorData(Globals.ThisAddIn.Documents.ActiveDocument.VectorDataSet, fileName);
+
+		/// <summary>
+		/// Зафиксировать данные.
+		/// </summary>
 		public void CommitVariables()
 		{
 			Content.CommitVariable(Doc.Variables, Const.Globals.CAPTION_VARIABLE_NAME, Caption);
@@ -379,17 +480,26 @@ namespace WordHiddenPowers.Documents
 				Content.CommitVariable(Doc.Variables, Const.Globals.XML_CURRENT_VARIABLE_NAME, CurrentDataSet);
 			}
 
-			if (AggregatedDataSet.HasChanges())
+			if (NowAggregatedDataSet.HasChanges())
 			{
-				Content.CommitVariable(Doc.Variables, Const.Globals.XML_AGGREGATED_VARIABLE_NAME, AggregatedDataSet);
+				Content.CommitVariable(Doc.Variables, Const.Globals.XML_NOW_AGGREGATED_VARIABLE_NAME, NowAggregatedDataSet);
 			}
 
-			if (OldAggregatedDataSet.HasChanges())
+			if (LastAggregatedDataSet.HasChanges())
 			{
-				Content.CommitVariable(Doc.Variables, Const.Globals.XML_OLD_AGGREGATED_VARIABLE_NAME, OldAggregatedDataSet);
+				Content.CommitVariable(Doc.Variables, Const.Globals.XML_LAST_AGGREGATED_VARIABLE_NAME, LastAggregatedDataSet);
+			}
+
+			if (VectorDataSet.HasChanges())
+			{
+				Content.CommitVariable(Doc.Variables, Const.Globals.XML_VECTOR_VARIABLE_NAME, VectorDataSet);
 			}
 		}
 
+		/// <summary>
+		/// Проверить наличие данных.
+		/// </summary>
+		/// <returns></returns>
 		public bool VariablesExists()
 		{
 			if (Doc.Variables.Count > 0)
@@ -410,14 +520,20 @@ namespace WordHiddenPowers.Documents
 					Const.Globals.XML_CURRENT_VARIABLE_NAME))
 					return true;
 				else if (Content.ExistsVariable(Doc.Variables,
-					Const.Globals.XML_AGGREGATED_VARIABLE_NAME))
+					Const.Globals.XML_NOW_AGGREGATED_VARIABLE_NAME))
+					return true;
+				else if (Content.ExistsVariable(Doc.Variables,
+					Const.Globals.XML_LAST_AGGREGATED_VARIABLE_NAME))
 					return true;
 				return Content.ExistsVariable(Doc.Variables,
-					Const.Globals.XML_OLD_AGGREGATED_VARIABLE_NAME);
+					Const.Globals.XML_VECTOR_VARIABLE_NAME);
 			}
 			return false;
 		}
 
+		/// <summary>
+		/// Удалить данные.
+		/// </summary>
 		public void DeleteVariables()
 		{
 			foreach (DataTable table in CurrentDataSet.Tables)
@@ -432,9 +548,11 @@ namespace WordHiddenPowers.Documents
 				Content.DeleteVariable(Doc.Variables, Const.Globals.DESCRIPTION_VARIABLE_NAME);
 				Content.DeleteVariable(Doc.Variables, Const.Globals.TABLE_VARIABLE_NAME);
 				Content.DeleteVariable(Doc.Variables, Const.Globals.XML_CURRENT_VARIABLE_NAME);
-				Content.DeleteVariable(Doc.Variables, Const.Globals.XML_AGGREGATED_VARIABLE_NAME);
-				Content.DeleteVariable(Doc.Variables, Const.Globals.XML_OLD_AGGREGATED_VARIABLE_NAME);
+				Content.DeleteVariable(Doc.Variables, Const.Globals.XML_NOW_AGGREGATED_VARIABLE_NAME);
+				Content.DeleteVariable(Doc.Variables, Const.Globals.XML_LAST_AGGREGATED_VARIABLE_NAME);
+				Content.DeleteVariable(Doc.Variables, Const.Globals.XML_VECTOR_VARIABLE_NAME);
 			}
+			State = WordDocumentMode.Default;
 		}
 
 		public void ShowDocumentKeysDialog()
@@ -474,8 +592,8 @@ namespace WordHiddenPowers.Documents
 			FolderBrowserDialog dialog = new FolderBrowserDialog();
 			if (Utils.Dialogs.ShowDialog(dialog) == DialogResult.OK)
 			{
-				FileSystem.GetDataSetFromWordFiles(dialog.SelectedPath, ref aggregatedDataSet);
-				Content.CommitVariable(Doc.Variables, Const.Globals.XML_AGGREGATED_VARIABLE_NAME, AggregatedDataSet);
+				FileSystem.GetDataSetFromWordFiles(dialog.SelectedPath, ref nowAggregatedDataSet);
+				Content.CommitVariable(Doc.Variables, Const.Globals.XML_NOW_AGGREGATED_VARIABLE_NAME, NowAggregatedDataSet);
 				Doc.Saved = false;
 			}
 		}
@@ -490,8 +608,8 @@ namespace WordHiddenPowers.Documents
 			{
 				if (dialog.FilterIndex == 0)
 				{
-					FileSystem.GetDataSetFromWordFile(dialog.FileName, ref aggregatedDataSet);
-					Content.CommitVariable(Doc.Variables, Const.Globals.XML_AGGREGATED_VARIABLE_NAME, AggregatedDataSet);
+					FileSystem.GetDataSetFromWordFile(dialog.FileName, ref nowAggregatedDataSet);
+					Content.CommitVariable(Doc.Variables, Const.Globals.XML_NOW_AGGREGATED_VARIABLE_NAME, NowAggregatedDataSet);
 					Doc.Saved = false;
 				}
 				else
@@ -501,16 +619,16 @@ namespace WordHiddenPowers.Documents
 			}
 		}
 
-		public void ImportOldDataFromWordDocuments()
+		public void ImportOldDataFromWordDocumentsFolder()
 		{
 			FolderBrowserDialog dialog = new FolderBrowserDialog();
 			if (Utils.Dialogs.ShowDialog(dialog) == DialogResult.OK)
 			{
-				if (oldAggregatedDataSet == null)
-					oldAggregatedDataSet = Xml.GetOldAggregatedDataSet(Doc: Doc, out _);
+				if (lastAggregatedDataSet == null)
+					lastAggregatedDataSet = Xml.GetLastAggregatedDataSet(Doc: Doc, out _);
 
-				FileSystem.GetDataSetFromWordFiles(dialog.SelectedPath, ref oldAggregatedDataSet);
-				Content.CommitVariable(Doc.Variables, Const.Globals.XML_OLD_AGGREGATED_VARIABLE_NAME, OldAggregatedDataSet);
+				FileSystem.GetDataSetFromWordFiles(dialog.SelectedPath, ref lastAggregatedDataSet);
+				Content.CommitVariable(Doc.Variables, Const.Globals.XML_LAST_AGGREGATED_VARIABLE_NAME, LastAggregatedDataSet);
 				Doc.Saved = false;
 			}
 		}
@@ -525,9 +643,9 @@ namespace WordHiddenPowers.Documents
 			{
 				if (dialog.FilterIndex == 0)
 				{
-					Xml.CopyModel(aggregatedDataSet, oldAggregatedDataSet);
-					FileSystem.GetDataSetFromWordFile(dialog.FileName, ref oldAggregatedDataSet);
-					Content.CommitVariable(Doc.Variables, Const.Globals.XML_OLD_AGGREGATED_VARIABLE_NAME, OldAggregatedDataSet);
+					Xml.CopyModel(nowAggregatedDataSet, lastAggregatedDataSet);
+					FileSystem.GetDataSetFromWordFile(dialog.FileName, ref lastAggregatedDataSet);
+					Content.CommitVariable(Doc.Variables, Const.Globals.XML_LAST_AGGREGATED_VARIABLE_NAME, LastAggregatedDataSet);
 					Doc.Saved = false;
 				}
 			}
@@ -535,7 +653,7 @@ namespace WordHiddenPowers.Documents
 
 		public void ShowTableViewerDialog()
 		{
-			TableViewerDialog dialog = new TableViewerDialog(AggregatedDataSet, OldAggregatedDataSet);
+			TableViewerDialog dialog = new TableViewerDialog(NowAggregatedDataSet, LastAggregatedDataSet);
 			Utils.Dialogs.ShowDialog(dialog);
 		}
 
@@ -582,7 +700,7 @@ namespace WordHiddenPowers.Documents
 		public void AddTextNote(string categoryGuid, string subcategoryGuid, string description, string value, int rating, int selectionStart, int selectionEnd)
 		{
 			int fileId = GetFileId(FileName);
-			CurrentDataSet.TextPowers.Rows.Add(new object[]
+			CurrentDataSet.TextNotes.Rows.Add(new object[]
 			{
 				null,
 				categoryGuid,
@@ -606,7 +724,7 @@ namespace WordHiddenPowers.Documents
 				string categoryGuid = dataSet.Categories[categoryId].key_guid;
 				string subcategoryGuid = dataSet.Subcategories[subcategoryId].key_guid;
 				Word.Range range = document.Range(selectionStart, selectionEnd);
-				dataSet.TextPowers.Rows.Add(new object[]
+				dataSet.TextNotes.Rows.Add(new object[]
 				{
 					null,
 					categoryGuid,
@@ -628,7 +746,7 @@ namespace WordHiddenPowers.Documents
 		public void AddDecimalNote(string categoryGuid, string subcategoryGuid, string description, double value, int rating, int selectionStart, int selectionEnd)
 		{
 			int fileId = GetFileId(FileName);
-			CurrentDataSet.DecimalPowers.Rows.Add(new object[]
+			CurrentDataSet.DecimalNotes.Rows.Add(new object[]
 			{
 				null,
 				categoryGuid,
@@ -651,7 +769,7 @@ namespace WordHiddenPowers.Documents
 				int fileId = GetFileId(dataSet: dataSet, fileName: document.FullName);
 				string categoryGuid = dataSet.Categories[categoryId].key_guid;
 				string subcategoryGuid = dataSet.Subcategories[subcategoryId].key_guid;
-				dataSet.DecimalPowers.Rows.Add(new object[]
+				dataSet.DecimalNotes.Rows.Add(new object[]
 				{
 					null,
 					categoryGuid,
@@ -679,6 +797,7 @@ namespace WordHiddenPowers.Documents
 				Services.Searcher.Search(
 					document: this,
 					subcategories: ((SelectCategoriesDialog)dialog).CheckedSubcategories);
+
 				MessageBox.Show("Разметка документа с помощью поисковых функций выполнена!",
 							"Разметка документа",
 							MessageBoxButtons.OK,
@@ -727,5 +846,22 @@ namespace WordHiddenPowers.Documents
 		/// Освобождает ресурсы, занятые панелью управления.
 		/// </summary>
 		public void Dispose() => CustomPane?.Dispose();
+
+		public enum WordDocumentMode
+		{
+			/// <summary>
+			/// По умолчанию (шаблоны проверки не загружены)
+			/// </summary>
+			Default,
+			/// <summary>
+			/// Разделение (Анализ одного документа)
+			/// </summary>
+			Separate,
+			/// <summary>
+			/// Объединение (Объединение аналитических данных с нескольких документов)
+			/// </summary>
+			Combine
+		}
+
 	}
 }

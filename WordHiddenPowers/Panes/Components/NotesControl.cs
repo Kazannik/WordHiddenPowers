@@ -23,8 +23,8 @@ namespace WordHiddenPowers.Panes.Components
 		public event EventHandler<EventArgs> PropertiesChanged;
 
 		protected virtual void OnPropertiesChanged(EventArgs e)
-		{		
-			notesListBox.ReadData();		
+		{
+			notesListBox.ReadData();
 			PropertiesChanged?.Invoke(this, e);
 		}
 
@@ -39,7 +39,7 @@ namespace WordHiddenPowers.Panes.Components
 		private Label descriptionLabel;
 		private DateTimePicker dateTimePicker;
 		private Label dateLabel;
-		private NotesListBox notesListBox;
+		private readonly NotesListBox notesListBox;
 		private ContextMenuStrip noteContextMenu;
 		private ToolStripMenuItem mnuNoteEdit;
 		private ToolStripSeparator toolStripMenuItem1;
@@ -50,12 +50,12 @@ namespace WordHiddenPowers.Panes.Components
 
 		public NotesControl(Document document)
 		{
-			Document = document;
-			
+			if (document != null) Document = document;
+
 			InitializeComponent();
 
 			notesListBox = new NotesListBox();
-			notesListBox.DataSet = Document.CurrentDataSet;
+			if (Document != null) notesListBox.DataSet = Document.CurrentDataSet;
 			notesListBox.Dock = DockStyle.Fill;
 			notesListBox.FormattingEnabled = true;
 			notesListBox.Location = new System.Drawing.Point(0, 0);
@@ -76,21 +76,24 @@ namespace WordHiddenPowers.Panes.Components
 			notesListBox.ItemDeleted += new EventHandler<EventArgs>(NoteListBox_ItemDeleted);
 			notesListBox.ItemContentChanged += new EventHandler<ItemEventArgs<ListItem>>(NotesListBox_ItemContentChanged);
 
-			Document.CurrentDataSet.DocumentKeys.DocumentKeysRowChanged += new RepositoryDataSet.DocumentKeysRowChangeEventHandler(DocumentKeys_RowChanged);
-			Document.CurrentDataSet.DocumentKeys.DocumentKeysRowDeleted += new RepositoryDataSet.DocumentKeysRowChangeEventHandler(DocumentKeys_RowChanged);
-			Document.CurrentDataSet.DocumentKeys.TableCleared += new DataTableClearEventHandler(DocumentKeys_TableCleared);
+			if (Document != null)
+			{
+				Document.CurrentDataSet.DocumentKeys.DocumentKeysRowChanged += new RepositoryDataSet.DocumentKeysRowChangeEventHandler(DocumentKeys_RowChanged);
+				Document.CurrentDataSet.DocumentKeys.DocumentKeysRowDeleted += new RepositoryDataSet.DocumentKeysRowChangeEventHandler(DocumentKeys_RowChanged);
+				Document.CurrentDataSet.DocumentKeys.TableCleared += new DataTableClearEventHandler(DocumentKeys_TableCleared);
+			}
 		}
 
 		private void NotesListBox_ItemContentChanged(object sender, ItemEventArgs<ListItem> e)
 		{
-			OnPropertiesChanged(new EventArgs()); 
+			OnPropertiesChanged(new EventArgs());
 		}
 
 		private void NoteListBox_ItemDeleted(object sender, EventArgs e)
 		{
 			Document.CommitVariables();
 		}
-		
+
 		private void NoteOpen_Click(object sender, EventArgs e)
 		{
 			NoteOpen(noteContextMenu.Tag as ListItem);
@@ -128,7 +131,7 @@ namespace WordHiddenPowers.Panes.Components
 					TextNoteDialog dialog = new TextNoteDialog(Document.CurrentDataSet, item.Note);
 					if (dialog.ShowDialog() == DialogResult.OK)
 					{
-						Document.CurrentDataSet.TextPowers.Set(item.Note.Id,
+						Document.CurrentDataSet.TextNotes.Set(item.Note.Id,
 							dialog.Category.Guid,
 							dialog.Subcategory.Guid,
 							dialog.Description,
@@ -149,7 +152,7 @@ namespace WordHiddenPowers.Panes.Components
 					DecimalNoteDialog dialog = new DecimalNoteDialog(Document.CurrentDataSet, item.Note);
 					if (dialog.ShowDialog() == DialogResult.OK)
 					{
-						Document.CurrentDataSet.DecimalPowers.Set(
+						Document.CurrentDataSet.DecimalNotes.Set(
 							item.Note.Id,
 							dialog.Category.Guid,
 							dialog.Subcategory.Guid,
@@ -231,7 +234,7 @@ namespace WordHiddenPowers.Panes.Components
 			get => notesListBox.ShowButtons;
 			set => notesListBox.ShowButtons = value;
 		}
-		
+
 		public void InitializeVariables()
 		{
 			if (Document.Doc.Variables.Count > 0)
@@ -277,12 +280,12 @@ namespace WordHiddenPowers.Panes.Components
 			else
 				return false;
 		}
-		
+
 		private void NotesPane_PropertiesChanged(object sender, EventArgs e)
 		{
 			OnPropertiesChanged(new EventArgs());
 		}
-		
+
 		private void NotesSplitContainer_SplitterMoved(object sender, SplitterEventArgs e)
 		{
 			Settings.Default.NotesPaneSplitterDistance = notesSplitContainer.SplitterDistance;

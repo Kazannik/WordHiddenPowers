@@ -4,10 +4,9 @@ using System.Collections.Generic;
 
 namespace WordHiddenPowers.Repository.Data
 {
-	public class TableCollection: List<(Table current, Table old)>
+	public class TableCollection : List<(Table current, Table old)>
 	{
 		public TableCollection() { }
-
 
 		private class Values
 		{

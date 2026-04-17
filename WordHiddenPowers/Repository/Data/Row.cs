@@ -7,10 +7,10 @@ namespace WordHiddenPowers.Repository.Data
 	{
 		internal RowCollection parent;
 
-		internal Row(RowCollection parent, int CellCount)
+		internal Row(RowCollection parent, int cellCount)
 		{
 			this.parent = parent;
-			for (int i = 0; i < CellCount; i++)
+			for (int i = 0; i < cellCount; i++)
 			{
 				base.Add(new Cell(this));
 			}
@@ -47,7 +47,7 @@ namespace WordHiddenPowers.Repository.Data
 				{
 					for (int c = 0; c < Count; c++)
 					{
-						if (this[c].Value != r[c].Value)
+						if (this[c].NowValue != r[c].NowValue)
 						{
 							return false;
 						}
@@ -63,7 +63,7 @@ namespace WordHiddenPowers.Repository.Data
 		{
 			for (int c = 0; c < a.Count; c++)
 			{
-				a[c].Value += b[c].Value;
+				a[c].NowValue += b[c].NowValue;
 			}
 			return a;
 		}
@@ -72,7 +72,7 @@ namespace WordHiddenPowers.Repository.Data
 		{
 			for (int c = 0; c < a.Count; c++)
 			{
-				a[c].Value -= b[c].Value;
+				a[c].NowValue -= b[c].NowValue;
 			}
 			return a;
 		}
@@ -81,7 +81,7 @@ namespace WordHiddenPowers.Repository.Data
 		{
 			for (int c = 0; c < row.Count; c++)
 			{
-				row[c].Value *= value;
+				row[c].NowValue *= value;
 			}
 			return row;
 		}
@@ -90,7 +90,7 @@ namespace WordHiddenPowers.Repository.Data
 		{
 			for (int c = 0; c < row.Count; c++)
 			{
-				row[c].Value /= value;
+				row[c].NowValue /= value;
 			}
 			return row;
 		}

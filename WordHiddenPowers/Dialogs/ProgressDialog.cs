@@ -25,7 +25,7 @@ namespace ProsecutorialSupervision.Dialogs
 				ProgressBar.Value = value;
 				ProgressLabel.Text = value.ToString() + " %";
 				Refresh();
-			}		
-		}		
+			}
+		}
 	}
 }

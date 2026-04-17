@@ -63,6 +63,26 @@ namespace WordHiddenPowers.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap AI_2 {
+            get {
+                object obj = ResourceManager.GetObject("AI_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap AI_3 {
+            get {
+                object obj = ResourceManager.GetObject("AI_3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ai_process {
             get {
                 object obj = ResourceManager.GetObject("ai-process", resourceCulture);
@@ -116,6 +136,56 @@ namespace WordHiddenPowers.Properties {
         internal static System.Drawing.Bitmap Bold_24 {
             get {
                 object obj = ResourceManager.GetObject("Bold_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ChartType01 {
+            get {
+                object obj = ResourceManager.GetObject("ChartType01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ChartType02 {
+            get {
+                object obj = ResourceManager.GetObject("ChartType02", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ChartType03 {
+            get {
+                object obj = ResourceManager.GetObject("ChartType03", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ChartType04 {
+            get {
+                object obj = ResourceManager.GetObject("ChartType04", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ChartType05 {
+            get {
+                object obj = ResourceManager.GetObject("ChartType05", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -493,6 +563,36 @@ namespace WordHiddenPowers.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Connecting {
+            get {
+                object obj = ResourceManager.GetObject("Connecting", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ConnectionError {
+            get {
+                object obj = ResourceManager.GetObject("ConnectionError", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ConnectionOk {
+            get {
+                object obj = ResourceManager.GetObject("ConnectionOk", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CreateTable_24 {
             get {
                 object obj = ResourceManager.GetObject("CreateTable_24", resourceCulture);
@@ -706,6 +806,16 @@ namespace WordHiddenPowers.Properties {
         internal static System.Drawing.Bitmap TableInsertRowsBelow_24 {
             get {
                 object obj = ResourceManager.GetObject("TableInsertRowsBelow_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UncorrectedAddress {
+            get {
+                object obj = ResourceManager.GetObject("UncorrectedAddress", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

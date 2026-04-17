@@ -17,11 +17,11 @@ namespace ProsecutorialSupervision.Utils
 
 		private static void AddDialog(object item)
 		{
-			if (dialogCollection == null) 
+			if (dialogCollection == null)
 				dialogCollection = new List<object>();
 			dialogCollection.Add(item);
 		}
-		
+
 		/// <summary>
 		/// Принудительное закрытие всех модальных окон и высвобождение ресурсов.
 		/// </summary>
@@ -112,6 +112,6 @@ namespace ProsecutorialSupervision.Utils
 			AddDialog(form);
 			form.Show(ownerWindow);
 			ownerWindow.ReleaseHandle();
-		}		
+		}
 	}
 }
