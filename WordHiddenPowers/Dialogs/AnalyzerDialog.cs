@@ -8,7 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using WordHiddenPowers.Repository;
-using WordHiddenPowers.Services;
 using WordHiddenPowers.Utils;
 using Content = WordHiddenPowers.Utils.WordDocuments.Content;
 using ListItem = WordHiddenPowers.Controls.ListControls.ContentListControl.ListItem;
@@ -51,13 +50,13 @@ namespace WordHiddenPowers.Dialogs
 		{
 			if (e.Item != null && e.Item.IsCategory)
 			{
-				toolStripStatusLabel2.Text = e.Item.owner.Caption;
+				toolStripStatusLabel2.Text = e.Item.owner.Text;
 			}
 			else if (e.Item != null && !e.Item.IsCategory)
 			{
 				if (statusListBox.NowDataSet.Subcategories.Exists(e.Item.owner.Guid))
 				{
-					RepositoryDataSet.SubcategoriesRow dataRow = (RepositoryDataSet.SubcategoriesRow)statusListBox.NowDataSet.Subcategories.GetRow(e.Item.owner.Guid);
+					DocumentDataSet.SubcategoriesRow dataRow = (DocumentDataSet.SubcategoriesRow)statusListBox.NowDataSet.Subcategories.GetRow(e.Item.owner.Guid);
 					toolStripStatusLabel2.Text = dataRow.CategoriesRow.Caption;
 				}
 			}
@@ -270,7 +269,7 @@ namespace WordHiddenPowers.Dialogs
 			}
 		}
 
-		private void GetDictionary(ref IList<string> list, RepositoryDataSet sourceDataSet)
+		private void GetDictionary(ref IList<string> list, DocumentDataSet sourceDataSet)
 		{
 			foreach (string line in sourceDataSet.GetContent())
 			{
@@ -295,14 +294,14 @@ namespace WordHiddenPowers.Dialogs
 
 		private void ToolsDataEmbedding_Click(object sender, EventArgs e)
 		{
-			LLMProcessDialog llmDialog = new LLMProcessDialog(
-				OpenAIService.Uri,
-				OpenAIService.Timeout,
-				OpenAIService.EmbeddingLLMName,
-				document.NowAggregatedDataSet,
-				document.VectorDataSet, null);
+			//LLMProcessDialog llmDialog = new LLMProcessDialog(
+			//	LLMService.Uri,
+			//	LLMService.Timeout,
+			//	LLMService.EmbeddingLLMName,
+			//	document.NowAggregatedDataSet,
+			//	document.VectorDataSet, null);
 
-			Utils.Dialogs.Show(llmDialog);
+			//Utils.Dialogs.Show(llmDialog);
 		}
 
 		private void RatingBox_RatingChanged(object sender, EventArgs e)
@@ -443,10 +442,10 @@ namespace WordHiddenPowers.Dialogs
 			if (noteContextMenu.Tag is ListItem)
 			{
 				ListItem item = noteContextMenu.Tag as ListItem;
-				Clipboard.SetText(string.Format("{0}\n{1}\n{2}", item.Note.Category.Caption, item.Note.Subcategory.Caption, item.Note.Value));
+				Clipboard.SetText(string.Format("{0}\n{1}\n{2}", item.Note.Category.Text, item.Note.Subcategory.Text, item.Note.Value));
 			}
 		}
 
-		
+
 	}
 }

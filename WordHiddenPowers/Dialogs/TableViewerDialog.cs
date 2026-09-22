@@ -14,8 +14,8 @@ namespace WordHiddenPowers.Dialogs
 {
 	public partial class TableViewerDialog : Form
 	{
-		private readonly RepositoryDataSet nowDataSet;
-		private readonly RepositoryDataSet lastDataSet;
+		private readonly DocumentDataSet nowDataSet;
+		private readonly DocumentDataSet lastDataSet;
 
 		private List<Table> nowDataBase;
 		private List<Table> lastDataBase;
@@ -24,9 +24,9 @@ namespace WordHiddenPowers.Dialogs
 		private double maxNowValue;
 		private double maxLastValue;
 
-		public TableViewerDialog(RepositoryDataSet nowDataSet) : this(nowDataSet: nowDataSet, lastDataSet: null) { }
+		public TableViewerDialog(DocumentDataSet nowDataSet) : this(nowDataSet: nowDataSet, lastDataSet: null) { }
 
-		public TableViewerDialog(RepositoryDataSet nowDataSet, RepositoryDataSet lastDataSet)
+		public TableViewerDialog(DocumentDataSet nowDataSet, DocumentDataSet lastDataSet)
 		{
 			this.nowDataSet = nowDataSet;
 			this.lastDataSet = lastDataSet;
@@ -64,7 +64,7 @@ namespace WordHiddenPowers.Dialogs
 			if (nowDataSet == null) return;
 
 			nowDataBase = new List<Table>();
-			foreach (RepositoryDataSet.DocumentKeysRow row in nowDataSet.DocumentKeys)
+			foreach (DocumentDataSet.DocumentKeysRow row in nowDataSet.DocumentKeys)
 			{
 				Table table = Table.Create(row.Description2, row.Caption, row.Description1);
 				if (!table.IsEmpty) nowDataBase.Add(table);
@@ -73,7 +73,7 @@ namespace WordHiddenPowers.Dialogs
 			lastDataBase = new List<Table>();
 			if (lastDataBase != null && lastDataSet.IsTables)
 			{
-				foreach (RepositoryDataSet.DocumentKeysRow row in lastDataSet.DocumentKeys)
+				foreach (DocumentDataSet.DocumentKeysRow row in lastDataSet.DocumentKeys)
 				{
 					Table table = Table.Create(row.Description2, row.Caption, row.Description1);
 					if (!table.IsEmpty) lastDataBase.Add(table);

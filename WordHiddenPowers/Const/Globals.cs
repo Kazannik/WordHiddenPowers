@@ -1,12 +1,17 @@
 ﻿// Ignore Spelling: ADDIN TSV DIC APP Globals
 
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace WordHiddenPowers.Const
 {
 	public static class Globals
 	{
-		public const string APP_FOLDER_NAME = "Microsoft Word MLModel";
+		public readonly static Size ACTION_BUTTON_SIZE = new(100, 27);
+		private static readonly Size BUTTON_SIZE = new((int)(SystemInformation.MenuHeight * 3.2), (int)(SystemInformation.MenuHeight * 1.2));
+
+		public const string APP_FOLDER_NAME = "WordHiddenPowers";
+		public const string APP_MLMODEL_FOLDER_NAME = "Microsoft Word MLModel";
 
 		/// <summary>
 		/// Минимальный порог для оценки параграфа как удовлетворяющего требованиям. 
@@ -33,8 +38,12 @@ namespace WordHiddenPowers.Const
 		public const string DATE_VARIABLE_NAME = "Date" + VARIABLES_NAME;
 		public const string XML_CURRENT_VARIABLE_NAME = "Xml" + VARIABLES_NAME;
 		public const string TABLE_VARIABLE_NAME = "Table" + VARIABLES_NAME;
+
 		public const string ML_MODEL_VARIABLE_NAME = "MLModel" + VARIABLES_NAME;
+		public const string CHAT_LLMODEL_VARIABLE_NAME = "ChatLLModel" + VARIABLES_NAME;
 		public const string EMBED_LLMODEL_VARIABLE_NAME = "EmbedLLModel" + VARIABLES_NAME;
+
+		public const string CHAT_SYSTEM_MESSAGE_VARIABLE_NAME = "ChatSystemMessage" + VARIABLES_NAME;
 
 
 		///// <summary>

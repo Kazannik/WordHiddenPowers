@@ -5,6 +5,8 @@ using System;
 using System.Data;
 using System.Windows.Forms;
 using WordHiddenPowers.Dialogs;
+using WordHiddenPowers.EventsBus;
+using WordHiddenPowers.EventsBus.EventArgs;
 using WordHiddenPowers.Panes;
 using WordHiddenPowers.Repository;
 using WordHiddenPowers.Utils;
@@ -18,36 +20,42 @@ namespace WordHiddenPowers.Documents
 {
 	public partial class Document : IDisposable
 	{
-		private WordDocumentMode state = WordDocumentMode.Default;
+		private readonly DocumentCollection parent;
 
+		private WordDocumentMode _state = WordDocumentMode.Default;
+
+		/// <summary>
+		/// Статус документа.
+		/// </summary>
 		internal WordDocumentMode State
 		{
-			get => state;
+			get => _state;
 			private set
 			{
-				state = value;
-				Pane.NotesControlVisible = state == WordDocumentMode.Separate;
+				if (_state != value)
+				{
+					_state = value;
+					GlobalsEventsBus.DoDocumentPropertiesChanged(this);
+				}
 			}
 		}
 
 		internal bool IsTableSchema => currentDataSet != null && currentDataSet.IsTableSchema;
 
-		private readonly DocumentCollection parent;
-
 		/// <summary>
 		/// Основные данные документа.
 		/// </summary>
-		private RepositoryDataSet currentDataSet;
+		private DocumentDataSet currentDataSet;
 
 		/// <summary>
 		/// Агрегированные данные из нескольких документов.
 		/// </summary>
-		private RepositoryDataSet nowAggregatedDataSet;
+		private DocumentDataSet nowAggregatedDataSet;
 
 		/// <summary>
 		/// Сопоставимые агрегированные данные из нескольких документов (например, за прошлый период).
 		/// </summary>
-		private RepositoryDataSet lastAggregatedDataSet;
+		private DocumentDataSet lastAggregatedDataSet;
 
 		/// <summary>
 		/// Хранилище векторов.
@@ -187,7 +195,7 @@ namespace WordHiddenPowers.Documents
 
 		public bool ContentHide { get; set; }
 
-		public RepositoryDataSet CurrentDataSet
+		public DocumentDataSet CurrentDataSet
 		{
 			get
 			{
@@ -196,14 +204,14 @@ namespace WordHiddenPowers.Documents
 					currentDataSet = Xml.GetCurrentDataSet(Doc: Doc, out bool isCorrect);
 					if (!isCorrect)
 					{
-						currentDataSet = new RepositoryDataSet();
+						currentDataSet = new DocumentDataSet();
 					}
 				}
 				return currentDataSet;
 			}
 		}
 
-		public RepositoryDataSet NowAggregatedDataSet
+		public DocumentDataSet NowAggregatedDataSet
 		{
 			get
 			{
@@ -212,14 +220,14 @@ namespace WordHiddenPowers.Documents
 					nowAggregatedDataSet = Xml.GetNowAggregatedDataSet(Doc: Doc, out bool isCorrect);
 					if (!isCorrect)
 					{
-						nowAggregatedDataSet = new RepositoryDataSet();
+						nowAggregatedDataSet = new DocumentDataSet();
 					}
 				}
 				return nowAggregatedDataSet;
 			}
 		}
 
-		public RepositoryDataSet LastAggregatedDataSet
+		public DocumentDataSet LastAggregatedDataSet
 		{
 			get
 			{
@@ -228,7 +236,7 @@ namespace WordHiddenPowers.Documents
 					lastAggregatedDataSet = Xml.GetLastAggregatedDataSet(Doc: Doc, out bool isCorrect);
 					if (!isCorrect)
 					{
-						lastAggregatedDataSet = new RepositoryDataSet();
+						lastAggregatedDataSet = new DocumentDataSet();
 					}
 				}
 				return lastAggregatedDataSet;
@@ -262,48 +270,105 @@ namespace WordHiddenPowers.Documents
 			Doc = doc;
 			Hwnd = Doc.Windows[1].Hwnd;
 
-
-			bool oldState = this.parent.paneVisibleButton.Checked;
-
-			this.parent.paneVisibleButton.Checked = false;
-
-			CustomPane = Globals.ThisAddIn.CustomTaskPanes.Add(new AddInPane(this, Hwnd), Const.Panes.PANE_TITLE, Doc.Windows[1]);
-			CustomPane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
-			CustomPane.Width = 600;
-			CustomPane.Visible = oldState;
-			CustomPane.VisibleChanged += new EventHandler(Pane_VisibleChanged);
-			Pane.PropertiesChanged += new EventHandler<EventArgs>(Pane_PropertiesChanged);
-
 			if (Content.ExistsVariable(Doc.Variables, Const.Globals.XML_NOW_AGGREGATED_VARIABLE_NAME))
 			{
-				State = WordDocumentMode.Combine;
+				_state = WordDocumentMode.Combine;
 			}
 			else if (Content.ExistsVariable(Doc.Variables, Const.Globals.XML_CURRENT_VARIABLE_NAME))
 			{
-				State = WordDocumentMode.Separate;
+				_state = WordDocumentMode.Separate;
 			}
 			else
 			{
-				State = WordDocumentMode.Default;
+				_state = WordDocumentMode.Default;
 			}
-			this.parent.paneVisibleButton.Checked = oldState;
+
+			try
+			{
+				CustomPane = Globals.ThisAddIn.CustomTaskPanes.Add(new AddInPane(this, Hwnd), Const.Panes.PANE_TITLE, Doc.Windows[1]);
+				CustomPane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
+				CustomPane.Width = 600;
+				CustomPane.VisibleChanged += new EventHandler(CustomPane_VisibleChanged);
+				CustomPane.Visible = GlobalsEventsBus.PaneVisible;
+				
+				Pane.PropertiesChanged += new EventHandler<EventArgs>(Pane_PropertiesChanged);
+				Pane.NotesControlVisible = _state == WordDocumentMode.Separate;
+			}
+			catch (Exception) { }
+			GlobalsEventsBus.DocumentSelectionChange += new EventHandler<WordSelectionEventArgs>(GlobalsEventsBus_DocumentSelectionChange);
+			GlobalsEventsBus.PaneStateChanged += new EventHandler<PaneStateEventArgs>(GlobalsEventsBus_PaneStateChanged);
 		}
 
-		private void Pane_VisibleChanged(object sender, EventArgs e)
+		private void GlobalsEventsBus_PaneStateChanged(object sender, PaneStateEventArgs e)
 		{
-			CustomTaskPane pane = (CustomTaskPane)sender;
-			if (parent != null) parent.paneVisibleButton.Checked = pane.Visible;
+			Timer delayTimer = new()
+			{
+				Interval = 10
+			};
+			delayTimer.Tick += (timerSender, timerArgs) =>
+			{
+				delayTimer.Stop();
+				delayTimer.Dispose();
+				CustomPane.Visible = e.IsVisible;
+				Globals.Ribbons.AddInMainRibbon.paneVisibleButton.Checked = e.IsVisible;
+			};
+			delayTimer.Start();
+		}
+
+		private void CustomPane_VisibleChanged(object sender, EventArgs e)
+		{
+			if (CustomPane.Visible && !GlobalsEventsBus.PaneVisible)
+				GlobalsEventsBus.SetPaneVisibleState(this);
+			else if (!CustomPane.Visible && GlobalsEventsBus.PaneVisible)
+				GlobalsEventsBus.SetPaneHideState(this);
+		}
+
+		private void GlobalsEventsBus_DocumentSelectionChange(object sender, WordSelectionEventArgs e)
+		{
+			if (e.Selection.Document.Windows[1].Hwnd != Hwnd) return;
+
+			if (e.Selection.Start == e.Selection.End)
+			{
+				ChatMessageMode = ChatMessageModeEnum.InsertHere;
+				previousCharacter = e.Selection.Start == 0 ? default : e.Selection.Document.Range(e.Selection.Start - 1, e.Selection.Start);
+				nextCharacter = e.Selection.End == e.Selection.Document.Range().End ? default : e.Selection.Document.Range(e.Selection.End, e.Selection.End + 1);
+			}
+			else
+			{
+				bool isPrevious = IsPreviousParagraphIsNull(e.Selection, out previousParagraph);
+				bool isBetween = IsCenterParagraphIsNull(e.Selection, out firstRange, out centerParagraph, out lastRange);
+				bool isNext = IsNextParagraphIsNull(e.Selection, out nextParagraph);
+				messageRange = e.Selection.Range;
+
+				if (!isPrevious && !isBetween && !isNext)
+				{
+					ChatMessageMode = ChatMessageModeEnum.ReplaceSelection;
+					previousCharacter = e.Selection.Start == 0 ? default : e.Selection.Document.Range(e.Selection.Start - 1, e.Selection.Start);
+					nextCharacter = e.Selection.End == e.Selection.Document.Range().End ? default : e.Selection.Document.Range(e.Selection.End, e.Selection.End + 1);
+				}
+				else
+				{
+					previousCharacter = default;
+					nextCharacter = default;
+
+					ChatMessageMode = ChatMessageModeEnum.ReplaceSelection | ChatMessageModeEnum.Insert;
+					if (isPrevious) ChatMessageMode |= ChatMessageModeEnum.Previous;
+					if (isBetween) ChatMessageMode |= ChatMessageModeEnum.Between;
+					if (isNext) ChatMessageMode |= ChatMessageModeEnum.Next;
+				}
+			}
+
+			GlobalsEventsBus.DoDocumentChatMessageModeChanged(this, ChatMessageMode);
 		}
 
 		public static Document Create(DocumentCollection parent, string fileName, Word._Document Doc)
 		{
-			Document document = new Document(
+			Document document = new(
 				parent: parent,
 				fileName: fileName,
 				doc: Doc);
 			return document;
 		}
-
 
 		/// <summary>
 		/// Создать чистую структуру данных.
@@ -327,9 +392,9 @@ namespace WordHiddenPowers.Documents
 		}
 
 		/// <summary>
-		/// Загрузить чистую структуру основных данных.
+		/// Загрузить чистую структуру основных данных файла.
 		/// </summary>
-		/// <param name="fileName"></param>
+		/// <param name="fileName">XML файл.</param>
 		public void LoadClearData(string fileName)
 		{
 			if (Doc.Variables.Count > 0)
@@ -352,9 +417,9 @@ namespace WordHiddenPowers.Documents
 		}
 
 		/// <summary>
-		/// Загрузить основные данные.
+		/// Загрузить основные данные из файла.
 		/// </summary>
-		/// <param name="fileName"></param>
+		/// <param name="fileName">XML файл.</param>
 		public void LoadCurrentData(string fileName)
 		{
 			LoadDataSet(CurrentDataSet, fileName);
@@ -363,9 +428,9 @@ namespace WordHiddenPowers.Documents
 		}
 
 		/// <summary>
-		/// Загрузить агрегированные данные текущего периода.
+		/// Загрузить агрегированные данные текущего периода из файла.
 		/// </summary>
-		/// <param name="fileName"></param>
+		/// <param name="fileName">XML файл.</param>
 		public void LoadNowAggregatedData(string fileName)
 		{
 			LoadDataSet(NowAggregatedDataSet, fileName);
@@ -374,9 +439,9 @@ namespace WordHiddenPowers.Documents
 		}
 
 		/// <summary>
-		/// Загрузить агрегированные данные прошлого периода.
+		/// Загрузить агрегированные данные прошлого периода из файла.
 		/// </summary>
-		/// <param name="fileName"></param>
+		/// <param name="fileName">XML файл.</param>
 		public void LoadLastAggregatedData(string fileName)
 		{
 			LoadDataSet(LastAggregatedDataSet, fileName);
@@ -384,7 +449,7 @@ namespace WordHiddenPowers.Documents
 			State = WordDocumentMode.Combine;
 		}
 
-		private void LoadDataSet(RepositoryDataSet dataSet, string fileName)
+		private void LoadDataSet(DocumentDataSet dataSet, string fileName)
 		{
 			try
 			{
@@ -398,24 +463,14 @@ namespace WordHiddenPowers.Documents
 			}
 		}
 
-		private void ClearDataSet(RepositoryDataSet dataSet)
+		private void ClearDataSet(DocumentDataSet dataSet)
 		{
 			try
 			{
-				dataSet.RowsHeaders.Clear();
-				dataSet.ColumnsHeaders.Clear();
-
-				dataSet.Subcategories.Clear();
-				dataSet.Categories.Clear();
-
-				dataSet.DocumentKeys.Clear();
-				dataSet.WordFiles.Clear();
-				dataSet.DecimalTable.Clear();
-
-				dataSet.DecimalNotes.Clear();
-				dataSet.TextNotes.Clear();
-
-				dataSet.Setting.Clear();
+				foreach (DataTable table in dataSet.Tables)
+				{
+					table.Clear();
+				}
 			}
 			catch (Exception ex)
 			{
@@ -424,9 +479,9 @@ namespace WordHiddenPowers.Documents
 		}
 
 		/// <summary>
-		/// Загрузить векторную базу дааных.
+		/// Загрузить векторную базу даных из файла.
 		/// </summary>
-		/// <param name="fileName"></param>
+		/// <param name="fileName">XML файл.</param>
 		public void LoadVectorData(string fileName)
 		{
 			try
@@ -466,7 +521,7 @@ namespace WordHiddenPowers.Documents
 			Xml.SaveVectorData(Globals.ThisAddIn.Documents.ActiveDocument.VectorDataSet, fileName);
 
 		/// <summary>
-		/// Зафиксировать данные.
+		/// Зафиксировать дополниетльные данные.
 		/// </summary>
 		public void CommitVariables()
 		{
@@ -497,7 +552,7 @@ namespace WordHiddenPowers.Documents
 		}
 
 		/// <summary>
-		/// Проверить наличие данных.
+		/// Проверить наличие дополнительных данных.
 		/// </summary>
 		/// <returns></returns>
 		public bool VariablesExists()
@@ -532,14 +587,11 @@ namespace WordHiddenPowers.Documents
 		}
 
 		/// <summary>
-		/// Удалить данные.
+		/// Удалить дополнительные данные.
 		/// </summary>
 		public void DeleteVariables()
 		{
-			foreach (DataTable table in CurrentDataSet.Tables)
-			{
-				table.Clear();
-			}
+			ClearDataSet(CurrentDataSet);
 
 			if (Doc.Variables.Count > 0)
 			{
@@ -589,10 +641,10 @@ namespace WordHiddenPowers.Documents
 
 		public void ImportDataFromWordDocuments()
 		{
-			FolderBrowserDialog dialog = new FolderBrowserDialog();
+			FolderBrowserDialog dialog = new();
 			if (Utils.Dialogs.ShowDialog(dialog) == DialogResult.OK)
 			{
-				FileSystem.GetDataSetFromWordFiles(dialog.SelectedPath, ref nowAggregatedDataSet);
+				FileSystem.GetDataSetFromWordDirectory(dialog.SelectedPath, ref nowAggregatedDataSet);
 				Content.CommitVariable(Doc.Variables, Const.Globals.XML_NOW_AGGREGATED_VARIABLE_NAME, NowAggregatedDataSet);
 				Doc.Saved = false;
 			}
@@ -600,17 +652,18 @@ namespace WordHiddenPowers.Documents
 
 		public void ImportDataFromWordDocument()
 		{
-			OpenFileDialog dialog = new OpenFileDialog
+			OpenFileDialog dialog = new()
 			{
 				Filter = "Документ Word|*.doc;*.docx| Текстовый файл с контекстом заметок|*.*"
 			};
 			if (Utils.Dialogs.ShowDialog(dialog) == DialogResult.OK)
 			{
-				if (dialog.FilterIndex == 0)
+				if (dialog.FilterIndex == 1)
 				{
 					FileSystem.GetDataSetFromWordFile(dialog.FileName, ref nowAggregatedDataSet);
 					Content.CommitVariable(Doc.Variables, Const.Globals.XML_NOW_AGGREGATED_VARIABLE_NAME, NowAggregatedDataSet);
 					Doc.Saved = false;
+					State = WordDocumentMode.Combine;
 				}
 				else
 				{
@@ -621,13 +674,13 @@ namespace WordHiddenPowers.Documents
 
 		public void ImportOldDataFromWordDocumentsFolder()
 		{
-			FolderBrowserDialog dialog = new FolderBrowserDialog();
+			FolderBrowserDialog dialog = new();
 			if (Utils.Dialogs.ShowDialog(dialog) == DialogResult.OK)
 			{
 				if (lastAggregatedDataSet == null)
 					lastAggregatedDataSet = Xml.GetLastAggregatedDataSet(Doc: Doc, out _);
 
-				FileSystem.GetDataSetFromWordFiles(dialog.SelectedPath, ref lastAggregatedDataSet);
+				FileSystem.GetDataSetFromWordDirectory(dialog.SelectedPath, ref lastAggregatedDataSet);
 				Content.CommitVariable(Doc.Variables, Const.Globals.XML_LAST_AGGREGATED_VARIABLE_NAME, LastAggregatedDataSet);
 				Doc.Saved = false;
 			}
@@ -635,13 +688,13 @@ namespace WordHiddenPowers.Documents
 
 		public void ImportOldDataFromWordDocument()
 		{
-			OpenFileDialog dialog = new OpenFileDialog
+			OpenFileDialog dialog = new()
 			{
 				Filter = "Документ Word|*.doc;*.docx"
 			};
 			if (Utils.Dialogs.ShowDialog(dialog) == DialogResult.OK)
 			{
-				if (dialog.FilterIndex == 0)
+				if (dialog.FilterIndex == 1)
 				{
 					Xml.CopyModel(nowAggregatedDataSet, lastAggregatedDataSet);
 					FileSystem.GetDataSetFromWordFile(dialog.FileName, ref lastAggregatedDataSet);
@@ -653,19 +706,19 @@ namespace WordHiddenPowers.Documents
 
 		public void ShowTableViewerDialog()
 		{
-			TableViewerDialog dialog = new TableViewerDialog(NowAggregatedDataSet, LastAggregatedDataSet);
+			TableViewerDialog dialog = new(NowAggregatedDataSet, LastAggregatedDataSet);
 			Utils.Dialogs.ShowDialog(dialog);
 		}
 
 		public void ShowAnalyzerDialog()
 		{
-			AnalyzerDialog dialog = new AnalyzerDialog(this);
+			AnalyzerDialog dialog = new(this);
 			Utils.Dialogs.Show(dialog);
 		}
 
 		public void AddTextNote(Word.Selection selection)
 		{
-			TextNoteDialog dialog = new TextNoteDialog(CurrentDataSet, selection);
+			TextNoteDialog dialog = new(CurrentDataSet, selection);
 			if (Utils.Dialogs.ShowDialog(dialog) == DialogResult.OK)
 			{
 				AddTextNote(
@@ -682,7 +735,7 @@ namespace WordHiddenPowers.Documents
 
 		public void AddDecimalNote(Word.Selection selection)
 		{
-			DecimalNoteDialog dialog = new DecimalNoteDialog(CurrentDataSet, selection);
+			DecimalNoteDialog dialog = new(CurrentDataSet, selection);
 			if (Utils.Dialogs.ShowDialog(dialog) == DialogResult.OK)
 			{
 				AddDecimalNote(
@@ -700,8 +753,8 @@ namespace WordHiddenPowers.Documents
 		public void AddTextNote(string categoryGuid, string subcategoryGuid, string description, string value, int rating, int selectionStart, int selectionEnd)
 		{
 			int fileId = GetFileId(FileName);
-			CurrentDataSet.TextNotes.Rows.Add(new object[]
-			{
+			CurrentDataSet.TextNotes.Rows.Add(
+			[
 				null,
 				categoryGuid,
 				subcategoryGuid,
@@ -711,21 +764,21 @@ namespace WordHiddenPowers.Documents
 				selectionStart,
 				selectionEnd,
 				fileId
-			});
+			]);
 			CommitVariables();
 		}
 
 		public static void AddTextNote(Word._Document document, int categoryId, int subcategoryId, int rating, int selectionStart, int selectionEnd)
 		{
-			RepositoryDataSet dataSet = Xml.GetCurrentDataSet(document, out bool isCorrect);
+			DocumentDataSet dataSet = Xml.GetCurrentDataSet(document, out bool isCorrect);
 			if (isCorrect)
 			{
 				int fileId = GetFileId(dataSet: dataSet, fileName: document.FullName);
 				string categoryGuid = dataSet.Categories[categoryId].key_guid;
 				string subcategoryGuid = dataSet.Subcategories[subcategoryId].key_guid;
 				Word.Range range = document.Range(selectionStart, selectionEnd);
-				dataSet.TextNotes.Rows.Add(new object[]
-				{
+				dataSet.TextNotes.Rows.Add(
+				[
 					null,
 					categoryGuid,
 					subcategoryGuid,
@@ -735,7 +788,7 @@ namespace WordHiddenPowers.Documents
 					selectionStart,
 					selectionEnd,
 					fileId
-				});
+				]);
 				if (dataSet.HasChanges())
 				{
 					Content.CommitVariable(document.Variables, Const.Globals.XML_CURRENT_VARIABLE_NAME, dataSet);
@@ -746,8 +799,8 @@ namespace WordHiddenPowers.Documents
 		public void AddDecimalNote(string categoryGuid, string subcategoryGuid, string description, double value, int rating, int selectionStart, int selectionEnd)
 		{
 			int fileId = GetFileId(FileName);
-			CurrentDataSet.DecimalNotes.Rows.Add(new object[]
-			{
+			CurrentDataSet.DecimalNotes.Rows.Add(
+			[
 				null,
 				categoryGuid,
 				subcategoryGuid,
@@ -757,20 +810,20 @@ namespace WordHiddenPowers.Documents
 				selectionStart,
 				selectionEnd,
 				fileId
-			});
+			]);
 			CommitVariables();
 		}
 
 		public static void AddDecimalNote(Word._Document document, int categoryId, int subcategoryId, double value, int rating, int selectionStart, int selectionEnd)
 		{
-			RepositoryDataSet dataSet = Xml.GetCurrentDataSet(document, out bool isCorrect);
+			DocumentDataSet dataSet = Xml.GetCurrentDataSet(document, out bool isCorrect);
 			if (isCorrect)
 			{
 				int fileId = GetFileId(dataSet: dataSet, fileName: document.FullName);
 				string categoryGuid = dataSet.Categories[categoryId].key_guid;
 				string subcategoryGuid = dataSet.Subcategories[subcategoryId].key_guid;
-				dataSet.DecimalNotes.Rows.Add(new object[]
-				{
+				dataSet.DecimalNotes.Rows.Add(
+				[
 					null,
 					categoryGuid,
 					subcategoryGuid,
@@ -780,7 +833,7 @@ namespace WordHiddenPowers.Documents
 					selectionStart,
 					selectionEnd,
 					fileId
-				});
+				]);
 				if (dataSet.HasChanges())
 				{
 					Content.CommitVariable(document.Variables, Const.Globals.XML_CURRENT_VARIABLE_NAME, dataSet);
@@ -788,49 +841,9 @@ namespace WordHiddenPowers.Documents
 			}
 		}
 
-		public void ShowSearchServiceDialog()
-		{
-			Form dialog = new SelectCategoriesDialog(this);
-			if (Utils.Dialogs.ShowDialog(dialog) == DialogResult.OK)
-			{
-				Pane.NotesControl.ShowButtons = true;
-				Services.Searcher.Search(
-					document: this,
-					subcategories: ((SelectCategoriesDialog)dialog).CheckedSubcategories);
-
-				MessageBox.Show("Разметка документа с помощью поисковых функций выполнена!",
-							"Разметка документа",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Information);
-				Pane.NotesControl.ShowButtons = false;
-			}
-		}
-
-		public void MLSearchService()
-		{
-			Pane.NotesControl.ShowButtons = true;
-			Services.MLService.Search(document: this, Const.Globals.LEVEL_PASSAGE);
-			MessageBox.Show("Разметка документа с помощью нейронной сети выполнена!",
-						"Разметка документа",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Information);
-			Pane.NotesControl.ShowButtons = false;
-		}
-
-		public void LLMSearchService()
-		{
-			Pane.NotesControl.ShowButtons = true;
-			Services.MLService.Search(document: this, Const.Globals.LEVEL_PASSAGE);
-			MessageBox.Show("Разметка документа с помощью нейронной сети выполнена!",
-						"Разметка документа",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Information);
-			Pane.NotesControl.ShowButtons = false;
-		}
-
 		private int GetFileId(string fileName) => GetFileId(dataSet: CurrentDataSet, fileName: fileName);
 
-		private static int GetFileId(RepositoryDataSet dataSet, string fileName)
+		private static int GetFileId(DocumentDataSet dataSet, string fileName)
 		{
 			if (dataSet.WordFiles.Exists(fileName: fileName))
 			{
@@ -845,23 +858,31 @@ namespace WordHiddenPowers.Documents
 		/// <summary>
 		/// Освобождает ресурсы, занятые панелью управления.
 		/// </summary>
-		public void Dispose() => CustomPane?.Dispose();
+		public void Dispose()
+		{
+			GlobalsEventsBus.DocumentSelectionChange -= GlobalsEventsBus_DocumentSelectionChange;
+			CustomPane?.Dispose();
+		}
 
+		/// <summary>
+		/// Статус документа (наличие дополнительных данных). 
+		/// </summary>
 		public enum WordDocumentMode
 		{
 			/// <summary>
-			/// По умолчанию (шаблоны проверки не загружены)
+			/// По умолчанию (шаблоны не загружены)
 			/// </summary>
 			Default,
+
 			/// <summary>
-			/// Разделение (Анализ одного документа)
+			/// Разделение (анализ одного документа)
 			/// </summary>
 			Separate,
+
 			/// <summary>
-			/// Объединение (Объединение аналитических данных с нескольких документов)
+			/// Объединение (коллекция аналитических данных из нескольких документов)
 			/// </summary>
 			Combine
 		}
-
 	}
 }

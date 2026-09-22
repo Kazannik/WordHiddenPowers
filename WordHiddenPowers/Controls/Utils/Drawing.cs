@@ -9,13 +9,13 @@ namespace WordHiddenPowers.Controls.Utils
 {
 	public static class Drawing
 	{
-		public static readonly StringFormat CENTER_STRING_FORMAT = new StringFormat
+		public static readonly StringFormat CENTER_STRING_FORMAT = new()
 		{
 			Alignment = StringAlignment.Center,
 			LineAlignment = StringAlignment.Center
 		};
 
-		public static readonly StringFormat LEFT_STRING_FORMAT = new StringFormat
+		public static readonly StringFormat LEFT_STRING_FORMAT = new()
 		{
 			Alignment = StringAlignment.Near,
 			LineAlignment = StringAlignment.Near

@@ -49,7 +49,7 @@ namespace WordHiddenPowers.Dialogs
 
 				Category item = e.Item.owner as Category;
 
-				captionTextBox.Text = item.Caption;
+				captionTextBox.Text = item.Text;
 				descriptionTextBox.Text = item.Description;
 				obligatoryСheckBox.Checked = item.IsObligatory;
 
@@ -70,7 +70,7 @@ namespace WordHiddenPowers.Dialogs
 
 				Subcategory item = e.Item.owner as Subcategory;
 
-				captionTextBox.Text = item.Caption;
+				captionTextBox.Text = item.Text;
 				descriptionTextBox.Text = item.Description;
 				obligatoryСheckBox.Checked = item.IsObligatory;
 
@@ -173,7 +173,7 @@ namespace WordHiddenPowers.Dialogs
 			{
 				Category category = item.owner as Category;
 
-				category.Caption = captionTextBox.Text;
+				category.Text = captionTextBox.Text;
 				category.Description = descriptionTextBox.Text;
 				category.IsObligatory = obligatoryСheckBox.Checked;
 
@@ -190,7 +190,7 @@ namespace WordHiddenPowers.Dialogs
 			{
 				Subcategory subcategory = item.owner as Subcategory;
 
-				subcategory.Caption = captionTextBox.Text;
+				subcategory.Text = captionTextBox.Text;
 				subcategory.Description = descriptionTextBox.Text;
 				subcategory.IsObligatory = obligatoryСheckBox.Checked;
 

@@ -23,18 +23,23 @@ namespace WordHiddenPowers.Controls.ComboControls
 
 		#endregion
 
-		public void InitializeSource(RepositoryDataSet dataSet, Category category, bool isText)
+		public void InitializeSource(DocumentDataSet dataSet, Category category, bool isText)
 		{
 			Items.Clear();
 
 			if (dataSet != null && category != null)
 			{
-				foreach (RepositoryDataSet.SubcategoriesRow dataRow in dataSet.Subcategories.GetSubcategoriesRows(category.Guid, isText))
+				foreach (DocumentDataSet.SubcategoriesRow dataRow in dataSet.Subcategories.GetSubcategoriesRows(category.Guid, isText))
 				{
 					Subcategory subcategory = Subcategory.Create(category, dataRow);
 					Add(subcategory);
 				}
 			}
+		}
+
+		protected override Size OnMeasurePrefixBound(Graphics graphics, Font font)
+		{
+			return graphics.MeasureString("FFFFF", font).ToSize();
 		}
 	}
 }

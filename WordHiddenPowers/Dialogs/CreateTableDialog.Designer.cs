@@ -508,8 +508,8 @@
 			// 
 			// CreateTableDialog
 			// 
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			resources.ApplyResources(this, "$this");
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.dataGridView);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.toolStrip1);

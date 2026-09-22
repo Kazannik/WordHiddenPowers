@@ -24,10 +24,12 @@ namespace ProsecutorialSupervision.Utils.WordDocuments
 	static class Content
 	{
 		private const int BUFFER_SIZE = 65280;
+		private const string REGEX_PATTERN = "^{0}(_\\d+)*$";
+		private const string VARIABLE_NAME_MASK = "{0}_{1}";
 
 		public static bool ExistsVariable(Word.Variables array, string variableName)
 		{
-			Regex regex = new Regex("^" + variableName + "(_\\d+)*$");
+			Regex regex = new(string.Format(REGEX_PATTERN, variableName));
 			for (int i = 1; i <= array.Count; i++)
 			{
 				if (regex.IsMatch(array[i].Name)) return true;
@@ -37,7 +39,7 @@ namespace ProsecutorialSupervision.Utils.WordDocuments
 
 		public static Word.Variable GetVariable(Word.Variables array, string variableName)
 		{
-			Regex regex = new Regex("^" + variableName + "(_\\d+)*$");
+			Regex regex = new(string.Format(REGEX_PATTERN, variableName));
 			for (int i = 1; i <= array.Count; i++)
 			{
 				if (regex.IsMatch(array[i].Name)) return array[i];
@@ -79,8 +81,8 @@ namespace ProsecutorialSupervision.Utils.WordDocuments
 
 		public static void CommitVariable(Word.Variables array, string variableName, DataSet dataSet)
 		{
-			StringBuilder builder = new StringBuilder();
-			StringWriter writer = new StringWriter(builder);
+			StringBuilder builder = new();
+			StringWriter writer = new(builder);
 			dataSet.WriteXml(writer, XmlWriteMode.WriteSchema);
 			writer.Close();
 
@@ -103,7 +105,7 @@ namespace ProsecutorialSupervision.Utils.WordDocuments
 				{
 					CommitVariable(
 						array: array,
-						variableName: variableName + "_" + i.ToString(),
+						variableName: string.Format(VARIABLE_NAME_MASK, variableName, i),
 						value: xml.Substring(0, BUFFER_SIZE));
 					i += 1;
 					xml = xml.Substring(BUFFER_SIZE);
@@ -112,7 +114,7 @@ namespace ProsecutorialSupervision.Utils.WordDocuments
 				if (xml.Length > 0)
 					CommitVariable(
 						array: array,
-						variableName: variableName + "_" + i.ToString(),
+						variableName: string.Format(VARIABLE_NAME_MASK, variableName, i),
 						value: xml);
 			}
 		}

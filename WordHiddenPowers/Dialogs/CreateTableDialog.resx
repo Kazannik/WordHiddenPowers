@@ -158,7 +158,7 @@
     <value>Закрыть</value>
   </data>
   <data name="mnuFile.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 24</value>
+    <value>59, 26</value>
   </data>
   <data name="mnuFile.Text" xml:space="preserve">
     <value>Файл</value>
@@ -221,7 +221,7 @@
     <value>Удалить</value>
   </data>
   <data name="mnuTable.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 24</value>
+    <value>82, 26</value>
   </data>
   <data name="mnuTable.Text" xml:space="preserve">
     <value>Таблица</value>
@@ -234,7 +234,7 @@
     <value>5, 2, 0, 2</value>
   </data>
   <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>449, 28</value>
+    <value>449, 30</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
@@ -427,7 +427,7 @@
     <value>Удалить</value>
   </data>
   <data name="toolStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 28</value>
+    <value>0, 30</value>
   </data>
   <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
     <value>449, 31</value>
@@ -484,7 +484,7 @@
     <value>Fill</value>
   </data>
   <data name="dataGridView.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 59</value>
+    <value>0, 61</value>
   </data>
   <data name="dataGridView.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
@@ -493,7 +493,7 @@
     <value>62</value>
   </data>
   <data name="dataGridView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>449, 356</value>
+    <value>449, 354</value>
   </data>
   <data name="dataGridView.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -552,9 +552,6 @@
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>8, 16</value>
-  </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>449, 437</value>
   </data>

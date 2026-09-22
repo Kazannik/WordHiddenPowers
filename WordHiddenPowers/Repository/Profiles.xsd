@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ProfilesCollection" targetNamespace="http://tempuri.org/Profiles.xsd" xmlns:mstns="http://tempuri.org/Profiles.xsd" xmlns="http://tempuri.org/Profiles.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="ProfilesCollection" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="ProfilesCollection" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="ProfilesCollection">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ProfileTypes" msprop:Generator_RowEvHandlerName="ProfileTypesRowChangeEventHandler" msprop:Generator_RowDeletedName="ProfileTypesRowDeleted" msprop:Generator_RowDeletingName="ProfileTypesRowDeleting" msprop:Generator_RowEvArgName="ProfileTypesRowChangeEvent" msprop:Generator_TablePropName="ProfileTypes" msprop:Generator_RowChangedName="ProfileTypesRowChanged" msprop:Generator_UserTableName="ProfileTypes" msprop:Generator_RowChangingName="ProfileTypesRowChanging" msprop:Generator_RowClassName="ProfileTypesRow" msprop:Generator_TableClassName="ProfileTypesDataTable" msprop:Generator_TableVarName="tableProfileTypes">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" msdata:AutoIncrement="true" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_UserColumnName="id" msprop:Generator_ColumnVarNameInTable="columnid" type="xs:int" />
+              <xs:element name="name" msprop:Generator_ColumnPropNameInTable="nameColumn" msprop:Generator_ColumnPropNameInRow="name" msprop:Generator_UserColumnName="name" msprop:Generator_ColumnVarNameInTable="columnname" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ApiTypes" msprop:Generator_RowEvHandlerName="ApiTypesRowChangeEventHandler" msprop:Generator_RowDeletedName="ApiTypesRowDeleted" msprop:Generator_RowDeletingName="ApiTypesRowDeleting" msprop:Generator_RowEvArgName="ApiTypesRowChangeEvent" msprop:Generator_TablePropName="ApiTypes" msprop:Generator_RowChangedName="ApiTypesRowChanged" msprop:Generator_UserTableName="ApiTypes" msprop:Generator_RowChangingName="ApiTypesRowChanging" msprop:Generator_RowClassName="ApiTypesRow" msprop:Generator_TableClassName="ApiTypesDataTable" msprop:Generator_TableVarName="tableApiTypes">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_UserColumnName="id" msprop:Generator_ColumnVarNameInTable="columnid" type="xs:int" />
+              <xs:element name="name" msprop:Generator_ColumnPropNameInTable="nameColumn" msprop:Generator_ColumnPropNameInRow="name" msprop:Generator_UserColumnName="name" msprop:Generator_ColumnVarNameInTable="columnname" type="xs:string" minOccurs="0" />
+              <xs:element name="Profiles" msprop:Generator_RowEvHandlerName="ProfilesRowChangeEventHandler" msprop:Generator_RowDeletedName="ProfilesRowDeleted" msprop:Generator_RowDeletingName="ProfilesRowDeleting" msprop:Generator_RowEvArgName="ProfilesRowChangeEvent" msprop:Generator_TablePropName="Profiles" msprop:Generator_RowChangedName="ProfilesRowChanged" msprop:Generator_UserTableName="Profiles" msprop:Generator_RowChangingName="ProfilesRowChanging" msprop:Generator_RowClassName="ProfilesRow" msprop:Generator_TableClassName="ProfilesDataTable" msprop:Generator_TableVarName="tableProfiles" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:appinfo>
+                    <msdata:Relationship name="api_types_profiles" msdata:parent="ApiTypes" msdata:child="Profiles" msdata:parentkey="id" msdata:childkey="api_type_id" msprop:Generator_UserParentTable="ApiTypes" msprop:Generator_UserChildTable="Profiles" msprop:Generator_RelationVarName="relationapi_types_profiles" msprop:Generator_ChildPropName="GetProfilesRows" msprop:Generator_ParentPropName="ApiTypesRow" msprop:Generator_UserRelationName="api_types_profiles" />
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="id" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="1" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_UserColumnName="id" msprop:Generator_ColumnVarNameInTable="columnid" type="xs:int" />
+                    <xs:element name="caption" msprop:Generator_ColumnPropNameInTable="captionColumn" msprop:Generator_ColumnPropNameInRow="caption" msprop:Generator_UserColumnName="caption" msprop:Generator_ColumnVarNameInTable="columncaption" type="xs:string" minOccurs="0" />
+                    <xs:element name="pingTimeout" msprop:Generator_ColumnPropNameInTable="pingTimeoutColumn" msprop:Generator_ColumnPropNameInRow="pingTimeout" msprop:Generator_UserColumnName="pingTimeout" msprop:Generator_ColumnVarNameInTable="columnpingTimeout" type="xs:int" />
+                    <xs:element name="endpoint" msprop:Generator_ColumnPropNameInTable="endpointColumn" msprop:Generator_ColumnPropNameInRow="endpoint" msprop:Generator_UserColumnName="endpoint" msprop:Generator_ColumnVarNameInTable="columnendpoint" type="xs:string" />
+                    <xs:element name="timeout" msprop:Generator_ColumnPropNameInTable="timeoutColumn" msprop:Generator_ColumnPropNameInRow="timeout" msprop:Generator_UserColumnName="timeout" msprop:Generator_ColumnVarNameInTable="columntimeout" type="xs:long" />
+                    <xs:element name="type_id" msprop:Generator_ColumnPropNameInTable="type_idColumn" msprop:Generator_ColumnPropNameInRow="type_id" msprop:Generator_UserColumnName="type_id" msprop:Generator_ColumnVarNameInTable="columntype_id" type="xs:int" />
+                    <xs:element name="api_type_id" msprop:Generator_ColumnPropNameInTable="api_type_idColumn" msprop:Generator_ColumnPropNameInRow="api_type_id" msprop:Generator_UserColumnName="api_type_id" msprop:Generator_ColumnVarNameInTable="columnapi_type_id" type="xs:int" />
+                    <xs:element name="thumbprint" msprop:Generator_ColumnPropNameInTable="thumbprintColumn" msprop:Generator_ColumnPropNameInRow="thumbprint" msprop:Generator_UserColumnName="thumbprint" msprop:Generator_ColumnVarNameInTable="columnthumbprint" type="xs:string" minOccurs="0" />
+                    <xs:element name="access_token" msprop:Generator_ColumnPropNameInTable="access_tokenColumn" msprop:Generator_ColumnPropNameInRow="access_token" msprop:Generator_UserColumnName="access_token" msprop:Generator_ColumnVarNameInTable="columnaccess_token" type="xs:string" minOccurs="0" />
+                    <xs:element name="access_token_life_time" msprop:Generator_ColumnPropNameInTable="access_token_life_timeColumn" msprop:Generator_ColumnPropNameInRow="access_token_life_time" msprop:Generator_UserColumnName="access_token_life_time" msprop:Generator_ColumnVarNameInTable="columnaccess_token_life_time" type="xs:long" minOccurs="0" />
+                    <xs:element name="oauthPingTimeout" msprop:Generator_ColumnPropNameInTable="oauthPingTimeoutColumn" msprop:Generator_ColumnPropNameInRow="oauthPingTimeout" msprop:Generator_UserColumnName="oauthPingTimeout" msprop:Generator_ColumnVarNameInTable="columnoauthPingTimeout" type="xs:int" minOccurs="0" />
+                    <xs:element name="oauthEndpoint" msprop:Generator_ColumnPropNameInTable="oauthEndpointColumn" msprop:Generator_ColumnPropNameInRow="oauthEndpoint" msprop:Generator_UserColumnName="oauthEndpoint" msprop:Generator_ColumnVarNameInTable="columnoauthEndpoint" type="xs:string" minOccurs="0" />
+                    <xs:element name="oauthTimeout" msprop:Generator_ColumnPropNameInTable="oauthTimeoutColumn" msprop:Generator_ColumnPropNameInRow="oauthTimeout" msprop:Generator_UserColumnName="oauthTimeout" msprop:Generator_ColumnVarNameInTable="columnoauthTimeout" type="xs:long" minOccurs="0" />
+                    <xs:element name="oauth_access_token_life_time" msprop:Generator_ColumnPropNameInTable="oauth_access_token_life_timeColumn" msprop:Generator_ColumnPropNameInRow="oauth_access_token_life_time" msprop:Generator_UserColumnName="oauth_access_token_life_time" msprop:Generator_ColumnVarNameInTable="columnoauth_access_token_life_time" type="xs:long" minOccurs="0" />
+                    <xs:element name="icon" msprop:Generator_ColumnPropNameInRow="icon" msprop:Generator_ColumnPropNameInTable="iconColumn" msprop:Generator_ColumnVarNameInTable="columnicon" msprop:Generator_UserColumnName="icon" type="xs:string" minOccurs="0" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="primary_key" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:ProfileTypes" />
+      <xs:field xpath="mstns:id" />
+    </xs:unique>
+    <xs:unique name="Profiles_primary_key" msdata:ConstraintName="primary_key" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Profiles" />
+      <xs:field xpath="mstns:id" />
+    </xs:unique>
+    <xs:unique name="ApiTypes_primary_key" msdata:ConstraintName="primary_key" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:ApiTypes" />
+      <xs:field xpath="mstns:id" />
+    </xs:unique>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="profile_types_profiles" msdata:parent="ProfileTypes" msdata:child="Profiles" msdata:parentkey="id" msdata:childkey="type_id" msprop:Generator_UserParentTable="ProfileTypes" msprop:Generator_UserChildTable="Profiles" msprop:Generator_RelationVarName="relationprofile_types_profiles" msprop:Generator_ChildPropName="GetProfilesRows" msprop:Generator_ParentPropName="ProfileTypesRow" msprop:Generator_UserRelationName="profile_types_profiles" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

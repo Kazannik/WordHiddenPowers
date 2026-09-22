@@ -1,152 +1,110 @@
 ﻿// Ignore Spelling: Dialogs uri
 
 using LLMConnectorLibrary;
+using LLMConnectorLibrary.Authentication;
 using LLMConnectorLibrary.EventArgs;
+using LLMConnectorLibrary.Models;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using WordHiddenPowers.Services;
-using WordHiddenPowers.Utils;
-using static LLMConnectorLibrary.LLMOpenAI;
-using static WordHiddenPowers.Controls.LLMConnectionControlBox;
+using WordHiddenPowers.Controls.ToolBar;
+using static WordHiddenPowers.Controls.AuthenticationProfileListControl.AuthenticationProfileListItem;
+using static WordHiddenPowers.Controls.ConnectionControlBox;
 
 namespace WordHiddenPowers.Dialogs
 {
 	public partial class LLMConnectSettingDialog : Form
 	{
-		public IEnumerable<string> LargeLanguageModels { get; private set; }
+		private readonly string selectedChatModelName;
+		private readonly string selectedChatModelProfile;
 
-		public string SelectedLLMName => llmNameComboBox.SelectedItem?.ToString();
+		private readonly LLMClient client;
+		public IEnumerable<IModel> LargeLanguageModels => modelsComboBox.Models;
+		public IModel SelectedModel => modelsComboBox.SelectedItem?.Model;
+		public IEnumerable<IAuthenticationProfile> AuthenticationProfiles => authenticationProfileListBox;
+		public ChatButtonProperties ChatButton_1_Properties { get; private set; }
+		public ChatButtonProperties ChatButton_2_Properties { get; private set; }
 
-		public string SelectedEmbeddingLLMName => embeddingLlmNameComboBox.SelectedItem?.ToString();
+		public LLMConnectSettingDialog()
+		{
+			this.selectedChatModelName = string.Empty;
+			this.selectedChatModelProfile = string.Empty;
 
-		public Uri Uri => llmConnectionControlBox.Uri;
+			InitializeComponent();
 
-		public TimeSpan Timeout => new TimeSpan(hours: 0, minutes: (int)minutesNumericUpDown.Value, seconds: (int)secondsNumericUpDown.Value);
+			okButton.Size = Const.Globals.ACTION_BUTTON_SIZE;
+			cancelButton.Size = Const.Globals.ACTION_BUTTON_SIZE;
 
-		public string MLNetModelPath { get; private set; }
-
-		private readonly Documents.Document document;
-
-		private readonly LLMClient llmClient;
-
-		private readonly string llmName;
-		private readonly string embeddingLlmName;
+			client = new LLMClient();
+			client.HostChecked += new EventHandler<CheckHostEventArgs>(LLMClient_HostChecked);
+			client.ModelsCollectionCompleted += new EventHandler<ModelsCollectionCompletedEventArgs>(LLMClient_ModelsCollectionCompleted);
+		}
 
 		/// <summary>
 		/// public static string MLNetModelPath = Path.Combine(Utils.FileSystem.UserDirectory.FullName, "LbfgsMaximumEntropyMulti_26.04.2025.mlnet");
 		/// </summary>
 		/// <param name="document"></param>
-		public LLMConnectSettingDialog(Documents.Document document, string selectedLLM, string selectedEmbeddingLlmName, Uri uri, TimeSpan timeout)
+		public LLMConnectSettingDialog(
+			IEnumerable<IAuthenticationProfile> profiles,
+			string selectedChatModelName,
+			string selectedChatModelProfile,
+			ChatButtonProperties button_1_properties, ChatButtonProperties button_2_properties) : this()
 		{
-			this.document = document;
-			string mlNetModelName = document.MLModelName;
-			llmName = selectedLLM;
-			embeddingLlmName = selectedEmbeddingLlmName;
-
-			InitializeComponent();
-
-			minutesNumericUpDown.Value = timeout.Minutes;
-			secondsNumericUpDown.Value = timeout.Seconds;
-
-			llmConnectionControlBox.StateChanged += new EventHandler<ConnectionEventArgs>(LlmConnectionControlBox_ConnectedState);
-			llmConnectionControlBox.PingTimeout = (int)Timeout.TotalSeconds;
-			llmConnectionControlBox.ConnectingTimeout = (int)Timeout.TotalSeconds;
-			llmConnectionControlBox.Address = uri.ToString();
-
-			llmClient = new LLMClient(uri: uri, timeout: timeout);
-			llmClient.HostChecked += new EventHandler<CheckHostEventArgs>(LlmClient_HostChecked);
-			llmClient.ModelsCollectionCompleted += new EventHandler<ModelsCollectionCompletedEventArgs>(LlmClient_ModelsCollectionCompleted);
+			this.selectedChatModelName = selectedChatModelName;
+			this.selectedChatModelProfile = selectedChatModelProfile;
+			authenticationProfileListBox.AddRange(profiles);
 			
-			llmConnectionControlBox.ConnectionCheck();
-
-			DirectoryInfo directory = new DirectoryInfo(FileSystem.UserDirectory.FullName);
-			int index = -1;
-			foreach (FileInfo file in directory.GetFiles("*.mlnet"))
-			{
-				int id = mlNetModelNameComboBox.Items.Add(file.Name);
-				if (mlNetModelName == file.Name)
-				{
-					index = id;
-				}
-			}
-			mlNetModelNameComboBox.SelectedIndex = index;
+			ChatButton_1_Properties = button_1_properties;
+			ChatButton_2_Properties = button_2_properties;
 		}
 
-		private void LlmConnectionControlBox_ConnectedState(object sender, ConnectionEventArgs e)
-		{
-			minutesNumericUpDown.Enabled =
-				secondsNumericUpDown.Enabled =
-				llmNameComboBox.Enabled =
-				embeddingLlmNameComboBox.Enabled = 
-				testModelButton.Enabled =
-				updateLLMArrayButton.Enabled = 
-				e.State.HasFlag(StateEnum.Checked) || e.State.HasFlag(StateEnum.ERROR) || e.State.HasFlag(StateEnum.Connected);
-			
-			if (e.State == (StateEnum.Connected | StateEnum.OK))
-			{
-				llmNameComboBox.Items.Clear();
-				embeddingLlmNameComboBox.Items.Clear();
-
-				llmNameComboBox.Enabled =
-				embeddingLlmNameComboBox.Enabled = false;
-				llmClient.ReadModelsName(uri: Uri, timeout: Timeout);
-			}	
-		}
-
-		private void LlmClient_ModelsCollectionCompleted(object sender, ModelsCollectionCompletedEventArgs e)
-		{
-			LargeLanguageModels = e.Models;
-			
-			ModelNameComboBoxUpdate(selectedLLMName: string.IsNullOrEmpty(SelectedLLMName) ? llmName : SelectedLLMName,
-				selectedEmbeddingLLMName: string.IsNullOrEmpty(SelectedEmbeddingLLMName) ? embeddingLlmName : SelectedEmbeddingLLMName);
-			
-			llmNameComboBox.Enabled = llmNameComboBox.Items.Count > 0;
-			embeddingLlmNameComboBox.Enabled = embeddingLlmNameComboBox.Items.Count > 0;
-		}
-
-		private void LlmClient_HostChecked(object sender, CheckHostEventArgs e)
+		private void LLMClient_HostChecked(object sender, CheckHostEventArgs e)
 		{
 			if (e.IsAvailable)
 			{
 			}
 			else
 			{
-				LargeLanguageModels = new string[] { };
-				llmNameComboBox.Items.Clear();
+
 			}
-			llmClient.ReadModelsName(uri: e.Uri, timeout: e.Timeout);
 		}
 
-		private void MlNetModelNameComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		private void LLMClient_ModelsCollectionCompleted(object sender, ModelsCollectionCompletedEventArgs e)
 		{
-			ComboBox comboBox = sender as ComboBox;
-			if (comboBox.SelectedIndex >= 0)
+			if (e.Models.Count > 0)
 			{
-				MLNetModelPath = Path.Combine(FileSystem.UserDirectory.FullName, comboBox.SelectedItem as string);
+				modelsComboBox.BeginInvoke(new Action(() =>
+				{
+					modelsComboBox.AddRange(e.Models);
+					modelsComboBox.Invalidate();
+				}));
 			}
 			else
 			{
-				MLNetModelPath = string.Empty;
+				ClearModelComboBox();
 			}
+
+			modelsComboBox.BeginInvoke(new Action(() =>
+			{
+				modelsComboBox.SelectModel(selectedChatModelName, selectedChatModelProfile);
+				modelsComboBox.Enabled = true;
+			}));
 		}
 
 		private void Dialog_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			if (DialogResult == DialogResult.OK)
 			{
-				SaveValues();
+
 			}
-			else if (e.CloseReason == CloseReason.UserClosing &&
-				!string.IsNullOrEmpty(MLNetModelPath) &&
-				document.MLModelName != mlNetModelNameComboBox.SelectedItem as string)
+			else if (e.CloseReason == CloseReason.UserClosing)
 			{
 				DialogResult result = MessageBox.Show(this, "Сохранить выбор ИИ модели?", "Выбор ИИ модели", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 				if (result == DialogResult.Yes)
 				{
-					SaveValues();
+
 				}
 				else if (result == DialogResult.Cancel)
 				{
@@ -155,98 +113,113 @@ namespace WordHiddenPowers.Dialogs
 			}
 		}
 
-		private void SaveValues()
-		{
-			document.MLModelName = mlNetModelNameComboBox.SelectedItem as string;
-			document.CommitVariables();
-			document.Doc.Saved = false;
-		}
-
-		private void ModelNameComboBoxUpdate(string selectedLLMName = "", string selectedEmbeddingLLMName = "")
-		{
-			llmNameComboBox.Items.Clear();
-			embeddingLlmNameComboBox.Items.Clear();
-
-			if (LargeLanguageModels is null) return;
-
-			foreach (string item in LargeLanguageModels.OrderBy(x => x))
-			{
-				llmNameComboBox.Items.Add(item);
-				embeddingLlmNameComboBox.Items.Add(item);
-			}
-
-			if (!string.IsNullOrWhiteSpace(selectedLLMName) &&
-				llmNameComboBox.Items.Count > 0)
-			{
-				llmNameComboBox.SelectedIndex = llmNameComboBox.Items.IndexOf(selectedLLMName);
-			}
-
-			if (!string.IsNullOrWhiteSpace(selectedEmbeddingLLMName) &&
-				embeddingLlmNameComboBox.Items.Count > 0)
-			{
-				embeddingLlmNameComboBox.SelectedIndex = embeddingLlmNameComboBox.Items.IndexOf(selectedEmbeddingLLMName);
-			}
-		}
-				
-		private void Update_Click(object sender, EventArgs e) => llmConnectionControlBox.ConnectionCheck();
-
 		private void Button1_Click(object sender, EventArgs e)
 		{
-			PromptEditorDialog dialog = new PromptEditorDialog(
-				caption: OpenAIService.CaptionButton1,
-				systemMessage: OpenAIService.SystemMessageButton1,
-				prefixUserMessage: OpenAIService.PrefixUserMessageButton1,
-				postfixUserMessage: OpenAIService.PostfixUserMessageButton1
-				);
+			PromptEditorDialog dialog = new(
+				caption: ChatButton_1_Properties.Caption,
+				systemMessage: ChatButton_1_Properties.SystemMessage,
+				prefixUserMessage: ChatButton_1_Properties.PrefixUserMessage,
+				postfixUserMessage: ChatButton_1_Properties.PostfixUserMessage);
+
 			if (dialog.ShowDialog(this) == DialogResult.OK)
 			{
-				OpenAIService.CaptionButton1 = dialog.Caption;
-				OpenAIService.SystemMessageButton1 = dialog.SystemMessage;
-				OpenAIService.PrefixUserMessageButton1 = dialog.PrefixUserMessage;
-				OpenAIService.PostfixUserMessageButton1 = dialog.PostfixUserMessage;
+				ChatButton_1_Properties = new ChatButtonProperties(
+					caption: dialog.Caption,
+					systemMessage: dialog.SystemMessage,
+					prefixUserMessage: dialog.PrefixUserMessage,
+					postfixUserMessage: dialog.PostfixUserMessage);
 			}
 		}
 
 		private void Button2_Click(object sender, EventArgs e)
 		{
-			PromptEditorDialog dialog = new PromptEditorDialog(
-				caption: OpenAIService.CaptionButton2,
-				systemMessage: OpenAIService.SystemMessageButton2,
-				prefixUserMessage: OpenAIService.PrefixUserMessageButton2,
-				postfixUserMessage: OpenAIService.PostfixUserMessageButton2
-				);
+			PromptEditorDialog dialog = new(
+				caption: ChatButton_2_Properties.Caption,
+				systemMessage: ChatButton_2_Properties.SystemMessage,
+				prefixUserMessage: ChatButton_2_Properties.PrefixUserMessage,
+				postfixUserMessage: ChatButton_2_Properties.PostfixUserMessage);
+
 			if (dialog.ShowDialog(this) == DialogResult.OK)
 			{
-				OpenAIService.CaptionButton2 = dialog.Caption;
-				OpenAIService.SystemMessageButton2 = dialog.SystemMessage;
-				OpenAIService.PrefixUserMessageButton2 = dialog.PrefixUserMessage;
-				OpenAIService.PostfixUserMessageButton2 = dialog.PostfixUserMessage;
+				ChatButton_2_Properties = new ChatButtonProperties(
+					caption: dialog.Caption,
+					systemMessage: dialog.SystemMessage,
+					prefixUserMessage: dialog.PrefixUserMessage,
+					postfixUserMessage: dialog.PostfixUserMessage);
+			}
+		}
+				
+		private void AddButton_Click(object sender, EventArgs e)
+		{
+			ConnectionTemplatesBrowser dialog = new();
+			if (dialog.ShowDialog(this) == DialogResult.OK)
+			{
+				authenticationProfileListBox.Add(dialog.AuthenticationProfile);
+			}			
+		}
+
+		private void AuthenticationProfileListBox_ItemProfileNameChanged(object sender, ItemEventArgs e)
+		{
+			modelsComboBox.BeginInvoke(new Action(() =>
+			{
+				modelsComboBox.RefreshRange(e.Item.guid, e.Item.Profile);
+			}));
+		}
+
+		private void AuthenticationProfileListBox_ItemProfileChanged(object sender, ItemEventArgs e)
+		{
+		
+		}
+
+		private void AuthenticationProfileListBox_ItemStateChanged(object sender, ItemConnectionEventArgs e)
+		{
+
+		}
+
+		private void AuthenticationProfileListBox_ItemPingChanged(object sender, ItemConnectionEventArgs e)
+		{
+
+		}
+
+		private void AuthenticationProfileListBox_ItemConnecting(object sender, ItemConnectionEventArgs e)
+		{
+			modelsComboBox.Enabled = false;
+		}
+
+		private async void AuthenticationProfileListBox_ItemConnected(object sender, ItemConnectionEventArgs e)
+		{
+			if (e.State == StateEnum.Connected)
+			{
+				if (e.Item.IsDouble)
+				{
+					modelsComboBox.Enabled = true;
+					return;
+				}
+				await Task.Run(() => client.ReadModelsNameAsync(e.Item.Profile, tag: e.Item.guid));
+			}
+			else if (e.State == (StateEnum.Connected | StateEnum.ERROR))
+			{
+				try
+				{
+					modelsComboBox.BeginInvoke(new Action(() =>
+					{
+						modelsComboBox.RemoveRange(e.Item.guid);
+					}));
+				}
+				catch (Exception) { }
+				modelsComboBox.Enabled = true;
 			}
 		}
 
-		private void TestModelButton_Click(object sender, EventArgs e)
+		private void ClearModelComboBox()
 		{
-			testModelButton.Enabled = false;
-			string selectedEmbeddingLLMName = SelectedEmbeddingLLMName;
+			IEnumerable<IAuthenticationProfile> removedProfiles = modelsComboBox.Profiles
+					.Where(x => !authenticationProfileListBox.Contains(x));
 
-			IEnumerable<string> embeddingLargeLanguageModels = TestEmbedding(
-								uri: Uri,
-								timeout: Timeout,
-								models: LargeLanguageModels);
-
-			embeddingLlmNameComboBox.Items.Clear();
-
-			foreach (string item in embeddingLargeLanguageModels)
+			modelsComboBox.BeginInvoke(new Action(() =>
 			{
-				embeddingLlmNameComboBox.Items.Add(item);
-			}
-
-			if (!string.IsNullOrWhiteSpace(selectedEmbeddingLLMName) &&
-				embeddingLlmNameComboBox.Items.Count > 0)
-			{
-				embeddingLlmNameComboBox.SelectedIndex = embeddingLlmNameComboBox.Items.IndexOf(selectedEmbeddingLLMName);
-			}
-			testModelButton.Enabled = true;
+				modelsComboBox.RemoveRange(removedProfiles);
+			}));
 		}
 	}
 }

@@ -7,6 +7,8 @@ namespace WordHiddenPowers.Dialogs
 		public InsertDataPropertiesDialog()
 		{
 			InitializeComponent();
+			okButton.Size = Const.Globals.ACTION_BUTTON_SIZE;
+			cancelButton.Size = Const.Globals.ACTION_BUTTON_SIZE;
 		}
 
 		public int MinRating { get => (int)minRatingNumericUpDown.Value; }

@@ -67,16 +67,10 @@ namespace MyMicrosoft.Office.Hooks
 		public static extern int GetCurrentThreadId();
 
 		[StructLayout(LayoutKind.Sequential)]
-		public struct Point
+		public struct Point(int x, int y)
 		{
-			public int X;
-			public int Y;
-
-			public Point(int x, int y)
-			{
-				X = x;
-				Y = y;
-			}
+			public int X = x;
+			public int Y = y;
 
 			public static implicit operator System.Drawing.Point(Point p)
 			{
@@ -97,6 +91,6 @@ namespace MyMicrosoft.Office.Hooks
 			public uint wHitTestCode;
 			public IntPtr dwExtraInfo;
 			public int MouseData;
-		}
+		}		
 	}
 }

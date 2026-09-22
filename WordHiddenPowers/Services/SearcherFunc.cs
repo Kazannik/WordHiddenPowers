@@ -10,15 +10,15 @@ namespace WordHiddenPowers.Services
 	{
 		internal static string[] GetPatterns(string keyword)
 		{
-			string[] patterns = keyword.Split(new string[] { "';'" }, StringSplitOptions.RemoveEmptyEntries);
+			string[] patterns = keyword.Split(["';'"], StringSplitOptions.RemoveEmptyEntries);
 			if (patterns.Length > 0)
 			{
 				if (patterns[0].Length > 0
 					&& patterns[0][0] == 39
-					&& patterns[patterns.Length - 1][patterns[patterns.Length - 1].Length - 1] == 39)
+					&& patterns[^1][^1] == 39)
 				{
 					patterns[0] = patterns[0].Substring(1);
-					patterns[patterns.Length - 1] = patterns[patterns.Length - 1].Substring(0, patterns[patterns.Length - 1].Length - 1);
+					patterns[^1] = patterns[^1][..(patterns[^1].Length - 1)];
 				}
 			}
 			return patterns;

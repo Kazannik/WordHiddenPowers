@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WordHiddenPowers.Repository;
 using WordHiddenPowers.Repository.Notes;
-using static WordHiddenPowers.Repository.RepositoryDataSet;
+using static WordHiddenPowers.Repository.DocumentDataSet;
 using Control = WordHiddenPowers.Controls.ListControls.NotesListControl;
 using Version = ControlLibrary.Structures.Version;
 
@@ -17,7 +17,7 @@ namespace WordHiddenPowers.Controls.ListControls
 	[ComVisible(false)]
 	public class NotesListBox : ListControl<Control.ListItem, Control.ListItemNote>
 	{
-		private RepositoryDataSet source;
+		private DocumentDataSet source;
 		private bool showButtons;
 
 		public NotesListBox() : base()
@@ -25,7 +25,7 @@ namespace WordHiddenPowers.Controls.ListControls
 			showButtons = false;
 		}
 
-		public RepositoryDataSet DataSet
+		public DocumentDataSet DataSet
 		{
 			get => source;
 			set
@@ -127,7 +127,8 @@ namespace WordHiddenPowers.Controls.ListControls
 
 		protected override void OnItemMouseMove(ItemMouseEventArgs<Control.ListItem, Control.ListItemNote> e)
 		{
-			if (e.SubItem != null && e.SubItem is Control.BottomBarNote note)
+			if (e.SubItem != null &&
+				e.SubItem is Control.BottomBarNote note)
 			{
 				if (note.AdditionButtonRectangle.Contains(e.Location))
 				{
@@ -351,15 +352,14 @@ namespace WordHiddenPowers.Controls.ListControls
 
 		public void ReadData()
 		{
+			Items.Clear();
+
 			if (DesignMode || DataSet == null) return;
 
 			SuspendEvents();
 
 			BeginUpdate();
-
 			int selectedIndex = SelectedIndex;
-
-			Items.Clear();
 
 			if (DataSet.TextNotes.Rows.Count > 0 ||
 				DataSet.DecimalNotes.Rows.Count > 0)
@@ -437,7 +437,7 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 		}
 
-		public abstract class ListItemNote : ControlLibrary.Controls.ListControls.ListItemNote
+		public abstract class ListItemNote(string text) : ControlLibrary.Controls.ListControls.ListItemNote
 		{
 			protected static readonly StringFormat CENTER_STRING_FORMAT = new StringFormat
 			{
@@ -451,9 +451,7 @@ namespace WordHiddenPowers.Controls.ListControls
 				LineAlignment = StringAlignment.Near
 			};
 
-			private string text;
-
-			public ListItemNote(string text) => this.text = text;
+			private string text = text;
 
 			public string Text
 			{

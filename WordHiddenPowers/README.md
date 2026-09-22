@@ -59,3 +59,16 @@
 ---
 
 `WordHiddenPowers\WordHiddenPowers\MLModel.filters` - файл словаря. Содержит слова без окончаний, использован для обучении отдельных нейросетей.
+
+
+Команда для подписи проекта:
+
+"C:\Program Files (x86)\Microsoft SDKs\ClickOnce\SignTool\signtool.exe" sign /n "Mikhail Kazannik Software" /t http://timestamp.digicert.com /fd SHA256 /a $(TargetPath)
+
+"C:\Program Files (x86)\Microsoft SDKs\ClickOnce\SignTool\signtool.exe" sign /n "Mikhail Kazannik Software" /t http://timestamp.digicert.com /fd SHA256 /a $(TargetPath)
+
+"C:\Program Files (x86)\Microsoft SDKs\ClickOnce\SignTool\signtool.exe" sign /n "Mikhail Kazannik Software" /t http://timestamp.digicert.com /fd SHA256 /a $(TargetPath)
+
+URL-адрес сервера меток времени:
+
+http://timestamp.digicert.com

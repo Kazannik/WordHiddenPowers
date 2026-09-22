@@ -8,7 +8,7 @@ namespace WordHiddenPowers.Repository.Notes
 {
 	public class Note : INotifyPropertyChanged, IComparable<Note>
 	{
-		internal static Note Create(RepositoryDataSet.DecimalNotesRow dataRow, Subcategory subcategory, string wordSelectionText = "", string vector = "")
+		internal static Note Create(DocumentDataSet.DecimalNotesRow dataRow, Subcategory subcategory, string wordSelectionText = "", string vector = "")
 		{
 			return new Note(
 				id: dataRow.id,
@@ -21,16 +21,16 @@ namespace WordHiddenPowers.Repository.Notes
 				wordSelectionEnd: dataRow.WordSelectionEnd,
 				hide: dataRow.Hide,
 				dataRow: dataRow,
-				fileName: dataRow.WordFilesRow.FileName,
-				fileCaption: dataRow.WordFilesRow.Caption,
-				fileDescription: !dataRow.WordFilesRow.IsDescriptionNull() ? dataRow.WordFilesRow.Description : string.Empty,
-				fileDate: dataRow.WordFilesRow.Date,
+				fileName: dataRow.WordFilesRow != null ? dataRow.WordFilesRow.FileName : string.Empty,
+				fileCaption: dataRow.WordFilesRow != null ? dataRow.WordFilesRow.Caption : string.Empty,
+				fileDescription: dataRow.WordFilesRow != null ? (!dataRow.WordFilesRow.IsDescriptionNull() ? dataRow.WordFilesRow.Description : string.Empty) : string.Empty,
+				fileDate: dataRow.WordFilesRow != null ? dataRow.WordFilesRow.Date : DateTime.Now,
 				fileId: dataRow.file_id,
 				vector: vector
 				);
 		}
 
-		internal static Note Create(RepositoryDataSet.TextNotesRow dataRow, Subcategory subcategory, string wordSelectionText = "", string vector = "")
+		internal static Note Create(DocumentDataSet.TextNotesRow dataRow, Subcategory subcategory, string wordSelectionText = "", string vector = "")
 		{
 			return new Note(
 				id: dataRow.id,
@@ -43,10 +43,10 @@ namespace WordHiddenPowers.Repository.Notes
 				wordSelectionEnd: dataRow.WordSelectionEnd,
 				hide: dataRow.Hide,
 				dataRow: dataRow,
-				fileName: dataRow.WordFilesRow.FileName,
-				fileCaption: dataRow.WordFilesRow.Caption,
-				fileDescription: !dataRow.WordFilesRow.IsDescriptionNull() ? dataRow.WordFilesRow.Description : string.Empty,
-				fileDate: dataRow.WordFilesRow.Date,
+				fileName: dataRow.WordFilesRow != null ? dataRow.WordFilesRow.FileName : string.Empty,
+				fileCaption: dataRow.WordFilesRow != null ? dataRow.WordFilesRow.Caption : string.Empty,
+				fileDescription: dataRow.WordFilesRow != null ? (!dataRow.WordFilesRow.IsDescriptionNull() ? dataRow.WordFilesRow.Description : string.Empty) : string.Empty,
+				fileDate: dataRow.WordFilesRow != null ? dataRow.WordFilesRow.Date : DateTime.Now,
 				fileId: dataRow.file_id,
 				vector: vector
 				);

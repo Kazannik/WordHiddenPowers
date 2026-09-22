@@ -35,20 +35,23 @@
     </NuGetPackageImportStamp>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <BootstrapperComponentsLocation>Relative</BootstrapperComponentsLocation>
-    <PublishUrl>..\publish\WordHiddenPowers_IT\4.2.0.4\</PublishUrl>
+    <PublishUrl>..\publish\WordHiddenPowers_IT\6.3.0.0\</PublishUrl>
     <InstallUrl>\\fsgpgvc01\Groups\IT\Отдел НСИ\Soft\MSWordAddins\WordHiddenPowers\</InstallUrl>
     <TargetCulture>ru</TargetCulture>
-    <ApplicationVersion>4.2.0.4</ApplicationVersion>
+    <ApplicationVersion>6.3.0.0</ApplicationVersion>
     <AutoIncrementApplicationRevision>false</AutoIncrementApplicationRevision>
     <UpdateEnabled>false</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
     <UpdateIntervalUnits>days</UpdateIntervalUnits>
     <ProductName>WordHiddenPowers</ProductName>
     <PublisherName>Генеральная прокуратура Российской Федерации</PublisherName>
-    <SupportUrl>\\fsgpgvc01\Groups\IT\Отдел НСИ\Soft\MSWordAddins\WordHiddenPowers</SupportUrl>
+    <SupportUrl />
     <FriendlyName>WordHiddenPowers</FriendlyName>
     <OfficeApplicationDescription>Автоматизированный  анализ документов</OfficeApplicationDescription>
     <LoadBehavior>3</LoadBehavior>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">
@@ -130,13 +133,16 @@
     <DefineConstants>TRACE;VSTO40;WORD</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <!--
     This section specifies references for the project.
   -->
   <ItemGroup>
     <Reference Include="Accessibility" />
+    <Reference Include="GigaChat">
+      <HintPath>..\..\gigachat-dotnet\src\bin\Release\netstandard2.0\GigaChat.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
@@ -204,6 +210,78 @@
     <Compile Include="..\..\ControlLibrary\ControlLibrary\Utils\Gdi32.cs">
       <Link>Utils\Gdi32.cs</Link>
     </Compile>
+    <Compile Include="Controls\AuthenticationProfileListControl\AuthenticationProfileListBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\AuthenticationProfileListControl\AuthenticationProfileListItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ComboControls\ModelsComboBox.cs" />
+    <Compile Include="Controls\PromptsHistoryControl\Prompt.cs" />
+    <Compile Include="Controls\PromptsHistoryControl\PromptCollection.cs" />
+    <Compile Include="Controls\SendMessagesControl\MessageCollection.cs" />
+    <Compile Include="Controls\ToolBar\ChatButtonProperties.cs" />
+    <Compile Include="Controls\ToolStripModelsBox.cs" />
+    <Compile Include="Dialogs\ConnectionTemplatesBrowser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ConnectionTemplatesBrowser.Designer.cs">
+      <DependentUpon>ConnectionTemplatesBrowser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\CertificatesBrowser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\CertificatesBrowser.Designer.cs">
+      <DependentUpon>CertificatesBrowser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\LLMChatOptionsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\LLMChatOptionsDialog.Designer.cs">
+      <DependentUpon>LLMChatOptionsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\TimeoutDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\TimeoutDialog.Designer.cs">
+      <DependentUpon>TimeoutDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EventsBus\EventArgs\AccessToSendingUserMessageEventArgs.cs" />
+    <Compile Include="EventsBus\EventArgs\DocumentChatMessageModeEventArgs.cs" />
+    <Compile Include="EventsBus\EventArgs\DocumentEventArgs.cs" />
+    <Compile Include="EventsBus\EventArgs\PaneStateEventArgs.cs" />
+    <Compile Include="EventsBus\EventArgs\ProcessStateEventArgs.cs" />
+    <Compile Include="EventsBus\EventArgs\PromptsHistoryEventArgs.cs" />
+    <Compile Include="EventsBus\EventArgs\StatusEventArgs.cs" />
+    <Compile Include="EventsBus\EventArgs\WordDocumentReceiveMessageEventArgs.cs" />
+    <Compile Include="EventsBus\EventArgs\WordDocumentSendMessageEventArgs.cs" />
+    <Compile Include="EventsBus\EventArgs\WordDocumentWindowDeactivateEventArgs.cs" />
+    <Compile Include="EventsBus\GlobalsEventsBus.cs" />
+    <Compile Include="EventsBus\EventArgs\WordDocumentBeforeCloseEventArgs.cs" />
+    <Compile Include="EventsBus\EventArgs\WordDocumentEventArgs.cs" />
+    <Compile Include="EventsBus\EventArgs\WordDocumentWindowActivateEventArgs.cs" />
+    <Compile Include="EventsBus\EventArgs\WordSelectionEventArgs.cs" />
+    <Compile Include="EventsBus\StateEnums\AccessToSendingUserMessage.cs" />
+    <Compile Include="EventsBus\StateEnums\ProcessState.cs" />
+    <Compile Include="EventsBus\StateEnums\PromptsHistoryState.cs" />
+    <Compile Include="Repository\GlobalsSetting.cs">
+      <DependentUpon>GlobalsSetting.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\GlobalsSetting.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GlobalsSetting.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\Profiles.cs">
+      <DependentUpon>Profiles.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\Profiles.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Profiles.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\Setting\ChatOptions.cs" />
+    <Compile Include="Services\CertificatesStore.cs" />
     <Compile Include="Const\Content.cs" />
     <Compile Include="Const\Globals.cs" />
     <Compile Include="Const\Panes.cs" />
@@ -221,21 +299,27 @@
     <Compile Include="Controls\ListControls\ListItems.cs" />
     <Compile Include="Controls\ListControls\NotesListBox.cs" />
     <Compile Include="Controls\ListControls\StatusListBox.cs" />
-    <Compile Include="Controls\LLMConnectionControlBox.cs">
+    <Compile Include="Controls\ConnectionControlBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ConnectionControlBox.Designer.cs">
+      <DependentUpon>ConnectionControlBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PromptsHistoryControl\LLMPromptsHistoryBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\LLMConnectionControlBox.Designer.cs">
-      <DependentUpon>LLMConnectionControlBox.cs</DependentUpon>
+    <Compile Include="Controls\PromptsHistoryControl\LLMPromptsHistoryBox.Designer.cs">
+      <DependentUpon>LLMPromptsHistoryBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\PatternsWizardBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\ComboControls\SubcategoriesComboBox.cs" />
-    <Compile Include="Controls\SendMessageButtonsBox.cs">
+    <Compile Include="Controls\SendMessagesControl\LLMSendMessageBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\SendMessageButtonsBox.Designer.cs">
-      <DependentUpon>SendMessageButtonsBox.cs</DependentUpon>
+    <Compile Include="Controls\SendMessagesControl\LLMSendMessageBox.Designer.cs">
+      <DependentUpon>LLMSendMessageBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\TableEditBox.cs">
       <SubType>UserControl</SubType>
@@ -243,10 +327,10 @@
     <Compile Include="Controls\TableEditBox.Designer.cs">
       <DependentUpon>TableEditBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\AddInMainRibbon.cs">
+    <Compile Include="Controls\ToolBar\AddInMainRibbon.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\AddInMainRibbon.Designer.cs">
+    <Compile Include="Controls\ToolBar\AddInMainRibbon.Designer.cs">
       <DependentUpon>AddInMainRibbon.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Utils\Drawing.cs" />
@@ -267,12 +351,6 @@
     </Compile>
     <Compile Include="Dialogs\InsertDataPropertiesDialog.Designer.cs">
       <DependentUpon>InsertDataPropertiesDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\LLMDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\LLMDialog.Designer.cs">
-      <DependentUpon>LLMDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\LLMProcessDialog.cs">
       <SubType>Form</SubType>
@@ -404,17 +482,25 @@
       <DependentUpon>Document.cs</DependentUpon>
     </Compile>
     <Compile Include="Documents\DocumentCollection.cs" />
-    <Compile Include="Documents\DocumentCollection.AI.cs">
-      <DependentUpon>DocumentCollection.cs</DependentUpon>
-    </Compile>
     <Compile Include="Panes\WordHiddenPowersPane.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Repository\Categories\Category.cs" />
     <Compile Include="Repository\Data\TableCollection.cs" />
+    <Compile Include="Repository\History\DtoMode.cs" />
+    <Compile Include="Repository\History\DtoModel.cs" />
+    <Compile Include="Repository\History\DtoPrompt.cs" />
     <Compile Include="Repository\Notes\Note.cs" />
     <Compile Include="Repository\Categories\Subcategory.cs" />
+    <Compile Include="Repository\PromptsHistory.cs">
+      <DependentUpon>PromptsHistory.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\PromptsHistory.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PromptsHistory.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Repository\VectorDataSet.cs">
       <DependentUpon>VectorDataSet.xsd</DependentUpon>
     </Compile>
@@ -425,8 +511,7 @@
     </Compile>
     <Compile Include="Repository\WordFiles\WordFile.cs" />
     <Compile Include="Services\MLService.cs" />
-    <Compile Include="Services\MainService.cs" />
-    <Compile Include="Services\OpenAIService.cs" />
+    <Compile Include="Services\LLMService.cs" />
     <Compile Include="Services\RegistryManager.cs" />
     <Compile Include="Services\Searcher.cs" />
     <Compile Include="Services\SearcherFunc.cs" />
@@ -441,27 +526,42 @@
     <Compile Include="Utils\Resource.cs" />
     <Compile Include="Utils\WordDocument.cs" />
     <Compile Include="Utils\Xml.cs" />
+    <EmbeddedResource Include="Controls\AuthenticationProfileListControl\AuthenticationProfileListBox.resx">
+      <DependentUpon>AuthenticationProfileListBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\AuthenticationProfileListControl\AuthenticationProfileListItem.resx">
+      <DependentUpon>AuthenticationProfileListItem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\CategoryBox.resx">
       <DependentUpon>CategoryBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\LLMConnectionControlBox.resx">
-      <DependentUpon>LLMConnectionControlBox.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ConnectionControlBox.resx">
+      <DependentUpon>ConnectionControlBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PromptsHistoryControl\LLMPromptsHistoryBox.resx">
+      <DependentUpon>LLMPromptsHistoryBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PatternsWizardBox.resx">
       <DependentUpon>PatternsWizardBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\SendMessageButtonsBox.resx">
-      <DependentUpon>SendMessageButtonsBox.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\SendMessagesControl\LLMSendMessageBox.resx">
+      <DependentUpon>LLMSendMessageBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TableEditBox.resx">
       <DependentUpon>TableEditBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\AddInMainRibbon.resx">
+    <EmbeddedResource Include="Controls\ToolBar\AddInMainRibbon.resx">
       <DependentUpon>AddInMainRibbon.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ConnectionTemplatesBrowser.resx">
+      <DependentUpon>ConnectionTemplatesBrowser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\CertificatesBrowser.resx">
+      <DependentUpon>CertificatesBrowser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ContentPrintDialog.resx">
       <DependentUpon>ContentPrintDialog.cs</DependentUpon>
@@ -482,8 +582,8 @@
     <EmbeddedResource Include="Dialogs\DocumentKeysDialog.resx">
       <DependentUpon>DocumentKeysDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\LLMDialog.resx">
-      <DependentUpon>LLMDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\LLMChatOptionsDialog.resx">
+      <DependentUpon>LLMChatOptionsDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\LLMProcessDialog.resx">
       <DependentUpon>LLMProcessDialog.cs</DependentUpon>
@@ -524,6 +624,9 @@
     <EmbeddedResource Include="Dialogs\TableSettingDialog.resx">
       <DependentUpon>TableSettingDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\TimeoutDialog.resx">
+      <DependentUpon>TimeoutDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Panes\AddInPane.resx">
       <DependentUpon>AddInPane.cs</DependentUpon>
     </EmbeddedResource>
@@ -544,7 +647,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
-    <None Include="Kazannik Test Software CA.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -554,28 +656,61 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Repository\RepositoryDataSet.cs">
-      <DependentUpon>RepositoryDataSet.xsd</DependentUpon>
+    <Compile Include="Repository\DocumentDataSet.cs">
+      <DependentUpon>DocumentDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Repository\RepositoryDataSet.Designer.cs">
+    <Compile Include="Repository\DocumentDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RepositoryDataSet.xsd</DependentUpon>
+      <DependentUpon>DocumentDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="ThisAddIn.cs">
       <SubType>Code</SubType>
     </Compile>
     <None Include="README.md" />
-    <None Include="Repository\RepositoryDataSet.xsc">
-      <DependentUpon>RepositoryDataSet.xsd</DependentUpon>
+    <None Include="Repository\GlobalsSetting.xsc">
+      <DependentUpon>GlobalsSetting.xsd</DependentUpon>
     </None>
-    <None Include="Repository\RepositoryDataSet.xsd">
+    <None Include="Repository\GlobalsSetting.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>RepositoryDataSet.Designer.cs</LastGenOutput>
+      <LastGenOutput>GlobalsSetting.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Repository\RepositoryDataSet.xss">
-      <DependentUpon>RepositoryDataSet.xsd</DependentUpon>
+    <None Include="Repository\GlobalsSetting.xss">
+      <DependentUpon>GlobalsSetting.xsd</DependentUpon>
+    </None>
+    <None Include="Repository\Profiles.xsc">
+      <DependentUpon>Profiles.xsd</DependentUpon>
+    </None>
+    <None Include="Repository\Profiles.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Profiles.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Repository\Profiles.xss">
+      <DependentUpon>Profiles.xsd</DependentUpon>
+    </None>
+    <None Include="Repository\PromptsHistory.xsc">
+      <DependentUpon>PromptsHistory.xsd</DependentUpon>
+    </None>
+    <None Include="Repository\PromptsHistory.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PromptsHistory.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Repository\PromptsHistory.xss">
+      <DependentUpon>PromptsHistory.xsd</DependentUpon>
+    </None>
+    <None Include="Repository\DocumentDataSet.xsc">
+      <DependentUpon>DocumentDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Repository\DocumentDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DocumentDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Repository\DocumentDataSet.xss">
+      <DependentUpon>DocumentDataSet.xsd</DependentUpon>
     </None>
     <Compile Include="Repository\VectorDataSet.Setting.cs">
       <DependentUpon>VectorDataSet.xsd</DependentUpon>
@@ -786,12 +921,8 @@
     <None Include="Resources\GroupContTypeNew_24.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Files\Example.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\ListDocs.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="ExampleFiles\Example.txt" />
+    <None Include="ExampleFiles\ListDocs.txt" />
     <None Include="MLModel.filters">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -962,6 +1093,60 @@
   <ItemGroup>
     <None Include="Resources\UncorrectedAddress.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LLM_Dialog_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HistoryNext.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HistoryPrevious.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HistoryNext2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SystemMessage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Repeat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Redo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Close24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WindowClose_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ChatOptions.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Favorite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HistoryClear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HistoryDelete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\More_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DocumentDelete32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DocumentClear32.png" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -977,22 +1162,31 @@
     <ManifestCertificateThumbprint>07066D49CFDDCE7CC8DAE6C58EF3D65710F6AB30</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\App.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Kazannik Test Software CA.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestTimestampUrl>http://timestamp.digicert.com</ManifestTimestampUrl>
+    <ManifestTimestampUrl>
+    </ManifestTimestampUrl>
   </PropertyGroup>
   <PropertyGroup>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>false</DelaySign>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

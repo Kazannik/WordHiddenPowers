@@ -8,7 +8,7 @@ namespace WordHiddenPowers.Repository.Data
 		{
 			this.IsLast = false;
 			this.ColumnCount = columnCount;
-			Rows = new RowCollection();
+			Rows = [];
 			for (int i = 0; i < rowCount; i++)
 			{
 				Rows.Add(new Row(Rows, columnCount));
@@ -44,7 +44,7 @@ namespace WordHiddenPowers.Repository.Data
 			}
 		}
 
-		public Table Clone() => new Table(Rows.Count, ColumnCount);
+		public Table Clone() => new(Rows.Count, ColumnCount);
 
 		public new string ToString()
 		{
@@ -87,9 +87,9 @@ namespace WordHiddenPowers.Repository.Data
 		{
 			if (string.IsNullOrWhiteSpace(text)) return new Table(0, 0);
 
-			string[] rows = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-			string[] cells = rows[0].Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-			Table table = new Table(rows.Length, cells.Length);
+			string[] rows = text.Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
+			string[] cells = rows[0].Split([';'], StringSplitOptions.RemoveEmptyEntries);
+			Table table = new(rows.Length, cells.Length);
 
 			for (int r = 0; r < table.RowCount; r++)
 			{
@@ -106,7 +106,7 @@ namespace WordHiddenPowers.Repository.Data
 
 		public void AddLastData(string text)
 		{
-			string[] rows = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+			string[] rows = text.Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
 			for (int r = 0; r < RowCount; r++)
 			{
 				string[] cells = rows[r].Split(';');

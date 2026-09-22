@@ -121,41 +121,6 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="menuStrip1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>10, 2, 0, 2</value>
-  </data>
-  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>880, 28</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="menuStrip1.Text" xml:space="preserve">
-    <value>menuStrip1</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.Name" xml:space="preserve">
-    <value>menuStrip1</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="mnuFile.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 24</value>
-  </data>
-  <data name="mnuFile.Text" xml:space="preserve">
-    <value>Файл</value>
-  </data>
   <data name="mnuFileNew.Size" type="System.Drawing.Size, System.Drawing">
     <value>337, 26</value>
   </data>
@@ -228,11 +193,11 @@
   <data name="mnuFileExit.Text" xml:space="preserve">
     <value>Выход</value>
   </data>
-  <data name="mnuView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>49, 24</value>
+  <data name="mnuFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 26</value>
   </data>
-  <data name="mnuView.Text" xml:space="preserve">
-    <value>Вид</value>
+  <data name="mnuFile.Text" xml:space="preserve">
+    <value>Файл</value>
   </data>
   <data name="mnuViewHide.Size" type="System.Drawing.Size, System.Drawing">
     <value>206, 26</value>
@@ -249,11 +214,11 @@
   <data name="mnuViewRefresh.Text" xml:space="preserve">
     <value>Обновить</value>
   </data>
-  <data name="mnuTools.Size" type="System.Drawing.Size, System.Drawing">
-    <value>87, 24</value>
+  <data name="mnuView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 26</value>
   </data>
-  <data name="mnuTools.Text" xml:space="preserve">
-    <value>mnuTools</value>
+  <data name="mnuView.Text" xml:space="preserve">
+    <value>Вид</value>
   </data>
   <data name="mnuToolsDataEmbedding.Size" type="System.Drawing.Size, System.Drawing">
     <value>265, 26</value>
@@ -261,39 +226,50 @@
   <data name="mnuToolsDataEmbedding.Text" xml:space="preserve">
     <value>mnuToolsDataEmbedding</value>
   </data>
+  <data name="mnuTools.Size" type="System.Drawing.Size, System.Drawing">
+    <value>87, 26</value>
+  </data>
+  <data name="mnuTools.Text" xml:space="preserve">
+    <value>mnuTools</value>
+  </data>
   <data name="mnuServiceToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>99, 24</value>
+    <value>99, 26</value>
   </data>
   <data name="mnuServiceToolStripMenuItem.Text" xml:space="preserve">
     <value>mnuService</value>
   </data>
+  <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="menuStrip1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>10, 2, 0, 2</value>
+  </data>
+  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>880, 30</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="menuStrip1.Text" xml:space="preserve">
+    <value>menuStrip1</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Name" xml:space="preserve">
+    <value>menuStrip1</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
   <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>152, 17</value>
   </metadata>
-  <data name="toolStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 28</value>
-  </data>
-  <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>880, 33</value>
-  </data>
-  <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="toolStrip1.Text" xml:space="preserve">
-    <value>toolStrip1</value>
-  </data>
-  <data name="&gt;&gt;toolStrip1.Name" xml:space="preserve">
-    <value>toolStrip1</value>
-  </data>
-  <data name="&gt;&gt;toolStrip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;toolStrip1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;toolStrip1.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
   <data name="insertToDocumentButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -327,9 +303,45 @@
   <data name="toolStripRatingBox.Text" xml:space="preserve">
     <value>toolStripRatingBox1</value>
   </data>
+  <data name="toolStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 30</value>
+  </data>
+  <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>880, 33</value>
+  </data>
+  <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="toolStrip1.Text" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Name" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
   <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>276, 17</value>
   </metadata>
+  <data name="toolStripStatusLabel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>151, 20</value>
+  </data>
+  <data name="toolStripStatusLabel1.Text" xml:space="preserve">
+    <value>toolStripStatusLabel1</value>
+  </data>
+  <data name="toolStripStatusLabel2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>151, 20</value>
+  </data>
+  <data name="toolStripStatusLabel2.Text" xml:space="preserve">
+    <value>toolStripStatusLabel2</value>
+  </data>
   <data name="statusStrip1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 438</value>
   </data>
@@ -357,23 +369,11 @@
   <data name="&gt;&gt;statusStrip1.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="toolStripStatusLabel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>151, 20</value>
-  </data>
-  <data name="toolStripStatusLabel1.Text" xml:space="preserve">
-    <value>toolStripStatusLabel1</value>
-  </data>
-  <data name="toolStripStatusLabel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>151, 20</value>
-  </data>
-  <data name="toolStripStatusLabel2.Text" xml:space="preserve">
-    <value>toolStripStatusLabel2</value>
-  </data>
   <data name="splitContainer1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="splitContainer1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 61</value>
+    <value>0, 63</value>
   </data>
   <data name="splitContainer1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>5, 5, 5, 5</value>
@@ -388,7 +388,7 @@
     <value>5, 2, 5, 2</value>
   </data>
   <data name="statusListBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>359, 377</value>
+    <value>359, 375</value>
   </data>
   <data name="statusListBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -420,6 +420,42 @@
   <metadata name="noteContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>413, 17</value>
   </metadata>
+  <data name="mnuNewTextContentMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>268, 24</value>
+  </data>
+  <data name="mnuNewTextContentMenu.Text" xml:space="preserve">
+    <value>Создать текстовую запись...</value>
+  </data>
+  <data name="mnuNewDecimalContentMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>268, 24</value>
+  </data>
+  <data name="mnuNewDecimalContentMenu.Text" xml:space="preserve">
+    <value>Создать числовую запись...</value>
+  </data>
+  <data name="mnuEditContentMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>268, 24</value>
+  </data>
+  <data name="mnuEditContentMenu.Text" xml:space="preserve">
+    <value>Редактировать запись...</value>
+  </data>
+  <data name="toolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>265, 6</value>
+  </data>
+  <data name="mnuHideContextMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>268, 24</value>
+  </data>
+  <data name="mnuHideContextMenu.Text" xml:space="preserve">
+    <value>mnuHide</value>
+  </data>
+  <data name="toolStripMenuItem7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>265, 6</value>
+  </data>
+  <data name="mnuCopyContentMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>268, 24</value>
+  </data>
+  <data name="mnuCopyContentMenu.Text" xml:space="preserve">
+    <value>Копировать</value>
+  </data>
   <data name="noteContextMenu.Size" type="System.Drawing.Size, System.Drawing">
     <value>269, 136</value>
   </data>
@@ -439,7 +475,7 @@
     <value>5, 2, 5, 2</value>
   </data>
   <data name="contentListBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>515, 233</value>
+    <value>515, 231</value>
   </data>
   <data name="contentListBox.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -496,7 +532,7 @@
     <value>1</value>
   </data>
   <data name="splitContainer1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>880, 377</value>
+    <value>880, 375</value>
   </data>
   <data name="splitContainer1.SplitterDistance" type="System.Int32, mscorlib">
     <value>359</value>
@@ -518,42 +554,6 @@
   </data>
   <data name="&gt;&gt;splitContainer1.ZOrder" xml:space="preserve">
     <value>1</value>
-  </data>
-  <data name="mnuNewTextContentMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>268, 24</value>
-  </data>
-  <data name="mnuNewTextContentMenu.Text" xml:space="preserve">
-    <value>Создать текстовую запись...</value>
-  </data>
-  <data name="mnuNewDecimalContentMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>268, 24</value>
-  </data>
-  <data name="mnuNewDecimalContentMenu.Text" xml:space="preserve">
-    <value>Создать числовую запись...</value>
-  </data>
-  <data name="mnuEditContentMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>268, 24</value>
-  </data>
-  <data name="mnuEditContentMenu.Text" xml:space="preserve">
-    <value>Редактировать запись...</value>
-  </data>
-  <data name="toolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>265, 6</value>
-  </data>
-  <data name="mnuHideContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>268, 24</value>
-  </data>
-  <data name="mnuHideContextMenu.Text" xml:space="preserve">
-    <value>mnuHide</value>
-  </data>
-  <data name="toolStripMenuItem7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>265, 6</value>
-  </data>
-  <data name="mnuCopyContentMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>268, 24</value>
-  </data>
-  <data name="mnuCopyContentMenu.Text" xml:space="preserve">
-    <value>Копировать</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WordHiddenPowers.Repository;
 using WordHiddenPowers.Repository.Notes;
-using static WordHiddenPowers.Repository.RepositoryDataSet;
+using static WordHiddenPowers.Repository.DocumentDataSet;
 using Control = WordHiddenPowers.Controls.ListControls.ContentListControl;
 using ListItem = WordHiddenPowers.Controls.ListControls.ContentListControl.ListItem;
 
@@ -17,7 +17,7 @@ namespace WordHiddenPowers.Controls.ListControls
 	[ComVisible(false)]
 	public class ContentListBox : ListControl<ListItem, Control.ListItemNote>
 	{
-		private RepositoryDataSet source;
+		private DocumentDataSet source;
 		private string filter;
 		private bool hide;
 		private int rating;
@@ -28,7 +28,7 @@ namespace WordHiddenPowers.Controls.ListControls
 			rating = 0;
 		}
 
-		public RepositoryDataSet DataSet
+		public DocumentDataSet DataSet
 		{
 			get => source;
 			set
@@ -424,11 +424,11 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 
 			public ListItem(Note note) : base(
-				new ListItemNote[] {
+				[
 				new TitleNote(note),
 				new TextNote(note.Value.ToString()),
 				new DescriptionNote(note.Description),
-				new BottomBarNote(note: note) })
+				new BottomBarNote(note: note) ])
 			{
 				Note = note;
 			}
@@ -437,7 +437,7 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
-				DrawItemEventArgs arg = new DrawItemEventArgs(
+				DrawItemEventArgs arg = new(
 					graphics: e.Graphics,
 					font: e.Font,
 					rect: e.Bounds,
@@ -468,7 +468,7 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 		}
 
-		public abstract class ListItemNote : ControlLibrary.Controls.ListControls.ListItemNote
+		public abstract class ListItemNote(string text) : ControlLibrary.Controls.ListControls.ListItemNote
 		{
 			protected static readonly StringFormat CENTER_STRING_FORMAT = new StringFormat
 			{
@@ -482,12 +482,7 @@ namespace WordHiddenPowers.Controls.ListControls
 				LineAlignment = StringAlignment.Near
 			};
 
-			private string text;
-
-			public ListItemNote(string text)
-			{
-				this.text = text;
-			}
+			private string text = text;
 
 			public string Text
 			{
@@ -503,24 +498,18 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 		}
 
-		public class TitleNote : ListItemNote
+		public class TitleNote(Note note) : ListItemNote(text: note.FileCaption)
 		{
-			private Size textSize;
-
-			public TitleNote(Note note) : base(text: note.FileCaption)
-			{
-				textSize = Size.Empty;
-			}
-
+			private Size textSize = Size.Empty;
 
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
-				Font boldFont = new Font(e.Font.FontFamily, e.Font.Size, FontStyle.Bold);
+				Font boldFont = new(e.Font.FontFamily, e.Font.Size, FontStyle.Bold);
 
 				if (!textSize.IsEmpty)
 				{
 					Brush brush = new SolidBrush(e.ForeColor);
-					Rectangle textRect = new Rectangle(e.Bounds.Width - textSize.Width - 1, e.Bounds.Y,
+					Rectangle textRect = new(e.Bounds.Width - textSize.Width - 1, e.Bounds.Y,
 						textSize.Width, textSize.Height);
 					e.Graphics.DrawString(Text, boldFont, brush, textRect, LEFT_STRING_FORMAT);
 				}
@@ -529,14 +518,12 @@ namespace WordHiddenPowers.Controls.ListControls
 			protected override Size OnMeasureBound(Graphics graphics, Font font, int itemWidth, int itemHeight)
 			{
 				textSize = GetTextSize(graphics, Text, font, itemWidth - 2, CENTER_STRING_FORMAT);
-				return new Size(itemWidth, textSize.Height + 8);			
+				return new Size(itemWidth, textSize.Height + 8);
 			}
 		}
 
-		public class TextNote : ListItemNote
+		public class TextNote(string text) : ListItemNote(text: text)
 		{
-			public TextNote(string text) : base(text: text) { }
-
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
 				Brush brush = new SolidBrush(e.ForeColor);
@@ -550,10 +537,8 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 		}
 
-		public class DescriptionNote : ListItemNote
+		public class DescriptionNote(string text) : ListItemNote(text: text)
 		{
-			public DescriptionNote(string text) : base(text: text) { }
-
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
 				Font italicFont = new Font(e.Font.FontFamily, e.Font.Size - 1, FontStyle.Italic);
@@ -564,28 +549,20 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			protected override Size OnMeasureBound(Graphics graphics, Font font, int itemWidth, int itemHeight)
 			{
-				Font italicFont = new Font(font.FontFamily, font.Size - 1, FontStyle.Italic);
+				Font italicFont = new(font.FontFamily, font.Size - 1, FontStyle.Italic);
 				return GetTextSize(graphics: graphics, Text, font: italicFont, width: itemWidth, LEFT_STRING_FORMAT);
 			}
 		}
 
-		public class BottomBarNote : ListItemNote
+		public class BottomBarNote(Note note) : ListItemNote(text: string.Empty)
 		{
-			private readonly Note note;
+			private readonly Note note = note;
 			protected Size checkBoxSize;
 			protected Size ratingBoxSize;
 
-			public Rectangle CheckButtonRectangle { get; private set; }
-			public Rectangle AdditionButtonRectangle { get; private set; }
-			public Rectangle SubtractionButtonRectangle { get; private set; }
-
-			public BottomBarNote(Note note) : base(text: string.Empty)
-			{
-				this.note = note;
-				CheckButtonRectangle = Rectangle.Empty;
-				AdditionButtonRectangle = Rectangle.Empty;
-				SubtractionButtonRectangle = Rectangle.Empty;
-			}
+			public Rectangle CheckButtonRectangle { get; private set; } = Rectangle.Empty;
+			public Rectangle AdditionButtonRectangle { get; private set; } = Rectangle.Empty;
+			public Rectangle SubtractionButtonRectangle { get; private set; } = Rectangle.Empty;
 
 			public virtual bool Hide
 			{
@@ -648,7 +625,7 @@ namespace WordHiddenPowers.Controls.ListControls
 			private void DrawRatingBox(DrawItemEventArgs e)
 			{
 				Color starColor = note.Rating < 0 ? (e.State == (e.State | DrawItemState.Selected) ? e.ForeColor : Const.Globals.COLOR_NEGATIVE_STAR_ICON) : Const.Globals.COLOR_STAR_ICON;
-				Font boldFont = new Font(e.Font.FontFamily, e.Font.Size + 4, FontStyle.Bold);
+				Font boldFont = new(e.Font.FontFamily, e.Font.Size + 4, FontStyle.Bold);
 				Rectangle[] rectangles = ControlLibrary.Utils.Drawing.DrawRating(e.Graphics, boldFont, e.ForeColor, backBrush: new SolidBrush(starColor), textColor: starColor, rect: e.Bounds, rating: note.Rating, starCount: 5);
 				SubtractionButtonRectangle = rectangles[0];
 				AdditionButtonRectangle = rectangles[4];
@@ -656,7 +633,7 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			protected override Size OnMeasureBound(Graphics graphics, Font font, int itemWidth, int itemHeight)
 			{
-				Font boldFont = new Font(font.FontFamily, font.Size + 4, FontStyle.Bold);
+				Font boldFont = new(font.FontFamily, font.Size + 4, FontStyle.Bold);
 				ratingBoxSize = ControlLibrary.Utils.Drawing.MeasureRating(graphics: graphics, font: boldFont, starCount: 5);
 				checkBoxSize = new Size(ratingBoxSize.Height, ratingBoxSize.Height);
 				return new Size(itemWidth, ratingBoxSize.Height + 12);

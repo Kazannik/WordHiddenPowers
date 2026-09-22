@@ -29,119 +29,88 @@
 		private void InitializeComponent()
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LLMControl));
-			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.sendMessageButtonsBar = new WordHiddenPowers.Controls.SendMessageButtonsBox();
-			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-			this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-			this.testButton = new System.Windows.Forms.ToolStripButton();
-			this.systemMessageEditButton = new System.Windows.Forms.ToolStripButton();
+			this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
 			this.userMessageTextBox = new System.Windows.Forms.TextBox();
-			this.tableLayoutPanel1.SuspendLayout();
-			this.toolStrip1.SuspendLayout();
+			this.sendMessageButtonsBar = new WordHiddenPowers.Controls.SendMessagesControl.LLMSendMessageBox();
+			this.promptsHistoryBox = new WordHiddenPowers.Controls.PromptsHistoryControl.LLMPromptsHistoryBox();
+			this.mainTableLayoutPanel.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// tableLayoutPanel1
+			// mainTableLayoutPanel
 			// 
-			resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
-			this.tableLayoutPanel1.Controls.Add(this.sendMessageButtonsBar, 0, 2);
-			this.tableLayoutPanel1.Controls.Add(this.toolStrip1, 0, 0);
-			this.tableLayoutPanel1.Controls.Add(this.userMessageTextBox, 0, 1);
-			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			// 
-			// sendMessageButtonsBar
-			// 
-			resources.ApplyResources(this.sendMessageButtonsBar, "sendMessageButtonsBar");
-			this.sendMessageButtonsBar.MessageMode = WordHiddenPowers.Documents.DocumentCollection.ChartMessageMode.Nothing;
-			this.sendMessageButtonsBar.Name = "sendMessageButtonsBar";
-			this.sendMessageButtonsBar.ClickInsertMessage += new System.EventHandler<System.EventArgs>(this.SendMessageButtonsBar_ClickInsertMessage);
-			this.sendMessageButtonsBar.ClickReplaceMessage += new System.EventHandler<System.EventArgs>(this.SendMessageButtonsBar_ClickReplaceMessage);
-			this.sendMessageButtonsBar.ClickInsertNextMessage += new System.EventHandler<System.EventArgs>(this.SendMessageButtonsBar_ClickInsertNextMessage);
-			this.sendMessageButtonsBar.ClickInsertPreviousMessage += new System.EventHandler<System.EventArgs>(this.SendMessageButtonsBar_ClickInsertPreviousMessage);
-			this.sendMessageButtonsBar.ClickInsertCenterMessage += new System.EventHandler<System.EventArgs>(this.SendMessageButtonsBar_ClickInsertCenterMessage);
-			// 
-			// toolStrip1
-			// 
-			this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-			this.toolStrip1.ImageScalingSize = new System.Drawing.Size(48, 48);
-			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
-            this.toolStripButton2,
-            this.toolStripButton3,
-            this.testButton,
-            this.systemMessageEditButton});
-			resources.ApplyResources(this.toolStrip1, "toolStrip1");
-			this.toolStrip1.Name = "toolStrip1";
-			// 
-			// toolStripButton1
-			// 
-			this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton1.Image = global::WordHiddenPowers.Properties.Resources.LLMFormat;
-			resources.ApplyResources(this.toolStripButton1, "toolStripButton1");
-			this.toolStripButton1.Name = "toolStripButton1";
-			// 
-			// toolStripButton2
-			// 
-			this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton2.Image = global::WordHiddenPowers.Properties.Resources.LLMFormat;
-			resources.ApplyResources(this.toolStripButton2, "toolStripButton2");
-			this.toolStripButton2.Name = "toolStripButton2";
-			// 
-			// toolStripButton3
-			// 
-			this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			resources.ApplyResources(this.toolStripButton3, "toolStripButton3");
-			this.toolStripButton3.Name = "toolStripButton3";
-			this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
-			// 
-			// testButton
-			// 
-			this.testButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			resources.ApplyResources(this.testButton, "testButton");
-			this.testButton.Name = "testButton";
-			this.testButton.Click += new System.EventHandler(this.toolStripButton4_Click);
-			// 
-			// systemMessageEditButton
-			// 
-			this.systemMessageEditButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.systemMessageEditButton.Image = global::WordHiddenPowers.Properties.Resources.DefinePrintStyles;
-			resources.ApplyResources(this.systemMessageEditButton, "systemMessageEditButton");
-			this.systemMessageEditButton.Name = "systemMessageEditButton";
-			this.systemMessageEditButton.Click += new System.EventHandler(this.SystemMessageEditButton_Click);
+			resources.ApplyResources(this.mainTableLayoutPanel, "mainTableLayoutPanel");
+			this.mainTableLayoutPanel.Controls.Add(this.userMessageTextBox, 0, 1);
+			this.mainTableLayoutPanel.Controls.Add(this.sendMessageButtonsBar, 0, 2);
+			this.mainTableLayoutPanel.Controls.Add(this.promptsHistoryBox, 0, 0);
+			this.mainTableLayoutPanel.Name = "mainTableLayoutPanel";
 			// 
 			// userMessageTextBox
 			// 
 			resources.ApplyResources(this.userMessageTextBox, "userMessageTextBox");
 			this.userMessageTextBox.Name = "userMessageTextBox";
+			this.userMessageTextBox.Click += new System.EventHandler(this.UserMessageTextBox_TextChanged);
+			this.userMessageTextBox.TextChanged += new System.EventHandler(this.UserMessageTextBox_TextChanged);
+			// 
+			// sendMessageButtonsBar
+			// 
+			this.sendMessageButtonsBar.AccessUserMessage = false;
+			this.sendMessageButtonsBar.BackColor = System.Drawing.SystemColors.Window;
+			this.sendMessageButtonsBar.ChatMessageMode = WordHiddenPowers.Documents.Document.ChatMessageModeEnum.Nothing;
+			resources.ApplyResources(this.sendMessageButtonsBar, "sendMessageButtonsBar");
+			this.sendMessageButtonsBar.Document = null;
+			this.sendMessageButtonsBar.Name = "sendMessageButtonsBar";
+			this.sendMessageButtonsBar.ClickInsertHereMessage += new System.EventHandler<System.EventArgs>(this.SendMessageButtonsBar_ClickInsertHereMessage);
+			this.sendMessageButtonsBar.ClickReplaceSelectionMessage += new System.EventHandler<System.EventArgs>(this.SendMessageButtonsBar_ClickReplaceSelectionMessage);
+			this.sendMessageButtonsBar.ClickInsertNextMessage += new System.EventHandler<System.EventArgs>(this.SendMessageButtonsBar_ClickInsertNextMessage);
+			this.sendMessageButtonsBar.ClickInsertPreviousMessage += new System.EventHandler<System.EventArgs>(this.SendMessageButtonsBar_ClickInsertPreviousMessage);
+			this.sendMessageButtonsBar.ClickInsertCenterMessage += new System.EventHandler<System.EventArgs>(this.SendMessageButtonsBar_ClickInsertBetweenMessage);
+			this.sendMessageButtonsBar.ClickRepeatMessage += new System.EventHandler<System.EventArgs>(this.SendMessageButtonsBar_ClickRepeatMessage);
+			this.sendMessageButtonsBar.ClickRedoMessage += new System.EventHandler<System.EventArgs>(this.SendMessageButtonsBar_ClickRedoMessage);
+			this.sendMessageButtonsBar.ClickUndoMessage += new System.EventHandler<System.EventArgs>(this.SendMessageButtonsBar_ClickUndoMessage);
+			// 
+			// promptsHistoryBox
+			// 
+			this.promptsHistoryBox.ChatOptions = null;
+			this.promptsHistoryBox.ClearButtonEnabled = true;
+			this.promptsHistoryBox.DeleteButtonEnabled = true;
+			this.promptsHistoryBox.DeleteButtonImage = ((System.Drawing.Image)(resources.GetObject("promptsHistoryBox.DeleteButtonImage")));
+			this.promptsHistoryBox.DeleteButtonToolTipText = "Удалить";
+			resources.ApplyResources(this.promptsHistoryBox, "promptsHistoryBox");
+			this.promptsHistoryBox.Favorite = false;
+			this.promptsHistoryBox.FavoriteButtonEnabled = true;
+			this.promptsHistoryBox.ModelsComboBoxEnabled = true;
+			this.promptsHistoryBox.Name = "promptsHistoryBox";
+			this.promptsHistoryBox.NextButtonEnabled = true;
+			this.promptsHistoryBox.PreviousButtonEnabled = true;
+			this.promptsHistoryBox.SelectedModel = null;
+			this.promptsHistoryBox.StateText = "#";
+			this.promptsHistoryBox.SystemMessage = null;
+			this.promptsHistoryBox.ChatOptionsChanged += new System.EventHandler<System.EventArgs>(this.PromptsHistoryBox_ChatOptionsChanged);
+			this.promptsHistoryBox.SystemMessageChanged += new System.EventHandler<System.EventArgs>(this.PromptsHistoryBox_SystemMessageChanged);
+			this.promptsHistoryBox.ClickClear += new System.EventHandler<System.EventArgs>(this.PromptsHistoryBox_ClickClear);
+			this.promptsHistoryBox.ClickDelete += new System.EventHandler<System.EventArgs>(this.PromptsHistoryBox_ClickDelete);
+			this.promptsHistoryBox.ClickFavorite += new System.EventHandler<System.EventArgs>(this.PromptsHistoryBox_ClickFavorite);
+			this.promptsHistoryBox.ClickPreviousPrompt += new System.EventHandler<System.EventArgs>(this.PromptsHistoryBox_ClickPreviousPrompt);
+			this.promptsHistoryBox.ClickNextPrompt += new System.EventHandler<System.EventArgs>(this.PromptsHistoryBox_ClickNextPrompt);
+			this.promptsHistoryBox.SelectedModelChanged += new System.EventHandler<System.EventArgs>(this.PromptsHistoryBox_SelectedModelChanged);
 			// 
 			// LLMControl
 			// 
-			resources.ApplyResources(this, "$this");
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.tableLayoutPanel1);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
+			this.Controls.Add(this.mainTableLayoutPanel);
 			this.Name = "LLMControl";
-			this.tableLayoutPanel1.ResumeLayout(false);
-			this.tableLayoutPanel1.PerformLayout();
-			this.toolStrip1.ResumeLayout(false);
-			this.toolStrip1.PerformLayout();
+			resources.ApplyResources(this, "$this");
+			this.mainTableLayoutPanel.ResumeLayout(false);
+			this.mainTableLayoutPanel.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
-
+		
 		#endregion
 
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-		private System.Windows.Forms.ToolStrip toolStrip1;
-		private System.Windows.Forms.ToolStripButton toolStripButton1;
-		private System.Windows.Forms.ToolStripButton toolStripButton2;
-		private System.Windows.Forms.Button button1;
-		private System.Windows.Forms.ToolStripButton toolStripButton3;
-		private System.Windows.Forms.TextBox textBox1;
+		private System.Windows.Forms.TableLayoutPanel mainTableLayoutPanel;
 		private System.Windows.Forms.TextBox userMessageTextBox;
-		private System.Windows.Forms.ToolStripButton testButton;
-		private System.Windows.Forms.ToolStripButton toolStripButton5;
-		private System.Windows.Forms.ToolStripButton systemMessageEditButton;
-		private Controls.SendMessageButtonsBox sendMessageButtonsBar;
+		private Controls.SendMessagesControl.LLMSendMessageBox sendMessageButtonsBar;
+		private Controls.PromptsHistoryControl.LLMPromptsHistoryBox promptsHistoryBox;
 	}
 }

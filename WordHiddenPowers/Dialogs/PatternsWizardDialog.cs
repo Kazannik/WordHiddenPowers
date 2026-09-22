@@ -17,6 +17,9 @@ namespace WordHiddenPowers.Dialogs
 			Subcategory = subcategory;
 			InitializeComponent();
 
+			okButton.Size = Const.Globals.ACTION_BUTTON_SIZE;
+			cancelButton.Size = Const.Globals.ACTION_BUTTON_SIZE;
+
 			Icon = WordDocument.GetIconMso("GanttChartWizard", SystemInformation.IconSize.Width, SystemInformation.IconSize.Height);
 
 			okButton.Enabled = false;

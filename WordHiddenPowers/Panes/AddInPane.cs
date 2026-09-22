@@ -1,9 +1,11 @@
-﻿using System;
+﻿using LLMConnectorLibrary;
+using LLMConnectorLibrary.Models;
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using WordHiddenPowers.Controls;
 using WordHiddenPowers.Documents;
+using WordHiddenPowers.EventsBus;
 
 
 namespace WordHiddenPowers.Panes
@@ -22,13 +24,6 @@ namespace WordHiddenPowers.Panes
 		public Components.NotesControl NotesControl => notesControl;
 
 		private bool notesControlVisible;
-
-
-		public Documents.DocumentCollection.ChartMessageMode MessageMode
-		{
-			get => llmControl.MessageMode;
-			set => llmControl.MessageMode = value;
-		}
 
 		public bool NotesControlVisible
 		{
@@ -59,6 +54,14 @@ namespace WordHiddenPowers.Panes
 			}
 		}
 
+		public Document.ChatMessageModeEnum ChatMessageMode => llmControl.ChatMessageMode;
+
+		public IChatOptions ChatOptions => llmControl.ChatOptions;
+
+		public IModel SelectedModel => llmControl.SelectedModel;
+
+		public string UserMessage => llmControl.UserMessage;
+
 		public AddInPane() : base()
 		{
 			InitializeComponent();
@@ -67,13 +70,25 @@ namespace WordHiddenPowers.Panes
 		public AddInPane(Document document, int hwnd) : base(document, hwnd)
 		{
 			InitializeComponent();
+			llmControl.Document = document;
+			GlobalsEventsBus.DocumentPropertiesChanged += new EventHandler<EventsBus.EventArgs.DocumentEventArgs>(GlobalsEventsBus_DocumentPropertiesChanged);
+		}
+
+		private void GlobalsEventsBus_DocumentPropertiesChanged(object sender, EventsBus.EventArgs.DocumentEventArgs e)
+		{
+			if (Hwnd != e.Document.Hwnd) return;
+
+			if (e.Document.State == Document.WordDocumentMode.Separate)
+				NotesControlVisible = true;
+			else if (e.Document.State != Document.WordDocumentMode.Separate)
+				NotesControlVisible = false;
 		}
 
 		private void InitializeComponent()
 		{
 			mainTabControl = new TabControl();
 			llmTabPage = new TabPage();
-			llmControl = new Components.LLMControl(Document);
+			llmControl = new Components.LLMControl();
 			mainTabControl.SuspendLayout();
 			llmTabPage.SuspendLayout();
 			SuspendLayout();
@@ -84,12 +99,12 @@ namespace WordHiddenPowers.Panes
 			mainTabControl.Controls.Add(llmTabPage);
 			mainTabControl.Dock = DockStyle.Fill;
 			mainTabControl.Location = new Point(0, 0);
-			mainTabControl.Name = "tabControl1";
+			mainTabControl.Name = "mainTabControl";
 			mainTabControl.SelectedIndex = 0;
 			mainTabControl.Size = new Size(366, 427);
 			mainTabControl.TabIndex = 1;
 			// 
-			// tabPage1
+			// llmTabPage
 			// 
 			llmTabPage.Controls.Add(llmControl);
 			llmTabPage.Location = new Point(4, 4);
@@ -111,7 +126,7 @@ namespace WordHiddenPowers.Panes
 			// AddInPane
 			// 
 			AutoScaleDimensions = new SizeF(9F, 18F);
-			AutoScaleMode = AutoScaleMode.Font;
+			AutoScaleMode = AutoScaleMode.None;
 			Controls.Add(mainTabControl);
 			Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
 			Margin = new Padding(4, 2, 4, 2);

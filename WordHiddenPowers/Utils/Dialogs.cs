@@ -17,8 +17,7 @@ namespace ProsecutorialSupervision.Utils
 
 		private static void AddDialog(object item)
 		{
-			if (dialogCollection == null)
-				dialogCollection = new List<object>();
+			dialogCollection ??= [];
 			dialogCollection.Add(item);
 		}
 
@@ -50,7 +49,7 @@ namespace ProsecutorialSupervision.Utils
 		/// <returns></returns>
 		public static DialogResult ShowDialog(Form form)
 		{
-			NativeWindow ownerWindow = new NativeWindow();
+			NativeWindow ownerWindow = new();
 			ownerWindow.AssignHandle(Process.GetCurrentProcess().MainWindowHandle);
 			AddDialog(form);
 			DialogResult dialogResult = form.ShowDialog(ownerWindow);
@@ -65,7 +64,7 @@ namespace ProsecutorialSupervision.Utils
 		/// <returns></returns>
 		public static DialogResult ShowDialog(CommonDialog dialog)
 		{
-			NativeWindow ownerWindow = new NativeWindow();
+			NativeWindow ownerWindow = new();
 			ownerWindow.AssignHandle(Process.GetCurrentProcess().MainWindowHandle);
 			AddDialog(dialog);
 			DialogResult dialogResult = dialog.ShowDialog(ownerWindow);
@@ -80,11 +79,7 @@ namespace ProsecutorialSupervision.Utils
 		/// <returns></returns>
 		public static DialogResult ShowErrorDialog(string text)
 		{
-			NativeWindow ownerWindow = new NativeWindow();
-			ownerWindow.AssignHandle(Process.GetCurrentProcess().MainWindowHandle);
-			DialogResult dialogResult = MessageBox.Show(owner: ownerWindow, text: text, caption: Const.Globals.ADDIN_TITLE, buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Error);
-			ownerWindow.ReleaseHandle();
-			return dialogResult;
+			return ShowMessageDialog(text: text, buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Error, defaultButton: MessageBoxDefaultButton.Button1);
 		}
 
 		/// <summary>
@@ -94,9 +89,21 @@ namespace ProsecutorialSupervision.Utils
 		/// <returns></returns>
 		public static DialogResult ShowMessageDialog(string text)
 		{
-			NativeWindow ownerWindow = new NativeWindow();
+			return ShowMessageDialog(text: text, buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Information, defaultButton: MessageBoxDefaultButton.Button1);
+		}
+
+		/// <summary>
+		/// Отображает окно информационного сообщения для главного окна активного процесса. 
+		/// </summary>
+		/// <param name="text">Текст, отображаемый в окне сообщения.</param>
+		/// <param name="buttons">Одно из значений <see cref="MessageBoxButtons"/>, указывающее, какие кнопки отображаются в окне сообщения.</param>
+		/// <param name="icon">Одно из значений <see cref="MessageBoxIcon"/>, указывающее, какой значек отображается в окне сообщения.</param>
+		/// <returns></returns>
+		public static DialogResult ShowMessageDialog(string text, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton)
+		{
+			NativeWindow ownerWindow = new();
 			ownerWindow.AssignHandle(Process.GetCurrentProcess().MainWindowHandle);
-			DialogResult dialogResult = MessageBox.Show(owner: ownerWindow, text: text, caption: Const.Globals.ADDIN_TITLE, buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Information);
+			DialogResult dialogResult = MessageBox.Show(owner: ownerWindow, text: text, caption: Const.Globals.ADDIN_TITLE, buttons: buttons, icon: icon, defaultButton: defaultButton);
 			ownerWindow.ReleaseHandle();
 			return dialogResult;
 		}
@@ -107,11 +114,18 @@ namespace ProsecutorialSupervision.Utils
 		/// <param name="form">Отображаемая форма.</param>
 		public static void Show(Form form)
 		{
-			NativeWindow ownerWindow = new NativeWindow();
-			ownerWindow.AssignHandle(Process.GetCurrentProcess().MainWindowHandle);
-			AddDialog(form);
-			form.Show(ownerWindow);
-			ownerWindow.ReleaseHandle();
+			NativeWindow ownerWindow = new();
+			try
+			{
+				ownerWindow.AssignHandle(Process.GetCurrentProcess().MainWindowHandle);
+				AddDialog(form);
+				form.Show(ownerWindow);
+			}
+			catch (System.Exception) { }
+			finally
+			{
+				ownerWindow.ReleaseHandle();
+			}
 		}
 	}
 }

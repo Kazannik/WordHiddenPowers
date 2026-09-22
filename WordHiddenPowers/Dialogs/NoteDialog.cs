@@ -11,10 +11,9 @@ namespace WordHiddenPowers.Dialogs
 {
 	public partial class NoteDialog : Form
 	{
-		private static readonly Size BUTTON_SIZE = new Size((int)(SystemInformation.MenuHeight * 3.2), (int)(SystemInformation.MenuHeight * 1.2));
 		private static readonly Size SMALL_BUTTON_SIZE = new Size((int)(SystemInformation.MenuHeight * 1.2), (int)(SystemInformation.MenuHeight * 1.2));
 
-		private readonly RepositoryDataSet dataSet;
+		private readonly DocumentDataSet dataSet;
 
 		public string SelectionText { get; }
 
@@ -22,7 +21,7 @@ namespace WordHiddenPowers.Dialogs
 
 		public int SelectionEnd { get; }
 
-		public int Rating => ratingControl1.Rating.Value;
+		public int Rating => ratingControl.Rating.Value;
 
 		public Category Category => categoriesComboBox.SelectedItem;
 
@@ -35,45 +34,32 @@ namespace WordHiddenPowers.Dialogs
 		public NoteDialog()
 		{
 			InitializeComponent();
+			Visible = false;
 			okButton.Enabled = false;
 		}
 
-		public NoteDialog(RepositoryDataSet dataSet, Word.Selection selection, bool isText)
+		public NoteDialog(DocumentDataSet dataSet, string selectionText, int selectionStart, int selectionEnd, bool isText) : this()
 		{
 			IsText = isText;
 			this.dataSet = dataSet;
 
-			InitializeComponent();
-
-			this.Visible = false;
-
 			categoriesComboBox.InitializeSource(this.dataSet, IsText);
 
-			SelectionText = selection.Text;
-			SelectionStart = selection.Start;
-			SelectionEnd = selection.End;
-
-			okButton.Enabled = false;
+			SelectionText = selectionText;
+			SelectionStart = selectionStart;
+			SelectionEnd = selectionEnd;
 		}
 
-		public NoteDialog(RepositoryDataSet dataSet, Note note, bool isText)
+
+		public NoteDialog(DocumentDataSet dataSet, Word.Selection selection, bool isText)
+			: this(dataSet: dataSet, selectionText: selection.Text, selectionStart: selection.Start, selectionEnd: selection.End, isText: isText)
+		{ }
+
+		public NoteDialog(DocumentDataSet dataSet, Note note, bool isText)
+			: this(dataSet: dataSet, selectionText: note.WordSelectionText, selectionStart: note.WordSelectionStart, selectionEnd: note.WordSelectionEnd, isText: isText)
 		{
-			IsText = isText;
-			this.dataSet = dataSet;
-			InitializeComponent();
-
-			this.Visible = false;
-
-			categoriesComboBox.InitializeSource(this.dataSet, IsText);
-
-			SelectionText = note.WordSelectionText;
-			SelectionStart = note.WordSelectionStart;
-			SelectionEnd = note.WordSelectionEnd;
-
-			ratingControl1.Rating = (Rating)note.Rating;
+			ratingControl.Rating = (Rating)note.Rating;
 			descriptionTextBox.Text = note.Description;
-
-			okButton.Enabled = false;
 
 			categoriesComboBox.SelectedItem = categoriesComboBox.GetItem(note.Category.Position.ToString());
 			subcategoriesComboBox.SelectedItem = subcategoriesComboBox.GetItem(note.Subcategory.Position.ToString());
@@ -110,8 +96,8 @@ namespace WordHiddenPowers.Dialogs
 
 		protected virtual void ControlsResize()
 		{
-			okButton.Size = BUTTON_SIZE;
-			cancelButton.Size = BUTTON_SIZE;
+			okButton.Size = Const.Globals.ACTION_BUTTON_SIZE;
+			cancelButton.Size = Const.Globals.ACTION_BUTTON_SIZE;
 			wizardButton.Size = SMALL_BUTTON_SIZE;
 		}
 
@@ -123,15 +109,15 @@ namespace WordHiddenPowers.Dialogs
 		{
 			ControlsResize();
 			//wizardButton.Image = WordUtil.GetImageMso("GanttChartWizard", SystemInformation.IconSize.Width, SystemInformation.IconSize.Height);
-			this.Visible = true;
+			Visible = true;
 		}
 
-		private void ratingControl1_RatingChanged(object sender, ControlLibrary.Controls.RatingControls.RatingEventArgs e)
+		private void RatingControl1_RatingChanged(object sender, ControlLibrary.Controls.RatingControls.RatingEventArgs e)
 		{
-			if (ratingControl1.Rating.Value < 0)
-				ratingControl1.StarsColor1 = Const.Globals.COLOR_NEGATIVE_STAR_ICON;
-			if (ratingControl1.Rating.Value > 0)
-				ratingControl1.StarsColor1 = Const.Globals.COLOR_STAR_ICON;
+			if (ratingControl.Rating.Value < 0)
+				ratingControl.StarsColor1 = Const.Globals.COLOR_NEGATIVE_STAR_ICON;
+			if (ratingControl.Rating.Value > 0)
+				ratingControl.StarsColor1 = Const.Globals.COLOR_STAR_ICON;
 		}
 	}
 }

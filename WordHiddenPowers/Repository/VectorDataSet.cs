@@ -29,7 +29,7 @@ namespace WordHiddenPowers.Repository
 				}
 				else
 				{
-					Rows.Add(new object[] { key, value });
+					Rows.Add([key, value]);
 				}
 			}
 

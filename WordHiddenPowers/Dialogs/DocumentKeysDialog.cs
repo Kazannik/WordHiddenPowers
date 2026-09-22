@@ -6,13 +6,16 @@ namespace WordHiddenPowers.Dialogs
 {
 	public partial class DocumentKeysDialog : Form
 	{
-		private readonly RepositoryDataSet DataSet;
+		private readonly DocumentDataSet DataSet;
 
-		public DocumentKeysDialog(RepositoryDataSet dataSet)
+		public DocumentKeysDialog(DocumentDataSet dataSet)
 		{
 			DataSet = dataSet;
 
 			InitializeComponent();
+
+			okButton.Size = Const.Globals.ACTION_BUTTON_SIZE;
+			cancelButton.Size = Const.Globals.ACTION_BUTTON_SIZE;
 
 			ReadDocumentKeysCollection();
 		}

@@ -13,6 +13,10 @@ namespace WordHiddenPowers.Dialogs
 			string postfixUserMessage = "")
 		{
 			InitializeComponent();
+
+			okButton.Size = Const.Globals.ACTION_BUTTON_SIZE;
+			cancelButton.Size = Const.Globals.ACTION_BUTTON_SIZE;
+
 			captionTextBox.Text = caption;
 			systemMessageTextBox.Text = systemMessage;
 			prefixUserMessageTextBox.Text = prefixUserMessage;

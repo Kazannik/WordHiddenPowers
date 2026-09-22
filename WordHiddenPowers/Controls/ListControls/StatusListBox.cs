@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using WordHiddenPowers.Repository;
 using WordHiddenPowers.Repository.Categories;
 using static WordHiddenPowers.Controls.ListControls.CategoriesListBox;
-using static WordHiddenPowers.Repository.RepositoryDataSet;
+using static WordHiddenPowers.Repository.DocumentDataSet;
 using Category = WordHiddenPowers.Repository.Categories.Category;
 using Control = WordHiddenPowers.Controls.ListControls.StatusListControl;
 using Font = System.Drawing.Font;
@@ -23,12 +23,12 @@ namespace WordHiddenPowers.Controls.ListControls
 	[ComVisible(false)]
 	public class StatusListBox : ListControl<ListItem, Control.ListItemNote>
 	{
-		private RepositoryDataSet nowSource;
-		private RepositoryDataSet lastSource;
+		private DocumentDataSet nowSource;
+		private DocumentDataSet lastSource;
 
 		public StatusListBox() : base() { }
 
-		public RepositoryDataSet NowDataSet
+		public DocumentDataSet NowDataSet
 		{
 			get => nowSource;
 			set
@@ -46,7 +46,7 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 		}
 
-		public RepositoryDataSet LastDataSet
+		public DocumentDataSet LastDataSet
 		{
 			get => lastSource;
 			set
@@ -317,14 +317,14 @@ namespace WordHiddenPowers.Controls.ListControls
 		public class ListItem : ControlLibrary.Controls.ListControls.ListItem
 		{
 			protected internal ICategoriesListItem owner;
-			protected internal RepositoryDataSet nowDataSet;
-			protected internal RepositoryDataSet lastDataSet;
+			protected internal DocumentDataSet nowDataSet;
+			protected internal DocumentDataSet lastDataSet;
 			public ListItem() : base()
 			{
 				owner = default;
 			}
 
-			public ListItem(ICategoriesListItem owner, RepositoryDataSet nowDataSet, RepositoryDataSet lastDataSet) : base(
+			public ListItem(ICategoriesListItem owner, DocumentDataSet nowDataSet, DocumentDataSet lastDataSet) : base(
 				CreateNotesArray(owner))
 			{
 				this.nowDataSet = nowDataSet;
@@ -339,18 +339,18 @@ namespace WordHiddenPowers.Controls.ListControls
 			{
 				if (owner is Category)
 				{
-					return new ListItemNote[] {
-						new CategoryTitleListItemNote(owner.Code, owner.Caption),
+					return [
+						new CategoryTitleListItemNote(owner.Code, owner.Text),
 						new DescriptionListItemNote(owner.Description)
-					};
+					];
 				}
 				else
 				{
-					return new ListItemNote[] {
-						new SubcategoryTitleListItemNote(owner.Code, owner.Caption),
+					return [
+						new SubcategoryTitleListItemNote(owner.Code, owner.Text),
 						new DescriptionListItemNote(owner.Description),
 						new StatusListItemNote()
-					};
+					];
 				}
 			}
 
@@ -397,7 +397,7 @@ namespace WordHiddenPowers.Controls.ListControls
 				owner = default;
 			}
 
-			public CategoryListItem(Category category, RepositoryDataSet nowDataSet, RepositoryDataSet lastDataSet) : base(owner: category, nowDataSet: nowDataSet, lastDataSet: lastDataSet)
+			public CategoryListItem(Category category, DocumentDataSet nowDataSet, DocumentDataSet lastDataSet) : base(owner: category, nowDataSet: nowDataSet, lastDataSet: lastDataSet)
 			{
 				owner = category;
 			}
@@ -412,7 +412,7 @@ namespace WordHiddenPowers.Controls.ListControls
 				owner = default;
 			}
 
-			public SubcategoryListItem(Subcategory subcategory, RepositoryDataSet nowDataSet, RepositoryDataSet lastDataSet) : base(owner: subcategory, nowDataSet: nowDataSet, lastDataSet: lastDataSet)
+			public SubcategoryListItem(Subcategory subcategory, DocumentDataSet nowDataSet, DocumentDataSet lastDataSet) : base(owner: subcategory, nowDataSet: nowDataSet, lastDataSet: lastDataSet)
 			{
 				owner = subcategory;
 			}
@@ -420,7 +420,7 @@ namespace WordHiddenPowers.Controls.ListControls
 			public Subcategory Category => (Subcategory)owner;
 		}
 
-		public abstract class ListItemNote : ControlLibrary.Controls.ListControls.ListItemNote
+		public abstract class ListItemNote(string text) : ControlLibrary.Controls.ListControls.ListItemNote
 		{
 			protected static readonly StringFormat CENTER_STRING_FORMAT = new StringFormat
 			{
@@ -434,9 +434,7 @@ namespace WordHiddenPowers.Controls.ListControls
 				LineAlignment = StringAlignment.Near
 			};
 
-			private string text;
-
-			public ListItemNote(string text) => this.text = text;
+			private string text = text;
 
 			public string Text
 			{
@@ -452,22 +450,15 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 		}
 
-		public class SubcategoryTitleListItemNote : ListItemNote
+		public class SubcategoryTitleListItemNote(Version code, string text) : ListItemNote(text: text)
 		{
 			internal ListItem owner;
 
-			private Version code;
-			private Size codeSize;
-			private Size textSize;
+			private Version code = code;
+			private Size codeSize = Size.Empty;
+			private Size textSize = Size.Empty;
 
 			public SubcategoryTitleListItemNote(int major, int minor, string guid, string text) : this(code: Version.Create(major: major, minor: minor, guid: guid), text: text) { }
-
-			public SubcategoryTitleListItemNote(Version code, string text) : base(text: text)
-			{
-				this.code = code;
-				codeSize = Size.Empty;
-				textSize = Size.Empty;
-			}
 
 			public Version Code
 			{
@@ -484,8 +475,8 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
-				Font boldFont = new Font(e.Font.FontFamily, e.Font.Size, FontStyle.Bold);
-				Rectangle codeRect = new Rectangle(e.Bounds.X + 2, e.Bounds.Y + 2, codeSize.Width, codeSize.Height);
+				Font boldFont = new(e.Font.FontFamily, e.Font.Size, FontStyle.Bold);
+				Rectangle codeRect = new(e.Bounds.X + 2, e.Bounds.Y + 2, codeSize.Width, codeSize.Height);
 
 				Color backColor = Color.Gray;
 				if (owner.IsCategory)
@@ -517,7 +508,7 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			protected override Size OnMeasureBound(Graphics graphics, Font font, int itemWidth, int itemHeight)
 			{
-				Font boldFont = new Font(font.FontFamily, font.Size, FontStyle.Bold);
+				Font boldFont = new(font.FontFamily, font.Size, FontStyle.Bold);
 				codeSize = Utils.Drawing.GetCodeSize(graphics, boldFont);
 				textSize = GetTextSize(graphics, Text, font, itemWidth - codeSize.Width - 4, CENTER_STRING_FORMAT);
 
@@ -541,7 +532,7 @@ namespace WordHiddenPowers.Controls.ListControls
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
 				if (e.Bounds.Width == 0 || e.Bounds.Height == 0) { return; }
-				
+
 				LinearGradientBrush brush;
 				if (e.State == (e.State | DrawItemState.Selected))
 				{
@@ -557,10 +548,8 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 		}
 
-		public class DescriptionListItemNote : ListItemNote
+		public class DescriptionListItemNote(string text) : ListItemNote(text: text)
 		{
-			public DescriptionListItemNote(string text) : base(text: text) { }
-
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
 				Brush brush = new SolidBrush(e.ForeColor);
@@ -571,7 +560,7 @@ namespace WordHiddenPowers.Controls.ListControls
 			protected override Size OnMeasureBound(Graphics graphics, Font font, int itemWidth, int itemHeight)
 			{
 				Size result = GetTextSize(graphics: graphics, Text, font: font, width: itemWidth, LEFT_STRING_FORMAT);
-				return new Size(itemWidth, result.Height + 2);				
+				return new Size(itemWidth, result.Height + 2);
 			}
 		}
 

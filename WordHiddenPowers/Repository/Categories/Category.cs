@@ -20,7 +20,7 @@ namespace WordHiddenPowers.Repository.Categories
 				afterText: dataRow.IsNull("AfterText") ? string.Empty : dataRow["AfterText"] as string);
 		}
 
-		public static Category Create(RepositoryDataSet.CategoriesRow dataRow)
+		public static Category Create(DocumentDataSet.CategoriesRow dataRow)
 		{
 			return Create(
 				guid: dataRow.key_guid,
@@ -70,7 +70,7 @@ namespace WordHiddenPowers.Repository.Categories
 		{
 			Guid = guid;
 			Position = position;
-			Caption = caption;
+			Text = caption;
 			Description = description;
 			IsObligatory = isObligatory;
 			BeforeText = beforeText;
@@ -81,7 +81,7 @@ namespace WordHiddenPowers.Repository.Categories
 
 		public int Position { get; }
 
-		public string Caption { get; set; }
+		public string Text { get; set; }
 
 		public string Description { get; set; }
 
@@ -89,28 +89,28 @@ namespace WordHiddenPowers.Repository.Categories
 
 		public string Code => Position.ToString();
 
-		public string Text => Caption;
-
 		public string BeforeText { get; set; }
 
 		public string AfterText { get; set; }
 
 		long IComboItem.Id => Position;
 
-		string IComboItem.Code => Code;
+		string IComboItem.Prefix => Code;
+
+		object IComboItem.Tag => Code;
 
 		ControlLibrary.Structures.Version ICategoriesListItem.Code => ControlLibrary.Structures.Version.Create(major: Position, guid: Guid);
 
 		public object[] ToObjectsArray()
 		{
-			return new object[] {
+			return [
 				Guid,
 				Position,
-				Caption,
+				Text,
 				Description,
 				IsObligatory,
 				BeforeText,
-				AfterText};
+				AfterText];
 		}
 
 		public int CompareTo(Category value) => Compare(this, value);
@@ -128,11 +128,11 @@ namespace WordHiddenPowers.Repository.Categories
 			throw new ArgumentException();
 		}
 
-		public bool Equals(RepositoryDataSet.CategoriesRow dataRow)
+		public bool Equals(DocumentDataSet.CategoriesRow dataRow)
 		{
 			if (Guid != dataRow.key_guid) return false;
 			if (Position != dataRow.position) return false;
-			if (Caption != dataRow.Caption) return false;
+			if (Text != dataRow.Caption) return false;
 			if (!string.IsNullOrEmpty(Description) && !dataRow.IsDescriptionNull() && Description != dataRow.Description) return false;
 			if (IsObligatory != dataRow.IsObligatory) return false;
 			if (!string.IsNullOrEmpty(BeforeText) && !dataRow.IsBeforeTextNull() && BeforeText != dataRow.BeforeText) return false;

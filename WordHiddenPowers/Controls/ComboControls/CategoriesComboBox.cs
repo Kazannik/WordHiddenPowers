@@ -21,7 +21,7 @@ namespace WordHiddenPowers.Controls.ComboControls
 		[DebuggerNonUserCode()]
 		public CategoriesComboBox(IContainer container) : base(container: container) { }
 
-		public void InitializeSource(RepositoryDataSet dataSet, bool isText)
+		public void InitializeSource(DocumentDataSet dataSet, bool isText)
 		{
 			Items.Clear();
 
@@ -33,6 +33,12 @@ namespace WordHiddenPowers.Controls.ComboControls
 				}
 			}
 		}
+
+		protected override Size OnMeasurePrefixBound(Graphics graphics, Font font)
+		{
+			return graphics.MeasureString("FFFFF", font).ToSize();
+		}
+
 		#endregion
 	}
 }

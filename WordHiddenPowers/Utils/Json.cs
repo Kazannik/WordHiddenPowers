@@ -4,13 +4,13 @@ using System.Text;
 
 namespace WordHiddenPowers.Utils
 {
-	public static class Json
+	static class Json
 	{
-		private static string GetIndent(int count) => new string('\x0020', count);
+		private static string GetIndent(int count) => new('\x0020', count);
 
 		public static string Serialize(IEnumerable<(string name, string type, string description, string parameters, bool strict)> attributes)
 		{
-			StringBuilder stringBuilder = new StringBuilder();
+			StringBuilder stringBuilder = new();
 			stringBuilder.Append("{\n");
 			stringBuilder.Append(GetIndent(2) + "\"type\":\"object\",\n");
 			stringBuilder.Append(GetIndent(2) + "\"properties\":\"{\n");

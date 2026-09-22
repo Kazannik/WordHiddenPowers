@@ -11,8 +11,8 @@ namespace WordHiddenPowers.Controls
 {
 	public partial class TableEditBox : UserControl
 	{
-		private RepositoryDataSet _nowDataSet;
-		private RepositoryDataSet _lastDataSet;
+		private DocumentDataSet _nowDataSet;
+		private DocumentDataSet _lastDataSet;
 		private Table _table;
 
 		public TableEditBox()
@@ -24,7 +24,7 @@ namespace WordHiddenPowers.Controls
 
 		public bool IsLast { get; private set; }
 
-		public RepositoryDataSet NowDataSet
+		public DocumentDataSet NowDataSet
 		{
 			get => _nowDataSet;
 			set
@@ -34,7 +34,7 @@ namespace WordHiddenPowers.Controls
 			}
 		}
 
-		public RepositoryDataSet LastDataSet
+		public DocumentDataSet LastDataSet
 		{
 			get => _lastDataSet;
 			set

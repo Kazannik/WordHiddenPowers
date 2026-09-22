@@ -16,7 +16,7 @@ namespace WordHiddenPowers.Repository.WordFiles
 				date: (DateTime)dataRow["Date"]);
 		}
 
-		public static WordFile Create(RepositoryDataSet.WordFilesRow dataRow)
+		public static WordFile Create(DocumentDataSet.WordFilesRow dataRow)
 		{
 			return new WordFile(
 				id: dataRow.id,
@@ -67,12 +67,12 @@ namespace WordHiddenPowers.Repository.WordFiles
 
 		public object[] ToObjectsArray()
 		{
-			return new object[] {
+			return [
 				Id < 0 ? null: (object) Id,
 				Filename,
 				Caption,
 				Description,
-				Date };
+				Date ];
 		}
 
 		public int CompareTo(WordFile value) => Compare(this, value);

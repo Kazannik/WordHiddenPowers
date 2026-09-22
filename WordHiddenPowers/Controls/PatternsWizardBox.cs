@@ -18,9 +18,9 @@ namespace WordHiddenPowers.Controls
 	[ComVisible(false)]
 	public partial class PatternsWizardBox : UserControl
 	{
-		private static readonly Size BUTTON_SIZE = new Size((int)(SystemInformation.MenuHeight * 3.2), (int)(SystemInformation.MenuHeight * 1.2));
-		private static readonly Size SMALL_BUTTON_SIZE = new Size(SystemInformation.MenuHeight, SystemInformation.MenuHeight);
-		private static readonly Regex regexDecimal = new Regex("\\d+([,]\\d+)?", RegexOptions.IgnoreCase & RegexOptions.Multiline);
+		private static readonly Size BUTTON_SIZE = new((int)(SystemInformation.MenuHeight * 3.2), (int)(SystemInformation.MenuHeight * 1.2));
+		private static readonly Size SMALL_BUTTON_SIZE = new(SystemInformation.MenuHeight, SystemInformation.MenuHeight);
+		private static readonly Regex regexDecimal = new("\\d+([,]\\d+)?", RegexOptions.IgnoreCase & RegexOptions.Multiline);
 
 		private string text;
 		private bool isCorrect;
@@ -106,11 +106,11 @@ namespace WordHiddenPowers.Controls
 			}
 			else
 			{
-				IsMatch(text: text, patterns: GetPatterns().ToArray(), index: patternsListBox.SelectedIndex - 1, out string tmp);
+				IsMatch(text: text, patterns: [.. GetPatterns()], index: patternsListBox.SelectedIndex - 1, out string tmp);
 				textTextBox.Text = tmp;
 			}
 
-			if (IsMatch(text: text, patterns: GetPatterns().ToArray(), index: patternsListBox.SelectedIndex, out string result))
+			if (IsMatch(text: text, patterns: [.. GetPatterns()], index: patternsListBox.SelectedIndex, out string result))
 			{
 				if (IsDecimal)
 				{
@@ -133,7 +133,7 @@ namespace WordHiddenPowers.Controls
 			}
 			resultTextBox.Text = result;
 
-			if (IsMatch(text: text, patterns: GetPatterns().ToArray(), index: patternsListBox.Items.Count - 1, out result))
+			if (IsMatch(text: text, patterns: [.. GetPatterns()], index: patternsListBox.Items.Count - 1, out result))
 			{
 				if (IsDecimal)
 				{
@@ -164,7 +164,7 @@ namespace WordHiddenPowers.Controls
 		{
 			keywordsListBox.BeginUpdate();
 			keywordsListBox.Items.Clear();
-			string[] keywords = keyword.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+			string[] keywords = keyword.Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
 
 			if (keywords.Any())
 			{
@@ -372,7 +372,7 @@ namespace WordHiddenPowers.Controls
 		{
 			try
 			{
-				Regex regex = new Regex(pattern, RegexOptions.IgnoreCase & RegexOptions.Multiline);
+				Regex regex = new(pattern, RegexOptions.IgnoreCase & RegexOptions.Multiline);
 				result = regex.Match(text).Value;
 				return regex.IsMatch(text) && !string.IsNullOrEmpty(result);
 			}

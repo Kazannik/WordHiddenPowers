@@ -7,7 +7,7 @@ namespace WordHiddenPowers.MLService
 {
 	public partial class MLModel
 	{
-		public readonly string RetrainFilePath = Path.Combine(Utils.FileSystem.UserDirectory.FullName, "MLModel.tsv");
+		public readonly string RetrainFilePath = Path.Combine(Utils.FileSystem.MLModelesDirectory.FullName, "MLModel.tsv");
 		public const char RetrainSeparatorChar = '	';
 		public const bool RetrainHasHeader = true;
 		public const bool RetrainAllowQuoting = false;

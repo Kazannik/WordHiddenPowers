@@ -9,13 +9,13 @@ namespace WordHiddenPowers.Dialogs
 	{
 		public string Value => valueTextBox.Text;
 
-		public TextNoteDialog(RepositoryDataSet dataSet, Word.Selection selection) : base(dataSet, selection, true)
+		public TextNoteDialog(DocumentDataSet dataSet, Word.Selection selection) : base(dataSet, selection, true)
 		{
 			InitializeComponent();
 			valueTextBox.Text = selection.Text;
 		}
 
-		public TextNoteDialog(RepositoryDataSet dataSet, Note note) : base(dataSet, note, true)
+		public TextNoteDialog(DocumentDataSet dataSet, Note note) : base(dataSet, note, true)
 		{
 			InitializeComponent();
 			if (note.IsText)

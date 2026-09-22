@@ -7,7 +7,7 @@ using WordHiddenPowers.Documents;
 namespace WordHiddenPowers.Panes
 {
 	[DesignerCategory("code")]
-	public class WordHiddenPowersPane : UserControl
+	public abstract class WordHiddenPowersPane : UserControl
 	{
 		private IContainer components;
 
@@ -20,11 +20,10 @@ namespace WordHiddenPowers.Panes
 			InitializeComponent();
 		}
 
-		public WordHiddenPowersPane(Document document, int hwnd)
+		public WordHiddenPowersPane(Document document, int hwnd) : this()
 		{
 			Document = document;
 			Hwnd = hwnd;
-			InitializeComponent();
 		}
 
 		protected override void Dispose(bool disposing)
@@ -51,11 +50,7 @@ namespace WordHiddenPowers.Panes
 		}
 
 		public event EventHandler<EventArgs> PropertiesChanged;
-
-		protected virtual void OnPropertiesChanged(EventArgs e)
-		{
-			PropertiesChanged?.Invoke(this, e);
-		}
+		protected virtual void OnPropertiesChanged(EventArgs e) => PropertiesChanged?.Invoke(this, e);
 	}
 }
 

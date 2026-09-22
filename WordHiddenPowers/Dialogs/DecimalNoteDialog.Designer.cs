@@ -45,8 +45,8 @@ namespace WordHiddenPowers.Dialogs
 			// 
 			// DecimalNoteDialog
 			// 
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			resources.ApplyResources(this, "$this");
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.numericTextBox1);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;

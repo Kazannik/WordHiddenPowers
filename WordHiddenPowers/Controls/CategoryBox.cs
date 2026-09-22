@@ -53,7 +53,7 @@ namespace WordHiddenPowers.Controls
 
 		private Size OnMeasureBound(Graphics graphics, Font font, int itemWidth, int itemHeight)
 		{
-			Font boldFont = new Font(font.FontFamily, font.Size, FontStyle.Bold);
+			Font boldFont = new(font.FontFamily, font.Size, FontStyle.Bold);
 			SizeF measure = graphics.MeasureString("XXX.XXX", boldFont, itemWidth - 3, Utils.Drawing.CENTER_STRING_FORMAT);
 
 			codeSize = new Size((int)measure.Width, (int)measure.Height);

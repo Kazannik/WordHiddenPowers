@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using WordHiddenPowers.Repository;
 using WordHiddenPowers.Repository.Categories;
 using static WordHiddenPowers.Controls.ListControls.CategoriesListBox;
-using static WordHiddenPowers.Repository.RepositoryDataSet;
+using static WordHiddenPowers.Repository.DocumentDataSet;
 using Category = WordHiddenPowers.Repository.Categories.Category;
 using Control = WordHiddenPowers.Controls.ListControls.CategoriesListControl;
 using Font = System.Drawing.Font;
@@ -23,11 +23,11 @@ namespace WordHiddenPowers.Controls.ListControls
 	[ComVisible(false)]
 	public class CategoriesListBox : ListControl<ListItem, Control.ListItemNote>
 	{
-		private RepositoryDataSet source;
+		private DocumentDataSet source;
 
 		public CategoriesListBox() : base() { }
 
-		public RepositoryDataSet DataSet
+		public DocumentDataSet DataSet
 		{
 			get => source;
 			set
@@ -297,7 +297,7 @@ namespace WordHiddenPowers.Controls.ListControls
 		public interface ICategoriesListItem
 		{
 			Version Code { get; }
-			string Caption { get; }
+			string Text { get; }
 			string Description { get; }
 			string Guid { get; }
 		}
@@ -315,9 +315,9 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 
 			public ListItem(ICategoriesListItem owner) : base(
-				new ListItemNote[] {
-				owner is Category ? new CategoryTitleNote(owner.Code, owner.Caption) : new TitleNote(owner.Code, owner.Caption),
-				new DescriptionNote(owner.Description)})
+				[
+				owner is Category ? new CategoryTitleNote(owner.Code, owner.Text) : new TitleNote(owner.Code, owner.Text),
+				new DescriptionNote(owner.Description)])
 			{
 				this.owner = owner;
 			}
@@ -365,23 +365,21 @@ namespace WordHiddenPowers.Controls.ListControls
 			public Subcategory Category => (Subcategory)owner;
 		}
 
-		public abstract class ListItemNote : ControlLibrary.Controls.ListControls.ListItemNote
+		public abstract class ListItemNote(string text) : ControlLibrary.Controls.ListControls.ListItemNote
 		{
-			protected static readonly StringFormat CENTER_STRING_FORMAT = new StringFormat
+			protected static readonly StringFormat CENTER_STRING_FORMAT = new()
 			{
 				Alignment = StringAlignment.Center,
 				LineAlignment = StringAlignment.Center
 			};
 
-			protected static readonly StringFormat LEFT_STRING_FORMAT = new StringFormat
+			protected static readonly StringFormat LEFT_STRING_FORMAT = new()
 			{
 				Alignment = StringAlignment.Near,
 				LineAlignment = StringAlignment.Near
 			};
 
-			private string text;
-
-			public ListItemNote(string text) => this.text = text;
+			private string text = text;
 
 			public string Text
 			{
@@ -427,15 +425,15 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
-				Font boldFont = new Font(e.Font.FontFamily, e.Font.Size, FontStyle.Bold);
-				Rectangle codeRectangle = new Rectangle(e.Bounds.X + 2, e.Bounds.Y + 2,
+				Font boldFont = new(e.Font.FontFamily, e.Font.Size, FontStyle.Bold);
+				Rectangle codeRectangle = new(e.Bounds.X + 2, e.Bounds.Y + 2,
 					codeSize.Width, codeSize.Height);
 				Utils.Drawing.DrawCode(Code, new DrawItemEventArgs(e.Graphics, boldFont, codeRectangle, e.Index, e.State, e.ForeColor, e.BackColor));
 
 				if (!textSize.IsEmpty)
 				{
 					Brush brush = new SolidBrush(e.ForeColor);
-					Rectangle rectangle = new Rectangle(e.Bounds.Width - textSize.Width - 1, e.Bounds.Y,
+					Rectangle rectangle = new(e.Bounds.Width - textSize.Width - 1, e.Bounds.Y,
 						textSize.Width, textSize.Height);
 					e.Graphics.DrawString(Text, boldFont, brush, rectangle, LEFT_STRING_FORMAT);
 				}
@@ -443,7 +441,7 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			protected override Size OnMeasureBound(Graphics graphics, Font font, int itemWidth, int itemHeight)
 			{
-				Font boldFont = new Font(font.FontFamily, font.Size, FontStyle.Bold);
+				Font boldFont = new(font.FontFamily, font.Size, FontStyle.Bold);
 				codeSize = Utils.Drawing.GetCodeSize(graphics, boldFont);
 				textSize = GetTextSize(graphics, Text, font, itemWidth - codeSize.Width - 4, CENTER_STRING_FORMAT);
 
@@ -481,10 +479,8 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 		}
 
-		public class DescriptionNote : ListItemNote
+		public class DescriptionNote(string text) : ListItemNote(text: text)
 		{
-			public DescriptionNote(string text) : base(text: text) { }
-
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
 				Brush brush = new SolidBrush(e.ForeColor);

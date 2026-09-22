@@ -150,9 +150,9 @@ namespace WordHiddenPowers.Panes.Components
 			// 
 			// NotesControl
 			// 
-			resources.ApplyResources(this, "$this");
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
 			this.Controls.Add(this.tableLayoutPanel1);
+			resources.ApplyResources(this, "$this");
 			this.Name = "NotesControl";
 			this.Load += new System.EventHandler(this.NotesPane_Load);
 			this.notesSplitContainer.Panel1.ResumeLayout(false);

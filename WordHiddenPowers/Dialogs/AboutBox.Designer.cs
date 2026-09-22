@@ -55,6 +55,7 @@
 			// logoPictureBox
 			// 
 			resources.ApplyResources(this.logoPictureBox, "logoPictureBox");
+			this.logoPictureBox.Image = global::WordHiddenPowers.Properties.Resources.AI_2;
 			this.logoPictureBox.Name = "logoPictureBox";
 			this.tableLayoutPanel.SetRowSpan(this.logoPictureBox, 6);
 			this.logoPictureBox.TabStop = false;

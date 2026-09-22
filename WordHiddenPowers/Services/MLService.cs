@@ -19,7 +19,7 @@ namespace WordHiddenPowers.Services
 		public static void Search(Document document, float levelPassage)
 		{
 			string mlNetModelName = document.MLModelName;
-			string mlNetModelPath = Path.Combine(FileSystem.UserDirectory.FullName, mlNetModelName);
+			string mlNetModelPath = Path.Combine(FileSystem.MLModelesDirectory.FullName, mlNetModelName);
 			if (!File.Exists(mlNetModelPath)) return;
 
 			ProgressDialog dialog = new ProgressDialog

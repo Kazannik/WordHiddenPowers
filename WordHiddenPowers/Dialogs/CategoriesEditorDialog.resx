@@ -190,13 +190,13 @@
     <value>Закрыть</value>
   </data>
   <data name="mnuFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 24</value>
+    <value>59, 26</value>
   </data>
   <data name="mnuFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Файл</value>
   </data>
   <data name="mnuEdit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>78, 24</value>
+    <value>78, 26</value>
   </data>
   <data name="mnuEdit.Text" xml:space="preserve">
     <value>mnuEdit</value>
@@ -232,7 +232,7 @@
     <value>Очистить</value>
   </data>
   <data name="mnuCategories.Size" type="System.Drawing.Size, System.Drawing">
-    <value>96, 24</value>
+    <value>96, 26</value>
   </data>
   <data name="mnuCategories.Text" xml:space="preserve">
     <value>Категории</value>
@@ -241,7 +241,7 @@
     <value>0, 0</value>
   </data>
   <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>815, 28</value>
+    <value>815, 30</value>
   </data>
   <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -364,7 +364,7 @@
     <value>toolStripButton5</value>
   </data>
   <data name="toolStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 28</value>
+    <value>0, 30</value>
   </data>
   <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
     <value>815, 31</value>
@@ -391,7 +391,7 @@
     <value>Fill</value>
   </data>
   <data name="splitContainer1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 59</value>
+    <value>0, 61</value>
   </data>
   <data name="splitContainer1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
@@ -406,7 +406,7 @@
     <value>3, 2, 3, 2</value>
   </data>
   <data name="listBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>331, 341</value>
+    <value>331, 339</value>
   </data>
   <data name="listBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -445,7 +445,7 @@
     <value>True</value>
   </data>
   <data name="obligatoryСheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 287</value>
+    <value>5, 285</value>
   </data>
   <data name="obligatoryСheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
@@ -475,7 +475,7 @@
     <value>Bottom, Left, Right</value>
   </data>
   <data name="descriptionTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 164</value>
+    <value>5, 162</value>
   </data>
   <data name="descriptionTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
@@ -511,7 +511,7 @@
     <value>True</value>
   </data>
   <data name="descriptionLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 145</value>
+    <value>5, 143</value>
   </data>
   <data name="descriptionLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>82, 16</value>
@@ -550,7 +550,7 @@
     <value>Vertical</value>
   </data>
   <data name="captionTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>381, 121</value>
+    <value>381, 119</value>
   </data>
   <data name="captionTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -604,7 +604,7 @@
     <value>3, 2, 3, 2</value>
   </data>
   <data name="tabPage1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>448, 309</value>
+    <value>447, 307</value>
   </data>
   <data name="tabPage1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -754,7 +754,7 @@
     <value>3, 2, 3, 2</value>
   </data>
   <data name="tabPage2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>447, 322</value>
+    <value>447, 309</value>
   </data>
   <data name="tabPage2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -907,7 +907,7 @@
     <value>3, 2, 3, 2</value>
   </data>
   <data name="tabPage3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>447, 322</value>
+    <value>447, 309</value>
   </data>
   <data name="tabPage3.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -934,7 +934,7 @@
     <value>3, 2, 3, 2</value>
   </data>
   <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>456, 338</value>
+    <value>455, 336</value>
   </data>
   <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -964,7 +964,7 @@
     <value>1</value>
   </data>
   <data name="splitContainer1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>815, 341</value>
+    <value>815, 339</value>
   </data>
   <data name="splitContainer1.SplitterDistance" type="System.Int32, mscorlib">
     <value>331</value>

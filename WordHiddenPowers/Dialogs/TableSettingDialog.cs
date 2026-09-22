@@ -7,6 +7,8 @@ namespace WordHiddenPowers.Dialogs
 		public TableSettingDialog()
 		{
 			InitializeComponent();
+			okButton.Size = Const.Globals.ACTION_BUTTON_SIZE;
+			cancelButton.Size = Const.Globals.ACTION_BUTTON_SIZE;
 		}
 
 		public int ColumnsCount { get { return (int)columnCountNumericUpDown.Value; } }

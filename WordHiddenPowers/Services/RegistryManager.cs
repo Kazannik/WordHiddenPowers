@@ -4,7 +4,7 @@ namespace WordHiddenPowers.Services
 {
 	internal static class RegistryManager
 	{
-		private static readonly string AppKeyPath = @"Software\KazannikSoft\WordHiddenPowers";
+		private const string AppKeyPath = @"Software\KazannikSoft\WordHiddenPowers";
 
 		public static void SaveSetting(string keyName, string value)
 		{

@@ -8,8 +8,8 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using WordHiddenPowers.Repository.Categories;
 using WordHiddenPowers.Repository.Notes;
+using static WordHiddenPowers.Repository.DocumentDataSet;
 using static WordHiddenPowers.Repository.Notes.Note;
-using static WordHiddenPowers.Repository.RepositoryDataSet;
 using static WordHiddenPowers.Utils.Gdi32;
 using Category = WordHiddenPowers.Repository.Categories.Category;
 using Word = Microsoft.Office.Interop.Word;
@@ -18,13 +18,13 @@ namespace WordHiddenPowers.Utils
 {
 	static class WordDocument
 	{
-		private readonly static Regex spiceRegex = new Regex("\\s{2,}", RegexOptions.Compiled & RegexOptions.IgnoreCase & RegexOptions.Multiline);
-		private readonly static Regex percentRegex = new Regex("\\%{3}", RegexOptions.Compiled & RegexOptions.IgnoreCase & RegexOptions.Multiline);
+		private readonly static Regex spiceRegex = new("\\s{2,}", RegexOptions.Compiled & RegexOptions.IgnoreCase & RegexOptions.Multiline);
+		private readonly static Regex percentRegex = new("\\%{3}", RegexOptions.Compiled & RegexOptions.IgnoreCase & RegexOptions.Multiline);
 
 		public static IEnumerable<(string userMessage, Word.Range range)> GetMessages(Word._Document document)
 		{
-			List<Match> separators = new List<Match>();
-			List<(string userMessage, Word.Range range)> result = new List<(string userMessage, Word.Range range)>();
+			List<Match> separators = [];
+			List<(string userMessage, Word.Range range)> result = [];
 			foreach (Match match in percentRegex.Matches(document.ActiveWindow.Selection.Text))
 			{
 				separators.Add(match);
@@ -135,7 +135,7 @@ namespace WordHiddenPowers.Utils
 			string categoryGuid)
 		{
 			Category category = sourceDocument.NowAggregatedDataSet.GetCategory(guid: categoryGuid);
-			InsertParagraph(destDocument, string.Format("{0}) {1}", category.Code, category.Caption), true);
+			InsertParagraph(destDocument, string.Format("{0}) {1}", category.Code, category.Text), true);
 			if (!string.IsNullOrEmpty(category.BeforeText))
 			{
 				InsertParagraph(destDocument, category.BeforeText);
@@ -159,7 +159,7 @@ namespace WordHiddenPowers.Utils
 			Word._Document destDocument,
 			Subcategory subcategory)
 		{
-			InsertParagraph(destDocument, string.Format("{0}.{1}) {2}", subcategory.Category.Code, subcategory.Code, subcategory.Caption), true);
+			InsertParagraph(destDocument, string.Format("{0}.{1}) {2}", subcategory.Category.Code, subcategory.Code, subcategory.Text), true);
 			if (!string.IsNullOrEmpty(subcategory.BeforeText))
 			{
 				InsertParagraph(destDocument, subcategory.BeforeText);

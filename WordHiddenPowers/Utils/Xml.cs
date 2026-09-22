@@ -12,19 +12,19 @@ namespace WordHiddenPowers.Utils
 {
 	static class Xml
 	{
-		public static RepositoryDataSet GetCurrentDataSet(Word._Document Doc, out bool isCorrect)
+		public static DocumentDataSet GetCurrentDataSet(Word._Document Doc, out bool isCorrect)
 		{
-			return (RepositoryDataSet)GetDataSet(Doc: Doc, variableName: Const.Globals.XML_CURRENT_VARIABLE_NAME, out isCorrect);
+			return (DocumentDataSet)GetDataSet(Doc: Doc, variableName: Const.Globals.XML_CURRENT_VARIABLE_NAME, out isCorrect);
 		}
 
-		public static RepositoryDataSet GetNowAggregatedDataSet(Word._Document Doc, out bool isCorrect)
+		public static DocumentDataSet GetNowAggregatedDataSet(Word._Document Doc, out bool isCorrect)
 		{
-			return (RepositoryDataSet)GetDataSet(Doc: Doc, variableName: Const.Globals.XML_NOW_AGGREGATED_VARIABLE_NAME, out isCorrect);
+			return (DocumentDataSet)GetDataSet(Doc: Doc, variableName: Const.Globals.XML_NOW_AGGREGATED_VARIABLE_NAME, out isCorrect);
 		}
 
-		public static RepositoryDataSet GetLastAggregatedDataSet(Word._Document Doc, out bool isCorrect)
+		public static DocumentDataSet GetLastAggregatedDataSet(Word._Document Doc, out bool isCorrect)
 		{
-			return (RepositoryDataSet)GetDataSet(Doc: Doc, variableName: Const.Globals.XML_LAST_AGGREGATED_VARIABLE_NAME, out isCorrect);
+			return (DocumentDataSet)GetDataSet(Doc: Doc, variableName: Const.Globals.XML_LAST_AGGREGATED_VARIABLE_NAME, out isCorrect);
 		}
 
 		public static VectorDataSet GetVectorDataSet(Word._Document Doc, out bool isCorrect)
@@ -47,7 +47,7 @@ namespace WordHiddenPowers.Utils
 			if (isVector)
 				dataSet = new VectorDataSet();
 			else
-				dataSet = new RepositoryDataSet();
+				dataSet = new DocumentDataSet();
 
 			if (Content.ExistsVariable(array: Doc.Variables, variableName: variableName + "_0"))
 			{
@@ -79,9 +79,9 @@ namespace WordHiddenPowers.Utils
 		/// </summary>
 		/// <param name="sourceDataSet">Хранилище данных, в котором содержится модель (шаблон).</param>
 		/// <param name="destDocument">Документ, в который производится копирование модели (шаблона)</param>
-		public static void CopyModel(RepositoryDataSet sourceDataSet, Word._Document destDocument)
+		public static void CopyModel(DocumentDataSet sourceDataSet, Word._Document destDocument)
 		{
-			RepositoryDataSet destDataSet = new RepositoryDataSet();
+			DocumentDataSet destDataSet = new();
 			CopyModel(sourceDataSet, destDataSet);
 			Content.CommitVariable(destDocument.Variables, Const.Globals.XML_CURRENT_VARIABLE_NAME, destDataSet);
 		}
@@ -91,7 +91,7 @@ namespace WordHiddenPowers.Utils
 		/// </summary>
 		/// <param name="sourceDataSet">Хранилище данных, в котором содержится модель (шаблон).</param>
 		/// <param name="destDataSet">Хранилище назначения, в которое копируется модель (шаблон).</param>
-		public static void CopyModel(RepositoryDataSet sourceDataSet, RepositoryDataSet destDataSet)
+		public static void CopyModel(DocumentDataSet sourceDataSet, DocumentDataSet destDataSet)
 		{
 			CopyData(sourceDataSet, destDataSet);
 			destDataSet.DecimalNotes.Clear();
@@ -107,7 +107,7 @@ namespace WordHiddenPowers.Utils
 		/// </summary>
 		/// <param name="sourceDataSet">Источник данных.</param>
 		/// <param name="destDataSet">Хранилище данных, в которое производится копирование.</param>
-		public static void CopyData(RepositoryDataSet sourceDataSet, RepositoryDataSet destDataSet)
+		public static void CopyData(DocumentDataSet sourceDataSet, DocumentDataSet destDataSet)
 		{
 			string sourceXml = GetXml(sourceDataSet);
 			if (!SetXml(destDataSet, sourceXml))
@@ -128,12 +128,12 @@ namespace WordHiddenPowers.Utils
 		/// </summary>
 		/// <param name="dataSet">Хранилище данных.</param>
 		/// <param name="fileName">Имя файла (включая путь) в который производится запись.</param>
-		public static void SaveSchema(RepositoryDataSet dataSet, string fileName)
+		public static void SaveSchema(DocumentDataSet dataSet, string fileName)
 		{
 			try
 			{
 				string xml = GetXml(dataSet);
-				RepositoryDataSet outDataSet = new RepositoryDataSet();
+				DocumentDataSet outDataSet = new DocumentDataSet();
 				if (SetXml(outDataSet, xml))
 				{
 					outDataSet.WriteXmlSchema(fileName);
@@ -150,12 +150,12 @@ namespace WordHiddenPowers.Utils
 		/// </summary>
 		/// <param name="dataSet">Хранилище данных.</param>
 		/// <param name="fileName">Имя файла (включая путь) в который производится запись.</param>
-		public static void SaveClearData(RepositoryDataSet dataSet, string fileName)
+		public static void SaveClearData(DocumentDataSet dataSet, string fileName)
 		{
 			try
 			{
 				string xml = GetXml(dataSet);
-				RepositoryDataSet outDataSet = new RepositoryDataSet();
+				DocumentDataSet outDataSet = new();
 				if (SetXml(outDataSet, xml))
 				{
 					outDataSet.DecimalNotes.Clear();
@@ -176,12 +176,12 @@ namespace WordHiddenPowers.Utils
 		/// </summary>
 		/// <param name="dataSet">Хранилище данных.</param>
 		/// <param name="fileName">Имя файла (включая путь) в который производится запись.</param>
-		public static void SaveData(RepositoryDataSet dataSet, string fileName)
+		public static void SaveData(DocumentDataSet dataSet, string fileName)
 		{
 			try
 			{
 				string xml = GetXml(dataSet);
-				RepositoryDataSet outDataSet = new RepositoryDataSet();
+				DocumentDataSet outDataSet = new();
 				if (SetXml(outDataSet, xml))
 					outDataSet.WriteXml(fileName, XmlWriteMode.WriteSchema);
 			}
@@ -202,7 +202,7 @@ namespace WordHiddenPowers.Utils
 			try
 			{
 				string xml = GetXml(dataSet);
-				VectorDataSet outDataSet = new VectorDataSet();
+				VectorDataSet outDataSet = new();
 				if (SetXml(outDataSet, xml))
 					outDataSet.WriteXml(fileName, XmlWriteMode.WriteSchema);
 			}
@@ -212,6 +212,87 @@ namespace WordHiddenPowers.Utils
 			}
 		}
 
+		public static void LoadGlobalsSettingData(GlobalsSetting dataSet, string filename)
+		{
+			dataSet.Clear();
+			dataSet.ReadXml(filename, XmlReadMode.IgnoreSchema);
+		}
+
+		public static void LoadProfilesData(ProfilesCollection dataSet, string filename)
+		{
+			dataSet.Clear();
+			dataSet.ReadXml(filename, XmlReadMode.IgnoreSchema);
+		}
+
+
+		public static void LoadHistoryData(PromptsHistory dataSet, string filename)
+		{
+			dataSet.Clear();
+			dataSet.ReadXml(filename, XmlReadMode.IgnoreSchema);
+		}
+
+
+		/// <summary>
+		/// Сохранить данные из хранилища настроек в файл в формате XML.
+		/// </summary>
+		/// <param name="dataSet">Хранилище данных.</param>
+		/// <param name="fileName">Имя файла (включая путь) в который производится запись.</param>
+		public static void SaveGlobalsSettingData(GlobalsSetting dataSet, string fileName)
+		{
+			try
+			{
+				string xml = GetXml(dataSet);
+				GlobalsSetting outDataSet = new();
+				if (SetXml(outDataSet, xml))
+					outDataSet.WriteXml(fileName, XmlWriteMode.IgnoreSchema);
+			}
+			catch (Exception ex)
+			{
+				Dialogs.ShowErrorDialog(ex.Message);
+			}
+		}
+
+		/// <summary>
+		/// Сохранить данные из хранилища профилей подключения к LLM в файл в формате XML.
+		/// </summary>
+		/// <param name="dataSet">Хранилище данных.</param>
+		/// <param name="fileName">Имя файла (включая путь) в который производится запись.</param>
+		public static void SaveProfilesData(ProfilesCollection dataSet, string fileName)
+		{
+			try
+			{
+				string xml = GetXml(dataSet);
+				ProfilesCollection outDataSet = new();
+				if (SetXml(outDataSet, xml))
+					outDataSet.WriteXml(fileName, XmlWriteMode.IgnoreSchema);
+			}
+			catch (Exception ex)
+			{
+				Dialogs.ShowErrorDialog(ex.Message);
+			}
+		}
+
+		/// <summary>
+		/// Сохранить данные из хранилища истории промптов в файл в формате XML.
+		/// </summary>
+		/// <param name="dataSet">Хранилище данных.</param>
+		/// <param name="fileName">Имя файла (включая путь) в который производится запись.</param>
+		public static void SaveHistoryData(PromptsHistory dataSet, string fileName)
+		{
+			try
+			{
+				string xml = GetXml(dataSet);
+				PromptsHistory outDataSet = new();
+				if (SetXml(outDataSet, xml))
+					outDataSet.WriteXml(fileName, XmlWriteMode.IgnoreSchema);
+			}
+			catch (Exception ex)
+			{
+				Dialogs.ShowErrorDialog(ex.Message);
+			}
+		}
+
+
 		/// <summary>
 		/// Получить из хранилища данные в формате XML.
 		/// </summary>
@@ -219,8 +300,8 @@ namespace WordHiddenPowers.Utils
 		/// <returns>Данные в формате XML.</returns>
 		private static string GetXml(DataSet dataSet)
 		{
-			StringBuilder builder = new StringBuilder();
-			StringWriter writer = new StringWriter(builder);
+			StringBuilder builder = new();
+			StringWriter writer = new(builder);
 			dataSet.WriteXml(writer, XmlWriteMode.WriteSchema);
 			writer.Close();
 			return builder.ToString();
@@ -235,8 +316,8 @@ namespace WordHiddenPowers.Utils
 		private static bool SetXml(DataSet dataSet, string xml)
 		{
 			xml = FixXml(xml);
-			
-			StringReader reader = new StringReader(xml);
+
+			StringReader reader = new(xml);
 			bool result = false;
 			try
 			{
@@ -255,6 +336,11 @@ namespace WordHiddenPowers.Utils
 			return result;
 		}
 
+		/// <summary>
+		/// Обеспечение совместимости с предыдущими версиями.
+		/// </summary>
+		/// <param name="xml"></param>
+		/// <returns></returns>
 		private static string FixXml(string xml)
 		{
 			return xml

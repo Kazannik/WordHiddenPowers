@@ -50,8 +50,8 @@ namespace ProsecutorialSupervision.Dialogs
 			// 
 			// ProgressDialog
 			// 
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			resources.ApplyResources(this, "$this");
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.ProgressLabel);
 			this.Controls.Add(this.ProgressBar);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;

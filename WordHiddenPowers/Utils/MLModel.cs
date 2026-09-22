@@ -10,7 +10,7 @@ namespace WordHiddenPowers.Utils
 {
 	static class MLModel
 	{
-		private static readonly string MLNetModelFilterPath = Path.Combine(FileSystem.UserDirectory.FullName, "MLModel.filters");
+		private static readonly string MLNetModelFilterPath = Path.Combine(FileSystem.MLModelesDirectory.FullName, "MLModel.filters");
 
 		private static Filters filters = null;
 
@@ -20,7 +20,7 @@ namespace WordHiddenPowers.Utils
 
 			text = filters.Clean(text);
 			if (string.IsNullOrEmpty(text)) return null;
-			ModelInput sampleData = new ModelInput()
+			ModelInput sampleData = new()
 			{
 				Title = text,
 			};
@@ -41,9 +41,9 @@ namespace WordHiddenPowers.Utils
 
 		private class Filters
 		{
-			private static readonly Regex regexWords = new Regex("\\w+");
-			private static readonly Regex regexDecimal = new Regex("(\\d\\s*)+([,](\\d\\s*)+)*");
-			private static readonly Regex regexSpace = new Regex("\\s{2,}");
+			private static readonly Regex regexWords = new("\\w+");
+			private static readonly Regex regexDecimal = new("(\\d\\s*)+([,](\\d\\s*)+)*");
+			private static readonly Regex regexSpace = new("\\s{2,}");
 
 			/// <summary>
 			/// Регулярные выражения для удаления 
@@ -56,9 +56,9 @@ namespace WordHiddenPowers.Utils
 
 			public Filters()
 			{
-				List<string> excludedPatterns = new List<string>();
-				List<string> excludedWords = new List<string>();
-				List<string> recommendWords = new List<string>();
+				List<string> excludedPatterns = [];
+				List<string> excludedWords = [];
+				List<string> recommendWords = [];
 
 				string mode = string.Empty;
 

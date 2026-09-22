@@ -11,13 +11,11 @@ namespace WordHiddenPowers.Dialogs
 	{
 		private readonly Documents.Document document;
 
-		public SelectCategoriesDialog(Documents.Document document)
+		public SelectCategoriesDialog(Documents.Document document) : this()
 		{
 			this.document = document;
 
 			this.Icon = WordDocument.GetIconMso("MindMapExportWord", SystemInformation.IconSize.Width, SystemInformation.IconSize.Height);
-
-			InitializeComponent();
 
 			checkedListBox1.DataSet = this.document.CurrentDataSet;
 
@@ -31,6 +29,9 @@ namespace WordHiddenPowers.Dialogs
 		public SelectCategoriesDialog()
 		{
 			InitializeComponent();
+
+			okButton.Size = Const.Globals.ACTION_BUTTON_SIZE;
+			cancelButton.Size = Const.Globals.ACTION_BUTTON_SIZE;
 		}
 
 		private void CheckButton_Click(object sender, EventArgs e)

@@ -9,11 +9,13 @@ using System.Xml.Schema;
 
 namespace WordHiddenPowers.Utils
 {
-	public static class HTMLClipboard
+	static class HTMLClipboard
 	{
+		private const string NAME_SPACE = "http://www.w3.org/2001/XMLSchema";
+
 		internal const RegexOptions options = RegexOptions.IgnoreCase | RegexOptions.Compiled;
-		private static readonly Regex beginFragment = new Regex("<!--StartFragment-->", options);
-		private static readonly Regex endFragment = new Regex("<!--EndFragment-->", options);
+		private static readonly Regex startFragment = new("<!--StartFragment-->", options);
+		private static readonly Regex endFragment = new("<!--EndFragment-->", options);
 
 		public static void Copy(DataGridViewSelectedCellCollection cells, Encoding encoding)
 		{
@@ -39,7 +41,7 @@ namespace WordHiddenPowers.Utils
 
 			int startHTML, endHTML, startFragment, endFragment;
 
-			XmlWriterSettings settings = new XmlWriterSettings
+			XmlWriterSettings settings = new()
 			{
 				//Indent = true,
 				//IndentChars = "    ",
@@ -48,7 +50,7 @@ namespace WordHiddenPowers.Utils
 				Encoding = Encoding.UTF8
 			};
 
-			XmlDocument document = new XmlDocument();
+			XmlDocument document = new();
 			XmlDeclaration declaration = document.CreateXmlDeclaration("1.0", settings.Encoding.WebName, null);
 			document.AppendChild(declaration);
 			document.Schemas = XmlSchemaCreate();
@@ -119,7 +121,7 @@ namespace WordHiddenPowers.Utils
 			xmlBODY.AppendChild(xmlEnd);
 
 			string documentText = GetText(document: document, settings: settings);
-			documentText = documentText.Substring(declarationLength);
+			documentText = documentText[declarationLength..];
 
 			startHTML = 0;
 			endHTML = startHTML + GetLength(document, settings) - declarationLength;
@@ -127,13 +129,13 @@ namespace WordHiddenPowers.Utils
 			endFragment = startFragment + fragmentLength;
 
 			string description = GetDescription(startHTML, endHTML, startFragment, endFragment);
-			Match beginMatch = beginFragment.Match(documentText);
+			Match startMatch = HTMLClipboard.startFragment.Match(documentText);
 			Match endMatch = HTMLClipboard.endFragment.Match(documentText);
 			do
 			{
 				startHTML = description.Length;
 				endHTML = startHTML + documentText.Length;
-				startFragment = startHTML + beginMatch.Index + beginMatch.Length;
+				startFragment = startHTML + startMatch.Index + startMatch.Length;
 				endFragment = startHTML + endMatch.Index - settings.NewLineChars.Length;
 				description = GetDescription(startHTML, endHTML, startFragment, endFragment);
 			}
@@ -150,7 +152,7 @@ namespace WordHiddenPowers.Utils
 
 		private static int GetLength(XmlElement element, XmlWriterSettings settings)
 		{
-			StringWriter stringWriter = new StringWriter();
+			StringWriter stringWriter = new();
 			XmlWriter xmlWriter = XmlWriter.Create(stringWriter, settings);
 			element.WriteTo(xmlWriter);
 			xmlWriter.Flush();
@@ -166,7 +168,7 @@ namespace WordHiddenPowers.Utils
 
 		private static string GetText(XmlDocument document, XmlWriterSettings settings)
 		{
-			StringWriter stringWriter = new StringWriter();
+			StringWriter stringWriter = new();
 			XmlWriter xmlWriter = XmlWriter.Create(stringWriter, settings);
 			document.WriteTo(xmlWriter);
 			xmlWriter.Flush();
@@ -175,89 +177,89 @@ namespace WordHiddenPowers.Utils
 
 		private static XmlSchemaSet XmlSchemaCreate()
 		{
-			XmlSchemaElement HTML = new XmlSchemaElement
+			XmlSchemaElement HTML = new()
 			{
 				Name = "HTML"
 			};
 
-			XmlSchemaElement HEAD = new XmlSchemaElement
+			XmlSchemaElement HEAD = new()
 			{
 				Name = "HEAD"
 			};
 
-			XmlSchemaElement style = new XmlSchemaElement
+			XmlSchemaElement style = new()
 			{
 				Name = "style",
-				SchemaTypeName = new XmlQualifiedName("string", "http://www.w3.org/2001/XMLSchema")
+				SchemaTypeName = new XmlQualifiedName("string", NAME_SPACE)
 			};
 
-			XmlSchemaElement BODY = new XmlSchemaElement
+			XmlSchemaElement BODY = new()
 			{
 				Name = "BODY"
 			};
 
-			XmlSchemaElement table = new XmlSchemaElement
+			XmlSchemaElement table = new()
 			{
 				Name = "table"
 			};
 
-			XmlSchemaElement tr = new XmlSchemaElement
+			XmlSchemaElement tr = new()
 			{
 				Name = "tr"
 			};
 
-			XmlSchemaElement td = new XmlSchemaElement
+			XmlSchemaElement td = new()
 			{
 				Name = "td",
-				SchemaTypeName = new XmlQualifiedName("string", "http://www.w3.org/2001/XMLSchema")
+				SchemaTypeName = new XmlQualifiedName("string", NAME_SPACE)
 			};
 
-			XmlSchemaAttribute typeAttribute = new XmlSchemaAttribute
+			XmlSchemaAttribute typeAttribute = new()
 			{
 				Name = "type",
 				Use = XmlSchemaUse.Required,
-				SchemaTypeName = new XmlQualifiedName("string", "http://www.w3.org/2001/XMLSchema")
+				SchemaTypeName = new XmlQualifiedName("string", NAME_SPACE)
 			};
 
-			XmlSchemaAttribute borderAttribute = new XmlSchemaAttribute
+			XmlSchemaAttribute borderAttribute = new()
 			{
 				Name = "border",
 				Use = XmlSchemaUse.Required,
-				SchemaTypeName = new XmlQualifiedName("unsignedByte", "http://www.w3.org/2001/XMLSchema")
+				SchemaTypeName = new XmlQualifiedName("unsignedByte", NAME_SPACE)
 			};
 
-			XmlSchemaAttribute cellPaddingAttribute = new XmlSchemaAttribute
+			XmlSchemaAttribute cellPaddingAttribute = new()
 			{
 				Name = "cellpadding",
 				Use = XmlSchemaUse.Required,
-				SchemaTypeName = new XmlQualifiedName("unsignedByte", "http://www.w3.org/2001/XMLSchema")
+				SchemaTypeName = new XmlQualifiedName("unsignedByte", NAME_SPACE)
 			};
 
-			XmlSchemaAttribute classAttribute = new XmlSchemaAttribute
+			XmlSchemaAttribute classAttribute = new()
 			{
 				Name = "class",
 				Use = XmlSchemaUse.Required,
-				SchemaTypeName = new XmlQualifiedName("string", "http://www.w3.org/2001/XMLSchema")
+				SchemaTypeName = new XmlQualifiedName("string", NAME_SPACE)
 			};
 
-			XmlSchemaAttribute styleAttribute = new XmlSchemaAttribute
+			XmlSchemaAttribute styleAttribute = new()
 			{
 				Name = "style",
 				Use = XmlSchemaUse.Required,
-				SchemaTypeName = new XmlQualifiedName("string", "http://www.w3.org/2001/XMLSchema")
+				SchemaTypeName = new XmlQualifiedName("string", NAME_SPACE)
 			};
 
-			XmlSchemaComplexType tdType = new XmlSchemaComplexType();
+			XmlSchemaComplexType tdType = new();
 			tdType.Attributes.Add(styleAttribute);
 			td.SchemaType = tdType;
 
-			XmlSchemaComplexType trType = new XmlSchemaComplexType();
-			XmlSchemaSequence trSequence = new XmlSchemaSequence();
+			XmlSchemaComplexType trType = new();
+			XmlSchemaSequence trSequence = new();
 			trSequence.Items.Add(td);
 			trType.Particle = trSequence;
 
-			XmlSchemaComplexType tableType = new XmlSchemaComplexType();
-			XmlSchemaSequence tableSequence = new XmlSchemaSequence();
+			XmlSchemaComplexType tableType = new();
+			XmlSchemaSequence tableSequence = new();
 			tableSequence.Items.Add(tr);
 			tableType.Particle = tableSequence;
 			tableType.Attributes.Add(borderAttribute);
@@ -265,33 +267,33 @@ namespace WordHiddenPowers.Utils
 			tableType.Attributes.Add(classAttribute);
 			table.SchemaType = tableType;
 
-			XmlSchemaComplexType bodyType = new XmlSchemaComplexType();
-			XmlSchemaSequence bodySequence = new XmlSchemaSequence();
+			XmlSchemaComplexType bodyType = new();
+			XmlSchemaSequence bodySequence = new();
 			bodySequence.Items.Add(table);
 			bodyType.Particle = bodySequence;
 
-			XmlSchemaComplexType styleType = new XmlSchemaComplexType();
-			XmlSchemaSequence styleSequence = new XmlSchemaSequence();
+			XmlSchemaComplexType styleType = new();
+			XmlSchemaSequence styleSequence = new();
 			styleSequence.Items.Add(HEAD);
 			styleType.Particle = styleSequence;
 			styleType.Attributes.Add(typeAttribute);
 			style.SchemaType = styleType;
 
-			XmlSchemaComplexType headerType = new XmlSchemaComplexType();
-			XmlSchemaSequence headerSequence = new XmlSchemaSequence();
+			XmlSchemaComplexType headerType = new();
+			XmlSchemaSequence headerSequence = new();
 			headerSequence.Items.Add(style);
 			headerType.Particle = headerSequence;
 
-			XmlSchemaComplexType htmlType = new XmlSchemaComplexType();
-			XmlSchemaSequence htmlSequence = new XmlSchemaSequence();
+			XmlSchemaComplexType htmlType = new();
+			XmlSchemaSequence htmlSequence = new();
 			htmlSequence.Items.Add(HEAD);
 			htmlSequence.Items.Add(BODY);
 			htmlType.Particle = htmlSequence;
 
-			XmlSchema clipboadrSchema = new XmlSchema();
+			XmlSchema clipboadrSchema = new();
 			clipboadrSchema.Items.Add(HTML);
 
-			XmlSchemaSet clipboadrSchemaSet = new XmlSchemaSet();
+			XmlSchemaSet clipboadrSchemaSet = new();
 			clipboadrSchemaSet.ValidationEventHandler += ValidationCallback;
 			clipboadrSchemaSet.Add(clipboadrSchema);
 			clipboadrSchemaSet.Compile();

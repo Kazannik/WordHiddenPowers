@@ -10,12 +10,12 @@ namespace WordHiddenPowers.Dialogs
 	{
 		public double Value => numericTextBox1.Value;
 
-		public DecimalNoteDialog(RepositoryDataSet dataSet, Word.Selection selection) : base(dataSet, selection, false)
+		public DecimalNoteDialog(DocumentDataSet dataSet, Word.Selection selection) : base(dataSet, selection, false)
 		{
 			InitializeComponent();
 		}
 
-		public DecimalNoteDialog(RepositoryDataSet dataSet, Note note) : base(dataSet, note, false)
+		public DecimalNoteDialog(DocumentDataSet dataSet, Note note) : base(dataSet, note, false)
 		{
 			InitializeComponent();
 			if (!note.IsText)

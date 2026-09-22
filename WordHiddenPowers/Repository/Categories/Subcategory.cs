@@ -24,7 +24,7 @@ namespace WordHiddenPowers.Repository.Categories
 				keywords: dataRow.IsNull("Keywords") ? string.Empty : dataRow["Keywords"] as string);
 		}
 
-		public static Subcategory Create(Category category, RepositoryDataSet.SubcategoriesRow dataRow)
+		public static Subcategory Create(Category category, DocumentDataSet.SubcategoriesRow dataRow)
 		{
 			return new Subcategory(
 				category: category,
@@ -91,7 +91,7 @@ namespace WordHiddenPowers.Repository.Categories
 			Category = category;
 			Guid = guid;
 			Position = position;
-			Caption = caption;
+			Text = caption;
 			Description = description;
 			IsDecimal = isDecimal;
 			IsText = isText;
@@ -107,7 +107,7 @@ namespace WordHiddenPowers.Repository.Categories
 
 		public int Position { get; }
 
-		public string Caption { get; set; }
+		public string Text { get; set; }
 
 		public string Description { get; set; }
 
@@ -119,8 +119,6 @@ namespace WordHiddenPowers.Repository.Categories
 
 		public string Code => Position.ToString();
 
-		public string Text => Caption;
-
 		public string BeforeText { get; set; }
 
 		public string AfterText { get; set; }
@@ -129,32 +127,32 @@ namespace WordHiddenPowers.Repository.Categories
 
 		long IComboItem.Id => Position;
 
-		string IComboItem.Code => Code;
+		string IComboItem.Prefix => Code;
 
 		ControlLibrary.Structures.Version ICategoriesListItem.Code => ControlLibrary.Structures.Version.Create(major: Category.Position, minor: Position, guid: Guid);
 
 		public object[] ToObjectsArray()
 		{
-			return new object[]{
+			return [
 				Guid,
 				Category.Guid,
 				Position,
-				Caption,
+				Text,
 				Description,
 				IsDecimal,
 				IsText,
 				IsObligatory,
 				BeforeText,
 				AfterText,
-				Keywords};
+				Keywords];
 		}
 
-		public bool Equals(RepositoryDataSet.SubcategoriesRow dataRow)
+		public bool Equals(DocumentDataSet.SubcategoriesRow dataRow)
 		{
 			if (Guid != dataRow.key_guid) return false;
 			if (Category.Guid != dataRow.category_guid) return false;
 			if (Position != dataRow.position)
-				if (Caption != dataRow.Caption) return false;
+				if (Text != dataRow.Caption) return false;
 			if (!string.IsNullOrEmpty(Description) && !dataRow.IsDescriptionNull() && Description != dataRow.Description) return false;
 			if (IsDecimal != dataRow.IsDecimal) return false;
 			if (IsText != dataRow.IsText) return false;

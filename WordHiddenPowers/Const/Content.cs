@@ -158,10 +158,10 @@ namespace WordHiddenPowers.Const
 		public const string EDIT_TABLE_SUPER_TIP = "Табличные данные позволяют накапливать анализируемые показатели, сформировав их в таблицу.";
 		public const string EDIT_TABLE_OFFICE_IMAGE_ID = "TableStyleModify";
 
-		public const string PANE_VISIBLE_LABEL = "Панель заметок";
-		public const string PANE_VISIBLE_DESCRIPTION = "Панель управления заметками";
-		public const string PANE_VISIBLE_SCREEN_TIP = "Панель управления заметками";
-		public const string PANE_VISIBLE_SUPER_TIP = "Панель управления заметками позволяет просматривать, редактировать или удалять ранее созданные заметки.";
+		public const string PANE_VISIBLE_LABEL = "Панель AI и заметок";
+		public const string PANE_VISIBLE_DESCRIPTION = "Панель управления AI и заметками";
+		public const string PANE_VISIBLE_SCREEN_TIP = "Панель управления AI и заметками";
+		public const string PANE_VISIBLE_SUPER_TIP = "\"Панель управления AI и заметками\" позволяет обращаться к большим языковым моделям, а также просматривать, редактировать или удалять ранее созданные заметки.";
 		public const string PANE_VISIBLE_OFFICE_IMAGE_ID = "MenuToDoBar";
 
 		public const string SEARCH_SERVICE_LABEL = "Разметка с помощью поиска";
@@ -177,6 +177,5 @@ namespace WordHiddenPowers.Const
 		public const string AI_SERVICE_OFFICE_IMAGE_ID = "ChartUpDownBars";
 
 		public const string LLM_BUTTON_IMAGE_ID = "AutoFormat";
-
 	}
 }

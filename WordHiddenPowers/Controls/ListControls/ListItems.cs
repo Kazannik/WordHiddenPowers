@@ -1,16 +1,12 @@
-﻿using ControlLibrary.Controls.ListControls;
-using ControlLibrary.Structures;
-using System.Data;
+﻿using ControlLibrary.Structures;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using WordHiddenPowers.Repository;
 using WordHiddenPowers.Repository.Notes;
 using Version = ControlLibrary.Structures.Version;
 
 namespace WordHiddenPowers.Controls.ListControls
-{	
+{
 	namespace ListItems
 	{
 		public class ListItem : ControlLibrary.Controls.ListControls.ListItem
@@ -21,12 +17,12 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 
 			public ListItem(Note note, bool showButtons) : base(
-				new ListItemNote[] {
+				[
 				new TitleNote(note.Category.Position, note.Subcategory.Position, note.Subcategory.Guid, note.Category.Text),
 				new SubtitleNote(note),
 				new TextNote(note),
 				new DescriptionNote(note),
-				new BottomBarNote(note) {ShowButtons = showButtons } })
+				new BottomBarNote(note) {ShowButtons = showButtons } ])
 			{
 				Note = note;
 			}
@@ -56,13 +52,13 @@ namespace WordHiddenPowers.Controls.ListControls
 
 		public abstract class ListItemNote : ControlLibrary.Controls.ListControls.ListItemNote
 		{
-			protected static readonly StringFormat CENTER_STRING_FORMAT = new StringFormat
+			protected static readonly StringFormat CENTER_STRING_FORMAT = new()
 			{
 				Alignment = StringAlignment.Center,
 				LineAlignment = StringAlignment.Center
 			};
 
-			protected static readonly StringFormat LEFT_STRING_FORMAT = new StringFormat
+			protected static readonly StringFormat LEFT_STRING_FORMAT = new()
 			{
 				Alignment = StringAlignment.Near,
 				LineAlignment = StringAlignment.Near
@@ -114,22 +110,22 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
-				Font boldFont = new Font(e.Font.FontFamily, e.Font.Size, FontStyle.Bold);
-				Rectangle codeRectangle = new Rectangle(e.Bounds.X + 2, e.Bounds.Y + 2,
+				Font boldFont = new(e.Font.FontFamily, e.Font.Size, FontStyle.Bold);
+				Rectangle codeRectangle = new(e.Bounds.X + 2, e.Bounds.Y + 2,
 					codeSize.Width, codeSize.Height);
 				Utils.Drawing.DrawCode(Code, new DrawItemEventArgs(e.Graphics, boldFont, codeRectangle, e.Index, e.State, e.ForeColor, e.BackColor));
 
 				if (!textSize.IsEmpty)
 				{
 					Brush brush = new SolidBrush(e.ForeColor);
-					Rectangle rectangle = new Rectangle(e.Bounds.Width - textSize.Width - 1, e.Bounds.Y, textSize.Width, textSize.Height);
+					Rectangle rectangle = new(e.Bounds.Width - textSize.Width - 1, e.Bounds.Y, textSize.Width, textSize.Height);
 					e.Graphics.DrawString(Text, boldFont, brush, rectangle, LEFT_STRING_FORMAT);
 				}
 			}
 
 			protected override Size OnMeasureBound(Graphics graphics, Font font, int itemWidth, int itemHeight)
 			{
-				Font boldFont = new Font(font.FontFamily, font.Size, FontStyle.Bold);
+				Font boldFont = new(font.FontFamily, font.Size, FontStyle.Bold);
 				codeSize = Utils.Drawing.GetCodeSize(graphics, boldFont);
 				textSize = GetTextSize(graphics, Text, font, itemWidth - codeSize.Width - 4, CENTER_STRING_FORMAT);
 
@@ -157,9 +153,9 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
-				Font boldItalicFont = new Font(e.Font.FontFamily, e.Font.Size, FontStyle.Bold | FontStyle.Italic);
+				Font boldItalicFont = new(e.Font.FontFamily, e.Font.Size, FontStyle.Bold | FontStyle.Italic);
 				Brush brush = new SolidBrush(e.State == (e.State | DrawItemState.Selected) ? e.ForeColor : Color.DarkGreen);
-				Rectangle rectangle = new Rectangle(e.Bounds.Width - textSize.Width - 1, e.Bounds.Y,
+				Rectangle rectangle = new(e.Bounds.Width - textSize.Width - 1, e.Bounds.Y,
 					textSize.Width, textSize.Height);
 				e.Graphics.DrawString(Text, boldItalicFont, brush, rectangle, LEFT_STRING_FORMAT);
 				brush.Dispose();
@@ -167,7 +163,7 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			protected override Size OnMeasureBound(Graphics graphics, Font font, int itemWidth, int itemHeight)
 			{
-				Font boldItalicFont = new Font(font.FontFamily, font.Size, FontStyle.Bold | FontStyle.Italic);
+				Font boldItalicFont = new(font.FontFamily, font.Size, FontStyle.Bold | FontStyle.Italic);
 				codeSize = Utils.Drawing.GetCodeSize(graphics, boldItalicFont);
 				textSize = GetTextSize(graphics, Text, font, itemWidth - codeSize.Width - 4, CENTER_STRING_FORMAT);
 				return new Size(itemWidth, textSize.Height + 8);
@@ -185,7 +181,7 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
-				Font boldLargeFont = new Font(e.Font.FontFamily, e.Font.Size + 4, FontStyle.Bold);
+				Font boldLargeFont = new(e.Font.FontFamily, e.Font.Size + 4, FontStyle.Bold);
 
 				Brush brush = new SolidBrush(e.ForeColor);
 				Utils.Drawing.DrawRoundedText(
@@ -198,7 +194,7 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			protected override Size OnMeasureBound(Graphics graphics, Font font, int itemWidth, int itemHeight)
 			{
-				Font boldLargeFont = new Font(font.FontFamily, font.Size + 4, FontStyle.Bold);
+				Font boldLargeFont = new(font.FontFamily, font.Size + 4, FontStyle.Bold);
 				return GetTextSize(graphics: graphics, Text, font: IsText ? font : boldLargeFont, width: itemWidth - 5, IsText ? LEFT_STRING_FORMAT : CENTER_STRING_FORMAT);
 			}
 		}
@@ -209,7 +205,7 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
-				Font italicSmallFont = new Font(e.Font.FontFamily, e.Font.Size - 1, FontStyle.Italic);
+				Font italicSmallFont = new(e.Font.FontFamily, e.Font.Size - 1, FontStyle.Italic);
 				Brush brush = new SolidBrush(e.State == (e.State | DrawItemState.Selected) ? e.ForeColor : Color.DarkGreen);
 				e.Graphics.DrawString(Text, italicSmallFont, brush, new Rectangle(e.Bounds.X, e.Bounds.Y + 1, e.Bounds.Width, e.Bounds.Height), LEFT_STRING_FORMAT);
 				brush.Dispose();
@@ -217,7 +213,7 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			protected override Size OnMeasureBound(Graphics graphics, Font font, int itemWidth, int itemHeight)
 			{
-				Font italicSmallFont = new Font(font.FontFamily, font.Size - 1, FontStyle.Italic);
+				Font italicSmallFont = new(font.FontFamily, font.Size - 1, FontStyle.Italic);
 				return GetTextSize(graphics: graphics, Text, font: italicSmallFont, width: itemWidth, LEFT_STRING_FORMAT) + new Size(0, 2);
 			}
 		}
@@ -285,7 +281,7 @@ namespace WordHiddenPowers.Controls.ListControls
 					{
 						starsColor = Const.Globals.COLOR_STAR_ICON;
 					}
-					Font boldFont = new Font(e.Font.FontFamily, e.Font.Size + 4, FontStyle.Bold);
+					Font boldFont = new(e.Font.FontFamily, e.Font.Size + 4, FontStyle.Bold);
 					Rectangle[] rectangles = ControlLibrary.Utils.Drawing.DrawRating(graphics: e.Graphics, font: boldFont, borderColor: e.ForeColor, backBrush: new SolidBrush(starsColor), textColor: starsColor, rect: new Rectangle(e.Bounds.Location, ratingBoxSize), rating: note.Rating);
 					SubtractionButtonRectangle = rectangles[0];
 					AdditionButtonRectangle = rectangles[4];
@@ -310,7 +306,7 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			protected override Size OnMeasureBound(Graphics graphics, Font font, int itemWidth, int itemHeight)
 			{
-				Font boldFont = new Font(font.FontFamily, font.Size + 4, FontStyle.Bold);
+				Font boldFont = new(font.FontFamily, font.Size + 4, FontStyle.Bold);
 				ratingBoxSize = ControlLibrary.Utils.Drawing.MeasureRating(graphics: graphics, font: boldFont, starCount: 5);
 				return new Size(itemWidth, note.IsText || showButtons ? ratingBoxSize.Height + 4 : 4);
 			}

@@ -137,8 +137,8 @@
 			// 
 			// TableViewerDialog
 			// 
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			resources.ApplyResources(this, "$this");
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.splitContainer1);
 			this.Controls.Add(this.topCaptionPanel);
 			this.Controls.Add(this.statusStrip1);

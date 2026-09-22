@@ -28,44 +28,19 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LLMConnectSettingDialog));
-			this.mlNetModelNameComboBox = new System.Windows.Forms.ComboBox();
-			this.label1 = new System.Windows.Forms.Label();
 			this.cancelButton = new System.Windows.Forms.Button();
 			this.okButton = new System.Windows.Forms.Button();
 			this.label2 = new System.Windows.Forms.Label();
-			this.llmNameComboBox = new System.Windows.Forms.ComboBox();
-			this.updateLLMArrayButton = new System.Windows.Forms.Button();
 			this.button1 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
 			this.llmGroupBox = new System.Windows.Forms.GroupBox();
-			this.llmConnectionControlBox = new WordHiddenPowers.Controls.LLMConnectionControlBox();
-			this.testModelButton = new System.Windows.Forms.Button();
-			this.timeoutGroupBox = new System.Windows.Forms.GroupBox();
-			this.secondsLabel = new System.Windows.Forms.Label();
-			this.secondsNumericUpDown = new System.Windows.Forms.NumericUpDown();
-			this.minutesNumericUpDown = new System.Windows.Forms.NumericUpDown();
-			this.minutesLabel = new System.Windows.Forms.Label();
-			this.embeddingLlmNameComboBox = new System.Windows.Forms.ComboBox();
-			this.label4 = new System.Windows.Forms.Label();
+			this.modelsComboBox = new WordHiddenPowers.Controls.ComboControls.ModelsComboBox(this.components);
+			this.addButton = new System.Windows.Forms.Button();
+			this.authenticationProfileListBox = new WordHiddenPowers.Controls.AuthenticationProfileListControl.AuthenticationProfileListBox(this.components);
 			this.llmGroupBox.SuspendLayout();
-			this.timeoutGroupBox.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.secondsNumericUpDown)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.minutesNumericUpDown)).BeginInit();
 			this.SuspendLayout();
-			// 
-			// mlNetModelNameComboBox
-			// 
-			resources.ApplyResources(this.mlNetModelNameComboBox, "mlNetModelNameComboBox");
-			this.mlNetModelNameComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.mlNetModelNameComboBox.FormattingEnabled = true;
-			this.mlNetModelNameComboBox.Name = "mlNetModelNameComboBox";
-			this.mlNetModelNameComboBox.SelectedIndexChanged += new System.EventHandler(this.MlNetModelNameComboBox_SelectedIndexChanged);
-			// 
-			// label1
-			// 
-			resources.ApplyResources(this.label1, "label1");
-			this.label1.Name = "label1";
 			// 
 			// cancelButton
 			// 
@@ -84,20 +59,6 @@
 			resources.ApplyResources(this.label2, "label2");
 			this.label2.Name = "label2";
 			// 
-			// llmNameComboBox
-			// 
-			resources.ApplyResources(this.llmNameComboBox, "llmNameComboBox");
-			this.llmNameComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.llmNameComboBox.FormattingEnabled = true;
-			this.llmNameComboBox.Name = "llmNameComboBox";
-			// 
-			// updateLLMArrayButton
-			// 
-			resources.ApplyResources(this.updateLLMArrayButton, "updateLLMArrayButton");
-			this.updateLLMArrayButton.Name = "updateLLMArrayButton";
-			this.updateLLMArrayButton.UseVisualStyleBackColor = true;
-			this.updateLLMArrayButton.Click += new System.EventHandler(this.Update_Click);
-			// 
 			// button1
 			// 
 			resources.ApplyResources(this.button1, "button1");
@@ -113,97 +74,58 @@
 			// llmGroupBox
 			// 
 			resources.ApplyResources(this.llmGroupBox, "llmGroupBox");
-			this.llmGroupBox.Controls.Add(this.llmConnectionControlBox);
-			this.llmGroupBox.Controls.Add(this.testModelButton);
-			this.llmGroupBox.Controls.Add(this.timeoutGroupBox);
-			this.llmGroupBox.Controls.Add(this.embeddingLlmNameComboBox);
-			this.llmGroupBox.Controls.Add(this.label4);
-			this.llmGroupBox.Controls.Add(this.updateLLMArrayButton);
-			this.llmGroupBox.Controls.Add(this.llmNameComboBox);
+			this.llmGroupBox.Controls.Add(this.modelsComboBox);
+			this.llmGroupBox.Controls.Add(this.addButton);
+			this.llmGroupBox.Controls.Add(this.authenticationProfileListBox);
 			this.llmGroupBox.Controls.Add(this.label2);
 			this.llmGroupBox.Name = "llmGroupBox";
 			this.llmGroupBox.TabStop = false;
 			// 
-			// llmConnectionControlBox
+			// modelsComboBox
 			// 
-			this.llmConnectionControlBox.Address = "";
-			resources.ApplyResources(this.llmConnectionControlBox, "llmConnectionControlBox");
-			this.llmConnectionControlBox.ConnectingTimeout = 100;
-			this.llmConnectionControlBox.Name = "llmConnectionControlBox";
-			this.llmConnectionControlBox.PingTimeout = 100;
+			resources.ApplyResources(this.modelsComboBox, "modelsComboBox");
+			this.modelsComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+			this.modelsComboBox.DropDownHeight = 404;
+			this.modelsComboBox.DropDownWidth = 180;
+			this.modelsComboBox.FormattingEnabled = true;
+			this.modelsComboBox.Guid = "";
+			this.modelsComboBox.Id = ((long)(-1));
+			this.modelsComboBox.Name = "modelsComboBox";
+			this.modelsComboBox.Prefix = "";
+			this.modelsComboBox.PrefixUnique = false;
+			this.modelsComboBox.SelectedItem = null;
 			// 
-			// testModelButton
+			// addButton
 			// 
-			resources.ApplyResources(this.testModelButton, "testModelButton");
-			this.testModelButton.Name = "testModelButton";
-			this.testModelButton.UseVisualStyleBackColor = true;
-			this.testModelButton.Click += new System.EventHandler(this.TestModelButton_Click);
+			resources.ApplyResources(this.addButton, "addButton");
+			this.addButton.Name = "addButton";
+			this.addButton.UseVisualStyleBackColor = true;
+			this.addButton.Click += new System.EventHandler(this.AddButton_Click);
 			// 
-			// timeoutGroupBox
+			// authenticationProfileListBox
 			// 
-			this.timeoutGroupBox.Controls.Add(this.secondsLabel);
-			this.timeoutGroupBox.Controls.Add(this.secondsNumericUpDown);
-			this.timeoutGroupBox.Controls.Add(this.minutesNumericUpDown);
-			this.timeoutGroupBox.Controls.Add(this.minutesLabel);
-			resources.ApplyResources(this.timeoutGroupBox, "timeoutGroupBox");
-			this.timeoutGroupBox.Name = "timeoutGroupBox";
-			this.timeoutGroupBox.TabStop = false;
-			// 
-			// secondsLabel
-			// 
-			resources.ApplyResources(this.secondsLabel, "secondsLabel");
-			this.secondsLabel.Name = "secondsLabel";
-			// 
-			// secondsNumericUpDown
-			// 
-			resources.ApplyResources(this.secondsNumericUpDown, "secondsNumericUpDown");
-			this.secondsNumericUpDown.Maximum = new decimal(new int[] {
-            59,
-            0,
-            0,
-            0});
-			this.secondsNumericUpDown.Name = "secondsNumericUpDown";
-			// 
-			// minutesNumericUpDown
-			// 
-			resources.ApplyResources(this.minutesNumericUpDown, "minutesNumericUpDown");
-			this.minutesNumericUpDown.Maximum = new decimal(new int[] {
-            59,
-            0,
-            0,
-            0});
-			this.minutesNumericUpDown.Name = "minutesNumericUpDown";
-			// 
-			// minutesLabel
-			// 
-			resources.ApplyResources(this.minutesLabel, "minutesLabel");
-			this.minutesLabel.Name = "minutesLabel";
-			// 
-			// embeddingLlmNameComboBox
-			// 
-			resources.ApplyResources(this.embeddingLlmNameComboBox, "embeddingLlmNameComboBox");
-			this.embeddingLlmNameComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.embeddingLlmNameComboBox.FormattingEnabled = true;
-			this.embeddingLlmNameComboBox.Name = "embeddingLlmNameComboBox";
-			// 
-			// label4
-			// 
-			resources.ApplyResources(this.label4, "label4");
-			this.label4.Name = "label4";
+			resources.ApplyResources(this.authenticationProfileListBox, "authenticationProfileListBox");
+			this.authenticationProfileListBox.BackColor = System.Drawing.SystemColors.Window;
+			this.authenticationProfileListBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.authenticationProfileListBox.Name = "authenticationProfileListBox";
+			this.authenticationProfileListBox.ItemProfileNameChanged += new System.EventHandler<WordHiddenPowers.Controls.AuthenticationProfileListControl.AuthenticationProfileListItem.ItemEventArgs>(this.AuthenticationProfileListBox_ItemProfileNameChanged);
+			this.authenticationProfileListBox.ItemProfileChanged += new System.EventHandler<WordHiddenPowers.Controls.AuthenticationProfileListControl.AuthenticationProfileListItem.ItemEventArgs>(this.AuthenticationProfileListBox_ItemProfileChanged);
+			this.authenticationProfileListBox.ItemStateChanged += new System.EventHandler<WordHiddenPowers.Controls.AuthenticationProfileListControl.AuthenticationProfileListItem.ItemConnectionEventArgs>(this.AuthenticationProfileListBox_ItemStateChanged);
+			this.authenticationProfileListBox.ItemPingChanged += new System.EventHandler<WordHiddenPowers.Controls.AuthenticationProfileListControl.AuthenticationProfileListItem.ItemConnectionEventArgs>(this.AuthenticationProfileListBox_ItemPingChanged);
+			this.authenticationProfileListBox.ItemConnecting += new System.EventHandler<WordHiddenPowers.Controls.AuthenticationProfileListControl.AuthenticationProfileListItem.ItemConnectionEventArgs>(this.AuthenticationProfileListBox_ItemConnecting);
+			this.authenticationProfileListBox.ItemConnected += new System.EventHandler<WordHiddenPowers.Controls.AuthenticationProfileListControl.AuthenticationProfileListItem.ItemConnectionEventArgs>(this.AuthenticationProfileListBox_ItemConnected);
 			// 
 			// LLMConnectSettingDialog
 			// 
 			this.AcceptButton = this.okButton;
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			resources.ApplyResources(this, "$this");
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cancelButton;
 			this.Controls.Add(this.llmGroupBox);
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.cancelButton);
 			this.Controls.Add(this.okButton);
-			this.Controls.Add(this.label1);
-			this.Controls.Add(this.mlNetModelNameComboBox);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
@@ -212,35 +134,19 @@
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Dialog_FormClosing);
 			this.llmGroupBox.ResumeLayout(false);
 			this.llmGroupBox.PerformLayout();
-			this.timeoutGroupBox.ResumeLayout(false);
-			this.timeoutGroupBox.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.secondsNumericUpDown)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.minutesNumericUpDown)).EndInit();
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
 		#endregion
-
-		private System.Windows.Forms.ComboBox mlNetModelNameComboBox;
-		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Button cancelButton;
 		private System.Windows.Forms.Button okButton;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.ComboBox llmNameComboBox;
-		private System.Windows.Forms.Button updateLLMArrayButton;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.GroupBox llmGroupBox;
-		private System.Windows.Forms.ComboBox embeddingLlmNameComboBox;
-		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.GroupBox timeoutGroupBox;
-		private System.Windows.Forms.Label secondsLabel;
-		private System.Windows.Forms.NumericUpDown secondsNumericUpDown;
-		private System.Windows.Forms.NumericUpDown minutesNumericUpDown;
-		private System.Windows.Forms.Label minutesLabel;
-		private System.Windows.Forms.Button testModelButton;
-		private Controls.LLMConnectionControlBox llmConnectionControlBox;
+		private Controls.AuthenticationProfileListControl.AuthenticationProfileListBox authenticationProfileListBox;
+		private System.Windows.Forms.Button addButton;
+		private Controls.ComboControls.ModelsComboBox modelsComboBox;
 	}
 }

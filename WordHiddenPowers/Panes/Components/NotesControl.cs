@@ -6,7 +6,6 @@ using System.Windows.Forms;
 using WordHiddenPowers.Controls.ListControls;
 using WordHiddenPowers.Dialogs;
 using WordHiddenPowers.Documents;
-using WordHiddenPowers.Properties;
 using WordHiddenPowers.Repository;
 using WordHiddenPowers.Utils;
 using Content = WordHiddenPowers.Utils.WordDocuments.Content;
@@ -67,7 +66,6 @@ namespace WordHiddenPowers.Panes.Components
 
 			mnuNoteRemove.Image = WordDocument.GetImageMso("Delete", 16, 16);
 
-
 			InitializeVariables();
 
 			notesListBox.ItemMouseDown += new EventHandler<ItemMouseEventArgs<ListItem, ListItemNote>>(NoteListBox_ItemMouseDown);
@@ -78,8 +76,8 @@ namespace WordHiddenPowers.Panes.Components
 
 			if (Document != null)
 			{
-				Document.CurrentDataSet.DocumentKeys.DocumentKeysRowChanged += new RepositoryDataSet.DocumentKeysRowChangeEventHandler(DocumentKeys_RowChanged);
-				Document.CurrentDataSet.DocumentKeys.DocumentKeysRowDeleted += new RepositoryDataSet.DocumentKeysRowChangeEventHandler(DocumentKeys_RowChanged);
+				Document.CurrentDataSet.DocumentKeys.DocumentKeysRowChanged += new DocumentDataSet.DocumentKeysRowChangeEventHandler(DocumentKeys_RowChanged);
+				Document.CurrentDataSet.DocumentKeys.DocumentKeysRowDeleted += new DocumentDataSet.DocumentKeysRowChangeEventHandler(DocumentKeys_RowChanged);
 				Document.CurrentDataSet.DocumentKeys.TableCleared += new DataTableClearEventHandler(DocumentKeys_TableCleared);
 			}
 		}
@@ -203,7 +201,7 @@ namespace WordHiddenPowers.Panes.Components
 			}
 		}
 
-		private void DocumentKeys_RowChanged(object sender, RepositoryDataSet.DocumentKeysRowChangeEvent e)
+		private void DocumentKeys_RowChanged(object sender, DocumentDataSet.DocumentKeysRowChangeEvent e)
 		{
 			captionComboBox.BeginUpdate();
 			captionComboBox.Items.Clear();
@@ -288,19 +286,12 @@ namespace WordHiddenPowers.Panes.Components
 
 		private void NotesSplitContainer_SplitterMoved(object sender, SplitterEventArgs e)
 		{
-			Settings.Default.NotesPaneSplitterDistance = notesSplitContainer.SplitterDistance;
-			Settings.Default.Save();
-			Settings.Default.Upgrade();
+
 		}
 
 		private void NotesPane_Load(object sender, EventArgs e)
 		{
-			Settings.Default.Upgrade();
-			try
-			{
-				notesSplitContainer.SplitterDistance = Settings.Default.NotesPaneSplitterDistance;
-			}
-			catch (Exception) { }
+
 		}
 	}
 }

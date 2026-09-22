@@ -12,9 +12,9 @@ namespace WordHiddenPowers.Utils
 	{
 		private const string TEXT = "/*\r\n! # Наименование категории\r\n      : Пояснение к первой категории\r\n  S ## Наименование текстовой подкатегории\r\n      : Пояснение к подкатегории\r\n  D ## Наименование числовой подкатегории\r\n      : Пояснение к подкатегории\r\n  D! ## Наименование обязательной числовой подкатегории\r\n      : Пояснение к подкатегории  \r\n*/\r\n";
 
-		private static readonly Regex regexCategory = new Regex(@"^\s*(\x21\s*){0,1}\x23\s");
+		private static readonly Regex regexCategory = new(@"^\s*(\x21\s*){0,1}\x23\s");
 
-		private static readonly Regex regexSubcategory = new Regex(@"^\s*([DS!]\s*){1,3}\x23{2}\s*\S");
+		private static readonly Regex regexSubcategory = new(@"^\s*([DS!]\s*){1,3}\x23{2}\s*\S");
 
 		private static readonly Regex regexObligatoryDecimalSubcategory = new Regex(@"^\s*\x44\s*\x21\s*\x23{2}\s{1,}\S");
 		private static readonly Regex regexDecimalSubcategory = new Regex(@"^\s*\x44\s*\x23{2}\s{1,}\S");
@@ -27,7 +27,7 @@ namespace WordHiddenPowers.Utils
 		private static readonly Regex regexKeywordCollection = new Regex(@"Keywords[:](\s*[""][^""]{1,}[""](\s*[,]\s*)*){1,}");
 		private static readonly Regex regexKeyword = new Regex(@"\x22[^\x22]{1,}\x22");
 
-		public static void CreateFromText(RepositoryDataSet dataSet, string text)
+		public static void CreateFromText(DocumentDataSet dataSet, string text)
 		{
 			dataSet.Subcategories.Clear();
 			dataSet.Subcategories.AcceptChanges();

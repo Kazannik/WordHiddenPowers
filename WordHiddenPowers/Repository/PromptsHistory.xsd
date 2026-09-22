@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="PromptsHistory" targetNamespace="http://tempuri.org/PromptHistoryDataSet.xsd" xmlns:mstns="http://tempuri.org/PromptHistoryDataSet.xsd" xmlns="http://tempuri.org/PromptHistoryDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="PromptsHistory" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="PromptsHistory" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="PromptsHistory">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="SystemMessages" msprop:Generator_RowEvHandlerName="SystemMessagesRowChangeEventHandler" msprop:Generator_RowDeletedName="SystemMessagesRowDeleted" msprop:Generator_RowDeletingName="SystemMessagesRowDeleting" msprop:Generator_RowEvArgName="SystemMessagesRowChangeEvent" msprop:Generator_TablePropName="SystemMessages" msprop:Generator_RowChangedName="SystemMessagesRowChanged" msprop:Generator_UserTableName="SystemMessages" msprop:Generator_RowChangingName="SystemMessagesRowChanging" msprop:Generator_RowClassName="SystemMessagesRow" msprop:Generator_TableClassName="SystemMessagesDataTable" msprop:Generator_TableVarName="tableSystemMessages">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="1" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_UserColumnName="id" msprop:Generator_ColumnVarNameInTable="columnid" type="xs:int" />
+              <xs:element name="message" msprop:Generator_ColumnPropNameInTable="messageColumn" msprop:Generator_ColumnPropNameInRow="message" msprop:Generator_UserColumnName="message" msprop:Generator_ColumnVarNameInTable="columnmessage" type="xs:string" />
+              <xs:element name="SystemMessagesReference" msprop:Generator_RowEvHandlerName="SystemMessagesReferenceRowChangeEventHandler" msprop:Generator_RowDeletedName="SystemMessagesReferenceRowDeleted" msprop:Generator_RowDeletingName="SystemMessagesReferenceRowDeleting" msprop:Generator_RowEvArgName="SystemMessagesReferenceRowChangeEvent" msprop:Generator_TablePropName="SystemMessagesReference" msprop:Generator_RowChangedName="SystemMessagesReferenceRowChanged" msprop:Generator_UserTableName="SystemMessagesReference" msprop:Generator_RowChangingName="SystemMessagesReferenceRowChanging" msprop:Generator_RowClassName="SystemMessagesReferenceRow" msprop:Generator_TableClassName="SystemMessagesReferenceDataTable" msprop:Generator_TableVarName="tableSystemMessagesReference" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:appinfo>
+                    <msdata:Relationship name="system_messages_system_messages_reference" msdata:parent="SystemMessages" msdata:child="SystemMessagesReference" msdata:parentkey="id" msdata:childkey="message_id" msprop:Generator_UserParentTable="SystemMessages" msprop:Generator_UserChildTable="SystemMessagesReference" msprop:Generator_RelationVarName="relationsystem_messages_system_messages_reference" msprop:Generator_ChildPropName="GetSystemMessagesReferenceRows" msprop:Generator_ParentPropName="SystemMessagesRow" msprop:Generator_UserRelationName="system_messages_system_messages_reference" />
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="prompt_id" msprop:Generator_ColumnPropNameInTable="prompt_idColumn" msprop:Generator_ColumnPropNameInRow="prompt_id" msprop:Generator_UserColumnName="prompt_id" msprop:Generator_ColumnVarNameInTable="columnprompt_id" type="xs:int" />
+                    <xs:element name="message_id" msprop:Generator_ColumnPropNameInTable="message_idColumn" msprop:Generator_ColumnPropNameInRow="message_id" msprop:Generator_UserColumnName="message_id" msprop:Generator_ColumnVarNameInTable="columnmessage_id" type="xs:int" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="UserMessages" msprop:Generator_RowEvHandlerName="UserMessagesRowChangeEventHandler" msprop:Generator_RowDeletedName="UserMessagesRowDeleted" msprop:Generator_RowDeletingName="UserMessagesRowDeleting" msprop:Generator_RowEvArgName="UserMessagesRowChangeEvent" msprop:Generator_TablePropName="UserMessages" msprop:Generator_RowChangedName="UserMessagesRowChanged" msprop:Generator_UserTableName="UserMessages" msprop:Generator_RowChangingName="UserMessagesRowChanging" msprop:Generator_RowClassName="UserMessagesRow" msprop:Generator_TableClassName="UserMessagesDataTable" msprop:Generator_TableVarName="tableUserMessages">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="1" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_UserColumnName="id" msprop:Generator_ColumnVarNameInTable="columnid" type="xs:int" />
+              <xs:element name="message" msprop:Generator_ColumnPropNameInTable="messageColumn" msprop:Generator_ColumnPropNameInRow="message" msprop:Generator_UserColumnName="message" msprop:Generator_ColumnVarNameInTable="columnmessage" type="xs:string" />
+              <xs:element name="UserMessagesReference" msprop:Generator_RowEvHandlerName="UserMessagesReferenceRowChangeEventHandler" msprop:Generator_RowDeletedName="UserMessagesReferenceRowDeleted" msprop:Generator_RowDeletingName="UserMessagesReferenceRowDeleting" msprop:Generator_RowEvArgName="UserMessagesReferenceRowChangeEvent" msprop:Generator_TablePropName="UserMessagesReference" msprop:Generator_RowChangedName="UserMessagesReferenceRowChanged" msprop:Generator_UserTableName="UserMessagesReference" msprop:Generator_RowChangingName="UserMessagesReferenceRowChanging" msprop:Generator_RowClassName="UserMessagesReferenceRow" msprop:Generator_TableClassName="UserMessagesReferenceDataTable" msprop:Generator_TableVarName="tableUserMessagesReference" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:appinfo>
+                    <msdata:Relationship name="user_messages_user_messages_reference" msdata:parent="UserMessages" msdata:child="UserMessagesReference" msdata:parentkey="id" msdata:childkey="message_id" msprop:Generator_UserParentTable="UserMessages" msprop:Generator_UserChildTable="UserMessagesReference" msprop:Generator_RelationVarName="relationuser_messages_user_messages_reference" msprop:Generator_ChildPropName="GetUserMessagesReferenceRows" msprop:Generator_ParentPropName="UserMessagesRow" msprop:Generator_UserRelationName="user_messages_user_messages_reference" />
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="prompt_id" msprop:Generator_ColumnPropNameInTable="prompt_idColumn" msprop:Generator_ColumnPropNameInRow="prompt_id" msprop:Generator_UserColumnName="prompt_id" msprop:Generator_ColumnVarNameInTable="columnprompt_id" type="xs:int" />
+                    <xs:element name="message_id" msprop:Generator_ColumnPropNameInTable="message_idColumn" msprop:Generator_ColumnPropNameInRow="message_id" msprop:Generator_UserColumnName="message_id" msprop:Generator_ColumnVarNameInTable="columnmessage_id" type="xs:int" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="PromptOptions" msprop:Generator_RowEvHandlerName="PromptOptionsRowChangeEventHandler" msprop:Generator_RowDeletedName="PromptOptionsRowDeleted" msprop:Generator_RowDeletingName="PromptOptionsRowDeleting" msprop:Generator_RowEvArgName="PromptOptionsRowChangeEvent" msprop:Generator_TablePropName="PromptOptions" msprop:Generator_RowChangedName="PromptOptionsRowChanged" msprop:Generator_UserTableName="PromptOptions" msprop:Generator_RowChangingName="PromptOptionsRowChanging" msprop:Generator_RowClassName="PromptOptionsRow" msprop:Generator_TableClassName="PromptOptionsDataTable" msprop:Generator_TableVarName="tablePromptOptions">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="1" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_UserColumnName="id" msprop:Generator_ColumnVarNameInTable="columnid" type="xs:int" />
+              <xs:element name="max_output_token_count" msprop:Generator_ColumnPropNameInTable="max_output_token_countColumn" msprop:Generator_ColumnPropNameInRow="max_output_token_count" msprop:Generator_UserColumnName="max_output_token_count" msprop:Generator_ColumnVarNameInTable="columnmax_output_token_count" type="xs:int" default="4096" />
+              <xs:element name="frequency_penalty" msprop:Generator_ColumnPropNameInTable="frequency_penaltyColumn" msprop:Generator_ColumnPropNameInRow="frequency_penalty" msprop:Generator_UserColumnName="frequency_penalty" msprop:Generator_ColumnVarNameInTable="columnfrequency_penalty" type="xs:float" default="0" />
+              <xs:element name="presence_penalty" msprop:Generator_ColumnPropNameInTable="presence_penaltyColumn" msprop:Generator_ColumnPropNameInRow="presence_penalty" msprop:Generator_UserColumnName="presence_penalty" msprop:Generator_ColumnVarNameInTable="columnpresence_penalty" type="xs:float" default="0" />
+              <xs:element name="temperature" msprop:Generator_ColumnPropNameInTable="temperatureColumn" msprop:Generator_ColumnPropNameInRow="temperature" msprop:Generator_UserColumnName="temperature" msprop:Generator_ColumnVarNameInTable="columntemperature" type="xs:float" default="0" />
+              <xs:element name="top_p" msprop:Generator_ColumnPropNameInTable="top_pColumn" msprop:Generator_ColumnPropNameInRow="top_p" msprop:Generator_UserColumnName="top_p" msprop:Generator_ColumnVarNameInTable="columntop_p" type="xs:float" default="0" />
+              <xs:element name="Prompts" msprop:Generator_RowEvHandlerName="PromptsRowChangeEventHandler" msprop:Generator_RowDeletedName="PromptsRowDeleted" msprop:Generator_RowDeletingName="PromptsRowDeleting" msprop:Generator_RowEvArgName="PromptsRowChangeEvent" msprop:Generator_TablePropName="Prompts" msprop:Generator_RowChangedName="PromptsRowChanged" msprop:Generator_UserTableName="Prompts" msprop:Generator_RowChangingName="PromptsRowChanging" msprop:Generator_RowClassName="PromptsRow" msprop:Generator_TableClassName="PromptsDataTable" msprop:Generator_TableVarName="tablePrompts" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:appinfo>
+                    <msdata:Relationship name="prompt_options_prompts" msdata:parent="PromptOptions" msdata:child="Prompts" msdata:parentkey="id" msdata:childkey="prompt_options_id" msprop:Generator_UserParentTable="PromptOptions" msprop:Generator_UserChildTable="Prompts" msprop:Generator_RelationVarName="relationprompt_options_prompts" msprop:Generator_ChildPropName="GetPromptsRows" msprop:Generator_ParentPropName="PromptOptionsRow" msprop:Generator_UserRelationName="prompt_options_prompts" />
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="1" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_UserColumnName="id" msprop:Generator_ColumnVarNameInTable="columnid" type="xs:int" />
+                    <xs:element name="date" msprop:Generator_ColumnPropNameInTable="dateColumn" msprop:Generator_ColumnPropNameInRow="date" msprop:Generator_UserColumnName="date" msprop:Generator_ColumnVarNameInTable="columndate" type="xs:dateTime" />
+                    <xs:element name="description" msprop:Generator_ColumnPropNameInTable="descriptionColumn" msprop:Generator_ColumnPropNameInRow="description" msprop:Generator_UserColumnName="description" msprop:Generator_ColumnVarNameInTable="columndescription" type="xs:string" />
+                    <xs:element name="model_id" msprop:Generator_ColumnPropNameInTable="model_idColumn" msprop:Generator_ColumnPropNameInRow="model_id" msprop:Generator_UserColumnName="model_id" msprop:Generator_ColumnVarNameInTable="columnmodel_id" type="xs:int" />
+                    <xs:element name="prompt_options_id" msprop:Generator_ColumnPropNameInTable="prompt_options_idColumn" msprop:Generator_ColumnPropNameInRow="prompt_options_id" msprop:Generator_UserColumnName="prompt_options_id" msprop:Generator_ColumnVarNameInTable="columnprompt_options_id" type="xs:int" />
+                    <xs:element name="mode_id" msprop:Generator_ColumnPropNameInTable="mode_idColumn" msprop:Generator_ColumnPropNameInRow="mode_id" msprop:Generator_UserColumnName="mode_id" msprop:Generator_ColumnVarNameInTable="columnmode_id" type="xs:int" />
+                    <xs:element name="is_favorite" msprop:Generator_ColumnPropNameInTable="is_favoriteColumn" msprop:Generator_ColumnPropNameInRow="is_favorite" msprop:Generator_UserColumnName="is_favorite" msprop:Generator_ColumnVarNameInTable="columnis_favorite" type="xs:boolean" default="false" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="PromptMode" msprop:Generator_RowEvHandlerName="PromptModeRowChangeEventHandler" msprop:Generator_RowDeletedName="PromptModeRowDeleted" msprop:Generator_RowDeletingName="PromptModeRowDeleting" msprop:Generator_RowEvArgName="PromptModeRowChangeEvent" msprop:Generator_TablePropName="PromptMode" msprop:Generator_RowChangedName="PromptModeRowChanged" msprop:Generator_UserTableName="PromptMode" msprop:Generator_RowChangingName="PromptModeRowChanging" msprop:Generator_RowClassName="PromptModeRow" msprop:Generator_TableClassName="PromptModeDataTable" msprop:Generator_TableVarName="tablePromptMode">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="1" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_UserColumnName="id" msprop:Generator_ColumnVarNameInTable="columnid" type="xs:int" />
+              <xs:element name="insert_here_message" msprop:Generator_ColumnPropNameInTable="insert_here_messageColumn" msprop:Generator_ColumnPropNameInRow="insert_here_message" msprop:Generator_UserColumnName="insert_here_message" msprop:Generator_ColumnVarNameInTable="columninsert_here_message" type="xs:boolean" default="true" />
+              <xs:element name="replace_selection_message" msprop:Generator_ColumnPropNameInTable="replace_selection_messageColumn" msprop:Generator_ColumnPropNameInRow="replace_selection_message" msprop:Generator_UserColumnName="replace_selection_message" msprop:Generator_ColumnVarNameInTable="columnreplace_selection_message" type="xs:boolean" default="true" />
+              <xs:element name="insert_next_message" msprop:Generator_ColumnPropNameInTable="insert_next_messageColumn" msprop:Generator_ColumnPropNameInRow="insert_next_message" msprop:Generator_UserColumnName="insert_next_message" msprop:Generator_ColumnVarNameInTable="columninsert_next_message" type="xs:boolean" default="true" />
+              <xs:element name="insert_previous_message" msprop:Generator_ColumnPropNameInTable="insert_previous_messageColumn" msprop:Generator_ColumnPropNameInRow="insert_previous_message" msprop:Generator_UserColumnName="insert_previous_message" msprop:Generator_ColumnVarNameInTable="columninsert_previous_message" type="xs:boolean" default="true" />
+              <xs:element name="insert_between_message" msprop:Generator_ColumnPropNameInTable="insert_between_messageColumn" msprop:Generator_ColumnPropNameInRow="insert_between_message" msprop:Generator_UserColumnName="insert_between_message" msprop:Generator_ColumnVarNameInTable="columninsert_between_message" type="xs:boolean" default="true" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Profiles" msprop:Generator_RowEvHandlerName="ProfilesRowChangeEventHandler" msprop:Generator_RowDeletedName="ProfilesRowDeleted" msprop:Generator_RowDeletingName="ProfilesRowDeleting" msprop:Generator_RowEvArgName="ProfilesRowChangeEvent" msprop:Generator_TablePropName="Profiles" msprop:Generator_RowChangedName="ProfilesRowChanged" msprop:Generator_UserTableName="Profiles" msprop:Generator_RowChangingName="ProfilesRowChanging" msprop:Generator_RowClassName="ProfilesRow" msprop:Generator_TableClassName="ProfilesDataTable" msprop:Generator_TableVarName="tableProfiles">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="1" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_UserColumnName="id" msprop:Generator_ColumnVarNameInTable="columnid" type="xs:int" />
+              <xs:element name="endpoint" msprop:Generator_ColumnPropNameInTable="endpointColumn" msprop:Generator_ColumnPropNameInRow="endpoint" msprop:Generator_UserColumnName="endpoint" msprop:Generator_ColumnVarNameInTable="columnendpoint" type="xs:string" />
+              <xs:element name="Models" msprop:Generator_RowEvHandlerName="ModelsRowChangeEventHandler" msprop:Generator_RowDeletedName="ModelsRowDeleted" msprop:Generator_RowDeletingName="ModelsRowDeleting" msprop:Generator_RowEvArgName="ModelsRowChangeEvent" msprop:Generator_TablePropName="Models" msprop:Generator_RowChangedName="ModelsRowChanged" msprop:Generator_UserTableName="Models" msprop:Generator_RowChangingName="ModelsRowChanging" msprop:Generator_RowClassName="ModelsRow" msprop:Generator_TableClassName="ModelsDataTable" msprop:Generator_TableVarName="tableModels" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:appinfo>
+                    <msdata:Relationship name="profiles_models" msdata:parent="Profiles" msdata:child="Models" msdata:parentkey="id" msdata:childkey="profile_id" msprop:Generator_UserParentTable="Profiles" msprop:Generator_UserChildTable="Models" msprop:Generator_RelationVarName="relationprofiles_models" msprop:Generator_UserRelationName="profiles_models" msprop:Generator_ChildPropName="GetModelsRows" msprop:Generator_ParentPropName="ProfilesRow" />
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="1" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_UserColumnName="id" msprop:Generator_ColumnVarNameInTable="columnid" type="xs:int" />
+                    <xs:element name="name" msprop:Generator_ColumnPropNameInTable="nameColumn" msprop:Generator_ColumnPropNameInRow="name" msprop:Generator_UserColumnName="name" msprop:Generator_ColumnVarNameInTable="columnname" type="xs:string" />
+                    <xs:element name="description" msprop:Generator_ColumnPropNameInTable="descriptionColumn" msprop:Generator_ColumnPropNameInRow="description" msprop:Generator_UserColumnName="description" msprop:Generator_ColumnVarNameInTable="columndescription" type="xs:string" minOccurs="0" />
+                    <xs:element name="profile_id" msprop:Generator_ColumnPropNameInTable="profile_idColumn" msprop:Generator_ColumnPropNameInRow="profile_id" msprop:Generator_UserColumnName="profile_id" msprop:Generator_ColumnVarNameInTable="columnprofile_id" type="xs:int" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="message_key">
+      <xs:selector xpath=".//mstns:SystemMessages" />
+      <xs:field xpath="mstns:message" />
+    </xs:unique>
+    <xs:unique name="primary_key" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:SystemMessages" />
+      <xs:field xpath="mstns:id" />
+    </xs:unique>
+    <xs:unique name="UserMessages_message_key" msdata:ConstraintName="message_key">
+      <xs:selector xpath=".//mstns:UserMessages" />
+      <xs:field xpath="mstns:message" />
+    </xs:unique>
+    <xs:unique name="UserMessages_primary_key" msdata:ConstraintName="primary_key" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:UserMessages" />
+      <xs:field xpath="mstns:id" />
+    </xs:unique>
+    <xs:unique name="Prompts_primary_key" msdata:ConstraintName="primary_key" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Prompts" />
+      <xs:field xpath="mstns:id" />
+    </xs:unique>
+    <xs:unique name="prompt_options_key">
+      <xs:selector xpath=".//mstns:PromptOptions" />
+      <xs:field xpath="mstns:max_output_token_count" />
+      <xs:field xpath="mstns:frequency_penalty" />
+      <xs:field xpath="mstns:presence_penalty" />
+      <xs:field xpath="mstns:temperature" />
+      <xs:field xpath="mstns:top_p" />
+    </xs:unique>
+    <xs:unique name="PromptOptions_primary_key" msdata:ConstraintName="primary_key" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:PromptOptions" />
+      <xs:field xpath="mstns:id" />
+    </xs:unique>
+    <xs:unique name="prompt_mode_key">
+      <xs:selector xpath=".//mstns:PromptMode" />
+      <xs:field xpath="mstns:insert_here_message" />
+      <xs:field xpath="mstns:replace_selection_message" />
+      <xs:field xpath="mstns:insert_next_message" />
+      <xs:field xpath="mstns:insert_previous_message" />
+      <xs:field xpath="mstns:insert_between_message" />
+    </xs:unique>
+    <xs:unique name="PromptMode_primary_key" msdata:ConstraintName="primary_key" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:PromptMode" />
+      <xs:field xpath="mstns:id" />
+    </xs:unique>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Models" />
+      <xs:field xpath="mstns:id" />
+    </xs:unique>
+    <xs:unique name="name_profile_key">
+      <xs:selector xpath=".//mstns:Models" />
+      <xs:field xpath="mstns:name" />
+      <xs:field xpath="mstns:profile_id" />
+    </xs:unique>
+    <xs:unique name="endpoint_key">
+      <xs:selector xpath=".//mstns:Profiles" />
+      <xs:field xpath="mstns:endpoint" />
+    </xs:unique>
+    <xs:unique name="Profiles_primary_key" msdata:ConstraintName="primary_key" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Profiles" />
+      <xs:field xpath="mstns:id" />
+    </xs:unique>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="prompts_system_messages_reference" msdata:parent="Prompts" msdata:child="SystemMessagesReference" msdata:parentkey="id" msdata:childkey="prompt_id" msprop:Generator_UserParentTable="Prompts" msprop:Generator_UserChildTable="SystemMessagesReference" msprop:Generator_RelationVarName="relationprompts_system_messages_reference" msprop:Generator_ChildPropName="GetSystemMessagesReferenceRows" msprop:Generator_ParentPropName="PromptsRow" msprop:Generator_UserRelationName="prompts_system_messages_reference" />
+      <msdata:Relationship name="prompts_user_messages_reference" msdata:parent="Prompts" msdata:child="UserMessagesReference" msdata:parentkey="id" msdata:childkey="prompt_id" msprop:Generator_UserParentTable="Prompts" msprop:Generator_UserChildTable="UserMessagesReference" msprop:Generator_RelationVarName="relationprompts_user_messages_reference" msprop:Generator_ChildPropName="GetUserMessagesReferenceRows" msprop:Generator_ParentPropName="PromptsRow" msprop:Generator_UserRelationName="prompts_user_messages_reference" />
+      <msdata:Relationship name="prompt_mode_prompts" msdata:parent="PromptMode" msdata:child="Prompts" msdata:parentkey="id" msdata:childkey="mode_id" msprop:Generator_UserParentTable="PromptMode" msprop:Generator_UserChildTable="Prompts" msprop:Generator_RelationVarName="relationprompt_mode_prompts" msprop:Generator_UserRelationName="prompt_mode_prompts" msprop:Generator_ChildPropName="GetPromptsRows" msprop:Generator_ParentPropName="PromptModeRow" />
+      <msdata:Relationship name="models_prompts" msdata:parent="Models" msdata:child="Prompts" msdata:parentkey="id" msdata:childkey="model_id" msprop:Generator_UserParentTable="Models" msprop:Generator_UserChildTable="Prompts" msprop:Generator_RelationVarName="relationmodels_prompts" msprop:Generator_UserRelationName="models_prompts" msprop:Generator_ChildPropName="GetPromptsRows" msprop:Generator_ParentPropName="ModelsRow" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

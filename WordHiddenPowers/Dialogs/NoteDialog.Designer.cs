@@ -37,7 +37,7 @@
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.categoriesComboBox = new WordHiddenPowers.Controls.ComboControls.CategoriesComboBox(this.components);
 			this.subcategoriesComboBox = new WordHiddenPowers.Controls.ComboControls.SubcategoriesComboBox(this.components);
-			this.ratingControl1 = new ControlLibrary.Controls.RatingControls.RatingControl(this.components);
+			this.ratingControl = new ControlLibrary.Controls.RatingControls.RatingControl();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -75,12 +75,11 @@
 			this.tableLayoutPanel1.Controls.Add(this.subcategoriesComboBox, 0, 1);
 			this.tableLayoutPanel1.Controls.Add(this.cancelButton, 4, 4);
 			this.tableLayoutPanel1.Controls.Add(this.okButton, 3, 4);
-			this.tableLayoutPanel1.Controls.Add(this.ratingControl1, 1, 4);
+			this.tableLayoutPanel1.Controls.Add(this.ratingControl, 1, 4);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			// 
 			// categoriesComboBox
 			// 
-			this.categoriesComboBox.Code = "";
 			this.tableLayoutPanel1.SetColumnSpan(this.categoriesComboBox, 5);
 			resources.ApplyResources(this.categoriesComboBox, "categoriesComboBox");
 			this.categoriesComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
@@ -90,12 +89,13 @@
 			this.categoriesComboBox.Guid = "";
 			this.categoriesComboBox.Id = ((long)(-1));
 			this.categoriesComboBox.Name = "categoriesComboBox";
+			this.categoriesComboBox.Prefix = "";
+			this.categoriesComboBox.PrefixUnique = true;
 			this.categoriesComboBox.SelectedItem = null;
 			this.categoriesComboBox.SelectedIndexChanged += new System.EventHandler(this.CategoriesComboBox_SelectedIndexChanged);
 			// 
 			// subcategoriesComboBox
 			// 
-			this.subcategoriesComboBox.Code = "";
 			this.tableLayoutPanel1.SetColumnSpan(this.subcategoriesComboBox, 5);
 			resources.ApplyResources(this.subcategoriesComboBox, "subcategoriesComboBox");
 			this.subcategoriesComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
@@ -105,22 +105,25 @@
 			this.subcategoriesComboBox.Guid = "";
 			this.subcategoriesComboBox.Id = ((long)(-1));
 			this.subcategoriesComboBox.Name = "subcategoriesComboBox";
+			this.subcategoriesComboBox.Prefix = "";
+			this.subcategoriesComboBox.PrefixUnique = true;
 			this.subcategoriesComboBox.SelectedItem = null;
 			this.subcategoriesComboBox.SelectedIndexChanged += new System.EventHandler(this.SubcategoriesComboBox_SelectedIndexChanged);
 			// 
-			// ratingControl1
+			// ratingControl
 			// 
-			resources.ApplyResources(this.ratingControl1, "ratingControl1");
-			this.ratingControl1.Name = "ratingControl1";
-			this.ratingControl1.StarsColor1 = System.Drawing.SystemColors.ControlText;
-			this.ratingControl1.RatingChanged += new System.EventHandler<ControlLibrary.Controls.RatingControls.RatingEventArgs>(this.ratingControl1_RatingChanged);
+			resources.ApplyResources(this.ratingControl, "ratingControl");
+			this.ratingControl.Name = "ratingControl";
+			this.ratingControl.StarsColor1 = System.Drawing.SystemColors.ControlText;
+			this.ratingControl.StarsColor2 = System.Drawing.SystemColors.InactiveCaption;
+			this.ratingControl.RatingChanged += new System.EventHandler<ControlLibrary.Controls.RatingControls.RatingEventArgs>(this.RatingControl1_RatingChanged);
 			// 
 			// NoteDialog
 			// 
 			this.AcceptButton = this.okButton;
-			resources.ApplyResources(this, "$this");
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.CancelButton = this.cancelButton;
+			resources.ApplyResources(this, "$this");
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
 			this.Name = "NoteDialog";
@@ -140,6 +143,6 @@
         private Controls.ComboControls.SubcategoriesComboBox subcategoriesComboBox;
 		private System.Windows.Forms.Button wizardButton;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-		private ControlLibrary.Controls.RatingControls.RatingControl ratingControl1;
+		private ControlLibrary.Controls.RatingControls.RatingControl ratingControl;
 	}
 }

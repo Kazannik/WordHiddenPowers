@@ -78,9 +78,9 @@
 			// SelectCategoriesDialog
 			// 
 			this.AcceptButton = this.okButton;
-			resources.ApplyResources(this, "$this");
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.CancelButton = this.cancelButton;
+			resources.ApplyResources(this, "$this");
 			this.Controls.Add(this.inverseButton);
 			this.Controls.Add(this.unckeckButton);
 			this.Controls.Add(this.checkButton);

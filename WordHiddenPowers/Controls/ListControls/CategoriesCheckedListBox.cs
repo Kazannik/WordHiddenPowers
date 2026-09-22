@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using WordHiddenPowers.Repository;
 using WordHiddenPowers.Repository.Categories;
 using static WordHiddenPowers.Controls.ListControls.CategoriesListBox;
-using static WordHiddenPowers.Repository.RepositoryDataSet;
+using static WordHiddenPowers.Repository.DocumentDataSet;
 using Category = WordHiddenPowers.Repository.Categories.Category;
 using Control = WordHiddenPowers.Controls.ListControls.CategoriesCheckedListControl;
 using Font = System.Drawing.Font;
@@ -23,11 +23,11 @@ namespace WordHiddenPowers.Controls.ListControls
 	[ComVisible(false)]
 	public class CategoriesCheckedListBox : ListControl<ListItem, Control.ListItemNote>
 	{
-		private RepositoryDataSet source;
+		private DocumentDataSet source;
 
 		public CategoriesCheckedListBox() : base() { }
 
-		public RepositoryDataSet DataSet
+		public DocumentDataSet DataSet
 		{
 			get => source;
 			set
@@ -333,11 +333,11 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 
 			public ListItem(ICategoriesListItem owner) : base(
-				new ListItemNote[] {
+				[
 				(owner is Category)
-					? new CategoryTitleListItemNote(owner.Code, owner.Caption)
-					: new SubcategoryTitleListItemNote(owner.Code, owner.Caption),
-				new DescriptionListItemNote(owner.Description)})
+					? new CategoryTitleListItemNote(owner.Code, owner.Text)
+					: new SubcategoryTitleListItemNote(owner.Code, owner.Text),
+				new DescriptionListItemNote(owner.Description)])
 			{
 				this.owner = owner;
 			}
@@ -401,7 +401,7 @@ namespace WordHiddenPowers.Controls.ListControls
 			public Subcategory Category => (Subcategory)owner;
 		}
 
-		public abstract class ListItemNote : ControlLibrary.Controls.ListControls.ListItemNote
+		public abstract class ListItemNote(string text) : ControlLibrary.Controls.ListControls.ListItemNote
 		{
 			protected static readonly StringFormat CENTER_STRING_FORMAT = new StringFormat
 			{
@@ -415,9 +415,7 @@ namespace WordHiddenPowers.Controls.ListControls
 				LineAlignment = StringAlignment.Near
 			};
 
-			private string text;
-
-			public ListItemNote(string text) => this.text = text;
+			private string text = text;
 
 			public string Text
 			{
@@ -433,26 +431,17 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 		}
 
-		public class SubcategoryTitleListItemNote : ListItemNote
+		public class SubcategoryTitleListItemNote(Version code, string text) : ListItemNote(text: text)
 		{
-			private Version code;
-			protected Size checkBoxSize;
-			private Size codeSize;
-			private Size textSize;
+			private Version code = code;
+			protected Size checkBoxSize = Size.Empty;
+			private Size codeSize = Size.Empty;
+			private Size textSize = Size.Empty;
 
 			private bool isChecked;
-			public Rectangle CheckButton { get; private set; }
+			public Rectangle CheckButton { get; private set; } = Rectangle.Empty;
 
 			public SubcategoryTitleListItemNote(int major, int minor, string guid, string text) : this(code: Version.Create(major: major, minor: minor, guid: guid), text: text) { }
-
-			public SubcategoryTitleListItemNote(Version code, string text) : base(text: text)
-			{
-				this.code = code;
-				checkBoxSize = Size.Empty;
-				codeSize = Size.Empty;
-				textSize = Size.Empty;
-				CheckButton = Rectangle.Empty;
-			}
 
 			public Version Code
 			{
@@ -482,7 +471,7 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
-				Font boldFont = new Font(e.Font.FontFamily, e.Font.Size, FontStyle.Bold);
+				Font boldFont = new(e.Font.FontFamily, e.Font.Size, FontStyle.Bold);
 
 				if (!checkBoxSize.IsEmpty)
 				{
@@ -494,7 +483,7 @@ namespace WordHiddenPowers.Controls.ListControls
 					DrawCheckBox(new DrawItemEventArgs(e.Graphics, boldFont, checkBoxRectangle, e.Index, e.State, e.ForeColor, e.BackColor));
 				}
 
-				Rectangle codeRectangle = new Rectangle(
+				Rectangle codeRectangle = new(
 					e.Bounds.X + checkBoxSize.Width + 3,
 					e.Bounds.Y + 2,
 					codeSize.Width,
@@ -504,7 +493,7 @@ namespace WordHiddenPowers.Controls.ListControls
 				if (!textSize.IsEmpty)
 				{
 					Brush brush = new SolidBrush(e.ForeColor);
-					Rectangle rectangle = new Rectangle(
+					Rectangle rectangle = new(
 						e.Bounds.Width - textSize.Width - 1,
 						e.Bounds.Y,
 						textSize.Width,
@@ -515,7 +504,7 @@ namespace WordHiddenPowers.Controls.ListControls
 
 			protected override Size OnMeasureBound(Graphics graphics, Font font, int itemWidth, int itemHeight)
 			{
-				Font boldFont = new Font(font.FontFamily, font.Size, FontStyle.Bold);
+				Font boldFont = new(font.FontFamily, font.Size, FontStyle.Bold);
 				codeSize = Utils.Drawing.GetCodeSize(graphics, boldFont);
 				checkBoxSize = new Size(codeSize.Height, codeSize.Height);
 				textSize = GetTextSize(graphics, Text, font, itemWidth - codeSize.Width - checkBoxSize.Width - 5, CENTER_STRING_FORMAT);
@@ -579,10 +568,8 @@ namespace WordHiddenPowers.Controls.ListControls
 			}
 		}
 
-		public class DescriptionListItemNote : ListItemNote
+		public class DescriptionListItemNote(string text) : ListItemNote(text: text)
 		{
-			public DescriptionListItemNote(string text) : base(text: text) { }
-
 			protected override void OnDraw(DrawItemEventArgs e)
 			{
 				Brush brush = new SolidBrush(e.ForeColor);

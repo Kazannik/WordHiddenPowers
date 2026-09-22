@@ -121,6 +121,12 @@
   <data name="TableDeleteRows_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TableDeleteRows_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ColorOlive_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorOlive_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorSilver_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorSilver_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ColorYellow_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ColorYellow_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -148,8 +154,8 @@
   <data name="TableInsertColumnsLeft_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TableInsertColumnsLeft_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="TableDelete_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TableDelete_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ChatOptions" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ChatOptions.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TableInsertRowsAbove_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TableInsertRowsAbove_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -159,6 +165,12 @@
   </data>
   <data name="AI_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AI_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Redo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Redo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ConnectionOk" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnectionOk.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TableClear_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TableClear_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -172,8 +184,8 @@
   <data name="Save_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Save_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ColorGray_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorGray_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="HistoryNext2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HistoryNext2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TableInsertColumnsLeft_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TableInsertColumnsLeft_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -181,8 +193,11 @@
   <data name="ColorLime_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ColorLime_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ColorLime_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorLime_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="LLM_Dialog_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LLM_Dialog_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Connecting" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Connecting.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ai-process" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ai-process.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -211,6 +226,9 @@
   <data name="ChartType02" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ChartType02.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="More_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\More_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Refresh_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Refresh_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -235,11 +253,20 @@
   <data name="WindowClose_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\WindowClose_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="WindowClose_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WindowClose_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ColorAqua_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ColorAqua_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ColorFuchsia_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ColorFuchsia_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableDeleteColumns_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TableDeleteColumns_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorLime_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorLime_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ColorMaroon_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ColorMaroon_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -247,26 +274,35 @@
   <data name="ColorNavy_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ColorNavy_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="HistoryNext" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HistoryNext.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HistoryClear" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HistoryClear.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Bold_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Bold_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BackColor_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BackColor_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Undo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Undo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Repeat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Repeat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ColorPalette_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ColorPalette_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Bold_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Bold_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ChartType03" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ChartType03.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ColorMaroon_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ColorMaroon_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ColorBlue_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorBlue_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ColorRed_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ColorRed_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Delete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ChartType04" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ChartType04.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -274,20 +310,32 @@
   <data name="ColorFuchsia_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ColorFuchsia_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ColorGray_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorGray_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ColorBlack_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ColorBlack_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HistoryPrevious" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HistoryPrevious.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HistoryDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HistoryDelete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ColorRed_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ColorRed_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="TableDeleteColumns_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TableDeleteColumns_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="UncorrectedAddress" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\UncorrectedAddress.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ColorOlive_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ColorOlive_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ColorTeal_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ColorTeal_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableInsertRowsBelow_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TableInsertRowsBelow_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ColorTeal_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ColorTeal_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -298,11 +346,17 @@
   <data name="ColorGray_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ColorGray_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ChartType03" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ChartType03.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Favorite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Favorite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TableDelete_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TableDelete_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ColorNavy_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ColorNavy_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ConnectionError" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnectionError.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TableDeleteColumns_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TableDeleteColumns_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -310,17 +364,26 @@
   <data name="ColorGreen_26" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ColorGreen_26.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ColorOlive_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorOlive_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Bold_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Bold_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TableInsertColumnsRight_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TableInsertColumnsRight_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Close24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Close24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SystemMessage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SystemMessage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ColorBlue_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ColorBlue_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ColorSilver_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorSilver_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ChartType05" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ChartType05.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorBlue_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorBlue_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="FINDCOMP_00" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\FINDCOMP_00.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -331,22 +394,13 @@
   <data name="ColorMenu_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ColorMenu_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="TableInsertRowsBelow_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TableInsertRowsBelow_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BackColor_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BackColor_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ChartType05" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ChartType05.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="DocumentDelete32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DocumentDelete32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Connecting" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Connecting.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ConnectionError" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ConnectionError.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ConnectionOk" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ConnectionOk.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="UncorrectedAddress" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\UncorrectedAddress.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="DocumentClear32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DocumentClear32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
