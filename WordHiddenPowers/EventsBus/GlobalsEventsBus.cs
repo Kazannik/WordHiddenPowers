@@ -68,12 +68,12 @@ namespace WordHiddenPowers.EventsBus
 				Document document = Globals.ThisAddIn.Documents.GetDocument(Doc);
 				DocumentWindowActivate?.Invoke(document, new WordDocumentWindowActivateEventArgs(Doc, Wn));
 				
-				if (document.Pane.SelectedModel != null)
+				if (document.Pane != null && document.Pane.SelectedModel != null)
 					TogglingStateForAccessToSendingUserMessage(document: document, AccessToSendingUserMessage.SelectModel);
 				else
 					RemovingStateForAccessToSendingUserMessage(document: document, AccessToSendingUserMessage.SelectModel);
 				
-				if (document.Pane.UserMessage.Length > 0)
+				if (document.Pane != null && document.Pane.UserMessage.Length > 0)
 					TogglingStateForAccessToSendingUserMessage(document: document, AccessToSendingUserMessage.UserMessage);
 				else
 					RemovingStateForAccessToSendingUserMessage(document: document, AccessToSendingUserMessage.UserMessage);

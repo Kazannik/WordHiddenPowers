@@ -35,10 +35,10 @@
     </NuGetPackageImportStamp>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <BootstrapperComponentsLocation>Relative</BootstrapperComponentsLocation>
-    <PublishUrl>..\publish\WordHiddenPowers_IT\6.3.0.0\</PublishUrl>
+    <PublishUrl>..\publish\WordHiddenPowers_IT\6.3.0.1\</PublishUrl>
     <InstallUrl>\\fsgpgvc01\Groups\IT\Отдел НСИ\Soft\MSWordAddins\WordHiddenPowers\</InstallUrl>
     <TargetCulture>ru</TargetCulture>
-    <ApplicationVersion>6.3.0.0</ApplicationVersion>
+    <ApplicationVersion>6.3.0.1</ApplicationVersion>
     <AutoIncrementApplicationRevision>false</AutoIncrementApplicationRevision>
     <UpdateEnabled>false</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
@@ -133,7 +133,7 @@
     <DefineConstants>TRACE;VSTO40;WORD</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <!--
     This section specifies references for the project.

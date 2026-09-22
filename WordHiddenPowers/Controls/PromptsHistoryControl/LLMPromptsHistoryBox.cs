@@ -406,7 +406,13 @@ namespace WordHiddenPowers.Controls.PromptsHistoryControl
 			if (InvokeRequired)
 				Invoke(new Action(() => SetModelsComboBoxEnabled(value)));
 			else
-			 modelsComboBox.Enabled = value;
+			{
+				try
+				{
+					modelsComboBox.Enabled = value;
+				}
+				catch (Exception) { }
+			}
 		}
 
 		#endregion

@@ -24,6 +24,8 @@ namespace WordHiddenPowers.Documents
 
 		private WordDocumentMode _state = WordDocumentMode.Default;
 
+		private CustomTaskPane customPane;
+
 		/// <summary>
 		/// Статус документа.
 		/// </summary>
@@ -65,9 +67,27 @@ namespace WordHiddenPowers.Documents
 		/// <summary>
 		/// Связанная с документом боковая панель.
 		/// </summary>
-		public CustomTaskPane CustomPane { get; }
+		public CustomTaskPane CustomPane
+		{
+			get
+			{
+				if (customPane == null)
+				{
+					UserControl pane = new AddInPane(this, Hwnd);
+					customPane = Globals.ThisAddIn.CustomTaskPanes.Add(pane, Const.Panes.PANE_TITLE, Doc.Windows[1]);
+					customPane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
+					customPane.Width = 600;
+					customPane.VisibleChanged += new EventHandler(CustomPane_VisibleChanged);
+					customPane.Visible = GlobalsEventsBus.PaneVisible;
 
-		public AddInPane Pane => CustomPane.Control as AddInPane;
+					Pane.PropertiesChanged += new EventHandler<EventArgs>(Pane_PropertiesChanged);
+					Pane.NotesControlVisible = _state == WordDocumentMode.Separate;
+				}
+				return customPane;
+			}
+		}
+
+		public AddInPane Pane => CustomPane is not null ? CustomPane.Control as AddInPane : null;
 
 		public int Hwnd { get; }
 
@@ -282,19 +302,7 @@ namespace WordHiddenPowers.Documents
 			{
 				_state = WordDocumentMode.Default;
 			}
-
-			try
-			{
-				CustomPane = Globals.ThisAddIn.CustomTaskPanes.Add(new AddInPane(this, Hwnd), Const.Panes.PANE_TITLE, Doc.Windows[1]);
-				CustomPane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
-				CustomPane.Width = 600;
-				CustomPane.VisibleChanged += new EventHandler(CustomPane_VisibleChanged);
-				CustomPane.Visible = GlobalsEventsBus.PaneVisible;
-				
-				Pane.PropertiesChanged += new EventHandler<EventArgs>(Pane_PropertiesChanged);
-				Pane.NotesControlVisible = _state == WordDocumentMode.Separate;
-			}
-			catch (Exception) { }
+			
 			GlobalsEventsBus.DocumentSelectionChange += new EventHandler<WordSelectionEventArgs>(GlobalsEventsBus_DocumentSelectionChange);
 			GlobalsEventsBus.PaneStateChanged += new EventHandler<PaneStateEventArgs>(GlobalsEventsBus_PaneStateChanged);
 		}
@@ -309,8 +317,16 @@ namespace WordHiddenPowers.Documents
 			{
 				delayTimer.Stop();
 				delayTimer.Dispose();
-				CustomPane.Visible = e.IsVisible;
-				Globals.Ribbons.AddInMainRibbon.paneVisibleButton.Checked = e.IsVisible;
+				if (CustomPane is not null)
+				{
+					Globals.Ribbons.AddInMainRibbon.paneVisibleButton.Enabled = true;
+					CustomPane.Visible = e.IsVisible;
+					Globals.Ribbons.AddInMainRibbon.paneVisibleButton.Checked = e.IsVisible;
+				}
+				else
+				{
+					Globals.Ribbons.AddInMainRibbon.paneVisibleButton.Enabled = false;
+				}
 			};
 			delayTimer.Start();
 		}

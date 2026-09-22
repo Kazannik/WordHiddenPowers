@@ -73,7 +73,7 @@ namespace WordHiddenPowers.Panes
 			llmControl.Document = document;
 			GlobalsEventsBus.DocumentPropertiesChanged += new EventHandler<EventsBus.EventArgs.DocumentEventArgs>(GlobalsEventsBus_DocumentPropertiesChanged);
 		}
-
+		
 		private void GlobalsEventsBus_DocumentPropertiesChanged(object sender, EventsBus.EventArgs.DocumentEventArgs e)
 		{
 			if (Hwnd != e.Document.Hwnd) return;
