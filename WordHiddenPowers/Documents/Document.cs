@@ -3,6 +3,7 @@
 using Microsoft.Office.Tools;
 using System;
 using System.Data;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WordHiddenPowers.Dialogs;
 using WordHiddenPowers.EventsBus;
@@ -878,6 +879,8 @@ namespace WordHiddenPowers.Documents
 		{
 			GlobalsEventsBus.DocumentSelectionChange -= GlobalsEventsBus_DocumentSelectionChange;
 			CustomPane?.Dispose();
+			Marshal.ReleaseComObject(CustomPane);
+			Marshal.ReleaseComObject(Doc);
 		}
 
 		/// <summary>

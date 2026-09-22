@@ -1,4 +1,5 @@
-﻿using WordHiddenPowers.Dialogs;
+﻿using System;
+using WordHiddenPowers.Dialogs;
 using WordHiddenPowers.EventsBus;
 using WordHiddenPowers.EventsBus.EventArgs;
 using WordHiddenPowers.Properties;
@@ -27,6 +28,9 @@ namespace WordHiddenPowers
 			GlobalsEventsBus.DocumentWindowActivate += new System.EventHandler<WordDocumentWindowActivateEventArgs>(GlobalsEventsBus_DocumentWindowActivate);
 			GlobalsEventsBus.DocumentWindowDeactivate += new System.EventHandler<WordDocumentWindowDeactivateEventArgs>(GlobalsEventsBus_DocumentWindowDeactivate);
 			GlobalsEventsBus.DocumentBeforeClose += new System.EventHandler<WordDocumentBeforeCloseEventArgs>(GlobalsEventsBus_DocumentBeforeClose);
+
+			GlobalsEventsBus.AccessToSendingUserMessageStateChanged += new System.EventHandler<EventsBus.EventArgs.AccessToSendingUserMessageEventArgs>(GlobalsEventsBus_AccessToSendingUserMessageStateChanged);
+
 
 			addLastNoteTypeButton.Description = Const.Content.TEXT_NOTE_DESCRIPTION;
 			addLastNoteTypeButton.Label = Const.Content.TEXT_NOTE_LABEL;

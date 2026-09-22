@@ -449,7 +449,7 @@ namespace WordHiddenPowers.Panes.Components
 		/// </summary>
 		private void GlobalsEventsBus_DocumentChatMessageModeChanged(object sender, DocumentChatMessageModeEventArgs e)
 		{
-			if (e.Document.Hwnd != Document.Hwnd) return;
+			if (Document != null && e.Document.Hwnd != Document.Hwnd) return;
 
 			int id = promptHistoryCollection.SelectedPrompt.Id;
 

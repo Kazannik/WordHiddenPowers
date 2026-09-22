@@ -22,6 +22,8 @@ namespace WordHiddenPowers
 		private Office.CommandBarButton buttonSelectChatMessage1;
 		private Office.CommandBarButton buttonSelectChatMessage2;
 
+		private bool isSelection = false;
+		private bool isModel = false;
 
 		private void GlobalsEventsBus_InitializeComponent(object sender, System.EventArgs e)
 		{
@@ -38,9 +40,7 @@ namespace WordHiddenPowers
 			buttonSelectChatMessage1 = AddButton(Globals.ThisAddIn.Application, Globals.ThisAddIn.Application.CommandBars["Text"], Globals.ThisAddIn.GlobalsSetting.CaptionButton1, Const.Content.LLM_BUTTON_IMAGE_ID, Const.Panes.BUTTON_PROMPT_01_TAG, true, ChatMessage1_Click);
 			buttonSelectChatMessage2 = AddButton(Globals.ThisAddIn.Application, Globals.ThisAddIn.Application.CommandBars["Text"], Globals.ThisAddIn.GlobalsSetting.CaptionButton2, Const.Content.LLM_BUTTON_IMAGE_ID, Const.Panes.BUTTON_PROMPT_02_TAG, false, ChatMessage2_Click);
 		}
-
-
-
+				
 		#region Global Events
 
 		private void GlobalsEventsBus_DocumentPropertiesChanged(object sender, DocumentEventArgs e)
@@ -53,7 +53,11 @@ namespace WordHiddenPowers
 
 		private void GlobalsEventsBus_DocumentChatMessageModeChanged(object sender, DocumentChatMessageModeEventArgs e)
 		{
-			llmButton1.Enabled = llmButton2.Enabled = e.MessageMode.HasFlag(ChatMessageModeEnum.ReplaceSelection);
+			isSelection = e.MessageMode.HasFlag(ChatMessageModeEnum.ReplaceSelection);
+			
+			llmButton1.Enabled = llmButton2.Enabled = isSelection & isModel;
+			SetContextMenuButtonEnabled(Const.Panes.BUTTON_PROMPT_01_TAG, isSelection & isModel);
+			SetContextMenuButtonEnabled(Const.Panes.BUTTON_PROMPT_02_TAG, isSelection & isModel);
 		}
 
 		private void GlobalsEventsBus_NewDocument(object sender, WordDocumentEventArgs e)
@@ -81,40 +85,50 @@ namespace WordHiddenPowers
 			SetToolBarState(Globals.ThisAddIn.ActiveDocument);
 		}
 
+		private void GlobalsEventsBus_AccessToSendingUserMessageStateChanged(object sender, AccessToSendingUserMessageEventArgs e)
+		{
+			isModel = e.AccessToSendingUserMessage.HasFlag(EventsBus.StateEnums.AccessToSendingUserMessage.SelectModel
+				| EventsBus.StateEnums.AccessToSendingUserMessage.SelectDocument);
+
+			llmButton1.Enabled = llmButton2.Enabled = isSelection & isModel;
+			SetContextMenuButtonEnabled(Const.Panes.BUTTON_PROMPT_01_TAG, isSelection & isModel);
+			SetContextMenuButtonEnabled(Const.Panes.BUTTON_PROMPT_02_TAG, isSelection & isModel);
+		}
+
 		#endregion
 
 		internal void SetToolBarState(Document document)
 		{
-			paneVisibleButton.Checked = document.CustomPane is not null ? document.CustomPane.Visible : false;
+			paneVisibleButton.Checked = document != null && document.CustomPane != null && document.CustomPane.Visible;
 
 			newDataButton.Enabled = openDataButton.Enabled = true;
 
-			saveDataButton.Enabled = deleteDataButton.Enabled = document.State != WordDocumentMode.Default;
+			saveDataButton.Enabled = document != null && (deleteDataButton.Enabled = document.State != WordDocumentMode.Default);
 
 			editCategoriesButton.Enabled =
 			createTableButton.Enabled =
-			editDocumentKeysButton.Enabled = document.State == WordDocumentMode.Separate;
+			editDocumentKeysButton.Enabled = document != null && document.State == WordDocumentMode.Separate;
 
-			aggregatedTableViewerButton.Enabled = document.State == WordDocumentMode.Combine && document.NowAggregatedDataSet != null && document.NowAggregatedDataSet.IsTables;
-			aggregatedDialogButton.Enabled = document.State == WordDocumentMode.Combine;
+			aggregatedTableViewerButton.Enabled = document != null && document.State == WordDocumentMode.Combine && document.NowAggregatedDataSet != null && document.NowAggregatedDataSet.IsTables;
+			aggregatedDialogButton.Enabled = document != null && document.State == WordDocumentMode.Combine;
 
 			aggregatedImportFolderButton.Enabled =
 			aggregatedImportFileButton.Enabled =
 
 			oldAggregatedImportFolderButton.Enabled =
-			oldAggregatedImportFileButton.Enabled = document.State != WordDocumentMode.Separate;
+			oldAggregatedImportFileButton.Enabled = document != null && document.State != WordDocumentMode.Separate;
 
-			addLastNoteTypeButton.Enabled = document.State == WordDocumentMode.Separate && document.CurrentDataSet.Subcategories.Any();
-			addTextNoteButton.Enabled = document.State == WordDocumentMode.Separate && document.CurrentDataSet.Subcategories.Any(x => x.IsText);
-			addDecimalNoteButton.Enabled = document.State == WordDocumentMode.Separate && document.CurrentDataSet.Subcategories.Any(x => x.IsDecimal);
+			addLastNoteTypeButton.Enabled = document != null && document.State == WordDocumentMode.Separate && document.CurrentDataSet.Subcategories.Any();
+			addTextNoteButton.Enabled = document != null && document.State == WordDocumentMode.Separate && document.CurrentDataSet.Subcategories.Any(x => x.IsText);
+			addDecimalNoteButton.Enabled = document != null && document.State == WordDocumentMode.Separate && document.CurrentDataSet.Subcategories.Any(x => x.IsDecimal);
 
 			searchServiceButton.Enabled =
-			aiServiceButton.Enabled = document.State == WordDocumentMode.Separate && document.CurrentDataSet.Subcategories.Any();
+			aiServiceButton.Enabled = document != null && document.State == WordDocumentMode.Separate && document.CurrentDataSet.Subcategories.Any();
 
-			editTableButton.Enabled = document.IsTableSchema;
+			editTableButton.Enabled = document != null && document.IsTableSchema;
 
-			SetContextMenuButtonEnabled(Const.Panes.BUTTON_STRING_TAG, document.State == WordDocumentMode.Separate && document.CurrentDataSet.Subcategories.Any(x => x.IsText));
-			SetContextMenuButtonEnabled(Const.Panes.BUTTON_DECIMAL_TAG, document.State == WordDocumentMode.Separate && document.CurrentDataSet.Subcategories.Any(x => x.IsDecimal));
+			SetContextMenuButtonEnabled(Const.Panes.BUTTON_STRING_TAG, document != null && document.State == WordDocumentMode.Separate && document.CurrentDataSet.Subcategories.Any(x => x.IsText));
+			SetContextMenuButtonEnabled(Const.Panes.BUTTON_DECIMAL_TAG, document != null && document.State == WordDocumentMode.Separate && document.CurrentDataSet.Subcategories.Any(x => x.IsDecimal));
 		}
 
 		#region CONTENT

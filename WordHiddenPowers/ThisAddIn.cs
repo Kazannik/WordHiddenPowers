@@ -33,7 +33,7 @@ namespace WordHiddenPowers
 		/// <summary>
 		/// Активный документ.
 		/// </summary>
-		public Documents.Document ActiveDocument => Documents.ActiveDocument;
+		public Documents.Document ActiveDocument => Documents?.ActiveDocument;
 
 		/// <summary>
 		/// Выделенный фрагмент активного документа.
